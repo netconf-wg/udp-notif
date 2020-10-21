@@ -143,7 +143,7 @@
       </address>
     </author>
     
-    <date day="7" month="October" year="2020"/>
+    <date day="21" month="October" year="2020"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -193,7 +193,7 @@
         <t>
         This document specifies a transport option for Sub-Notif that leverages UDP.
         Specifically, it facilitates the distributed data collection mechanism
-        described in <xref target="I-D.unyte-netconf-distributed-notif"/>. In the
+        described in <xref target="I-D.ietf-netconf-distributed-notif"/>. In the
         case of data originating from multiple line cards, centralized designs require
         data to be internally forwarded from those line cards to the push server,
         presumably on a route processor, which then combines the individual data items into
@@ -231,7 +231,7 @@
 
         <t>This document describes the notification mechanism. It is intended to be
         used in conjunction with <xref target="RFC8639"/>, extended by <xref
-        target="I-D.unyte-netconf-distributed-notif"/>.</t>
+        target="I-D.ietf-netconf-distributed-notif"/>.</t>
     
         <t> <xref
             target="sec_transport"/> describes the control of the proposed transport
@@ -266,7 +266,7 @@
         <t>
 In this section, we specify the UDP-Notif Transport behaviour. <xref target = "sec_design"/> describes the general design 
 of the solution. <xref target = "sec_ups_format"/> specifies the UDP-Notif message format. <xref target = "sec_options"/> describes
-a generic optional sub TLV format. <xref target = "sec_fragmentation"/> uses such options to provide a fragmentation solution
+a generic optional sub TLV format. <xref target = "sec_fragmentation"/> uses such options to provide a segmentation solution
 for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes the encoding of the message payload. </t>
 
 
@@ -317,11 +317,11 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
  +-----+-+-------+---------------+-------------------------------+
  | Ver |S|  ET   |  Header Len   |      Message Length           |
  +-----+-+-------+---------------+-------------------------------+
- |                       Message-Generator-ID                    |
+ |                    Message-Subscription-ID                    |
  +---------------------------------------------------------------+
- |                       Message ID                              |
+ |                         Message ID                            |
  +---------------------------------------------------------------+
- ~                       Options                                 ~
+ ~                          Options                              ~
  +---------------------------------------------------------------+
 
 ]]></artwork>
@@ -359,8 +359,8 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
             <t>Message Length is the total length of the message within one UDP 
             datagram, measured in octets, including the message header.</t>
 
-            <t>Message-Generator-ID is a 32-bit identifier of the process which
-            created the notification message.  This allows disambiguation of an information
+            <t>Message-Subscription-ID is a 32-bit identifier of the subscription that led to the production of the notification message. 
+            This allows disambiguation of an information
             source, such as the identification of different line cards sending the
             notification messages.  The source IP address of the UDP datagrams SHOULD NOT
             be interpreted as the identifier for the host that originated the UDP-Notif message.
@@ -413,7 +413,7 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
             operational and performance reasons.</t>
 
             <t>Consequently, implementations of the mechanism SHOULD provide a configurable
-            max-fragment-size option to control the maximum size of a payload.</t>
+            max-segment-size option to control the maximum size of a payload.</t>
 
 
           <figure anchor="fig_frag_option" title="Segmentation Option Format">
@@ -428,7 +428,7 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
           </figure>
 
             <t>The Segmentation Option is to be included when the message content is
-            fragmented into multiple pieces.  Different fragments of one message share the
+            segmented into multiple pieces.  Different segments of one message share the
             same Message ID. An illustration is provided in <xref target="fig_frag_option"/>. The fields of this TLV are:</t>
 
           
@@ -438,7 +438,8 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
 
             <t>Length: is a fixed value of 6 octets.</t>
           
-            <t>Segment Number: indicates the sequence number of the current segment.</t>
+            <t>Segment Number: indicates the sequence number of the current segment. The first segment 
+            of a segmented message has a Segment Number value of 0.</t>
 
             <t>L: is a flag to indicate whether the current segment is the last one. When
             0 is set, the current segment is not the last one, hence more segment are
@@ -792,7 +793,7 @@ reference: RFC XXXX]]></artwork>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
 
-      <reference anchor="I-D.unyte-netconf-distributed-notif" target="">
+      <reference anchor="I-D.ietf-netconf-distributed-notif" target="">
         <front>
             <title>Subscription to Distributed Notifications</title>
             <author initials="T." surname="Zhou" fullname="Tianran Zhou">
@@ -812,7 +813,7 @@ reference: RFC XXXX]]></artwork>
             </author>
             <date month="June" year="2020" />
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-unyte-netconf-distributed-notif-00" />
+        <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-distributed-notif-00" />
     </reference>
 
     </references>
