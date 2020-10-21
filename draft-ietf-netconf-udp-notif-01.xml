@@ -317,7 +317,7 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
  +-----+-+-------+---------------+-------------------------------+
  | Ver |S|  ET   |  Header Len   |      Message Length           |
  +-----+-+-------+---------------+-------------------------------+
- |                    Message-Subscription-ID                    |
+ |                    Observation-Domain-ID                      |
  +---------------------------------------------------------------+
  |                         Message-ID                            |
  +---------------------------------------------------------------+
@@ -359,7 +359,8 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
             <t>Message Length is the total length of the message within one UDP 
             datagram, measured in octets, including the message header.</t>
 
-            <t>Message-Subscription-ID is a 32-bit identifier of the subscription that led to the production of the notification message. 
+            <t>Observation-Domain-ID is a 32-bit identifier of the Observation Domain that led to the production of the notification message, as defined in <xref
+            target="I-D.ietf-netconf-notification-messages"/>.             
             This allows disambiguation of an information
             source, such as the identification of different line cards sending the
             notification messages.  The source IP address of the UDP datagrams SHOULD NOT
