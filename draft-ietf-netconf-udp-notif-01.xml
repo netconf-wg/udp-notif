@@ -436,15 +436,18 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
 
             <t>Type: Generic option field which indicates a Segmentation Option. The Type value is to be asigned.</t>
 
-            <t>Length: is a fixed value of 4 octets.</t>
+            <t>Length: Generic option field which indicates the length of this option. It is a fixed value of 4 octets for the 
+            Segmentation Option.</t>
           
             <t>Segment Number: 15-bit value indicating the sequence number of the current segment. The first segment 
             of a segmented message has a Segment Number value of 0.</t>
 
-            <t>L: is a flag to indicate whether the current segment is the last one. When
-            0 is set, the current segment is not the last one, hence more segment are
-            expected. When 1 is set, the current segment is the last one, meaning that the total number
-            of segments used to transport this message is the value of the current Segment Number + 1.</t>
+            <t>L: is a flag to indicate whether the current segment is the last
+            one of the message. When 0 is set, the current segment is not the last one.
+            When 1 is set, the current segment is the last one, meaning that the total
+            number of segments used to transport this message is the value of the current
+            Segment Number + 1.</t>
+
         </list></t>
 
         </section>
