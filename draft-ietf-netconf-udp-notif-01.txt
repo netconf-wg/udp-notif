@@ -5,13 +5,13 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 24 April 2021                                           T. Graf
+Expires: 25 April 2021                                           T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                         21 October 2020
+                                                         22 October 2020
 
 
             UDP-based Transport for Configured Subscriptions
@@ -47,13 +47,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 April 2021.
+   This Internet-Draft will expire on 25 April 2021.
 
 
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 1]
+Zheng, et al.             Expires 25 April 2021                 [Page 1]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 2]
+Zheng, et al.             Expires 25 April 2021                 [Page 2]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -165,7 +165,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 3]
+Zheng, et al.             Expires 25 April 2021                 [Page 3]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -221,7 +221,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 4]
+Zheng, et al.             Expires 25 April 2021                 [Page 4]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -277,7 +277,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 5]
+Zheng, et al.             Expires 25 April 2021                 [Page 5]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -333,7 +333,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 6]
+Zheng, et al.             Expires 25 April 2021                 [Page 6]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -359,7 +359,7 @@ Internet-Draft               unyte-udp-notif                October 2020
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +---------------+---------------+-----------------------------+-+
      |     Type      |     Length    |        Segment Number       |L|
-     +-------------------------------+---------------+-------------+-+
+     +---------------+---------------+-----------------------------+-+
 
                     Figure 4: Segmentation Option Format
 
@@ -389,7 +389,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 7]
+Zheng, et al.             Expires 25 April 2021                 [Page 7]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -445,7 +445,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 8]
+Zheng, et al.             Expires 25 April 2021                 [Page 8]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -501,7 +501,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                 [Page 9]
+Zheng, et al.             Expires 25 April 2021                 [Page 9]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -557,7 +557,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                [Page 10]
+Zheng, et al.             Expires 25 April 2021                [Page 10]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -613,7 +613,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                [Page 11]
+Zheng, et al.             Expires 25 April 2021                [Page 11]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -669,7 +669,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                [Page 12]
+Zheng, et al.             Expires 25 April 2021                [Page 12]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -725,7 +725,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                [Page 13]
+Zheng, et al.             Expires 25 April 2021                [Page 13]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -781,7 +781,7 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                [Page 14]
+Zheng, et al.             Expires 25 April 2021                [Page 14]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -837,7 +837,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.             Expires 24 April 2021                [Page 15]
+Zheng, et al.             Expires 25 April 2021                [Page 15]
 
 Internet-Draft               unyte-udp-notif                October 2020
 
@@ -893,4 +893,4 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 24 April 2021                [Page 16]
+Zheng, et al.             Expires 25 April 2021                [Page 16]
