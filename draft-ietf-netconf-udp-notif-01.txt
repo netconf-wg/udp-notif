@@ -357,11 +357,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-                                     +---------------+---------------+
-                                     |     Type      |     Length    |
+     +---------------+---------------+-----------------------------+-+
+     |     Type      |     Length    |        Segment Number       |L|
      +-------------------------------+---------------+-------------+-+
-     |            Segment Number                                   |L|
-     +-------------------------------------------------------------+-+
 
                     Figure 4: Segmentation Option Format
 
@@ -370,19 +368,21 @@ Internet-Draft               unyte-udp-notif                October 2020
    share the same Message ID.  An illustration is provided in Figure 4.
    The fields of this TLV are:
 
-   *  Type: indicates Segmentation Option.  The Type value is to be
-      asigned.
+   *  Type: Generic option field which indicates a Segmentation Option.
+      The Type value is to be asigned.
 
-   *  Length: is a fixed value of 6 octets.
+   *  Length: is a fixed value of 4 octets.
 
-   *  Segment Number: indicates the sequence number of the current
-      segment.  The first segment of a segmented message has a Segment
-      Number value of 0.
+   *  Segment Number: 15-bit value indicating the sequence number of the
+      current segment.  The first segment of a segmented message has a
+      Segment Number value of 0.
 
    *  L: is a flag to indicate whether the current segment is the last
       one.  When 0 is set, the current segment is not the last one,
       hence more segment are expected.  When 1 is set, the current
-      segment is the last one.
+      segment is the last one, meaning that the total number of segments
+      used to transport this message is the value of the current Segment
+      Number + 1.
 
 
 
