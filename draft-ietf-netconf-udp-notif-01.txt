@@ -5,13 +5,13 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 25 April 2021                                           T. Graf
+Expires: 6 May 2021                                              T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                         22 October 2020
+                                                         2 November 2020
 
 
             UDP-based Transport for Configured Subscriptions
@@ -47,15 +47,15 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2021.
+   This Internet-Draft will expire on 6 May 2021.
 
 
 
 
 
-Zheng, et al.             Expires 25 April 2021                 [Page 1]
+Zheng, et al.              Expires 6 May 2021                   [Page 1]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
 Copyright Notice
@@ -109,17 +109,17 @@ Table of Contents
 
 
 
-Zheng, et al.             Expires 25 April 2021                 [Page 2]
+Zheng, et al.              Expires 6 May 2021                   [Page 2]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
-   While powerful in its features and general in their architecture, the
-   currently available transport mechanisms need to be complemented to
-   support data publications at high velocity from devices that feature
-   a distributed architecture.  The currently available transports are
-   based on TCP and lack the efficiency needed to continuously send
-   notifications at high velocity.
+   While powerful in their features and general in their architecture,
+   the currently available transport mechanisms need to be complemented
+   to support data publications at high velocity from devices that
+   feature a distributed architecture.  The currently available
+   transports are based on TCP and lack the efficiency needed to
+   continuously send notifications at high velocity.
 
    This document specifies a transport option for Sub-Notif that
    leverages UDP.  Specifically, it facilitates the distributed data
@@ -165,9 +165,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                 [Page 3]
+Zheng, et al.              Expires 6 May 2021                   [Page 3]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
 2.  Configured Subscription to UDP-Notif
@@ -221,9 +221,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                 [Page 4]
+Zheng, et al.              Expires 6 May 2021                   [Page 4]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
                +-------+  +--------------+  +--------------+
@@ -277,9 +277,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                 [Page 5]
+Zheng, et al.              Expires 6 May 2021                   [Page 5]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
       -  others are reserved.
@@ -327,15 +327,15 @@ Internet-Draft               unyte-udp-notif                October 2020
 
    *  Type: 1 octet describing the option type;
 
-   *  Length: 1 octet of the TLV Length, including the Type and Length
-      fields;
+   *  Length: 1 octet representing the total number of octets in the
+      TLV, including the Type and Length fields;
 
 
 
 
-Zheng, et al.             Expires 25 April 2021                 [Page 6]
+Zheng, et al.              Expires 6 May 2021                   [Page 6]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
    *  Variable-length data: 0 or more octets of TLV Value.
@@ -389,10 +389,16 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                 [Page 7]
+Zheng, et al.              Expires 6 May 2021                   [Page 7]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
+
+   An implementation of this specification MUST NOT rely on IP
+   fragmentation by default to carry large messages.  An implementation
+   of this specification MUST either restrict the size of individual
+   messages carried over this protocol, or support the segmentation
+   option.
 
 3.4.  Data Encoding
 
@@ -436,19 +442,17 @@ Internet-Draft               unyte-udp-notif                October 2020
    traffic through traffic engineering mechanisms, such as rate limiting
    or capacity reservations.
 
+
+
+
+Zheng, et al.              Expires 6 May 2021                   [Page 8]
+
+Internet-Draft               unyte-udp-notif               November 2020
+
+
    Implementation of the proposal SHOULD NOT push unlimited amounts of
    traffic by default, and SHOULD require the users to explicitely
    configure such a mode of operation.
-
-
-
-
-
-
-Zheng, et al.             Expires 25 April 2021                 [Page 8]
-
-Internet-Draft               unyte-udp-notif                October 2020
-
 
    Burst mitigation through packet pacing is RECOMMENDED.  Disabling
    burst mitigation SHOULD require the users to explicitely configure
@@ -497,13 +501,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-
-
-
-
-Zheng, et al.             Expires 25 April 2021                 [Page 9]
+Zheng, et al.              Expires 6 May 2021                   [Page 9]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
     module: ietf-udp-subscribed-notifications
@@ -557,9 +557,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                [Page 10]
+Zheng, et al.              Expires 6 May 2021                  [Page 10]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
        of the code.  All rights reserved.
@@ -613,9 +613,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                [Page 11]
+Zheng, et al.              Expires 6 May 2021                  [Page 11]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
            "Port number of target UDP-Notif receiver, if not specified,
@@ -669,9 +669,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                [Page 12]
+Zheng, et al.              Expires 6 May 2021                  [Page 12]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
    Port Number: PORT-X
@@ -725,9 +725,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                [Page 13]
+Zheng, et al.              Expires 6 May 2021                  [Page 13]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
    [RFC4347]  Rescorla, E. and N. Modadugu, "Datagram Transport Layer
@@ -781,9 +781,9 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                [Page 14]
+Zheng, et al.              Expires 6 May 2021                  [Page 14]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
@@ -808,8 +808,8 @@ Internet-Draft               unyte-udp-notif                October 2020
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
               "Subscription to Distributed Notifications", Work in
               Progress, Internet-Draft, draft-ietf-netconf-distributed-
-              notif-00, June 2020, <https://tools.ietf.org/html/draft-
-              ietf-netconf-distributed-notif-00>.
+              notif-01, June 2020, <https://tools.ietf.org/html/draft-
+              ietf-netconf-distributed-notif-01>.
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -837,9 +837,9 @@ Authors' Addresses
 
 
 
-Zheng, et al.             Expires 25 April 2021                [Page 15]
+Zheng, et al.              Expires 6 May 2021                  [Page 15]
 
-Internet-Draft               unyte-udp-notif                October 2020
+Internet-Draft               unyte-udp-notif               November 2020
 
 
    Guangying Zheng
@@ -893,4 +893,4 @@ Internet-Draft               unyte-udp-notif                October 2020
 
 
 
-Zheng, et al.             Expires 25 April 2021                [Page 16]
+Zheng, et al.              Expires 6 May 2021                  [Page 16]

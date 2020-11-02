@@ -143,7 +143,7 @@
       </address>
     </author>
     
-    <date day="22" month="October" year="2020"/>
+    <date day="2" month="November" year="2020"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -183,7 +183,7 @@
 
         <t>
 
-        While powerful in its features and general in their architecture, the
+        While powerful in their features and general in their architecture, the
         currently available transport mechanisms need to be complemented to support
         data publications at high velocity from devices that feature a distributed
         architecture. The currently available transports are based on TCP and lack the
@@ -397,7 +397,7 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
         <t><list style="symbols">
           <t>Type: 1 octet describing the option type;</t>
           
-          <t>Length: 1 octet of the TLV Length, including the Type and
+          <t>Length: 1 octet representing the total number of octets in the TLV, including the Type and
           Length fields;</t>
           
           <t>Variable-length data: 0 or more octets of TLV Value.</t>
@@ -449,6 +449,11 @@ for large UDP-Notif message payloads. <xref target ="sec_encoding"/> describes t
             Segment Number + 1.</t>
 
         </list></t>
+
+            <t>An implementation of this specification MUST NOT rely on IP
+            fragmentation by default to carry large messages. An implementation of this
+            specification MUST either restrict the size of individual messages carried over
+            this protocol, or support the segmentation option.</t>
 
         </section>
       </section>
@@ -817,7 +822,7 @@ reference: RFC XXXX]]></artwork>
             </author>
             <date month="June" year="2020" />
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-distributed-notif-00" />
+        <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-distributed-notif-01" />
     </reference>
 
     </references>
