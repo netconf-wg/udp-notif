@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc category="std" docName="draft-ietf-netconf-udp-notif-02"
+     ipr="trust200902">
+  <front>
+    <title abbrev="unyte-udp-notif">UDP-based Transport for Configured
+    Subscriptions</title>
+
+    <author fullname="Guangying Zheng" initials="G." surname="Zheng">
+      <organization>Huawei</organization>
+
+      <address>
+        <postal>
+          <street>101 Yu-Hua-Tai Software Road</street>
+
+          <city>Nanjing</city>
+
+          <code/>
+
+          <region>Jiangsu</region>
+
+          <country>China</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>zhengguangying@huawei.com</email>
+      </address>
+    </author>
+
+    <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+      <organization>Huawei</organization>
+
+      <address>
+        <postal>
+          <street>156 Beiqing Rd., Haidian District</street>
+
+          <city>Beijing</city>
+
+          <region/>
+
+          <code/>
+
+          <country>China</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>zhoutianran@huawei.com</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Thomas Graf" initials="T." surname="Graf">
+      <organization>Swisscom</organization>
+
+      <address>
+        <postal>
+          <street>Binzring 17</street>
+
+          <city>Zuerich 8045</city>
+
+          <region/>
+
+          <code/>
+
+          <country>Switzerland</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>thomas.graf@swisscom.com</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Pierre Francois" initials="P." surname="Francois">
+      <organization>INSA-Lyon</organization>
+
+      <address>
+        <postal>
+          <street/>
+
+          <city>Lyon</city>
+
+          <region/>
+
+          <code/>
+
+          <country>France</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>pierre.francois@insa-lyon.fr</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Paolo Lucente" initials="P." surname="Lucente">
+      <organization>NTT</organization>
+
+      <address>
+        <postal>
+          <street>Siriusdreef 70-72</street>
+
+          <city>Hoofddorp, WT 2132</city>
+
+          <region/>
+
+          <code/>
+
+          <country>NL</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>paolo@ntt.net</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <date day="6" month="May" year="2021"/>
+
+    <workgroup>NETCONF</workgroup>
+
+    <abstract>
+      <t>This document describes an UDP-based notification mechanism to
+      collect data from networking devices. A shim header is proposed to
+      facilitate the data streaming directly from the publishing process on
+      network processor of line cards to receivers. The objective is a
+      lightweight approach to enable higher frequency and less performance
+      impact on publisher and receiver process compared to already established
+      notification mechanisms.</t>
+    </abstract>
+
+    <note title="Requirements Language">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+      document are to be interpreted as described in <xref
+      target="RFC2119">RFC 2119</xref>.</t>
+    </note>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t><xref target="RFC8639">Sub-Notif</xref> defines a mechanism that lets
+      a receiver subscribe to the publication of YANG-defined data maintained
+      in a <xref target="RFC7950">YANG</xref> datastore. The mechanism
+      separates the management and control of subscriptions from the transport
+      used to deliver the data. Three transport mechanisms, namely <xref
+      target="RFC8640">NETCONF transport</xref>, <xref
+      target="RFC8650">RESTCONF transport</xref>, and <xref
+      target="I-D.ietf-netconf-https-notif">HTTPS transport</xref> have been
+      defined so far for such notification messages.</t>
+
+      <t>While powerful in their features and general in their architecture,
+      the currently available transport mechanisms need to be complemented to
+      support data publications at high velocity from devices that feature a
+      distributed architecture. The currently available transports are based
+      on TCP and lack the efficiency needed to continuously send notifications
+      at high velocity.</t>
+
+      <t>This document specifies a transport option for Sub-Notif that
+      leverages UDP. Specifically, it facilitates the distributed data
+      collection mechanism described in <xref
+      target="I-D.ietf-netconf-distributed-notif"/>. In the case of publishing
+      from multiple network processors on multiple line cards, centralized
+      designs require data to be internally forwarded from those network
+      processors to the push server, presumably on a route processor, which
+      then combines the individual data items into a single consolidated
+      stream. The centralized data collection mechanism can result in a
+      performance bottleneck, especially when large amounts of data are
+      involved.</t>
+
+      <t>What is needed is a mechanism that allows for directly publishing
+      from multiple network processors on line cards, without passing them
+      through an additional processing stage for internal consolidation. The
+      proposed UDP-based transport allows for such a distributed data
+      publishing approach.</t>
+
+      <t><list style="symbols">
+          <t>Firstly, a UDP approach reduces the burden of maintaining a large
+          amount of active TCP connections at the receiver, notably in cases
+          where it collects data from network processors on line cards from a
+          large amount of networking devices.</t>
+
+          <t>Secondly, as no connection state needs to be maintained, UDP
+          encapsulation can be easily implemented by the hardware of the
+          publication streamer, which will further improve performance.</t>
+
+          <t>Ultimately, such advantages allow for a larger data analysis
+          feature set, as more voluminous, finer grained data sets can be
+          streamed to the receiver.</t>
+        </list></t>
+
+      <t>The transport described in this document can be used for transmitting
+      notification messages over both IPv4 and IPv6.</t>
+
+      <t>This document describes the notification mechanism. It is intended to
+      be used in conjunction with <xref target="RFC8639"/>, extended by <xref
+      target="I-D.ietf-netconf-distributed-notif"/>.</t>
+
+      <t><xref target="sec_transport"/> describes the control of the proposed
+      transport mechanism. <xref target="sec_ups_transport"/> details the
+      notification mechanism and message format. <xref
+      target="sec_congestion_control"/> discusses congestion control. <xref
+      target="sec_applicability"/> covers the applicability of the proposed
+      mechanism.</t>
+    </section>
+
+    <section anchor="sec_transport"
+             title="Configured Subscription to UDP-Notif">
+      <t>This section describes how the proposed mechanism can be controlled
+      using subscription channels based on NETCONF or RESTCONF.</t>
+
+      <t>Following the usual approach of Sub-Notif, configured subscriptions
+      contain the location information of all the receivers, including the IP
+      address and the port number, so that the publisher can actively send
+      UDP-Notif messages to the corresponding receivers.</t>
+
+      <t>Note that receivers MAY NOT be already up and running when the
+      configuration of the subscription takes effect on the monitored device.
+      The first message MUST be a separate subscription-started notification
+      to indicate the Receiver that the stream has started flowing. Then, the
+      notifications can be sent immediately without delay. All the
+      subscription state notifications, as defined in <xref
+      target="RFC8639"/>, MUST be encapsulated in separate notification
+      messages.</t>
+    </section>
+
+    <section anchor="sec_ups_transport" title="UDP-Based Transport">
+      <t>In this section, we specify the UDP-Notif Transport behavior. <xref
+      target="sec_design"/> describes the general design of the solution.
+      <xref target="sec_ups_format"/> specifies the UDP-Notif message format.
+      <xref target="sec_options"/> describes a generic optional sub TLV
+      format. <xref target="sec_fragmentation"/> uses such options to provide
+      a segmentation solution for large UDP-Notif message payloads. <xref
+      target="sec_encoding"/> describes the encoding of the message
+      payload.</t>
+
+      <section anchor="sec_design" title="Design Overview">
+        <t>As specified in Sub-Notif, the telemetry data is encapsulated in
+        the NETCONF/RESTCONF notification message, which is then encapsulated
+        and carried using transport protocols such as TLS or HTTP2. <xref
+        target="fig_ups_message"/> illustrates the structure of an UDP-Notif
+        message.</t>
+
+        <t><list style="symbols">
+            <t>The Message Header contains information that facilitate the
+            message transmission before deserializing the notification
+            message.</t>
+
+            <t>Notification Message is the encoded content that the
+            publication stream transports. The common encoding methods
+            include, <xref target="RFC7049">CBOR</xref>, JSON, and XML. <xref
+            target="I-D.ietf-netconf-notification-messages"/> describes the
+            structure of the Notification Message for single notifications and
+            bundled notifications.</t>
+          </list></t>
+
+        <t><figure anchor="fig_ups_message" title="UDP-Notif Message Overview">
+            <artwork align="center"><![CDATA[
++-------+  +--------------+  +--------------+
+|  UDP  |  |   Message    |  | Notification |
+|       |  |   Header     |  | Message      |
++-------+  +--------------+  +--------------+
+]]></artwork>
+          </figure></t>
+
+        <t/>
+      </section>
+
+      <section anchor="sec_ups_format"
+               title="Format of the UDP-Notif Message Header">
+        <t>The UDP-Notif Message Header contains information that facilitate
+        the message transmission before deserializing the notification
+        message. The data format is shown in <xref
+        target="fig_ups_header"/>.</t>
+
+        <figure anchor="fig_ups_header"
+                title="UDP-Notif Message Header Format">
+          <artwork align="center"><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-----+-+-------+---------------+-------------------------------+
+ | Ver |S|  ET   |  Header Len   |      Message Length           |
+ +-----+-+-------+---------------+-------------------------------+
+ |                    Observation-Domain-ID                      |
+ +---------------------------------------------------------------+
+ |                         Message-ID                            |
+ +---------------------------------------------------------------+
+ ~                          Options                              ~
+ +---------------------------------------------------------------+
+
+]]></artwork>
+        </figure>
+
+        <t/>
+
+        <t>The Message Header contains the following field:</t>
+
+        <t><list style="symbols">
+            <t>Ver represents the PDU (Protocol Data Unit) encoding version.
+            The initial version value is 0.</t>
+
+            <t>S represents the space of encoding type specified in the ET
+            field. When S is unset, ET represents the standard encoding types
+            as defined in this document. When S is set, ET represents a
+            private space to be freely used for nonstandard encodings.</t>
+
+            <t>ET is a 4 bit identifier to indicate the encoding type used for
+            the Notification Message. 16 types of encoding can be expressed.
+            When the S bit is unset, the following values apply:<list
+                style="symbols">
+                <t>0: CBOR;</t>
+
+                <t>1: JSON;</t>
+
+                <t>2: XML;</t>
+
+                <t>others are reserved.</t>
+              </list></t>
+
+            <t>Header Len is the length of the message header in octets,
+            including both the fixed header and the options.</t>
+
+            <t>Message Length is the total length of the message within one
+            UDP datagram, measured in octets, including the message
+            header.</t>
+
+            <t>Observation-Domain-ID is a 32-bit identifier of the Observation
+            Domain that led to the production of the notification message, as
+            defined in <xref
+            target="I-D.ietf-netconf-notification-messages"/>. This allows
+            disambiguation of an information source, such as the
+            identification of different line cards sending the notification
+            messages. The source IP address of the UDP datagrams SHOULD NOT be
+            interpreted as the identifier for the host that originated the
+            UDP-Notif message. Indeed, the streamer sending the UDP-Notif
+            message could be a relay for the actual source of data carried
+            within UDP-Notif messages.</t>
+
+            <t>The Message ID is generated continuously by the sender of
+            UDP-Notif messages. Different subscribers share the same Message
+            ID sequence.</t>
+
+            <t>Options is a variable-length field in the TLV format. When the
+            Header Length is larger than 12 octets, which is the length of the
+            fixed header, Options TLVs follow directly after the fixed message
+            header (i.e., Message ID). The details of the options are
+            described in the following section.</t>
+          </list></t>
+
+        <t/>
+      </section>
+
+      <section anchor="sec_options" title="Options">
+        <t>All the options are defined with the following format, illustrated
+        in <xref target="fig_ups_message_options"/>.</t>
+
+        <t><figure anchor="fig_ups_message_options"
+            title="Generic Option Format">
+            <artwork align="center"><![CDATA[
+  0                   1                   2                   3        
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +---------------+---------------+--------------------------------
+ |     Type      |    Length     |    Variable-length data     
+ +---------------+---------------+--------------------------------]]></artwork>
+          </figure></t>
+
+        <t><list style="symbols">
+            <t>Type: 1 octet describing the option type;</t>
+
+            <t>Length: 1 octet representing the total number of octets in the
+            TLV, including the Type and Length fields;</t>
+
+            <t>Variable-length data: 0 or more octets of TLV Value.</t>
+          </list></t>
+
+        <section anchor="sec_fragmentation" title="Segmentation Option">
+          <t>The UDP payload length is limited to 65535. Application level
+          headers will make the actual payload shorter. Even though binary
+          encodings such as CBOR may not require more space than what is left,
+          more voluminous encodings such as JSON and XML may suffer from this
+          size limitation. Although IPv4 and IPv6 senders can fragment
+          outgoing packets exceeding their Maximum Transmission Unit(MTU),
+          fragmented IP packets may not be desired for operational and
+          performance reasons.</t>
+
+          <t>Consequently, implementations of the mechanism SHOULD provide a
+          configurable max-segment-size option to control the maximum size of
+          a payload.</t>
+
+          <figure anchor="fig_frag_option" title="Segmentation Option Format">
+            <artwork align="center"><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +---------------+---------------+-----------------------------+-+
+ |     Type      |     Length    |        Segment Number       |L|
+ +---------------+---------------+-----------------------------+-+
+ ]]></artwork>
+          </figure>
+
+          <t>The Segmentation Option is to be included when the message
+          content is segmented into multiple pieces. Different segments of one
+          message share the same Message ID. An illustration is provided in
+          <xref target="fig_frag_option"/>. The fields of this TLV are:</t>
+
+          <t><list style="symbols">
+              <t>Type: Generic option field which indicates a Segmentation
+              Option. The Type value is to be assigned.</t>
+
+              <t>Length: Generic option field which indicates the length of
+              this option. It is a fixed value of 4 octets for the
+              Segmentation Option.</t>
+
+              <t>Segment Number: 15-bit value indicating the sequence number
+              of the current segment. The first segment of a segmented message
+              has a Segment Number value of 0.</t>
+
+              <t>L: is a flag to indicate whether the current segment is the
+              last one of the message. When 0 is set, the current segment is
+              not the last one. When 1 is set, the current segment is the last
+              one, meaning that the total number of segments used to transport
+              this message is the value of the current Segment Number + 1.</t>
+            </list></t>
+
+          <t>An implementation of this specification MUST NOT rely on IP
+          fragmentation by default to carry large messages. An implementation
+          of this specification MUST either restrict the size of individual
+          messages carried over this protocol, or support the segmentation
+          option.</t>
+        </section>
+      </section>
+
+      <section anchor="sec_encoding" title="Data Encoding">
+        <t>UDP-Notif message data can be encoded in CBOR, XML or JSON format.
+        It is conceivable that additional encodings may be supported in the
+        future. This can be accomplished by augmenting the subscription data
+        model with additional identity statements used to refer to requested
+        encodings.</t>
+
+        <t>Implementation MAY support multiple encoding methods per
+        subscription. When bundled notifications are supported between the
+        publisher and the receiver, only subscribed notifications with the
+        same encoding can be bundled in a given message.</t>
+      </section>
+    </section>
+
+    <section anchor="sec_applicability" title="Applicability">
+      <t>In this section, we provide an applicability statement for the
+      proposed mechanism, following the recommendations of <xref
+      target="RFC8085"/>.</t>
+
+      <t>The proposed mechanism falls in the category of UDP applications
+      "designed for use within the network of a single network operator or on
+      networks of an adjacent set of cooperating network operators, to be
+      deployed in controlled environments". Implementations of the proposed
+      mechanism should thus follow the recommendations in place for such
+      specific applications. In the following, we discuss recommendations on
+      congestion control, message size guidelines, reliability
+      considerations.</t>
+
+      <section anchor="sec_congestion_control" title="Congestion Control">
+        <t>The proposed application falls into the category of applications
+        performing transfer of large amounts of data. It is expected that the
+        operator using the solution configures QoS on its related flows. As
+        per <xref target="RFC8085"/>, such applications MAY choose not to
+        implement any form of congestion control, but follow the following
+        principles.</t>
+
+        <t>It is NOT RECOMMENDED to use the proposed mechanism over
+        congestion-sensitive network paths. The only environments where
+        UDP-Notif is expected to be used are managed networks. The deployments
+        require that the network path has been explicitly provisioned to
+        handle the traffic through traffic engineering mechanisms, such as
+        rate limiting or capacity reservations.</t>
+
+        <t>Implementation of the proposal SHOULD NOT push unlimited amounts of
+        traffic by default, and SHOULD require the users to explicitly
+        configure such a mode of operation.</t>
+
+        <t>Burst mitigation through packet pacing is RECOMMENDED. Disabling
+        burst mitigation SHOULD require the users to explicitly configure such
+        a mode of operation.</t>
+
+        <t>Applications SHOULD monitor packet losses and provide means to the
+        user for retrieving information on such losses. The UDP-Notif Message
+        ID can be used to deduce congestion based on packet loss detection.
+        Hence the receiver can notify the device to use a lower streaming
+        rate. The interaction to control the streaming rate on the device is
+        out of the scope of this document.</t>
+
+        <!-- <t>Congestion control mechanisms that respond to congestion by reducing
+      traffic rates and establish a degree of fairness between flows that
+      share the same path are vital to the stable operation of the Internet
+      <xref target="RFC2914"/>. While efficient, UDP has no built-in
+      congestion control mechanism. Because streaming telemetry can generate
+      unlimited amounts of data, transferring this data over UDP may be considered
+      problematic. -->
+      </section>
+
+      <section anchor="sec_message_size" title="Message Size">
+        <t><xref target="RFC8085"/> recommends not to rely on IP fragmentation
+        for messages whose size result in IP packets exceeding the MTU along
+        the path. The segmentation option of the current specification permits
+        segmentation of the UDP Notif message content without relying on IP
+        fragmentation. Implementation of the current specification SHOULD
+        allow for the configuration of the MTU.</t>
+      </section>
+
+      <section anchor="Reliability" title="Reliability">
+        <t>The target application for UDP-Notif is the collection of
+        data-plane information. The lack of reliability of the data streaming
+        mechanism is thus considered acceptable as the mechanism is to be used
+        in controlled environments, mitigating the risk of information loss,
+        while allowing for publication of very large amounts of data.
+        Moreover, in this context, sporadic events when incomplete data
+        collection is provided is not critical for the proper management of
+        the network, as information collected for the devices through the
+        means of the proposed mechanism is to be often refreshed.</t>
+
+        <t>A receiver implementation for this protocol SHOULD deal with
+        potential loss of packets carrying a part of segmented payload, by
+        discarding packets that were received, but cannot be re-assembled as a
+        complete message within a given amount of time. This time SHOULD be
+        configurable.</t>
+      </section>
+    </section>
+
+    <section title="A YANG Data Model for Management of UDP-Notif">
+      <t>The YANG model defined in Section 9 has two leaf's augmented into one
+      place of <xref target="RFC8639">Sub-Notif</xref>, plus one identity.</t>
+
+      <t><figure>
+          <artwork><![CDATA[
+    module: ietf-udp-subscribed-notifications
+     augment /sn:subscriptions/sn:subscription/sn:receivers/sn:receiver:
+       +--rw address   inet:ip-address
+       +--rw port      inet:port-number
+       +--rw enable-fragment?  boolean
+       +--rw max-fragment-size?  uint32]]></artwork>
+        </figure></t>
+    </section>
+
+    <section title="YANG Module">
+      <t/>
+
+      <t><figure>
+          <artwork><![CDATA[
+<CODE BEGINS> file "ietf-udp-notif@2020-04-27.yang"
+module ietf-udp-notif {
+  yang-version 1.1;
+  namespace 
+    "urn:ietf:params:xml:ns:yang:ietf-udp-notif";
+  prefix un;
+  import ietf-subscribed-notifications {
+    prefix sn;
+    reference
+      "RFC 8639: Subscription to YANG Notifications";
+  }
+  import ietf-inet-types {
+    prefix inet;
+    reference
+      "RFC 6991: Common YANG Data Types";
+  }
+
+  organization "IETF NETCONF (Network Configuration) Working Group";
+  contact
+    "WG Web:   <http:/tools.ietf.org/wg/netconf/>
+     WG List:  <mailto:netconf@ietf.org>
+
+     Authors:  Guangying Zheng
+               <mailto:zhengguangying@huawei.com>
+               Tianran Zhou
+               <mailto:zhoutianran@huawei.com>
+               Thomas Graf
+               <mailto:thomas.graf@swisscom.com>
+               Pierre Francois
+               <mailto:pierre.francois@insa-lyon.fr>
+               Paolo Lucente
+               <mailto:paolo@ntt.net>";
+
+  description
+    "Defines UDP-Notif as a supported transport for subscribed
+    event notifications.
+
+    Copyright (c) 2018 IETF Trust and the persons identified as authors
+    of the code.  All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, is permitted pursuant to, and subject to the license
+    terms contained in, the Simplified BSD License set forth in Section
+    4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
+    (https://trustee.ietf.org/license-info).
+
+    This version of this YANG module is part of RFC XXXX; see the RFC
+
+    itself for full legal notices.";
+
+  revision 2020-04-27 {
+    description
+      "Initial version";
+    reference
+      "RFC XXXX: UDP-based Notifications for Streaming Telemetry";
+  }
+
+  identity udp-notif {
+    base sn:transport;
+    description
+      "UDP-Notif is used as transport for notification messages 
+and state change notifications.";
+  }
+
+  identity encode-cbor {
+    base sn:encoding;
+    description
+      "Encode data using CBOR as described in RFC 7049.";
+    reference
+      "RFC 7049: Concise Binary Object Representation";
+  }
+  
+  grouping target-receiver {
+    description
+      "Provides a reusable description of a UDP-Notif target receiver.";
+    leaf address {
+      type inet:ip-address;
+      mandatory true;
+      description
+        "IP address of target UDP-Notif receiver, which can be an 
+        IPv4 address or an IPV6 address.";
+    }
+    leaf port {
+      type inet:port-number;
+      mandatory true;
+      description
+        "Port number of target UDP-Notif receiver, if not specified, 
+        the system should use default port number.";    
+    }
+    
+    leaf enable-fragment {
+      type boolean;
+      default false;
+      description
+        "The switch for the fragment feature. When disabled, the
+         publisher will not allow fragment for a very large data";
+    }
+    
+    leaf max-fragment-size {
+      when "../enable-fragment = true";
+      type uint32;
+      description "UDP-Notif provides a configurable max-fragment-size
+      to control the size of each message.";      
+    }
+  }
+
+  augment "/sn:subscriptions/sn:subscription/sn:receivers/sn:receiver" {
+    description
+      "This augmentation allows UDP-Notif specific parameters to be
+       exposed for a subscription.";
+    uses target-receiver;
+  }
+}
+<CODE ENDS>]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>This RFC requests that IANA assigns one UDP port number in the
+      "Registered Port Numbers" range with the service name "udp-notif". This
+      port will be the default port for the UDP-based notification Streaming
+      Telemetry (UDP-Notif) for NETCONF and RESTCONF. Below is the
+      registration template following the rules of <xref
+      target="RFC6335"/>.</t>
+
+      <t>Service Name: udp-notif</t>
+
+      <t>Transport Protocol(s): UDP</t>
+
+      <t>Assignee: IESG &lt;iesg@ietf.org&gt;</t>
+
+      <t>Contact: IETF Chair &lt;chair@ietf.org&gt;</t>
+
+      <t>Description: UDP-based Publication Streaming Telemetry</t>
+
+      <t>Reference: RFC XXXX</t>
+
+      <t>Port Number: PORT-X</t>
+
+      <t/>
+
+      <t>IANA is requested to assign a new URI from the <xref
+      target="RFC3688">IETF XML Registry</xref>. The following URI is
+      suggested:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.]]></artwork>
+        </figure></t>
+
+      <t>This document also requests a new YANG module name in the <xref
+      target="RFC7950">YANG Module Names registry</xref> with the following
+      suggestion:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+name: ietf-udp-notif
+namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif
+prefix: un
+reference: RFC XXXX]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="Security" title="Security Considerations">
+      <t>TBD</t>
+    </section>
+
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>The authors of this documents would like to thank Alexander Clemm,
+      Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
+      Frenot, Timothy Carey, Tim Jenkins, and Yunan Gu for their constructive
+      suggestions for improving this document.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+
+      <!--      <?rfc include="reference.RFC.2119"?>-->
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8639.xml'?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.2914.xml'?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8650.xml'?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6335.xml'?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7049.xml"?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6347.xml'?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.4347.xml'?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5246.xml'?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
+
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8640.xml'?>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
+
+      <reference anchor="I-D.ietf-netconf-distributed-notif" target="">
+        <front>
+          <title>Subscription to Distributed Notifications</title>
+
+          <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+            <organization>Huawei</organization>
+          </author>
+
+          <author fullname="Guangying Zheng" initials="G." surname="Zheng">
+            <organization>Huawei</organization>
+          </author>
+
+          <author fullname="Eric Voit" initials="E." surname="Voit">
+            <organization>Cisco Systems</organization>
+          </author>
+
+          <author fullname="Thomas Graf" initials="T." surname="Graf">
+            <organization>Swisscom</organization>
+          </author>
+
+          <author fullname="Pierre Francois" initials="P." surname="Francois">
+            <organization>INSA-Lyon</organization>
+          </author>
+
+          <date month="June" year="2020"/>
+        </front>
+
+        <seriesInfo name="Internet-Draft"
+                    value="draft-ietf-netconf-distributed-notif-01"/>
+      </reference>
+    </references>
+  </back>
+</rfc>
