@@ -90,7 +90,7 @@ Table of Contents
    6.  YANG Module . . . . . . . . . . . . . . . . . . . . . . . . .  10
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
-   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
+   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  14
      10.2.  Informative References . . . . . . . . . . . . . . . . .  15
@@ -714,14 +714,14 @@ Internet-Draft               unyte-udp-notif                   July 2021
 
 8.  Security Considerations
 
-   As stated in the Applicability analysis in section Section 4
+   As stated in the Applicability analysis in Section 4, this protocol
+   is to be used in controlled environments, so that transport level
+   security mechanisms might not be needed.  A approach to secure this
+   protocol using dTLS can be found in [I-D.unyte-udp-notif-dtls]
 
-9.  Acknowledgements
 
-   The authors of this documents would like to thank Alexander Clemm,
-   Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
-   Frenot, Timothy Carey, Tim Jenkins, and Yunan Gu for their
-   constructive suggestions for improving this document.
+
+
 
 
 
@@ -729,6 +729,13 @@ Zheng, et al.            Expires 2 January 2022                [Page 13]
 
 Internet-Draft               unyte-udp-notif                   July 2021
 
+
+9.  Acknowledgements
+
+   The authors of this documents would like to thank Alexander Clemm,
+   Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
+   Frenot, Timothy Carey, Tim Jenkins, and Yunan Gu for their
+   constructive suggestions for improving this document.
 
 10.  References
 
@@ -766,6 +773,19 @@ Internet-Draft               unyte-udp-notif                   July 2021
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
+
+
+
+
+
+
+
+
+Zheng, et al.            Expires 2 January 2022                [Page 14]
+
+Internet-Draft               unyte-udp-notif                   July 2021
+
+
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
               Procedures for the Management of the Service Name and
@@ -776,15 +796,6 @@ Internet-Draft               unyte-udp-notif                   July 2021
    [RFC6347]  Rescorla, E. and N. Modadugu, "Datagram Transport Layer
               Security Version 1.2", RFC 6347, DOI 10.17487/RFC6347,
               January 2012, <https://www.rfc-editor.org/info/rfc6347>.
-
-
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 14]
-
-Internet-Draft               unyte-udp-notif                   July 2021
-
 
    [RFC7049]  Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
@@ -823,6 +834,14 @@ Internet-Draft               unyte-udp-notif                   July 2021
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
               "Subscription to Distributed Notifications", Work in
+
+
+
+Zheng, et al.            Expires 2 January 2022                [Page 15]
+
+Internet-Draft               unyte-udp-notif                   July 2021
+
+
               Progress, Internet-Draft, draft-ietf-netconf-distributed-
               notif-01, June 2020, <https://tools.ietf.org/html/draft-
               ietf-netconf-distributed-notif-01>.
@@ -834,14 +853,6 @@ Internet-Draft               unyte-udp-notif                   July 2021
               <https://www.ietf.org/archive/id/draft-ietf-netconf-https-
               notif-08.txt>.
 
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 15]
-
-Internet-Draft               unyte-udp-notif                   July 2021
-
-
    [I-D.ietf-netconf-notification-messages]
               Voit, E., Jenkins, T., Birkholz, H., Bierman, A., and A.
               Clemm, "Notification Message Headers and Bundles", Work in
@@ -849,6 +860,13 @@ Internet-Draft               unyte-udp-notif                   July 2021
               messages-08, 17 November 2019,
               <https://www.ietf.org/archive/id/draft-ietf-netconf-
               notification-messages-08.txt>.
+
+   [I-D.unyte-udp-notif-dtls]
+              Huang Feng, A., Francois, P., Zhou, T., and T. Graf, "dTLS
+              for UDP-Notif", Work in Progress, Internet-Draft, draft-
+              unyte-udp-notif-dtls-00, July 2021,
+              <https://tools.ietf.org/html/draft-unyte-udp-notif-dtls-
+              00>.
 
 Authors' Addresses
 
@@ -871,6 +889,15 @@ Authors' Addresses
    Email: zhoutianran@huawei.com
 
 
+
+
+
+
+Zheng, et al.            Expires 2 January 2022                [Page 16]
+
+Internet-Draft               unyte-udp-notif                   July 2021
+
+
    Thomas Graf
    Swisscom
    Binzring 17
@@ -888,16 +915,6 @@ Authors' Addresses
    Email: pierre.francois@insa-lyon.fr
 
 
-
-
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 16]
-
-Internet-Draft               unyte-udp-notif                   July 2021
-
-
    Paolo Lucente
    NTT
    Siriusdreef 70-72
@@ -905,23 +922,6 @@ Internet-Draft               unyte-udp-notif                   July 2021
    Netherlands
 
    Email: paolo@ntt.net
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

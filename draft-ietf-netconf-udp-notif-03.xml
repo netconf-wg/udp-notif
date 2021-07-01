@@ -743,7 +743,8 @@ reference: RFC XXXX]]></artwork>
         <t>As stated in the Applicability analysis in <xref
         target="sec_applicability"/>, this protocol is to be used in controlled
         environments, so that transport level security mechanisms might not be needed. 
-        A approach to secure this protocol using dTLS can be found in TODO REF udp-dtls </t>
+        A approach to secure this protocol using dTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/>
+        </t>
 
     </section>
 
@@ -797,7 +798,33 @@ reference: RFC XXXX]]></artwork>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
 
-      <reference anchor="I-D.ietf-netconf-distributed-notif" target="">
+    <reference anchor="I-D.unyte-udp-notif-dtls" target="">
+        <front>
+          <title>dTLS for UDP-Notif</title>
+
+          <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
+            <organization>INSA-Lyon</organization>
+          </author>
+
+          <author fullname="Pierre Francois" initials="P." surname="Francois">
+            <organization>INSA-Lyon</organization>
+          </author>
+
+          <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+            <organization>Huawei</organization>
+          </author>
+
+          <author fullname="Thomas Graf" initials="T." surname="Graf">
+            <organization>Swisscom</organization>
+          </author>
+
+          <date month="July" year="2021"/>
+        </front>
+
+        <seriesInfo name="Internet-Draft"
+                    value="draft-unyte-udp-notif-dtls-00"/>
+      </reference>
+<reference anchor="I-D.ietf-netconf-distributed-notif" target="">
         <front>
           <title>Subscription to Distributed Notifications</title>
 
@@ -821,11 +848,11 @@ reference: RFC XXXX]]></artwork>
             <organization>INSA-Lyon</organization>
           </author>
 
-          <date month="June" year="2020"/>
+          <date month="May" year="2021"/>
         </front>
 
         <seriesInfo name="Internet-Draft"
-                    value="draft-ietf-netconf-distributed-notif-01"/>
+                    value="draft-ietf-netconf-distributed-notif-02"/>
       </reference>
     </references>
   </back>
