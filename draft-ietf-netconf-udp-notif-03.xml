@@ -691,28 +691,6 @@ and state change notifications.";
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This RFC requests that IANA assigns one UDP port number in the
-      "Registered Port Numbers" range with the service name "udp-notif". This
-      port will be the default port for the UDP-based notification Streaming
-      Telemetry (UDP-Notif) for NETCONF and RESTCONF. Below is the
-      registration template following the rules of <xref
-      target="RFC6335"/>.</t>
-
-      <t>Service Name: udp-notif</t>
-
-      <t>Transport Protocol(s): UDP</t>
-
-      <t>Assignee: IESG &lt;iesg@ietf.org&gt;</t>
-
-      <t>Contact: IETF Chair &lt;chair@ietf.org&gt;</t>
-
-      <t>Description: UDP-based Publication Streaming Telemetry</t>
-
-      <t>Reference: RFC XXXX</t>
-
-      <t>Port Number: PORT-X</t>
-
-      <t/>
 
       <t>IANA is requested to assign a new URI from the <xref
       target="RFC3688">IETF XML Registry</xref>. The following URI is

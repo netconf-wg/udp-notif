@@ -88,13 +88,13 @@ Table of Contents
      4.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .   9
    5.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  10
    6.  YANG Module . . . . . . . . . . . . . . . . . . . . . . . . .  10
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  13
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  12
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  13
-   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  14
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  14
+   9.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  13
      10.2.  Informative References . . . . . . . . . . . . . . . . .  15
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  16
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  15
 
 1.  Introduction
 
@@ -661,10 +661,10 @@ Internet-Draft               unyte-udp-notif                   July 2021
    }
    <CODE ENDS>
 
+7.  IANA Considerations
 
-
-
-
+   IANA is requested to assign a new URI from the IETF XML Registry
+   [RFC3688].  The following URI is suggested:
 
 
 
@@ -673,32 +673,6 @@ Zheng, et al.            Expires 2 January 2022                [Page 12]
 
 Internet-Draft               unyte-udp-notif                   July 2021
 
-
-7.  IANA Considerations
-
-   This RFC requests that IANA assigns one UDP port number in the
-   "Registered Port Numbers" range with the service name "udp-notif".
-   This port will be the default port for the UDP-based notification
-   Streaming Telemetry (UDP-Notif) for NETCONF and RESTCONF.  Below is
-   the registration template following the rules of [RFC6335].
-
-   Service Name: udp-notif
-
-   Transport Protocol(s): UDP
-
-   Assignee: IESG <iesg@ietf.org>
-
-   Contact: IETF Chair <chair@ietf.org>
-
-   Description: UDP-based Publication Streaming Telemetry
-
-   Reference: RFC XXXX
-
-   Port Number: PORT-X
-
-
-   IANA is requested to assign a new URI from the IETF XML Registry
-   [RFC3688].  The following URI is suggested:
 
    URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
    Registrant Contact: The IESG.
@@ -718,17 +692,6 @@ Internet-Draft               unyte-udp-notif                   July 2021
    is to be used in controlled environments, so that transport level
    security mechanisms might not be needed.  A approach to secure this
    protocol using DTLS can be found in [I-D.unyte-udp-notif-dtls]
-
-
-
-
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 13]
-
-Internet-Draft               unyte-udp-notif                   July 2021
-
 
 9.  Acknowledgements
 
@@ -758,6 +721,15 @@ Internet-Draft               unyte-udp-notif                   July 2021
               Security", RFC 4347, DOI 10.17487/RFC4347, April 2006,
               <https://www.rfc-editor.org/info/rfc4347>.
 
+
+
+
+
+Zheng, et al.            Expires 2 January 2022                [Page 13]
+
+Internet-Draft               unyte-udp-notif                   July 2021
+
+
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
@@ -772,19 +744,6 @@ Internet-Draft               unyte-udp-notif                   July 2021
               and A. Bierman, Ed., "Network Configuration Protocol
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
-
-
-
-
-
-
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 14]
-
-Internet-Draft               unyte-udp-notif                   July 2021
-
 
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
@@ -818,6 +777,15 @@ Internet-Draft               unyte-udp-notif                   July 2021
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
               <https://www.rfc-editor.org/info/rfc8639>.
 
+
+
+
+
+Zheng, et al.            Expires 2 January 2022                [Page 14]
+
+Internet-Draft               unyte-udp-notif                   July 2021
+
+
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
               and Datastores over NETCONF", RFC 8640,
@@ -834,18 +802,9 @@ Internet-Draft               unyte-udp-notif                   July 2021
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
               "Subscription to Distributed Notifications", Work in
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 15]
-
-Internet-Draft               unyte-udp-notif                   July 2021
-
-
               Progress, Internet-Draft, draft-ietf-netconf-distributed-
-              notif-02, May 2021,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
-              distributed-notif-02>.
+              notif-02, May 2021, <https://tools.ietf.org/html/draft-
+              ietf-netconf-distributed-notif-02>.
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -866,8 +825,8 @@ Internet-Draft               unyte-udp-notif                   July 2021
               Huang Feng, A., Francois, P., Zhou, T., and T. Graf, "DTLS
               for UDP-Notif", Work in Progress, Internet-Draft, draft-
               unyte-udp-notif-dtls-00, July 2021,
-              <https://datatracker.ietf.org/doc/html/draft-unyte-udp-
-              notif-dtls-00>.
+              <https://tools.ietf.org/html/draft-unyte-udp-notif-dtls-
+              00>.
 
 Authors' Addresses
 
@@ -875,6 +834,14 @@ Authors' Addresses
    Huawei
    101 Yu-Hua-Tai Software Road
    Nanjing
+
+
+
+Zheng, et al.            Expires 2 January 2022                [Page 15]
+
+Internet-Draft               unyte-udp-notif                   July 2021
+
+
    Jiangsu,
    China
 
@@ -888,14 +855,6 @@ Authors' Addresses
    China
 
    Email: zhoutianran@huawei.com
-
-
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 16]
-
-Internet-Draft               unyte-udp-notif                   July 2021
 
 
    Thomas Graf
@@ -934,19 +893,4 @@ Internet-Draft               unyte-udp-notif                   July 2021
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Zheng, et al.            Expires 2 January 2022                [Page 17]
+Zheng, et al.            Expires 2 January 2022                [Page 16]
