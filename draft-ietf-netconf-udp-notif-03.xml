@@ -743,7 +743,7 @@ reference: RFC XXXX]]></artwork>
         <t>As stated in the Applicability analysis in <xref
         target="sec_applicability"/>, this protocol is to be used in controlled
         environments, so that transport level security mechanisms might not be needed. 
-        A approach to secure this protocol using dTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/>
+        A approach to secure this protocol using DTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/>
         </t>
 
     </section>
@@ -800,7 +800,7 @@ reference: RFC XXXX]]></artwork>
 
     <reference anchor="I-D.unyte-udp-notif-dtls" target="">
         <front>
-          <title>dTLS for UDP-Notif</title>
+          <title>DTLS for UDP-Notif</title>
 
           <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
             <organization>INSA-Lyon</organization>
