@@ -228,7 +228,6 @@
       <t><xref target="sec_transport"/> describes the control of the proposed
       transport mechanism. <xref target="sec_ups_transport"/> details the
       notification mechanism and message format. <xref
-      target="sec_congestion_control"/> discusses congestion control. <xref
       target="sec_applicability"/> covers the applicability of the proposed
       mechanism.</t>
     </section>
@@ -720,9 +719,9 @@ reference: RFC XXXX]]></artwork>
 
         <t>As stated in the Applicability analysis in <xref
         target="sec_applicability"/>, this protocol is to be used in controlled
-        environments, so that transport level security mechanisms might not be needed. 
-        A approach to secure this protocol using DTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/>
-        </t>
+        environments, so that network operators may not require to secure the transport
+        mechanism described in this document.  An approach to secure this protocol
+        using DTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/> </t>
 
     </section>
 
