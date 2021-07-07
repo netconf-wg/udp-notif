@@ -215,9 +215,9 @@ Internet-Draft               unyte-udp-notif                   July 2021
 
    As specified in Sub-Notif, the telemetry data is encapsulated in the
    NETCONF/RESTCONF notification message, which is then encapsulated and
-   carried using transport protocols such as TLS or HTTP2.  Figure 1
-   illustrates the structure of an UDP-Notif message.
-
+   carried using transport protocols such as TLS or HTTP2.  This
+   document defines a UDP based transport.  Figure 1 illustrates the
+   structure of an UDP-Notif message.
 
 
 
@@ -573,7 +573,7 @@ Internet-Draft               unyte-udp-notif                   July 2021
 
 6.  A YANG Data Model for Management of UDP-Notif
 
-   The YANG model defined in Section 9 has two leaf's augmented into one
+   The YANG model defined in Section 7 has two leaves augmented into one
    place of Sub-Notif [RFC8639], plus one identity.
 
     module: ietf-udp-subscribed-notifications

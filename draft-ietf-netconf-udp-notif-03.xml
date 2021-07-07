@@ -265,7 +265,7 @@
       <section anchor="sec_design" title="Design Overview">
         <t>As specified in Sub-Notif, the telemetry data is encapsulated in
         the NETCONF/RESTCONF notification message, which is then encapsulated
-        and carried using transport protocols such as TLS or HTTP2. <xref
+        and carried using transport protocols such as TLS or HTTP2. This document defines a UDP based transport. <xref
         target="fig_ups_message"/> illustrates the structure of an UDP-Notif
         message.</t>
 
@@ -599,7 +599,7 @@
     </section>
 
     <section title="A YANG Data Model for Management of UDP-Notif">
-      <t>The YANG model defined in Section 9 has two leaf's augmented into one
+      <t>The YANG model defined in <xref target="sec_yang_model"/> has two leaves augmented into one
       place of <xref target="RFC8639">Sub-Notif</xref>, plus one identity.</t>
 
       <t><figure>
@@ -613,7 +613,7 @@
         </figure></t>
     </section>
 
-    <section title="YANG Module">
+    <section title="YANG Module" anchor="sec_yang_model">
       <t/>
 
       <t><figure>
