@@ -458,9 +458,9 @@ Internet-Draft               unyte-udp-notif                   July 2021
 
 4.2.  Private Encoding Option
 
-   The space to describe private encodings in the main UDP-Notif being
-   limited, an option is provided to describe custom encodings.  The
-   fields of this option are as follows.
+   The space to describe private encodings in the ET field of the UDP-
+   Notif header being limited, an option is provided to describe custom
+   encodings.  The fields of this option are as follows.
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1

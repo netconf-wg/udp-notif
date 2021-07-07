@@ -480,7 +480,7 @@
         </section>
          <section anchor="sec_enc_opt" title="Private Encoding Option">
 
-        <t>The space to describe private encodings in the main UDP-Notif being
+        <t>The space to describe private encodings in the ET field of the UDP-Notif header being
         limited, an option is provided to describe custom encodings. The
         fields of this option are as follows.</t>
 
