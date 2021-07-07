@@ -144,7 +144,7 @@
       </address>
     </author>
 
-    <date day="1" month="July" year="2021"/>
+    <date day="7" month="July" year="2021"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -227,8 +227,8 @@
 
       <t><xref target="sec_transport"/> describes the control of the proposed
       transport mechanism. <xref target="sec_ups_transport"/> details the
-      notification mechanism and message format. <xref
-      target="sec_applicability"/> covers the applicability of the proposed
+      notification mechanism and message format. <xref target="sec_options"/> describes the use of options in the notification message header. 
+      <xref target="sec_applicability"/> covers the applicability of the proposed
       mechanism.</t>
     </section>
 
@@ -330,7 +330,7 @@
             <t>S represents the space of encoding type specified in the ET
             field. When S is unset, ET represents the standard encoding types
             as defined in this document. When S is set, ET represents a
-            private space to be freely used for nonstandard encodings.</t>
+            private space to be freely used for non standard encodings.</t>
 
             <t>ET is a 4 bit identifier to indicate the encoding type used for
             the Notification Message. 16 types of encoding can be expressed.
@@ -372,11 +372,33 @@
             Header Length is larger than 12 octets, which is the length of the
             fixed header, Options TLVs follow directly after the fixed message
             header (i.e., Message ID). The details of the options are
-            described in the following section.</t>
+            described in <xref target="sec_options"/>.</t>
           </list></t>
 
         <t/>
       </section>
+
+      <section anchor="sec_encoding" title="Data Encoding">
+        <t>UDP-Notif message data can be encoded in CBOR, XML or JSON format.
+        It is conceivable that additional encodings may be supported in the
+        future. This can be accomplished by augmenting the subscription data
+        model with additional identity statements used to refer to requested
+        encodings.</t>
+
+
+        <t>Private encodings can be supported through the use of the S bit of
+        the header. When the S bit is set, the value of the ET field is left to be
+        defined and agreed upon by the users of the private encoding. An option is
+        defined in <xref target ="sec_enc_opt"/> for more verbose encoding descriptions
+        than what can be described with the ET field.   </t>
+
+        <t>Implementation MAY support multiple encoding methods per
+        subscription. When bundled notifications are supported between the
+        publisher and the receiver, only subscribed notifications with the
+        same encoding can be bundled in a given message.</t>
+      </section>
+    </section>
+
 
       <section anchor="sec_options" title="Options">
         <t>All the options are defined with the following format, illustrated
@@ -453,23 +475,47 @@
           fragmentation by default to carry large messages. An implementation
           of this specification MUST either restrict the size of individual
           messages carried over this protocol, or support the segmentation
-          option.</t>
+         option.</t>
+
+        </section>
+         <section anchor="sec_enc_opt" title="Private Encoding Option">
+
+        <t>The space to describe private encodings in the main UDP-Notif being
+        limited, an option is provided to describe custom encodings. The
+        fields of this option are as follows.</t>
+
+<figure anchor="fig_enc_option" title="Private Encoding Option Format">
+            <artwork align="center"><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +---------------+---------------+--------------------------------
+ |     Type      |     Length    |   Variable length enc. descr.  
+ +---------------+---------------+--------------------------------
+
+ ]]></artwork>
+          </figure>
+
+
+          <t><list style="symbols">
+              <t>Type: Generic option field which indicates a Private Encoding 
+              Option. The Type value is to be assigned.</t>
+
+              <t>Length: Generic option field which indicates the length of
+              this option. It is a variable value.</t>
+
+              <t>Enc. Descr: The description of the private encoding used for
+                this message. The values to be used for such private encodings is left to be defined by the
+                users of private encodings. </t>
+
+            </list></t>
+
+        <t>This option SHOULD only be used when the S bit of the header is
+        set, as providing a private encoding description for standard encodings is
+        meaningless.</t>
+
+
         </section>
       </section>
-
-      <section anchor="sec_encoding" title="Data Encoding">
-        <t>UDP-Notif message data can be encoded in CBOR, XML or JSON format.
-        It is conceivable that additional encodings may be supported in the
-        future. This can be accomplished by augmenting the subscription data
-        model with additional identity statements used to refer to requested
-        encodings.</t>
-
-        <t>Implementation MAY support multiple encoding methods per
-        subscription. When bundled notifications are supported between the
-        publisher and the receiver, only subscribed notifications with the
-        same encoding can be bundled in a given message.</t>
-      </section>
-    </section>
 
     <section anchor="sec_applicability" title="Applicability">
       <t>In this section, we provide an applicability statement for the
@@ -719,9 +765,9 @@ reference: RFC XXXX]]></artwork>
 
         <t>As stated in the Applicability analysis in <xref
         target="sec_applicability"/>, this protocol is to be used in controlled
-        environments, so that network operators may not require to secure the transport
+        environments, so that network operators might not require to secure the transport
         mechanism described in this document.  An approach to secure this protocol
-        using DTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/> </t>
+        using DTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/>. </t>
 
     </section>
 
@@ -747,9 +793,9 @@ reference: RFC XXXX]]></artwork>
 
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8650.xml'?>
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6335.xml'?>
+<!--      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6335.xml'?>-->
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
+<!--      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>-->
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
 
@@ -757,13 +803,13 @@ reference: RFC XXXX]]></artwork>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7049.xml"?>
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6347.xml'?>
+<!--      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6347.xml'?>-->
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.4347.xml'?>
+<!--      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.4347.xml'?>-->
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5246.xml'?>
+<!--      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5246.xml'?>-->
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
+<!--      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?> -->
 
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
 
@@ -791,7 +837,7 @@ reference: RFC XXXX]]></artwork>
             <organization>Huawei</organization>
           </author>
 
-          <author fullname="Thomas Graf" initials="T." surname="Graf">
+          <author fullname="Marco Tollini" initials="M." surname="Tollini">
             <organization>Swisscom</organization>
           </author>
 
