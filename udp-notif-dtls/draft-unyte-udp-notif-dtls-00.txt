@@ -77,7 +77,7 @@ Table of Contents
      4.2.  Sending Data  . . . . . . . . . . . . . . . . . . . . . .   4
      4.3.  Session termination . . . . . . . . . . . . . . . . . . .   5
    5.  Applicability considerations  . . . . . . . . . . . . . . . .   5
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
      7.2.  Informative References  . . . . . . . . . . . . . . . . .   7
@@ -123,6 +123,11 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    secured layer of DTLS for UDP-notif.  No DTLS 1.3 extensions are
    defined nor needed.
 
+   Section 2 describes the involved layers for this mechanism.
+   Section 3 describes the port management.  Section 4 details the
+   session lifecycle of DTLS within UDP-notif.  Section 5 covers factors
+   to be considered using this mechanism.
+
 2.  Transport
 
    As shown in Figure 1, the DTLS is layered next to the UDP transport
@@ -155,11 +160,6 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    relay may not realize that a collector has gone down or lost its DTLS
    connection state, so messages may be lost.
 
-   The DTLS record has its own sequence number, the encryption and
-   decryption will done by DTLS layer, UDP-notif Message layer will not
-   concern this.
-
-
 
 
 
@@ -169,6 +169,10 @@ Huang Feng, et al.       Expires 6 January 2022                 [Page 3]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
+
+   The DTLS record has its own sequence number, the encryption and
+   decryption will done by DTLS layer, UDP-notif Message layer will not
+   concern this.
 
 3.  Port Assignment
 
@@ -215,16 +219,16 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    records.  The application data is defined with the following ABNF
    [RFC5234] expression:
 
-   APPLICATION-DATA = 1*UDP-NOTIF-FRAME
-
-   UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG
-
 
 
 Huang Feng, et al.       Expires 6 January 2022                 [Page 4]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
+
+   APPLICATION-DATA = 1*UDP-NOTIF-FRAME
+
+   UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG
 
    MSG-LEN = NONZERO-DIGIT *DIGIT
 
@@ -265,14 +269,10 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    within 65535 bytes or less than 1500 bytes if IP fragmentation is not
    desired.
 
-6.  IANA Considerations
 
-   This RFC requests that IANA assigns one UDP port number in the
-   "Registered Port Numbers" range with the service name "udp-notif-
-   dtls".  This port will be the default port for the UDP-based
-   notification Streaming Telemetry (UDP-Notif-DTLS) for NETCONF and
-   RESTCONF.  Below is the registration template following the rules of
-   [RFC6335] .
+
+
+
 
 
 
@@ -281,6 +281,15 @@ Huang Feng, et al.       Expires 6 January 2022                 [Page 5]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
+
+6.  IANA Considerations
+
+   This RFC requests that IANA assigns one UDP port number in the
+   "Registered Port Numbers" range with the service name "udp-notif-
+   dtls".  This port will be the default port for the UDP-based
+   notification Streaming Telemetry (UDP-Notif-DTLS) for NETCONF and
+   RESTCONF.  Below is the registration template following the rules of
+   [RFC6335] .
 
    Service Name: udp-notif-dtls
 
@@ -321,6 +330,14 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+
+
+
+Huang Feng, et al.       Expires 6 January 2022                 [Page 6]
+
+Internet-Draft            unyte-udp-notif-dtls                 July 2021
+
+
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
@@ -329,14 +346,6 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
-
-
-
-
-Huang Feng, et al.       Expires 6 January 2022                 [Page 6]
-
-Internet-Draft            unyte-udp-notif-dtls                 July 2021
-
 
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
@@ -373,6 +382,18 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
 Authors' Addresses
 
+
+
+
+
+
+
+
+Huang Feng, et al.       Expires 6 January 2022                 [Page 7]
+
+Internet-Draft            unyte-udp-notif-dtls                 July 2021
+
+
    Alex Huang Feng
    INSA-Lyon
    Lyon
@@ -385,14 +406,6 @@ Authors' Addresses
    INSA-Lyon
    Lyon
    France
-
-
-
-
-Huang Feng, et al.       Expires 6 January 2022                 [Page 7]
-
-Internet-Draft            unyte-udp-notif-dtls                 July 2021
-
 
    Email: pierre.francois@insa-lyon.fr
 
@@ -413,19 +426,6 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    Switzerland
 
    Email: marco.tollini1@swisscom.com
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

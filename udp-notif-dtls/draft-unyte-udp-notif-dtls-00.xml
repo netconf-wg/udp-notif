@@ -171,6 +171,11 @@
       <t>
       This documents defines the requirements for the implementation of the secured layer of DTLS for UDP-notif. No DTLS 1.3 extensions are defined nor needed.
       </t>
+      <t><xref target="sec_dtl_transport"/> describes the involved layers for this mechanism.
+      <xref target="sec_port_assignment"/> describes the port management.
+      <xref target="sec_session_lifecycle"/> details the session lifecycle of DTLS within UDP-notif.
+      <xref target="sec_applicability_cons"/> covers factors to be considered using this mechanism.
+      </t>
     </section>
 
     <section anchor="sec_dtl_transport" title="Transport">
@@ -222,7 +227,7 @@
       port.  The Publisher MAY use any source UDP port for transmitting
       messages.</t>
     </section>
-    <section title="Session lifecycle">
+    <section anchor="sec_session_lifecycle" title="Session lifecycle">
 
       <section title="DTLS Session Initiation">
         <t>The Publisher initiates a DTLS connection by sending a DTLS Client
@@ -285,7 +290,7 @@
       </t>
     </section>
   </section>
-  <section title="Applicability considerations">
+  <section anchor="sec_applicability_cons" title="Applicability considerations">
     <t>
       As defined in <xref target="I-D.draft-ietf-tls-dtls13"/>, each DTLS record MUST fit within a single datagram.
       Thus, implementations of the mechanism MUST size the payload of UDP-notif protocol 
