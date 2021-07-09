@@ -157,7 +157,7 @@
           contents.</t>
 
           <t>Integrity checking to counter modifications to a message on a
-          hop- by-hop basis.</t>
+          hop-by-hop basis.</t>
 
           <t>Server or mutual authentication to counter masquerade.</t>
         </list></t>
@@ -224,11 +224,11 @@
     <section anchor="sec_port_assignment" title="Port Assignment">
       <t>The Publisher is always a DTLS client, and the Receiver is always a
       DTLS server. The Receivers MUST support accepting UDP-notif Messages on
-      the UDP port PORT-Y, but MAY be configurable to listen on a different
-      port. The Publisher MUST support sending UDP-notif messages to the UDP
-      port PORT-Y, but MAY be configurable to send messages to a different
-      port. The Publisher MAY use any source UDP port for transmitting
-      messages.</t>
+      the specified UDP port, but MAY be configurable to listen on a different
+      port. The Publisher MUST support sending UDP-notif messages to the
+      specified UDP port, but MAY be configurable to send messages to a
+      different port. The Publisher MAY use any source UDP port for
+      transmitting messages.</t>
     </section>
 
     <section anchor="sec_session_lifecycle" title="Session lifecycle">
@@ -258,12 +258,12 @@
         secured network.</t>
       </section>
 
-      <section title="Sending Data">
-        <t>All UDP-notif messages MUST be sent as DTLS "application_data". It
-        is possible that multiple UDP-notif messages are contained in one DTLS
-        record, or that a publication message is transferred in multiple DTLS
-        records. The application data is defined with the following ABNF <xref
-        target="RFC5234"/> expression:</t>
+      <section title="Publish Data">
+        <t>All UDP-notif messages MUST be published as DTLS
+        "application_data". It is possible that multiple UDP-notif messages
+        are contained in one DTLS record, or that a publication message is
+        transferred in multiple DTLS records. The application data is defined
+        with the following ABNF <xref target="RFC5234"/> expression:</t>
 
         <t>APPLICATION-DATA = 1*UDP-NOTIF-FRAME</t>
 
@@ -279,6 +279,9 @@
 
         <t>UDP-NOTIF-MSG is defined in <xref
         target="I-D.ietf-netconf-udp-notif"/>.</t>
+
+        <t>The Publisher SHOULD attempt to avoid IP fragmentation by using the
+        Segmentation Option in the UDP-notif message.</t>
       </section>
 
       <section title="Session termination">
@@ -310,7 +313,7 @@
       This port will be the default port for the UDP-based notification
       Streaming Telemetry (UDP-Notif-DTLS) for NETCONF and RESTCONF. Below is
       the registration template following the rules of <xref
-      target="RFC6335"/> .</t>
+      target="RFC6335"/>.</t>
 
       <t>Service Name: udp-notif-dtls</t>
 
@@ -322,9 +325,9 @@
 
       <t>Description: UDP-based Publication Streaming Telemetry</t>
 
-      <t>Reference: RFC XXXX</t>
+      <t>Reference: [RFC-to-be]</t>
 
-      <t>Port Number: PORT-Y</t>
+      <t>Port Number: TBD1</t>
 
       <t/>
 
