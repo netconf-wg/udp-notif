@@ -118,72 +118,77 @@
       </address>
     </author>
 
-    <date day="5" month="July" year="2021"/>
+    <date day="11" month="July" year="2021"/>
 
     <workgroup>NETCONF</workgroup>
 
     <abstract>
-      <t>This document describes a DTLS layer for the UDP-notif protocol. DTLS allows a server and a client 
-      to exchange secured messages over UDP. This transport layer permits networking devices to send
-      secured UDP-notif messages over the network.
-      </t>
+      <t>This document describes a DTLS layer for the UDP-notif protocol. DTLS
+      allows a server and a client to exchange secured messages over UDP. This
+      transport layer permits networking devices to send secured UDP-notif
+      messages over the network.</t>
     </abstract>
 
     <note title="Requirements Language">
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-      document are to be interpreted as described in <xref target="RFC2119">RFC 2119</xref>.
-      </t>
+      document are to be interpreted as described in <xref
+      target="RFC2119">RFC 2119</xref>.</t>
     </note>
   </front>
 
   <middle>
     <section title="Introduction">
-      <t>
-        <xref target="I-D.ietf-netconf-udp-notif">UDP-notif</xref> defines a 
-      lightweight notification protocol allowing networking devices to send data 
-      over UDP. This document describes a layer to secure UDP-notif messages between the publisher and the receiver using the DTLS 1.3 protocol.
-      </t>
-      <t>The DTLS 1.3 protocol <xref target="I-D.draft-ietf-tls-dtls13"/>
-      is designed to meet the requirements of applications that need to secure
+      <t><xref target="I-D.ietf-netconf-udp-notif">UDP-notif</xref> defines a
+      lightweight notification protocol allowing networking devices to send
+      data over UDP. This document describes a layer to secure UDP-notif
+      messages between the publisher and the receiver using the DTLS 1.3
+      protocol.</t>
+
+      <t>The DTLS 1.3 protocol <xref target="I-D.draft-ietf-tls-dtls13"/> is
+      designed to meet the requirements of applications that need to secure
       datagram transport.</t>
 
       <t>DTLS can be used as a secure transport to counter all the primary
       threats to UDP-notif:</t>
 
-      <t>
-        <list style="symbols">
-          <t>Confidentiality to counter disclosure of the message contents.</t>
-          <t>Integrity checking to counter modifications to a message on a hop-
-          by-hop basis.</t>
+      <t><list style="symbols">
+          <t>Confidentiality to counter disclosure of the message
+          contents.</t>
+
+          <t>Integrity checking to counter modifications to a message on a
+          hop-by-hop basis.</t>
+
           <t>Server or mutual authentication to counter masquerade.</t>
-        </list>
-      </t>
+        </list></t>
 
       <t>In addition, DTLS also provides:</t>
-      <t>
-        <list style="symbols">
+
+      <t><list style="symbols">
           <t>A cookie exchange mechanism during handshake to counter Denial of
           Service attacks.</t>
+
           <t>A sequence number in the header to counter replay attacks.</t>
-        </list>
-      </t>
-      <t>
-      This documents defines the requirements for the implementation of the secured layer of DTLS for UDP-notif. No DTLS 1.3 extensions are defined nor needed.
-      </t>
-      <t><xref target="sec_dtl_transport"/> describes the involved layers for this mechanism.
-      <xref target="sec_port_assignment"/> describes the port management.
-      <xref target="sec_session_lifecycle"/> details the session lifecycle of DTLS within UDP-notif.
-      </t>
+        </list></t>
+
+      <t>This document defines the requirements for the implementation of the
+      secured layer of DTLS for UDP-notif. No DTLS 1.3 extensions are defined
+      nor needed.</t>
+
+      <t><xref target="sec_dtl_transport"/> describes the involved layers for
+      this mechanism. <xref target="sec_port_assignment"/> describes the port
+      management. <xref target="sec_session_lifecycle"/> details the session
+      lifecycle of DTLS within UDP-notif.</t>
     </section>
 
     <section anchor="sec_dtl_transport" title="Transport">
-      <t>As shown in <xref target="fig_dtls_layers"/>, the DTLS is layered next to the UDP transport
-        providing reusable security and authentication functions over
-        UDP. No DTLS extension is required to enable UDP-notif messages over DTLS.
-      </t>
-      <t>
-        <figure anchor="fig_dtls_layers" title="Protocol Stack for DTLS secured UDP-notif">
+      <t>As shown in <xref target="fig_dtls_layers"/>, the DTLS is layered
+      next to the UDP transport providing reusable security and authentication
+      functions over UDP. No DTLS extension is required to enable UDP-notif
+      messages over DTLS.</t>
+
+      <t><figure anchor="fig_dtls_layers"
+          title="Protocol Stack for DTLS secured UDP-notif">
           <artwork align="center"><![CDATA[
 +-----------------------------+
 |      UDP-notif Message      |
@@ -194,222 +199,234 @@
 +-----------------------------+
 |            IP               |
 +-----------------------------+
-]]>          </artwork>
-        </figure>
-      </t>
+          ]]></artwork>
+        </figure></t>
 
       <t>The application implementer will map a unique combination of the
-        remote address, remote port number, local address, and local port
-        number to a session.</t>
+      remote address, remote port number, local address, and local port number
+      to a session.</t>
 
-      <t>Each UDP-notif message is delivered by the DTLS record protocol, which
-        assigns a sequence number to each DTLS record.  Although the DTLS
-        implementer may adopt a queue mechanism to resolve reordering, it may
-        not assure that all the messages are delivered in order when mapping
-        on the UDP transport.</t>
+      <t>Each UDP-notif message is delivered by the DTLS record protocol,
+      which assigns a sequence number to each DTLS record. Although the DTLS
+      implementer may adopt a queue mechanism to resolve reordering, it may
+      not assure that all the messages are delivered in order when mapping on
+      the UDP transport.</t>
 
-      <t>Since UDP is an unreliable transport, with DTLS, an originator or
-        relay may not realize that a collector has gone down or lost its DTLS
-        connection state, so messages may be lost.</t>
+      <t>Since UDP is an unreliable transport, with DTLS, an originator or a
+      relay may not realize that a collector has gone down or lost its DTLS
+      connection state, so messages may be lost.</t>
 
       <t>The DTLS record has its own sequence number, encryption and
-        decryption will done by the DTLS layer, so that the UDP-notif 
-        Message layer is not impacted by the use of DTLS.</t>
+      decryption will be done by the DTLS layer, so that the UDP-notif Message
+      layer is not impacted by the use of DTLS.</t>
     </section>
 
     <section anchor="sec_port_assignment" title="Port Assignment">
       <t>The Publisher is always a DTLS client, and the Receiver is always a
-      DTLS server.  The Receivers MUST support accepting UDP-notif Messages on
-      the UDP port PORT-Y, but MAY be configurable to listen on a different
-      port.  The Publisher MUST support sending UDP-notif messages to the UDP
-      port PORT-Y, but MAY be configurable to send messages to a different
-      port.  The Publisher MAY use any source UDP port for transmitting
-      messages.</t>
+      DTLS server. The Receivers MUST support accepting UDP-notif Messages on
+      the specified UDP port, but MAY be configurable to listen on a different
+      port. The Publisher MUST support sending UDP-notif messages to the
+      specified UDP port, but MAY be configurable to send messages to a
+      different port. The Publisher MAY use any source UDP port for
+      transmitting messages.</t>
     </section>
-    <section anchor="sec_session_lifecycle" title="Session lifecycle">
 
+    <section anchor="sec_session_lifecycle" title="Session lifecycle">
       <section title="DTLS Session Initiation">
-        <t>The Publisher initiates a DTLS connection by sending a DTLS Client
-        Hello to the Receiver.  Implementations MUST support the denial of
-        service countermeasures defined by DTLS 1.3.  When these countermeasures
-        are used, the Receiver responds with a DTLS Hello Verify Request
-        containing a cookie.  The Publisher responds with a DTLS Client Hello
-        containing the received cookie, which initiates the DTLS handshake.</t>
+        <t>The Publisher initiates a DTLS connection by sending a DTLS
+        ClientHello to the Receiver. Implementations MUST support the denial
+        of service countermeasures defined by DTLS 1.3. When these
+        countermeasures are used, the Receiver responds with a DTLS
+        HelloRetryRequest containing a stateless cookie. The Publisher MUST
+        send a new DTLS ClientHello message containing the received cookie,
+        which initiates the DTLS handshake.</t>
+
         <t>The Publisher MUST NOT send any UDP-notif messages before the DTLS
         handshake has successfully completed.</t>
-        <t>
-        Implementations MUST support DTLS 1.3 <xref target="I-D.draft-ietf-tls-dtls13"/>
-        and MUST support the
-        mandatory to implement cipher suite TLS_AES_128_GCM_SHA256 and SHOULD implement TLS_AES_256_GCM_SHA384
-        and TLS_CHACHA20_POLY1305_SHA256 cipher suites, 
-        as specified in TLS 1.3 <xref target="RFC8446"/>.  If
-        additional cipher suites are supported, then implementations MUST NOT
-        negotiate a cipher suite that employs NULL integrity or
-        authentication algorithms.</t>
-        <t>Where privacy is REQUIRED, then implementations must either negotiate
-          a cipher suite that employs a non-NULL encryption algorithm or otherwise
-          achieve privacy by other means, such as a physically secured network.
-        </t>
+
+        <t>Implementations MUST support DTLS 1.3 <xref
+        target="I-D.draft-ietf-tls-dtls13"/> and MUST support the mandatory to
+        implement cipher suite TLS_AES_128_GCM_SHA256 and SHOULD implement
+        TLS_AES_256_GCM_SHA384 and TLS_CHACHA20_POLY1305_SHA256 cipher suites,
+        as specified in TLS 1.3 <xref target="RFC8446"/>. If additional cipher
+        suites are supported, then implementations MUST NOT negotiate a cipher
+        suite that employs NULL integrity or authentication algorithms.</t>
+
+        <t>Where privacy is REQUIRED, then implementations must either
+        negotiate a cipher suite that employs a non-NULL encryption algorithm
+        or otherwise achieve privacy by other means, such as a physically
+        secured network.</t>
       </section>
 
-      <section title="Sending Data">
-        <t>All UDP-notif messages MUST be sent as DTLS "application_data".  It is
-        possible that multiple UDP-notif messages be contained in one DTLS record,
-        or that a publication message be transferred in multiple DTLS
-        records.  The application data is defined with the following ABNF
-          <xref target="RFC5234"/> expression:</t>
+      <section title="Publish Data">
+        <t>All UDP-notif messages MUST be published as DTLS
+        "application_data". It is possible that multiple UDP-notif messages
+        are contained in one DTLS record, or that a publication message is
+        transferred in multiple DTLS records. The application data is defined
+        with the following ABNF <xref target="RFC5234"/> expression:</t>
+
         <t>APPLICATION-DATA = 1*UDP-NOTIF-FRAME</t>
+
         <t>UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG</t>
+
         <t>MSG-LEN = NONZERO-DIGIT *DIGIT</t>
+
         <t>SP = %d32</t>
+
         <t>NONZERO-DIGIT = %d49-57</t>
+
         <t>DIGIT = %d48 / NONZERO-DIGIT</t>
-        <t>UDP-NOTIF-MSG is defined in <xref target="I-D.ietf-netconf-udp-notif"/>.</t>
+
+        <t>UDP-NOTIF-MSG is defined in <xref
+        target="I-D.ietf-netconf-udp-notif"/>.</t>
+
+        <t>The Publisher SHOULD attempt to avoid IP fragmentation by using the
+        Segmentation Option in the UDP-notif message.</t>
+      </section>
+
+      <section title="Session termination">
+        <t>A Publisher MUST close the associated DTLS connection if the
+        connection is not expected to deliver any UDP-notif Messages later. It
+        MUST send a DTLS close_notify alert before closing the connection. A
+        Publisher (DTLS client) MAY choose to not wait for the Receiver's
+        close_notify alert and simply close the DTLS connection. Once the
+        Receiver gets a close_notify from the Publisher, it MUST reply with a
+        close_notify.</t>
+
+        <t>When no data is received from a DTLS connection for a long time
+        (where the application decides what "long" means), the Receiver MAY
+        close the connection. The Receiver (DTLS server) MUST attempt to
+        initiate an exchange of close_notify alerts with the Publisher before
+        closing the connection. Receivers that are unprepared to receive any
+        more data MAY close the connection after sending the close_notify
+        alert.</t>
+
+        <t>Although closure alerts are a component of TLS and so of DTLS,
+        they, like all alerts, are not retransmitted by DTLS and so may be
+        lost over an unreliable network.</t>
+      </section>
     </section>
 
-    <section title="Session termination">
-      <t>A Publisher MUST close the associated DTLS connection if the
-      connection is not expected to deliver any UDP-notif Messages later.  It
-      MUST send a DTLS close_notify alert before closing the connection.  A
-      Publisher (DTLS client) MAY choose to not wait for the Receiver's
-      close_notify alert and simply close the DTLS connection.  Once the
-      Receiver gets a close_notify from the Publisher, it MUST reply with a
-      close_notify.</t>
-      <t>When no data is received from a DTLS connection for a long time
-      (where the application decides what "long" means), Receiver MAY close
-      the connection.  The Receiver (DTLS server) MUST attempt to initiate
-      an exchange of close_notify alerts with the Publisher before closing
-      the connection.  Receivers that are unprepared to receive any more
-      data MAY close the connection after sending the close_notify alert.
-      </t>
-      <t>
-      Although closure alerts are a component of TLS and so of DTLS, they,
-      like all alerts, are not retransmitted by DTLS and so may be lost
-      over an unreliable network.
-      </t>
-    </section>
-  </section>
+    <section anchor="IANA" title="IANA Considerations">
+      <t>This RFC requests that IANA assigns one UDP port number in the
+      "Registered Port Numbers" range with the service name "udp-notif-dtls".
+      This port will be the default port for the UDP-based notification
+      Streaming Telemetry (UDP-Notif-DTLS) for NETCONF and RESTCONF. Below is
+      the registration template following the rules of <xref
+      target="RFC6335"/>.</t>
 
-  <section anchor="IANA" title="IANA Considerations">
-    <t>This RFC requests that IANA assigns one UDP port number in the
-      "Registered Port Numbers" range with the service name "udp-notif-dtls". This
-      port will be the default port for the UDP-based notification Streaming
-      Telemetry (UDP-Notif-DTLS) for NETCONF and RESTCONF. Below is the
-      registration template following the rules of <xref target="RFC6335"/>
-    .</t>
+      <t>Service Name: udp-notif-dtls</t>
 
-    <t>Service Name: udp-notif-dtls</t>
+      <t>Transport Protocol(s): UDP</t>
 
-    <t>Transport Protocol(s): UDP</t>
+      <t>Assignee: IESG &lt;iesg@ietf.org&gt;</t>
 
-    <t>Assignee: IESG &lt;iesg@ietf.org&gt;</t>
+      <t>Contact: IETF Chair &lt;chair@ietf.org&gt;</t>
 
-    <t>Contact: IETF Chair &lt;chair@ietf.org&gt;</t>
+      <t>Description: UDP-based Publication Streaming Telemetry</t>
 
-    <t>Description: UDP-based Publication Streaming Telemetry</t>
+      <t>Reference: [RFC-to-be]</t>
 
-    <t>Reference: RFC XXXX</t>
+      <t>Port Number: TBD1</t>
 
-    <t>Port Number: PORT-X</t>
+      <t/>
 
-    <t/>
-
-    <t>IANA is requested to assign a new URI from the <xref target="RFC3688">IETF XML Registry</xref>. The following URI is
+      <t>IANA is requested to assign a new URI from the <xref
+      target="RFC3688">IETF XML Registry</xref>. The following URI is
       suggested:</t>
 
-    <t>
-      <figure>
-        <artwork align="left"><![CDATA[
+      <t><figure>
+          <artwork align="left"><![CDATA[
 URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
 Registrant Contact: The IESG.
 XML: N/A; the requested URI is an XML namespace.]]></artwork>
-      </figure>
-    </t>
+        </figure></t>
 
-    <t>This document also requests a new YANG module name in the <xref target="RFC7950">YANG Module Names registry</xref> with the following
+      <t>This document also requests a new YANG module name in the <xref
+      target="RFC7950">YANG Module Names registry</xref> with the following
       suggestion:</t>
 
-    <t>
-      <figure>
-        <artwork align="left"><![CDATA[
+      <t><figure>
+          <artwork align="left"><![CDATA[
 name: ietf-udp-notif
 namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-dtls
 prefix: un
 reference: RFC XXXX]]></artwork>
-      </figure>
-    </t>
-  </section>
+        </figure></t>
+    </section>
+  </middle>
 
-</middle>
+  <back>
+    <references title="Normative References">
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
 
-<back>
-  <references title="Normative References">
-    <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"?>
 
-    <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"?>
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6335.xml'?>
 
-    <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.6335.xml'?>
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
 
-    <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
 
-    <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml'?>
+    </references>
 
-    <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml'?>
+    <references title="Informative References">
+      <reference anchor="I-D.ietf-netconf-udp-notif" target="">
+        <front>
+          <title>UDP-based Transport for Configured Subscriptions</title>
 
-  </references>
+          <author fullname="Guangying Zheng" initials="G." surname="Zheng">
+            <organization>Huawei</organization>
+          </author>
 
-  <references title="Informative References">
-    <reference anchor="I-D.ietf-netconf-udp-notif" target="">
-      <front>
-        <title>UDP-based Transport for Configured Subscriptions</title>
+          <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+            <organization>Huawei</organization>
+          </author>
 
-        <author fullname="Guangying Zheng" initials="G." surname="Zheng">
-          <organization>Huawei</organization>
-        </author>
+          <author fullname="Thomas Graf" initials="T." surname="Graf">
+            <organization>Swisscom</organization>
+          </author>
 
-        <author fullname="Tianran Zhou" initials="T." surname="Zhou">
-          <organization>Huawei</organization>
-        </author>
+          <author fullname="Pierre Francois" initials="P." surname="Francois">
+            <organization>INSA-Lyon</organization>
+          </author>
 
-        <author fullname="Thomas Graf" initials="T." surname="Graf">
-          <organization>Swisscom</organization>
-        </author>
+          <author fullname="Paolo Lucente" initials="P." surname="Lucente">
+            <organization>NTT</organization>
+          </author>
 
-        <author fullname="Pierre Francois" initials="P." surname="Francois">
-          <organization>INSA-Lyon</organization>
-        </author>
+          <date month="July" year="2021"/>
+        </front>
 
-        <author fullname="Paolo Lucente" initials="P." surname="Lucente">
-          <organization>NTT</organization>
-        </author>
+        <seriesInfo name="Internet-Draft"
+                    value="draft-ietf-netconf-udp-notif-03"/>
+      </reference>
 
-        <date month="July" year="2021"/>
-      </front>
+      <reference anchor="I-D.draft-ietf-tls-dtls13" target="">
+        <front>
+          <title>The Datagram Transport Layer Security (DTLS) Protocol Version
+          1.3</title>
 
-      <seriesInfo name="Internet-Draft" value="draft-ietf-netconf-udp-notif-03"/>
-    </reference>
+          <author fullname="Eric Rescorla" initials="E." surname="Rescorla">
+            <organization>RTFM, Inc.</organization>
+          </author>
 
-    <reference anchor="I-D.draft-ietf-tls-dtls13" target="">
-      <front>
-        <title>The Datagram Transport Layer Security (DTLS) Protocol Version 1.3</title>
+          <author fullname="Hannes Tschofenig" initials="H."
+                  surname="Tschofenig">
+            <organization>Arm Limited</organization>
+          </author>
 
-        <author fullname="Eric Rescorla" initials="E." surname="Rescorla">
-          <organization>RTFM, Inc.</organization>
-        </author>
+          <author fullname="Nagendra Modadugu" initials="N."
+                  surname="Modadugu">
+            <organization>Google, Inc.</organization>
+          </author>
 
-        <author fullname="Hannes Tschofenig" initials="H." surname="Tschofenig">
-          <organization>Arm Limited</organization>
-        </author>
+          <date month="July" year="2021"/>
+        </front>
 
-        <author fullname="Nagendra Modadugu" initials="N." surname="Modadugu">
-          <organization>Google, Inc.</organization>
-        </author>
-
-        <date month="July" year="2021"/>
-      </front>
-
-      <seriesInfo name="Internet-Draft" value="draft-ietf-tls-dtls13-43"/>
-    </reference>
-  </references>
-</back>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-tls-dtls13-43"/>
+      </reference>
+    </references>
+  </back>
 </rfc>
