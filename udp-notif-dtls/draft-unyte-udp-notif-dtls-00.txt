@@ -5,11 +5,11 @@
 NETCONF                                                    A. Huang Feng
 Internet-Draft                                               P. Francois
 Intended status: Standards Track                               INSA-Lyon
-Expires: 6 January 2022                                          T. Zhou
+Expires: 12 January 2022                                         T. Zhou
                                                                   Huawei
                                                               M. Tollini
                                                                 Swisscom
-                                                             5 July 2021
+                                                            11 July 2021
 
 
                            DTLS for UDP-notif
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 January 2022.
+   This Internet-Draft will expire on 12 January 2022.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Huang Feng, et al.       Expires 6 January 2022                 [Page 1]
+Huang Feng, et al.       Expires 12 January 2022                [Page 1]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
@@ -74,7 +74,7 @@ Table of Contents
    3.  Port Assignment . . . . . . . . . . . . . . . . . . . . . . .   4
    4.  Session lifecycle . . . . . . . . . . . . . . . . . . . . . .   4
      4.1.  DTLS Session Initiation . . . . . . . . . . . . . . . . .   4
-     4.2.  Sending Data  . . . . . . . . . . . . . . . . . . . . . .   4
+     4.2.  Publish Data  . . . . . . . . . . . . . . . . . . . . . .   4
      4.3.  Session termination . . . . . . . . . . . . . . . . . . .   5
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Huang Feng, et al.       Expires 6 January 2022                 [Page 2]
+Huang Feng, et al.       Expires 12 January 2022                [Page 2]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
@@ -119,7 +119,7 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
    *  A sequence number in the header to counter replay attacks.
 
-   This documents defines the requirements for the implementation of the
+   This document defines the requirements for the implementation of the
    secured layer of DTLS for UDP-notif.  No DTLS 1.3 extensions are
    defined nor needed.
 
@@ -155,17 +155,17 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    it may not assure that all the messages are delivered in order when
    mapping on the UDP transport.
 
-   Since UDP is an unreliable transport, with DTLS, an originator or
+   Since UDP is an unreliable transport, with DTLS, an originator or a
    relay may not realize that a collector has gone down or lost its DTLS
    connection state, so messages may be lost.
 
    The DTLS record has its own sequence number, encryption and
-   decryption will done by the DTLS layer, so that the UDP-notif Message
-   layer is not impacted by the use of DTLS.
+   decryption will be done by the DTLS layer, so that the UDP-notif
+   Message layer is not impacted by the use of DTLS.
 
 
 
-Huang Feng, et al.       Expires 6 January 2022                 [Page 3]
+Huang Feng, et al.       Expires 12 January 2022                [Page 3]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
@@ -174,9 +174,9 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
    The Publisher is always a DTLS client, and the Receiver is always a
    DTLS server.  The Receivers MUST support accepting UDP-notif Messages
-   on the UDP port PORT-Y, but MAY be configurable to listen on a
+   on the specified UDP port, but MAY be configurable to listen on a
    different port.  The Publisher MUST support sending UDP-notif
-   messages to the UDP port PORT-Y, but MAY be configurable to send
+   messages to the specified UDP port, but MAY be configurable to send
    messages to a different port.  The Publisher MAY use any source UDP
    port for transmitting messages.
 
@@ -184,13 +184,13 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
 4.1.  DTLS Session Initiation
 
-   The Publisher initiates a DTLS connection by sending a DTLS Client
-   Hello to the Receiver.  Implementations MUST support the denial of
-   service countermeasures defined by DTLS 1.3.  When these
-   countermeasures are used, the Receiver responds with a DTLS Hello
-   Verify Request containing a cookie.  The Publisher responds with a
-   DTLS Client Hello containing the received cookie, which initiates the
-   DTLS handshake.
+   The Publisher initiates a DTLS connection by sending a DTLS
+   ClientHello to the Receiver.  Implementations MUST support the denial
+   of service countermeasures defined by DTLS 1.3.  When these
+   countermeasures are used, the Receiver responds with a DTLS
+   HelloRetryRequest containing a stateless cookie.  The Publisher MUST
+   send a new DTLS ClientHello message containing the received cookie,
+   which initiates the DTLS handshake.
 
    The Publisher MUST NOT send any UDP-notif messages before the DTLS
    handshake has successfully completed.
@@ -208,20 +208,20 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    otherwise achieve privacy by other means, such as a physically
    secured network.
 
-4.2.  Sending Data
+4.2.  Publish Data
 
-   All UDP-notif messages MUST be sent as DTLS "application_data".  It
-   is possible that multiple UDP-notif messages be contained in one DTLS
-   record, or that a publication message be transferred in multiple DTLS
-   records.  The application data is defined with the following ABNF
-   [RFC5234] expression:
+   All UDP-notif messages MUST be published as DTLS "application_data".
+   It is possible that multiple UDP-notif messages are contained in one
+   DTLS record, or that a publication message is transferred in multiple
+   DTLS records.  The application data is defined with the following
+   ABNF [RFC5234] expression:
 
    APPLICATION-DATA = 1*UDP-NOTIF-FRAME
 
 
 
 
-Huang Feng, et al.       Expires 6 January 2022                 [Page 4]
+Huang Feng, et al.       Expires 12 January 2022                [Page 4]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
@@ -238,6 +238,9 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
    UDP-NOTIF-MSG is defined in [I-D.ietf-netconf-udp-notif].
 
+   The Publisher SHOULD attempt to avoid IP fragmentation by using the
+   Segmentation Option in the UDP-notif message.
+
 4.3.  Session termination
 
    A Publisher MUST close the associated DTLS connection if the
@@ -249,11 +252,12 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    close_notify.
 
    When no data is received from a DTLS connection for a long time
-   (where the application decides what "long" means), Receiver MAY close
-   the connection.  The Receiver (DTLS server) MUST attempt to initiate
-   an exchange of close_notify alerts with the Publisher before closing
-   the connection.  Receivers that are unprepared to receive any more
-   data MAY close the connection after sending the close_notify alert.
+   (where the application decides what "long" means), the Receiver MAY
+   close the connection.  The Receiver (DTLS server) MUST attempt to
+   initiate an exchange of close_notify alerts with the Publisher before
+   closing the connection.  Receivers that are unprepared to receive any
+   more data MAY close the connection after sending the close_notify
+   alert.
 
    Although closure alerts are a component of TLS and so of DTLS, they,
    like all alerts, are not retransmitted by DTLS and so may be lost
@@ -266,29 +270,29 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    dtls".  This port will be the default port for the UDP-based
    notification Streaming Telemetry (UDP-Notif-DTLS) for NETCONF and
    RESTCONF.  Below is the registration template following the rules of
-   [RFC6335] .
+   [RFC6335].
 
    Service Name: udp-notif-dtls
+
+
+
+
+Huang Feng, et al.       Expires 12 January 2022                [Page 5]
+
+Internet-Draft            unyte-udp-notif-dtls                 July 2021
+
 
    Transport Protocol(s): UDP
 
    Assignee: IESG <iesg@ietf.org>
 
-
-
-
-Huang Feng, et al.       Expires 6 January 2022                 [Page 5]
-
-Internet-Draft            unyte-udp-notif-dtls                 July 2021
-
-
    Contact: IETF Chair <chair@ietf.org>
 
    Description: UDP-based Publication Streaming Telemetry
 
-   Reference: RFC XXXX
+   Reference: [RFC-to-be]
 
-   Port Number: PORT-X
+   Port Number: TBD1
 
 
    IANA is requested to assign a new URI from the IETF XML Registry
@@ -324,19 +328,22 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
 
+
+
+
+
+
+Huang Feng, et al.       Expires 12 January 2022                [Page 6]
+
+Internet-Draft            unyte-udp-notif-dtls                 July 2021
+
+
    [RFC6335]  Cotton, M., Eggert, L., Touch, J., Westerlund, M., and S.
               Cheshire, "Internet Assigned Numbers Authority (IANA)
               Procedures for the Management of the Service Name and
               Transport Protocol Port Number Registry", BCP 165,
               RFC 6335, DOI 10.17487/RFC6335, August 2011,
               <https://www.rfc-editor.org/info/rfc6335>.
-
-
-
-Huang Feng, et al.       Expires 6 January 2022                 [Page 6]
-
-Internet-Draft            unyte-udp-notif-dtls                 July 2021
-
 
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
@@ -379,19 +386,15 @@ Authors' Addresses
    Lyon
    France
 
-   Email: pierre.francois@insa-lyon.fr
 
 
 
-
-
-
-
-
-
-Huang Feng, et al.       Expires 6 January 2022                 [Page 7]
+Huang Feng, et al.       Expires 12 January 2022                [Page 7]
 
 Internet-Draft            unyte-udp-notif-dtls                 July 2021
+
+
+   Email: pierre.francois@insa-lyon.fr
 
 
    Tianran Zhou
@@ -442,7 +445,4 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
 
 
 
-
-
-
-Huang Feng, et al.       Expires 6 January 2022                 [Page 8]
+Huang Feng, et al.       Expires 12 January 2022                [Page 8]
