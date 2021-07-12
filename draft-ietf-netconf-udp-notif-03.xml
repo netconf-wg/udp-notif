@@ -144,7 +144,7 @@
       </address>
     </author>
 
-    <date day="7" month="July" year="2021"/>
+    <date day="12" month="July" year="2021"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -820,7 +820,7 @@ reference: RFC XXXX]]></artwork>
       <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
-
+<!--
     <reference anchor="I-D.unyte-udp-notif-dtls" target="">
         <front>
           <title>DTLS for UDP-Notif</title>
@@ -847,6 +847,7 @@ reference: RFC XXXX]]></artwork>
         <seriesInfo name="Internet-Draft"
                     value="draft-unyte-udp-notif-dtls-00"/>
       </reference>
+-->
 <reference anchor="I-D.ietf-netconf-distributed-notif" target="">
         <front>
           <title>Subscription to Distributed Notifications</title>
