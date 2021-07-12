@@ -226,11 +226,11 @@
       target="I-D.ietf-netconf-distributed-notif"/>.</t>
 
       <t><xref target="sec_transport"/> describes the control of the proposed
-      transport mechanism. <xref target="sec_ups_transport"/> details the
-      notification mechanism and message format. <xref target="sec_options"/> describes the use of options in the notification message header. 
-      <xref target="sec_applicability"/> covers the applicability of the proposed
-      mechanism.</t>
-    </section>
+        transport mechanism. <xref target="sec_ups_transport"/> details the
+        notification mechanism and message format. <xref target="sec_options"/>
+        describes the use of options in the notification message header.  <xref
+        target="sec_applicability"/> covers the applicability of the proposed
+        mechanism.</t> </section>
 
     <section anchor="sec_transport"
              title="Configured Subscription to UDP-Notif">
@@ -766,8 +766,8 @@ reference: RFC XXXX]]></artwork>
         <t>As stated in the Applicability analysis in <xref
         target="sec_applicability"/>, this protocol is to be used in controlled
         environments, so that network operators might not require to secure the transport
-        mechanism described in this document.  An approach to secure this protocol
-        using DTLS can be found in <xref target="I-D.unyte-udp-notif-dtls"/>. </t>
+        mechanism described in this document. An approach to secure this protocol
+        is out of the scope of this document. </t>
 
     </section>
 

@@ -747,8 +747,8 @@ Internet-Draft               unyte-udp-notif                   July 2021
    As stated in the Applicability analysis in Section 5, this protocol
    is to be used in controlled environments, so that network operators
    might not require to secure the transport mechanism described in this
-   document.  An approach to secure this protocol using DTLS can be
-   found in [I-D.unyte-udp-notif-dtls].
+   document.  An approach to secure this protocol is out of the scope of
+   this document.
 
 10.  Acknowledgements
 
