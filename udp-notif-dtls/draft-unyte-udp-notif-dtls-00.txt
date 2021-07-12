@@ -185,7 +185,7 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
 4.1.  DTLS Session Initiation
 
    The Publisher initiates a DTLS connection by sending a DTLS
-   ClientHello to the Receiver.  Implementations MUST support the denial
+   ClientHello to the Receiver.  Implementations MAY support the denial
    of service countermeasures defined by DTLS 1.3.  When these
    countermeasures are used, the Receiver responds with a DTLS
    HelloRetryRequest containing a stateless cookie.  The Publisher MUST
@@ -251,13 +251,14 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    Receiver gets a close_notify from the Publisher, it MUST reply with a
    close_notify.
 
-   When no data is received from a DTLS connection for a long time
-   (where the application decides what "long" means), the Receiver MAY
-   close the connection.  The Receiver (DTLS server) MUST attempt to
-   initiate an exchange of close_notify alerts with the Publisher before
-   closing the connection.  Receivers that are unprepared to receive any
-   more data MAY close the connection after sending the close_notify
-   alert.
+   When no data is received from a DTLS connection for a long time, the
+   Receiver MAY close the connection.  Implementations SHOULD set the
+   timeout value to 10 minutes but application specific profiles MAY
+   recommend shorter or longer values.  The Receiver (DTLS server) MUST
+   attempt to initiate an exchange of close_notify alerts with the
+   Publisher before closing the connection.  Receivers that are
+   unprepared to receive any more data MAY close the connection after
+   sending the close_notify alert.
 
    Although closure alerts are a component of TLS and so of DTLS, they,
    like all alerts, are not retransmitted by DTLS and so may be lost
@@ -273,7 +274,6 @@ Internet-Draft            unyte-udp-notif-dtls                 July 2021
    [RFC6335].
 
    Service Name: udp-notif-dtls
-
 
 
 
