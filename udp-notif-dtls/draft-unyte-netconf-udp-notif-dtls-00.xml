@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-unyte-udp-notif-dtls-00" ipr="trust200902">
+<rfc category="std" docName="draft-unyte-netconf-udp-notif-dtls-00" ipr="trust200902">
   <front>
     <title abbrev="unyte-udp-notif-dtls">DTLS for UDP-notif</title>
 
@@ -118,7 +118,7 @@
       </address>
     </author>
 
-    <date day="12" month="July" year="2021"/>
+    <date day="30" month="July" year="2021"/>
 
     <workgroup>NETCONF</workgroup>
 
