@@ -228,9 +228,11 @@
       <t><xref target="sec_transport"/> describes the control of the proposed
         transport mechanism. <xref target="sec_ups_transport"/> details the
         notification mechanism and message format. <xref target="sec_options"/>
-        describes the use of options in the notification message header.  <xref
+        describes the use of options in the notification message header. <xref
         target="sec_applicability"/> covers the applicability of the proposed
-        mechanism.</t> </section>
+        mechanism. <xref target="sec_dtls_udp_notif"/> describes a mechanism
+        to secure the protocol in open networks.
+        </t></section>
 
     <section anchor="sec_transport"
              title="Configured Subscription to UDP-Notif">
@@ -603,7 +605,7 @@
         forgery SHOULD employ end-to-end security services provided by other 
         IETF protocols". As mentioned above, the proposed mechanism is designed to 
         be used in controlled environments and thus, a security layer is unrequired.
-        Nevertheless, a DTLS layer MUST be implemented in open or unsecure networks.
+        Nevertheless, a DTLS layer SHOULD be implemented in open or unsecured networks.
         A DTLS layered implementation is presented in <xref target="sec_dtls_udp_notif"/>.</t>
 
         <!-- <t>As stated in the Applicability analysis in <xref
@@ -615,11 +617,11 @@
     </section>
 
     <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-notif">
-    <!-- TODO: mettre un SHOULD or NOT REQUIRED qq part -->
-      <t>In this section, a mechanism using DTLS 1.3 to secure UDP-notif protocol
+      <t>In open or unsecured networks, UDP-notif messages SHOULD be secured or encrypted.
+      In this section, a mechanism using DTLS 1.3 to secure UDP-notif protocol
       is presented. The following sections defines the requirements for the 
       implementation of the secured layer of DTLS for UDP-notif. No DTLS 1.3 
-      extensions are defined nor needed.</t>
+      extensions are defined nor needed. This DTLS 1.3 layer is </t>
 
       <t>The DTLS 1.3 protocol <xref target="I-D.draft-ietf-tls-dtls13"/> is
       designed to meet the requirements of applications that need to secure
@@ -652,9 +654,9 @@
       </t>
 
       <section anchor="sec_dtl_transport" title="Transport">
-        <t>As shown in <xref target="fig_dtls_layers"/>, the DTLS is layered
-        next to the UDP transport providing reusable security and authentication
-        functions over UDP. No DTLS extension is required to enable UDP-notif
+        <t>As shown in <xref target="fig_dtls_layers"/>,
+        the DTLS is layered next to the UDP transport providing reusable security and
+        authentication functions over UDP. No DTLS extension is required to enable UDP-notif
         messages over DTLS.</t>
 
         <t><figure anchor="fig_dtls_layers"
@@ -692,8 +694,9 @@
       </section>
 
       <section anchor="sec_port_assignment" title="Port Assignment">
-        <t>The Publisher is always a DTLS client, and the Receiver is always a
-        DTLS server. The Receivers MUST support accepting UDP-notif Messages on
+        <t>The Publisher MUST always be a DTLS
+        client, and the Receiver MUST always be a DTLS server. The Receivers MUST
+        support accepting UDP-notif Messages on
         the specified UDP port, but MAY be configurable to listen on a different
         port. The Publisher MUST support sending UDP-notif messages to the
         specified UDP port, but MAY be configurable to send messages to a
@@ -939,16 +942,6 @@ prefix: un
 reference: RFC XXXX]]></artwork>
         </figure></t>
     </section>
-<!-- 
-    <section anchor="Security" title="Security Considerations">
-
-        <t>As stated in the Applicability analysis in <xref
-        target="sec_applicability"/>, this protocol is to be used in controlled
-        environments, so that network operators might not require to secure the transport
-        mechanism described in this document. An approach to secure this protocol
-        is out of the scope of this document. </t>
-
-    </section> -->
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors of this documents would like to thank Alexander Clemm,
