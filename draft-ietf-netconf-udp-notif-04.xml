@@ -144,7 +144,7 @@
       </address>
     </author>
 
-    <date day="20" month="September" year="2021"/>
+    <date day="28" month="September" year="2021"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -366,7 +366,7 @@
             message could be a relay for the actual source of data carried
             within UDP-Notif messages.</t>
 
-            <t>The Message ID is generated continuously by the sender of
+            <t>The Message ID is generated continuously by the publisher of
             UDP-Notif messages. Different subscribers share the same Message
             ID sequence.</t>
 
@@ -425,12 +425,16 @@
             <t>Variable-length data: 0 or more octets of TLV Value.</t>
           </list></t>
 
+        <t>When more than one option are used in the UDP-notif header, options
+        MUST be ordered by the Type value.
+        </t>
+
         <section anchor="sec_fragmentation" title="Segmentation Option">
           <t>The UDP payload length is limited to 65535. Application level
           headers will make the actual payload shorter. Even though binary
           encodings such as CBOR may not require more space than what is left,
           more voluminous encodings such as JSON and XML may suffer from this
-          size limitation. Although IPv4 and IPv6 senders can fragment
+          size limitation. Although IPv4 and IPv6 publishers can fragment
           outgoing packets exceeding their Maximum Transmission Unit(MTU),
           fragmented IP packets may not be desired for operational and
           performance reasons.</t>
@@ -456,7 +460,7 @@
 
           <t><list style="symbols">
               <t>Type: Generic option field which indicates a Segmentation
-              Option. The Type value is to be assigned.</t>
+              Option. The Type value is to be assigned TBD1.</t>
 
               <t>Length: Generic option field which indicates the length of
               this option. It is a fixed value of 4 octets for the
@@ -477,7 +481,12 @@
           fragmentation by default to carry large messages. An implementation
           of this specification MUST either restrict the size of individual
           messages carried over this protocol, or support the segmentation
-         option.</t>
+          option.</t>
+
+          <t>When a message has multiple options and is segmented using the
+          described mechanism, all the options MUST be present on the first segment
+          ordered by the options Type. The rest of segmented messages MAY
+          include all the options ordered by options type.</t>
 
         </section>
          <section anchor="sec_enc_opt" title="Private Encoding Option">
@@ -500,7 +509,7 @@
 
           <t><list style="symbols">
               <t>Type: Generic option field which indicates a Private Encoding 
-              Option. The Type value is to be assigned.</t>
+              Option. The Type value is to be assigned TBD2.</t>
 
               <t>Length: Generic option field which indicates the length of
               this option. It is a variable value.</t>
@@ -620,8 +629,8 @@
       <t>In open or unsecured networks, UDP-notif messages SHOULD be secured or encrypted.
       In this section, a mechanism using DTLS 1.3 to secure UDP-notif protocol
       is presented. The following sections defines the requirements for the 
-      implementation of the secured layer of DTLS for UDP-notif. No DTLS 1.3 
-      extensions are defined nor needed. This DTLS 1.3 layer is </t>
+      implementation of the secured layer of DTLS for UDP-notif.
+      No DTLS 1.3 extensions are defined nor needed.</t>
 
       <t>The DTLS 1.3 protocol <xref target="I-D.draft-ietf-tls-dtls13"/> is
       designed to meet the requirements of applications that need to secure
@@ -652,6 +661,9 @@
           <t>A sequence number in the header to counter replay attacks.</t>
         </list>
       </t>
+
+      <t>Even though this security layer is unrequired, DTLS 1.3 SHOULD be implemented on 
+      unsecured networks to achieve privacy.</t>
 
       <section anchor="sec_dtl_transport" title="Transport">
         <t>As shown in <xref target="fig_dtls_layers"/>,
@@ -694,7 +706,7 @@
       </section>
 
       <section anchor="sec_port_assignment" title="Port Assignment">
-        <t>The Publisher MUST always be a DTLS
+        <t>When this security layer is used, the Publisher MUST always be a DTLS
         client, and the Receiver MUST always be a DTLS server. The Receivers MUST
         support accepting UDP-notif Messages on
         the specified UDP port, but MAY be configurable to listen on a different
@@ -714,10 +726,10 @@
           send a new DTLS ClientHello message containing the received cookie,
           which initiates the DTLS handshake.</t>
 
-          <t>The Publisher MUST NOT send any UDP-notif messages before the DTLS
-          handshake has successfully completed.</t>
+          <t>When DTLS is implemented, the Publisher MUST NOT send any UDP-notif
+          messages before the DTLS handshake has successfully completed.</t>
 
-          <t>Implementations MUST support DTLS 1.3 <xref
+          <t>Implementations of this security layer MUST support DTLS 1.3 <xref
           target="I-D.draft-ietf-tls-dtls13"/> and MUST support the mandatory to
           implement cipher suite TLS_AES_128_GCM_SHA256 and SHOULD implement
           TLS_AES_256_GCM_SHA384 and TLS_CHACHA20_POLY1305_SHA256 cipher suites,
@@ -732,7 +744,7 @@
         </section>
 
         <section title="Publish Data">
-          <t>All UDP-notif messages MUST be published as DTLS
+          <t>When DTLS is used, all UDP-notif messages MUST be published as DTLS
           "application_data". It is possible that multiple UDP-notif messages
           are contained in one DTLS record, or that a publication message is
           transferred in multiple DTLS records. The application data is defined
@@ -918,8 +930,69 @@ and state change notifications.";
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
+      <t>This document is creating 2 registries called "UDP-notif encoding types" and
+      "UDP-notif options types" under the new heading "UDP-notif protocol". The
+      registration procedure is made using the Standards Action process defined in
+      <xref target="RFC8126"/>.</t>
 
-      <t>IANA is requested to assign a new URI from the <xref
+      <t>The first requested registry is the following:</t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Registry Name: UDP-notif encoding type
+  Registry Category: UDP-notif protocol.
+  Registration Procedure: Standard Action as defined in RFC8126
+  Maximum value: 15]]></artwork>
+      </figure></t>
+
+      <t>These are the initial registrations for "UDP-notif encoding types":</t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 0
+  Description: Payload encoded in CBOR
+  Reference: this document]]></artwork>
+      </figure></t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 1
+  Description: Payload encoded in JSON
+  Reference: this document]]></artwork>
+      </figure></t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 2
+  Description: Payload encoded in XML
+  Reference: this document]]></artwork>
+      </figure></t>
+
+      <t>The second requested registry is the following:</t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Registry Name: UDP-notif options type
+  Registry Category: UDP-notif protocol.
+  Registration Procedure: Standard Action as defined in RFC8126
+  Maximum value: 255]]></artwork>
+      </figure></t>
+      <t>These are the initial registrations for "UDP-notif options types":</t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 0
+  Description: Reserved type
+  Reference: this document]]></artwork>
+      </figure></t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: TBD1 (suggested value: 1)
+  Description: Segmentation Option
+  Reference: this document]]></artwork>
+      </figure></t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: TBD2 (suggested value: 2)
+  Description: Private Encoding Option
+  Reference: this document]]></artwork>
+      </figure></t>
+
+      <t>IANA is also requested to assign a new URI from the <xref
       target="RFC3688">IETF XML Registry</xref>. The following URI is
       suggested:</t>
 
@@ -960,7 +1033,7 @@ reference: RFC XXXX]]></artwork>
 
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8639.xml'?>
 
-      <!-- <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.2914.xml'?> -->
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml'?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"?>
 
