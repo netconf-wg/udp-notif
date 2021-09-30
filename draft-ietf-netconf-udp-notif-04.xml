@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-netconf-udp-notif-03"
+<rfc category="std" docName="draft-ietf-netconf-udp-notif-04"
      ipr="trust200902">
   <front>
     <title abbrev="unyte-udp-notif">UDP-based Transport for Configured
@@ -114,6 +114,31 @@
 
         <email>pierre.francois@insa-lyon.fr</email>
 
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
+      <organization>INSA-Lyon</organization>
+
+      <address>
+        <postal>
+          <street/>
+
+          <city>Lyon</city>
+
+          <region/>
+
+          <code/>
+
+          <country>France</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>alex.huang-feng@insa-lyon.fr</email>
         <uri/>
       </address>
     </author>
@@ -930,8 +955,8 @@ and state change notifications.";
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This document is creating 2 registries called "UDP-notif encoding types" and
-      "UDP-notif options types" under the new heading "UDP-notif protocol". The
+      <t>This document is creating 2 registries called "UDP-notif encoding type" and
+      "UDP-notif option type" under the new heading "UDP-notif protocol". The
       registration procedure is made using the Standards Action process defined in
       <xref target="RFC8126"/>.</t>
 
@@ -944,7 +969,7 @@ and state change notifications.";
   Maximum value: 15]]></artwork>
       </figure></t>
 
-      <t>These are the initial registrations for "UDP-notif encoding types":</t>
+      <t>These are the initial registrations for "UDP-notif encoding type":</t>
       <t><figure>
           <artwork align="left"><![CDATA[
   Value: 0
@@ -967,16 +992,16 @@ and state change notifications.";
       <t>The second requested registry is the following:</t>
       <t><figure>
           <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif options type
+  Registry Name: UDP-notif option type
   Registry Category: UDP-notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 255]]></artwork>
       </figure></t>
-      <t>These are the initial registrations for "UDP-notif options types":</t>
+      <t>These are the initial registrations for "UDP-notif options type":</t>
       <t><figure>
           <artwork align="left"><![CDATA[
   Value: 0
-  Description: Reserved type
+  Description: Reserved
   Reference: this document]]></artwork>
       </figure></t>
       <t><figure>
@@ -1019,7 +1044,7 @@ reference: RFC XXXX]]></artwork>
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors of this documents would like to thank Alexander Clemm,
       Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
-      Frenot, Timothy Carey, Tim Jenkins, Yunan Gu, Alex Huang Feng and 
+      Frenot, Timothy Carey, Tim Jenkins, Yunan Gu and 
       Marco Tollini for their constructive suggestions for improving this 
       document.</t>
     </section>
