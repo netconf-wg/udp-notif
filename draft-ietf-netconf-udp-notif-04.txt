@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 1 April 2022                                            T. Graf
+Expires: 14 April 2022                                           T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                       28 September 2021
+                                                         11 October 2021
 
 
             UDP-based Transport for Configured Subscriptions
@@ -23,10 +23,10 @@ Abstract
    This document describes an UDP-based notification mechanism to
    collect data from networking devices.  A shim header is proposed to
    facilitate the data streaming directly from the publishing process on
-   network processor of line cards to receivers.  The objective is a
-   lightweight approach to enable higher frequency and less performance
-   impact on publisher and receiver process compared to already
-   established notification mechanisms.
+   network processor of line cards to receivers.  The objective is to
+   provide a lightweight approach to enable higher frequency and less
+   performance impact on publisher and receiver processes compared to
+   already established notification mechanisms.
 
 Requirements Language
 
@@ -49,13 +49,13 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 April 2022.
+   This Internet-Draft will expire on 14 April 2022.
 
 
 
-Zheng, et al.             Expires 1 April 2022                  [Page 1]
+Zheng, et al.             Expires 14 April 2022                 [Page 1]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Zheng, et al.             Expires 1 April 2022                  [Page 2]
+Zheng, et al.             Expires 14 April 2022                 [Page 2]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                  [Page 3]
+Zheng, et al.             Expires 14 April 2022                 [Page 3]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    The transport described in this document can be used for transmitting
@@ -221,9 +221,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                  [Page 4]
+Zheng, et al.             Expires 14 April 2022                 [Page 4]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 3.1.  Design Overview
@@ -277,9 +277,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                  [Page 5]
+Zheng, et al.             Expires 14 April 2022                 [Page 5]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    The Message Header contains the following field:
@@ -296,11 +296,13 @@ Internet-Draft               unyte-udp-notif              September 2021
       the Notification Message. 16 types of encoding can be expressed.
       When the S bit is unset, the following values apply:
 
-      -  0: CBOR;
+      -  0: Reserved;
 
       -  1: JSON;
 
       -  2: XML;
+
+      -  3: CBOR;
 
       -  others are reserved.
 
@@ -325,17 +327,22 @@ Internet-Draft               unyte-udp-notif              September 2021
       Notif messages.  Different subscribers share the same Message ID
       sequence.
 
+
+
+
+
+
+
+Zheng, et al.             Expires 14 April 2022                 [Page 6]
+
+Internet-Draft               unyte-udp-notif                October 2021
+
+
    *  Options is a variable-length field in the TLV format.  When the
       Header Length is larger than 12 octets, which is the length of the
       fixed header, Options TLVs follow directly after the fixed message
       header (i.e., Message ID).  The details of the options are
       described in Section 4.
-
-
-
-Zheng, et al.             Expires 1 April 2022                  [Page 6]
-
-Internet-Draft               unyte-udp-notif              September 2021
 
 
 3.3.  Data Encoding
@@ -382,16 +389,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-
-
-
-
-
-
-
-Zheng, et al.             Expires 1 April 2022                  [Page 7]
+Zheng, et al.             Expires 14 April 2022                 [Page 7]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 4.1.  Segmentation Option
@@ -445,9 +445,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                  [Page 8]
+Zheng, et al.             Expires 14 April 2022                 [Page 8]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    An implementation of this specification MUST NOT rely on IP
@@ -501,9 +501,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                  [Page 9]
+Zheng, et al.             Expires 14 April 2022                 [Page 9]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    be deployed in controlled environments".  Implementations of the
@@ -557,9 +557,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 10]
+Zheng, et al.             Expires 14 April 2022                [Page 10]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 5.3.  Reliability
@@ -613,9 +613,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 11]
+Zheng, et al.             Expires 14 April 2022                [Page 11]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    *  Server or mutual authentication to counter masquerade.
@@ -669,9 +669,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 12]
+Zheng, et al.             Expires 14 April 2022                [Page 12]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 6.2.  Port Assignment
@@ -725,9 +725,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 13]
+Zheng, et al.             Expires 14 April 2022                [Page 13]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG
@@ -781,9 +781,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 14]
+Zheng, et al.             Expires 14 April 2022                [Page 14]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
     module: ietf-udp-subscribed-notifications
@@ -837,9 +837,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 15]
+Zheng, et al.             Expires 14 April 2022                [Page 15]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
        of the code.  All rights reserved.
@@ -893,9 +893,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 16]
+Zheng, et al.             Expires 14 April 2022                [Page 16]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
            "Port number of target UDP-Notif receiver, if not specified,
@@ -930,28 +930,28 @@ Internet-Draft               unyte-udp-notif              September 2021
 9.  IANA Considerations
 
    This document is creating 2 registries called "UDP-notif encoding
-   type" and "UDP-notif option type" under the new heading "UDP-notif
+   types" and "UDP-notif option types" under the new heading "UDP-notif
    protocol".  The registration procedure is made using the Standards
    Action process defined in [RFC8126].
 
    The first requested registry is the following:
 
-     Registry Name: UDP-notif encoding type
+     Registry Name: UDP-notif encoding types
      Registry Category: UDP-notif protocol.
      Registration Procedure: Standard Action as defined in RFC8126
      Maximum value: 15
 
-   These are the initial registrations for "UDP-notif encoding type":
+   These are the initial registrations for "UDP-notif encoding types":
 
      Value: 0
-     Description: Payload encoded in CBOR
+     Description: Reserved
      Reference: this document
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 17]
+Zheng, et al.             Expires 14 April 2022                [Page 17]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
      Value: 1
@@ -962,14 +962,18 @@ Internet-Draft               unyte-udp-notif              September 2021
      Description: Payload encoded in XML
      Reference: this document
 
+     Value: 3
+     Description: Payload encoded in CBOR
+     Reference: this document
+
    The second requested registry is the following:
 
-     Registry Name: UDP-notif option type
+     Registry Name: UDP-notif option types
      Registry Category: UDP-notif protocol.
      Registration Procedure: Standard Action as defined in RFC8126
      Maximum value: 255
 
-   These are the initial registrations for "UDP-notif options type":
+   These are the initial registrations for "UDP-notif options types":
 
      Value: 0
      Description: Reserved
@@ -1001,13 +1005,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-
-
-
-
-Zheng, et al.             Expires 1 April 2022                 [Page 18]
+Zheng, et al.             Expires 14 April 2022                [Page 18]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 10.  Acknowledgements
@@ -1061,9 +1061,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 19]
+Zheng, et al.             Expires 14 April 2022                [Page 19]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
@@ -1117,9 +1117,9 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 20]
+Zheng, et al.             Expires 14 April 2022                [Page 20]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
 Authors' Addresses
@@ -1173,9 +1173,9 @@ Authors' Addresses
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 21]
+Zheng, et al.             Expires 14 April 2022                [Page 21]
 
-Internet-Draft               unyte-udp-notif              September 2021
+Internet-Draft               unyte-udp-notif                October 2021
 
 
    Paolo Lucente
@@ -1229,4 +1229,4 @@ Internet-Draft               unyte-udp-notif              September 2021
 
 
 
-Zheng, et al.             Expires 1 April 2022                 [Page 22]
+Zheng, et al.             Expires 14 April 2022                [Page 22]

@@ -169,7 +169,7 @@
       </address>
     </author>
 
-    <date day="28" month="September" year="2021"/>
+    <date day="11" month="October" year="2021"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -177,9 +177,9 @@
       <t>This document describes an UDP-based notification mechanism to
       collect data from networking devices. A shim header is proposed to
       facilitate the data streaming directly from the publishing process on
-      network processor of line cards to receivers. The objective is a
+      network processor of line cards to receivers. The objective is to provide a
       lightweight approach to enable higher frequency and less performance
-      impact on publisher and receiver process compared to already established
+      impact on publisher and receiver processes compared to already established
       notification mechanisms.</t>
     </abstract>
 
@@ -363,11 +363,13 @@
             the Notification Message. 16 types of encoding can be expressed.
             When the S bit is unset, the following values apply:<list
                 style="symbols">
-                <t>0: CBOR;</t>
+                <t>0: Reserved;</t>
 
                 <t>1: JSON;</t>
 
                 <t>2: XML;</t>
+
+                <t>3: CBOR;</t>
 
                 <t>others are reserved.</t>
               </list></t>
@@ -955,25 +957,25 @@ and state change notifications.";
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This document is creating 2 registries called "UDP-notif encoding type" and
-      "UDP-notif option type" under the new heading "UDP-notif protocol". The
+      <t>This document is creating 2 registries called "UDP-notif encoding types" and
+      "UDP-notif option types" under the new heading "UDP-notif protocol". The
       registration procedure is made using the Standards Action process defined in
       <xref target="RFC8126"/>.</t>
 
       <t>The first requested registry is the following:</t>
       <t><figure>
           <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif encoding type
+  Registry Name: UDP-notif encoding types
   Registry Category: UDP-notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 15]]></artwork>
       </figure></t>
 
-      <t>These are the initial registrations for "UDP-notif encoding type":</t>
+      <t>These are the initial registrations for "UDP-notif encoding types":</t>
       <t><figure>
           <artwork align="left"><![CDATA[
   Value: 0
-  Description: Payload encoded in CBOR
+  Description: Reserved
   Reference: this document]]></artwork>
       </figure></t>
       <t><figure>
@@ -988,16 +990,22 @@ and state change notifications.";
   Description: Payload encoded in XML
   Reference: this document]]></artwork>
       </figure></t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 3
+  Description: Payload encoded in CBOR
+  Reference: this document]]></artwork>
+      </figure></t>
 
       <t>The second requested registry is the following:</t>
       <t><figure>
           <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif option type
+  Registry Name: UDP-notif option types
   Registry Category: UDP-notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 255]]></artwork>
       </figure></t>
-      <t>These are the initial registrations for "UDP-notif options type":</t>
+      <t>These are the initial registrations for "UDP-notif options types":</t>
       <t><figure>
           <artwork align="left"><![CDATA[
   Value: 0
