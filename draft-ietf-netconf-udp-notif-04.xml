@@ -829,8 +829,8 @@
      augment /sn:subscriptions/sn:subscription/sn:receivers/sn:receiver:
        +--rw address   inet:ip-address
        +--rw port      inet:port-number
-       +--rw enable-fragment?  boolean
-       +--rw max-fragment-size?  uint32]]></artwork>
+       +--rw enable-segmentation?  boolean
+       +--rw max-segmentation-size?  uint32]]></artwork>
         </figure></t>
     </section>
 
@@ -839,7 +839,7 @@
 
       <t><figure>
           <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif@2020-04-27.yang"
+<CODE BEGINS> file "ietf-udp-notif@2020-10-18.yang"
 module ietf-udp-notif {
   yang-version 1.1;
   namespace
