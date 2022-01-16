@@ -83,27 +83,27 @@ Table of Contents
      3.3.  Data Encoding . . . . . . . . . . . . . . . . . . . . . .   6
    4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   7
      4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   7
-     4.2.  Private Encoding Option . . . . . . . . . . . . . . . . .   9
+     4.2.  Private Encoding Option . . . . . . . . . . . . . . . . .   8
    5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .   9
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .   9
      5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  10
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  10
      5.4.  Security Considerations . . . . . . . . . . . . . . . . .  11
    6.  Secured layer for UDP-notif . . . . . . . . . . . . . . . . .  11
-     6.1.  Transport . . . . . . . . . . . . . . . . . . . . . . . .  12
+     6.1.  Transport . . . . . . . . . . . . . . . . . . . . . . . .  11
      6.2.  Port Assignment . . . . . . . . . . . . . . . . . . . . .  12
-     6.3.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  13
-       6.3.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  13
+     6.3.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  12
+       6.3.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  12
        6.3.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  13
        6.3.3.  Session termination . . . . . . . . . . . . . . . . .  14
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  14
    8.  YANG Module . . . . . . . . . . . . . . . . . . . . . . . . .  14
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  18
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  19
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  19
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  20
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  17
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  18
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  19
 
 
 
@@ -308,16 +308,8 @@ Internet-Draft               unyte-udp-notif                January 2022
       Notif messages.  Different subscribers share the same Message ID
       sequence.
 
-   o  Defines the media-type of the encoded notification message
-      according to [RFC6838].  Registered standards, vendor and personal
-      tree media-types are listed at "IANA Media Types registry
-      [IANA-MEDIA-TYPES].  Examples are:
-
-      *  application/yang-data+json [RFC8040]
-
-      *  application/yang-data+xml [RFC8040]
-
-      *  application/yang-data+cbor [I-D.ietf-core-yang-cbor]
+   o  Media-Type is a 64-bit identifier which defines the media-type of
+      the encoded notification message according to [RFC6838].
 
    o  Options is a variable-length field in the TLV format.  When the
       Header Length is larger than 12 octets, which is the length of the
@@ -330,14 +322,6 @@ Internet-Draft               unyte-udp-notif                January 2022
    UDP-Notif message data can be encoded in CBOR, XML or JSON format.
    It is conceivable that additional encodings may be supported in the
    future.  This can be accomplished by augmenting the subscription data
-
-
-
-Zheng, et al.             Expires July 20, 2022                 [Page 6]
-
-Internet-Draft               unyte-udp-notif                January 2022
-
-
    model with additional identity statements used to refer to requested
    encodings.
 
@@ -346,6 +330,13 @@ Internet-Draft               unyte-udp-notif                January 2022
    to be defined and agreed upon by the users of the private encoding.
    An option is defined in Section 4.2 for more verbose encoding
    descriptions than what can be described with the ET field.
+
+
+
+Zheng, et al.             Expires July 20, 2022                 [Page 6]
+
+Internet-Draft               unyte-udp-notif                January 2022
+
 
    Implementation MAY support multiple encoding methods per
    subscription.  When bundled notifications are supported between the
@@ -386,6 +377,15 @@ Internet-Draft               unyte-udp-notif                January 2022
    fragmented IP packets may not be desired for operational and
    performance reasons.
 
+   Consequently, implementations of the mechanism SHOULD provide a
+   configurable max-segment-size option to control the maximum size of a
+   payload.
+
+
+
+
+
+
 
 
 
@@ -393,10 +393,6 @@ Zheng, et al.             Expires July 20, 2022                 [Page 7]
 
 Internet-Draft               unyte-udp-notif                January 2022
 
-
-   Consequently, implementations of the mechanism SHOULD provide a
-   configurable max-segment-size option to control the maximum size of a
-   payload.
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -439,7 +435,11 @@ Internet-Draft               unyte-udp-notif                January 2022
    segment ordered by the options Type.  The rest of segmented messages
    MAY include all the options ordered by options type.
 
+4.2.  Private Encoding Option
 
+   The space to describe private encodings in the ET field of the UDP-
+   Notif header being limited, an option is provided to describe custom
+   encodings.  The fields of this option are as follows.
 
 
 
@@ -449,12 +449,6 @@ Zheng, et al.             Expires July 20, 2022                 [Page 8]
 
 Internet-Draft               unyte-udp-notif                January 2022
 
-
-4.2.  Private Encoding Option
-
-   The space to describe private encodings in the ET field of the UDP-
-   Notif header being limited, an option is provided to describe custom
-   encodings.  The fields of this option are as follows.
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -498,6 +492,12 @@ Internet-Draft               unyte-udp-notif                January 2022
    The proposed application falls into the category of applications
    performing transfer of large amounts of data.  It is expected that
    the operator using the solution configures QoS on its related flows.
+   As per [RFC8085], such applications MAY choose not to implement any
+   form of congestion control, but follow the following principles.
+
+   It is NOT RECOMMENDED to use the proposed mechanism over congestion-
+   sensitive network paths.  The only environments where UDP-Notif is
+   expected to be used are managed networks.  The deployments require
 
 
 
@@ -506,12 +506,6 @@ Zheng, et al.             Expires July 20, 2022                 [Page 9]
 Internet-Draft               unyte-udp-notif                January 2022
 
 
-   As per [RFC8085], such applications MAY choose not to implement any
-   form of congestion control, but follow the following principles.
-
-   It is NOT RECOMMENDED to use the proposed mechanism over congestion-
-   sensitive network paths.  The only environments where UDP-Notif is
-   expected to be used are managed networks.  The deployments require
    that the network path has been explicitly provisioned to handle the
    traffic through traffic engineering mechanisms, such as rate limiting
    or capacity reservations.
@@ -554,6 +548,12 @@ Internet-Draft               unyte-udp-notif                January 2022
 
    A receiver implementation for this protocol SHOULD deal with
    potential loss of packets carrying a part of segmented payload, by
+   discarding packets that were received, but cannot be re-assembled as
+   a complete message within a given amount of time.  This time SHOULD
+   be configurable.
+
+
+
 
 
 
@@ -561,10 +561,6 @@ Zheng, et al.             Expires July 20, 2022                [Page 10]
 
 Internet-Draft               unyte-udp-notif                January 2022
 
-
-   discarding packets that were received, but cannot be re-assembled as
-   a complete message within a given amount of time.  This time SHOULD
-   be configurable.
 
 5.4.  Security Considerations
 
@@ -609,7 +605,11 @@ Internet-Draft               unyte-udp-notif                January 2022
    Even though this security layer is unrequired, DTLS 1.3 SHOULD be
    implemented on unsecured networks to achieve privacy.
 
+6.1.  Transport
 
+   As shown in Figure 6, the DTLS is layered next to the UDP transport
+   providing reusable security and authentication functions over UDP.
+   No DTLS extension is required to enable UDP-notif messages over DTLS.
 
 
 
@@ -617,12 +617,6 @@ Zheng, et al.             Expires July 20, 2022                [Page 11]
 
 Internet-Draft               unyte-udp-notif                January 2022
 
-
-6.1.  Transport
-
-   As shown in Figure 6, the DTLS is layered next to the UDP transport
-   providing reusable security and authentication functions over UDP.
-   No DTLS extension is required to enable UDP-notif messages over DTLS.
 
                       +-----------------------------+
                       |      UDP-notif Message      |
@@ -664,16 +658,6 @@ Internet-Draft               unyte-udp-notif                January 2022
    but MAY be configurable to send messages to a different port.  The
    Publisher MAY use any source UDP port for transmitting messages.
 
-
-
-
-
-
-Zheng, et al.             Expires July 20, 2022                [Page 12]
-
-Internet-Draft               unyte-udp-notif                January 2022
-
-
 6.3.  Session lifecycle
 
 6.3.1.  DTLS Session Initiation
@@ -682,6 +666,14 @@ Internet-Draft               unyte-udp-notif                January 2022
    ClientHello to the Receiver.  Implementations MAY support the denial
    of service countermeasures defined by DTLS 1.3.  When these
    countermeasures are used, the Receiver responds with a DTLS
+
+
+
+Zheng, et al.             Expires July 20, 2022                [Page 12]
+
+Internet-Draft               unyte-udp-notif                January 2022
+
+
    HelloRetryRequest containing a stateless cookie.  The Publisher MUST
    send a new DTLS ClientHello message containing the received cookie,
    which initiates the DTLS handshake.
@@ -723,17 +715,20 @@ Internet-Draft               unyte-udp-notif                January 2022
 
    DIGIT = %d48 / NONZERO-DIGIT
 
+   UDP-NOTIF-MSG is defined in Section 3.
+
+   The Publisher SHOULD attempt to avoid IP fragmentation by using the
+   Segmentation Option in the UDP-notif message.
+
+
+
+
 
 
 Zheng, et al.             Expires July 20, 2022                [Page 13]
 
 Internet-Draft               unyte-udp-notif                January 2022
 
-
-   UDP-NOTIF-MSG is defined in Section 3.
-
-   The Publisher SHOULD attempt to avoid IP fragmentation by using the
-   Segmentation Option in the UDP-notif message.
 
 6.3.3.  Session termination
 
@@ -778,6 +773,11 @@ module ietf-udp-notif {
   namespace
     "urn:ietf:params:xml:ns:yang:ietf-udp-notif";
   prefix un;
+  import ietf-subscribed-notifications {
+    prefix sn;
+    reference
+      "RFC 8639: Subscription to YANG Notifications";
+  }
 
 
 
@@ -786,11 +786,6 @@ Zheng, et al.             Expires July 20, 2022                [Page 14]
 Internet-Draft               unyte-udp-notif                January 2022
 
 
-  import ietf-subscribed-notifications {
-    prefix sn;
-    reference
-      "RFC 8639: Subscription to YANG Notifications";
-  }
   import ietf-inet-types {
     prefix inet;
     reference
@@ -834,6 +829,11 @@ Internet-Draft               unyte-udp-notif                January 2022
     "Slight change to the name of two parameters.";
     reference
     "RFC XXXX: UDP-based Transport for Configured Subscriptions";
+  }
+
+
+ /*
+  * IDENTITIES
 
 
 
@@ -842,11 +842,6 @@ Zheng, et al.             Expires July 20, 2022                [Page 15]
 Internet-Draft               unyte-udp-notif                January 2022
 
 
-  }
-
-
- /*
-  * IDENTITIES
   */
   identity udp-notif {
     base sn:transport;
@@ -891,6 +886,11 @@ Internet-Draft               unyte-udp-notif                January 2022
         publisher will not allow fragment for a very large data";
     }
 
+    leaf max-segmentation-size {
+    when "../enable-segmentation = 'true'";
+    type uint32;
+    description "UDP-Notif provides a configurable
+
 
 
 Zheng, et al.             Expires July 20, 2022                [Page 16]
@@ -898,10 +898,6 @@ Zheng, et al.             Expires July 20, 2022                [Page 16]
 Internet-Draft               unyte-udp-notif                January 2022
 
 
-    leaf max-segmentation-size {
-    when "../enable-segmentation = 'true'";
-    type uint32;
-    description "UDP-Notif provides a configurable
       max-segmentation-size to control the size of each message.";
     }
   }
@@ -919,80 +915,17 @@ Internet-Draft               unyte-udp-notif                January 2022
 
 9.  IANA Considerations
 
-   This document is creating 2 registries called "UDP-notif encoding
-   types" and "UDP-notif option types" under the new heading "UDP-notif
-   protocol".  The registration procedure is made using the Standards
-   Action process defined in [RFC8126].
+   Registered media types are listed at "IANA Media Types registry
+   [IANA-MEDIA-TYPES].  Examples are:
 
-   The first requested registry is the following:
+   o  application/yang-data+json [RFC8040]
 
-     Registry Name: UDP-notif encoding types
-     Registry Category: UDP-notif protocol.
-     Registration Procedure: Standard Action as defined in RFC8126
-     Maximum value: 15
+   o  application/yang-data+xml [RFC8040]
 
-   These are the initial registrations for "UDP-notif encoding types":
+   o  application/yang-data+cbor [I-D.ietf-core-yang-cbor]
 
-     Value: 0
-     Description: Reserved
-     Reference: this document
-
-     Value: 1
-     Description: Payload encoded in JSON
-     Reference: this document
-
-     Value: 2
-     Description: Payload encoded in XML
-     Reference: this document
-
-
-
-
-
-Zheng, et al.             Expires July 20, 2022                [Page 17]
-
-Internet-Draft               unyte-udp-notif                January 2022
-
-
-     Value: 3
-     Description: Payload encoded in CBOR
-     Reference: this document
-
-   The second requested registry is the following:
-
-     Registry Name: UDP-notif option types
-     Registry Category: UDP-notif protocol.
-     Registration Procedure: Standard Action as defined in RFC8126
-     Maximum value: 255
-
-   These are the initial registrations for "UDP-notif options types":
-
-     Value: 0
-     Description: Reserved
-     Reference: this document
-
-     Value: TBD1 (suggested value: 1)
-     Description: Segmentation Option
-     Reference: this document
-
-     Value: TBD2 (suggested value: 2)
-     Description: Private Encoding Option
-     Reference: this document
-
-   IANA is also requested to assign a new URI from the IETF XML Registry
-   [RFC3688].  The following URI is suggested:
-
-   URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
-   Registrant Contact: The IESG.
-   XML: N/A; the requested URI is an XML namespace.
-
-   This document also requests a new YANG module name in the YANG Module
-   Names registry [RFC7950] with the following suggestion:
-
-   name: ietf-udp-notif
-   namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif
-   prefix: un
-   reference: RFC XXXX
+   [RFC6838] describes the procedure to add additional media types into
+   the standards, vendor or personal tree.
 
 10.  Acknowledgements
 
@@ -1001,14 +934,6 @@ Internet-Draft               unyte-udp-notif                January 2022
    Frenot, Timothy Carey, Tim Jenkins, Yunan Gu, Marco Tollini and Andy
    Bierman for their constructive suggestions for improving this
    document.
-
-
-
-
-Zheng, et al.             Expires July 20, 2022                [Page 18]
-
-Internet-Draft               unyte-udp-notif                January 2022
-
 
 11.  References
 
@@ -1019,9 +944,15 @@ Internet-Draft               unyte-udp-notif                January 2022
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
-              DOI 10.17487/RFC3688, January 2004,
-              <https://www.rfc-editor.org/info/rfc3688>.
+
+
+
+
+
+Zheng, et al.             Expires July 20, 2022                [Page 17]
+
+Internet-Draft               unyte-udp-notif                January 2022
+
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
@@ -1041,11 +972,6 @@ Internet-Draft               unyte-udp-notif                January 2022
               Guidelines", BCP 145, RFC 8085, DOI 10.17487/RFC8085,
               March 2017, <https://www.rfc-editor.org/info/rfc8085>.
 
-   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
-              Writing an IANA Considerations Section in RFCs", BCP 26,
-              RFC 8126, DOI 10.17487/RFC8126, June 2017,
-              <https://www.rfc-editor.org/info/rfc8126>.
-
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
@@ -1054,17 +980,6 @@ Internet-Draft               unyte-udp-notif                January 2022
               E., and A. Tripathy, "Subscription to YANG Notifications",
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
               <https://www.rfc-editor.org/info/rfc8639>.
-
-
-
-
-
-
-
-Zheng, et al.             Expires July 20, 2022                [Page 19]
-
-Internet-Draft               unyte-udp-notif                January 2022
-
 
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
@@ -1083,6 +998,17 @@ Internet-Draft               unyte-udp-notif                January 2022
               <https://www.rfc-editor.org/info/rfc8949>.
 
 11.2.  Informative References
+
+
+
+
+
+
+
+Zheng, et al.             Expires July 20, 2022                [Page 18]
+
+Internet-Draft               unyte-udp-notif                January 2022
+
 
    [I-D.draft-ietf-tls-dtls13]
               Rescorla, E., Tschofenig, H., and N. Modadugu, "The
@@ -1112,16 +1038,6 @@ Internet-Draft               unyte-udp-notif                January 2022
               ietf-netconf-notification-messages-08 (work in progress),
               November 2019.
 
-
-
-
-
-
-Zheng, et al.             Expires July 20, 2022                [Page 20]
-
-Internet-Draft               unyte-udp-notif                January 2022
-
-
    [IANA-MEDIA-TYPES]
               "IANA Media Types registry",
               <https://www.iana.org/assignments/media-types/media-
@@ -1140,6 +1056,14 @@ Authors' Addresses
    China
 
    Email: zhengguangying@huawei.com
+
+
+
+
+
+Zheng, et al.             Expires July 20, 2022                [Page 19]
+
+Internet-Draft               unyte-udp-notif                January 2022
 
 
    Tianran Zhou
@@ -1168,16 +1092,6 @@ Authors' Addresses
    Email: pierre.francois@insa-lyon.fr
 
 
-
-
-
-
-
-Zheng, et al.             Expires July 20, 2022                [Page 21]
-
-Internet-Draft               unyte-udp-notif                January 2022
-
-
    Alex Huang Feng
    INSA-Lyon
    Lyon
@@ -1203,30 +1117,4 @@ Internet-Draft               unyte-udp-notif                January 2022
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Zheng, et al.             Expires July 20, 2022                [Page 22]
+Zheng, et al.             Expires July 20, 2022                [Page 20]

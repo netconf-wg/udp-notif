@@ -384,18 +384,9 @@
             UDP-Notif messages. Different subscribers share the same Message
             ID sequence.</t>
 
-            <t>Defines the media-type of the encoded notification message
-            according to <xref target="RFC6838"/>. Registered standards,
-            vendor and personal tree media-types are listed at <xref
-            target="IANA-MEDIA-TYPES">"IANA Media Types registry</xref>.
-            Examples are: <list style="symbols">
-                <t>application/yang-data+json <xref target="RFC8040"/></t>
-
-                <t>application/yang-data+xml <xref target="RFC8040"/></t>
-
-                <t>application/yang-data+cbor <xref
-                target="I-D.ietf-core-yang-cbor"/></t>
-              </list></t>
+            <t>Media-Type is a 64-bit identifier which defines the media-type
+            of the encoded notification message according to <xref
+            target="RFC6838"/>.</t>
 
             <t>Options is a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
@@ -961,108 +952,17 @@ module ietf-udp-notif {
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This document is creating 2 registries called "UDP-notif encoding
-      types" and "UDP-notif option types" under the new heading "UDP-notif
-      protocol". The registration procedure is made using the Standards Action
-      process defined in <xref target="RFC8126"/>.</t>
+      <t>Registered media types are listed at <xref
+      target="IANA-MEDIA-TYPES">"IANA Media Types registry</xref>. Examples
+      are: <list style="symbols">
+          <t>application/yang-data+json <xref target="RFC8040"/></t>
 
-      <t>The first requested registry is the following:</t>
+          <t>application/yang-data+xml <xref target="RFC8040"/></t>
 
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif encoding types
-  Registry Category: UDP-notif protocol.
-  Registration Procedure: Standard Action as defined in RFC8126
-  Maximum value: 15]]></artwork>
-        </figure></t>
-
-      <t>These are the initial registrations for "UDP-notif encoding
-      types":</t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Value: 0
-  Description: Reserved
-  Reference: this document]]></artwork>
-        </figure></t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Value: 1
-  Description: Payload encoded in JSON
-  Reference: this document]]></artwork>
-        </figure></t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Value: 2
-  Description: Payload encoded in XML
-  Reference: this document]]></artwork>
-        </figure></t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Value: 3
-  Description: Payload encoded in CBOR
-  Reference: this document]]></artwork>
-        </figure></t>
-
-      <t>The second requested registry is the following:</t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif option types
-  Registry Category: UDP-notif protocol.
-  Registration Procedure: Standard Action as defined in RFC8126
-  Maximum value: 255]]></artwork>
-        </figure></t>
-
-      <t>These are the initial registrations for "UDP-notif options
-      types":</t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Value: 0
-  Description: Reserved
-  Reference: this document]]></artwork>
-        </figure></t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Value: TBD1 (suggested value: 1)
-  Description: Segmentation Option
-  Reference: this document]]></artwork>
-        </figure></t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-  Value: TBD2 (suggested value: 2)
-  Description: Private Encoding Option
-  Reference: this document]]></artwork>
-        </figure></t>
-
-      <t>IANA is also requested to assign a new URI from the <xref
-      target="RFC3688">IETF XML Registry</xref>. The following URI is
-      suggested:</t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
-Registrant Contact: The IESG.
-XML: N/A; the requested URI is an XML namespace.]]></artwork>
-        </figure></t>
-
-      <t>This document also requests a new YANG module name in the <xref
-      target="RFC7950">YANG Module Names registry</xref> with the following
-      suggestion:</t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[
-name: ietf-udp-notif
-namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif
-prefix: un
-reference: RFC XXXX]]></artwork>
-        </figure></t>
+          <t>application/yang-data+cbor <xref
+          target="I-D.ietf-core-yang-cbor"/></t>
+        </list> <xref target="RFC6838"/> describes the procedure to add
+      additional media types into the standards, vendor or personal tree.</t>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
@@ -1080,8 +980,6 @@ reference: RFC XXXX]]></artwork>
 
       <?rfc include='reference.RFC.8639'?>
 
-      <?rfc include='reference.RFC.8126'?>
-
       <?rfc include='reference.RFC.7950'?>
 
       <?rfc include='reference.RFC.8650'?>
@@ -1093,8 +991,6 @@ reference: RFC XXXX]]></artwork>
       <?rfc include='reference.RFC.5234'?>
 
       <?rfc include='reference.RFC.8446'?>
-
-      <?rfc include='reference.RFC.3688'?>
 
       <?rfc include='reference.RFC.8640'?>
 
