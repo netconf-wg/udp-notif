@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-netconf-udp-notif-04"
+<rfc category="std" docName="draft-ietf-netconf-udp-notif-05"
      ipr="trust200902">
   <front>
     <title abbrev="unyte-udp-notif">UDP-based Transport for Configured
@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="16" month="January" year="2022"/>
+    <date day="13" month="February" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -305,7 +305,9 @@
 
             <t>Notification Message is the encoded content that the
             publication stream transports. The common encoding methods
-            include, <xref target="RFC8949">CBOR</xref>, JSON, and XML. <xref
+            include, <xref target="RFC8949">CBOR</xref>, <xref
+            target="RFC8040">JSON</xref>, and <xref
+            target="RFC8040">XML</xref>. <xref
             target="I-D.ietf-netconf-notification-messages"/> describes the
             structure of the Notification Message for single notifications and
             bundled notifications.</t>
@@ -335,17 +337,14 @@
           <artwork align="center"><![CDATA[
   0                   1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
- +-----+---------+---------------+-------------------------------+
- | Ver | Unused  |  Header Len   |      Message Length           |
- +-----+---------+---------------+-------------------------------+
+ +-----+-+-------+---------------+-------------------------------+
+ | Ver |S|  MT   |  Header Len   |      Message Length           |
+ +-----+-+-------+---------------+-------------------------------+
  |                    Observation-Domain-ID                      |
  +---------------------------------------------------------------+
  |                         Message-ID                            |
  +---------------------------------------------------------------+
- |                         Media-Type                            |
- |                                                               |
- +---------------------------------------------------------------+
- |                          Options                              |
+ ~                          Options                              ~
  +---------------------------------------------------------------+
 
 ]]></artwork>
@@ -357,9 +356,28 @@
 
         <t><list style="symbols">
             <t>Ver represents the PDU (Protocol Data Unit) encoding version.
-            The initial version value is 1.</t>
+            The initial version value is 0.</t>
 
-            <t>Unused header space.</t>
+            <t>S represents the space of media type specified in the MT field.
+            When S is unset, MT represents the standard media types as defined
+            in this document. When S is set, MT represents a private space to
+            be freely used for non standard encodings.</t>
+
+            <t>MT is a 4 bit identifier to indicate the media type used for
+            the Notification Message. 16 types of encoding can be expressed.
+            When the S bit is unset, the following values apply:<list
+                style="symbols">
+                <t>0: Reserved;</t>
+
+                <t>application/yang-data+json <xref target="RFC8040"/></t>
+
+                <t>application/yang-data+xml <xref target="RFC8040"/></t>
+
+                <t>application/yang-data+cbor <xref
+                target="I-D.ietf-core-yang-cbor"/></t>
+
+                <t>others are reserved.</t>
+              </list></t>
 
             <t>Header Len is the length of the message header in octets,
             including both the fixed header and the options.</t>
@@ -384,10 +402,6 @@
             UDP-Notif messages. Different subscribers share the same Message
             ID sequence.</t>
 
-            <t>Media-Type is a 64-bit identifier which defines the media-type
-            of the encoded notification message according to <xref
-            target="RFC6838"/>.</t>
-
             <t>Options is a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
             fixed header, Options TLVs follow directly after the fixed message
@@ -406,10 +420,10 @@
         encodings.</t>
 
         <t>Private encodings can be supported through the use of the S bit of
-        the header. When the S bit is set, the value of the ET field is left
+        the header. When the S bit is set, the value of the MT field is left
         to be defined and agreed upon by the users of the private encoding. An
         option is defined in <xref target="sec_enc_opt"/> for more verbose
-        encoding descriptions than what can be described with the ET
+        encoding descriptions than what can be described with the MT
         field.</t>
 
         <t>Implementation MAY support multiple encoding methods per
@@ -506,7 +520,7 @@
       </section>
 
       <section anchor="sec_enc_opt" title="Private Encoding Option">
-        <t>The space to describe private encodings in the ET field of the
+        <t>The space to describe private encodings in the MT field of the
         UDP-Notif header being limited, an option is provided to describe
         custom encodings. The fields of this option are as follows.</t>
 
@@ -897,9 +911,9 @@ module ietf-udp-notif {
   identity encode-cbor {
     base sn:encoding;
     description
-      "Encode data using CBOR as described in RFC 7049.";
+      "Encode data using CBOR as described in RFC 8949.";
     reference
-      "RFC 7049: Concise Binary Object Representation";
+      "RFC 8949: Concise Binary Object Representation";
   }
 
   grouping target-receiver {
@@ -952,25 +966,115 @@ module ietf-udp-notif {
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>Registered media types are listed at <xref
-      target="IANA-MEDIA-TYPES">"IANA Media Types registry</xref>. Examples
-      are: <list style="symbols">
-          <t>application/yang-data+json <xref target="RFC8040"/></t>
+      <t>This document is creating 2 registries called "UDP-notif encoding
+      types" and "UDP-notif option types" under the new heading "UDP-notif
+      protocol". The registration procedure is made using the Standards Action
+      process defined in <xref target="RFC8126"/>.</t>
 
-          <t>application/yang-data+xml <xref target="RFC8040"/></t>
+      <t>The first requested registry is the following:</t>
 
-          <t>application/yang-data+cbor <xref
-          target="I-D.ietf-core-yang-cbor"/></t>
-        </list> <xref target="RFC6838"/> describes the procedure to add
-      additional media types into the standards, vendor or personal tree.</t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Registry Name: UDP-notif media types
+  Registry Category: UDP-notif protocol.
+  Registration Procedure: Standard Action as defined in RFC8126
+  Maximum value: 15]]></artwork>
+        </figure></t>
+
+      <t>These are the initial registrations for "UDP-notif encoding
+      types":</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 0
+  Description: Reserved
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 1
+  Description: media type application/yang-data+json
+  Reference: <xref target="RFC8040"/>]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 2
+  Description: media type application/yang-data+xml
+  Reference: <xref target="RFC8040"/>]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 3
+  Description: media type application/yang-data+cbor
+  Reference: <xref target="I-D.ietf-core-yang-cbor"/>]]></artwork>
+        </figure></t>
+
+      <t>The second requested registry is the following:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Registry Name: UDP-notif option types
+  Registry Category: UDP-notif protocol.
+  Registration Procedure: Standard Action as defined in RFC8126
+  Maximum value: 255]]></artwork>
+        </figure></t>
+
+      <t>These are the initial registrations for "UDP-notif options
+      types":</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 0
+  Description: Reserved
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: TBD1 (suggested value: 1)
+  Description: Segmentation Option
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: TBD2 (suggested value: 2)
+  Description: Private Encoding Option
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t>IANA is also requested to assign a new URI from the <xref
+      target="RFC3688">IETF XML Registry</xref>. The following URI is
+      suggested:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.]]></artwork>
+        </figure></t>
+
+      <t>This document also requests a new YANG module name in the <xref
+      target="RFC7950">YANG Module Names registry</xref> with the following
+      suggestion:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+name: ietf-udp-notif
+namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif
+prefix: un
+reference: RFC XXXX]]></artwork>
+        </figure></t>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors of this documents would like to thank Alexander Clemm,
       Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
-      Frenot, Timothy Carey, Tim Jenkins, Yunan Gu, Marco Tollini and Andy
-      Bierman for their constructive suggestions for improving this
-      document.</t>
+      Frenot, Timothy Carey, Tim Jenkins, Yunan Gu and Marco Tollini for their
+      constructive suggestions for improving this document.</t>
     </section>
   </middle>
 
@@ -978,23 +1082,25 @@ module ietf-udp-notif {
     <references title="Normative References">
       <?rfc include='reference.RFC.2119'?>
 
-      <?rfc include='reference.RFC.8639'?>
-
-      <?rfc include='reference.RFC.7950'?>
-
-      <?rfc include='reference.RFC.8650'?>
-
-      <?rfc include='reference.RFC.8085'?>
-
-      <?rfc include='reference.RFC.8949'?>
+      <?rfc include='reference.RFC.3688'?>
 
       <?rfc include='reference.RFC.5234'?>
 
+      <?rfc include='reference.RFC.7950'?>
+
+      <?rfc include='reference.RFC.8085'?>
+
+      <?rfc include='reference.RFC.8126'?>
+
       <?rfc include='reference.RFC.8446'?>
+
+      <?rfc include='reference.RFC.8639'?>
 
       <?rfc include='reference.RFC.8640'?>
 
-      <?rfc include='reference.RFC.6838'?>
+      <?rfc include='reference.RFC.8650'?>
+
+      <?rfc include='reference.RFC.8949'?>
     </references>
 
     <references title="Informative References">
@@ -1005,46 +1111,6 @@ module ietf-udp-notif {
       <?rfc include='reference.RFC.8040'?>
 
       <?rfc include='reference.I-D.ietf-core-yang-cbor'?>
-
-      <reference anchor="IANA-MEDIA-TYPES"
-                 target="https://www.iana.org/assignments/media-types/media-types.xhtml">
-        <front>
-          <title>IANA Media Types registry</title>
-
-          <author/>
-
-          <date/>
-        </front>
-      </reference>
-
-      <!--
-    <reference anchor="I-D.unyte-udp-notif-dtls" target="">
-        <front>
-          <title>DTLS for UDP-Notif</title>
-
-          <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
-            <organization>INSA-Lyon</organization>
-          </author>
-
-          <author fullname="Pierre Francois" initials="P." surname="Francois">
-            <organization>INSA-Lyon</organization>
-          </author>
-
-          <author fullname="Tianran Zhou" initials="T." surname="Zhou">
-            <organization>Huawei</organization>
-          </author>
-
-          <author fullname="Marco Tollini" initials="M." surname="Tollini">
-            <organization>Swisscom</organization>
-          </author>
-
-          <date month="July" year="2021"/>
-        </front>
-
-        <seriesInfo name="Internet-Draft"
-                    value="draft-unyte-udp-notif-dtls-00"/>
-      </reference>
--->
 
       <reference anchor="I-D.draft-ietf-tls-dtls13" target="">
         <front>
