@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="13" month="February" year="2022"/>
+    <date day="15" month="February" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -369,14 +369,12 @@
                 style="symbols">
                 <t>0: Reserved;</t>
 
-                <t>application/yang-data+json <xref target="RFC8040"/></t>
+                <t>1: application/yang-data+json <xref target="RFC8040"/></t>
 
-                <t>application/yang-data+xml <xref target="RFC8040"/></t>
+                <t>2: application/yang-data+xml <xref target="RFC8040"/></t>
 
-                <t>application/yang-data+cbor <xref
+                <t>3: application/yang-data+cbor <xref
                 target="I-D.ietf-core-yang-cbor"/></t>
-
-                <t>others are reserved.</t>
               </list></t>
 
             <t>Header Len is the length of the message header in octets,
@@ -966,10 +964,10 @@ module ietf-udp-notif {
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This document is creating 2 registries called "UDP-notif encoding
-      types" and "UDP-notif option types" under the new heading "UDP-notif
-      protocol". The registration procedure is made using the Standards Action
-      process defined in <xref target="RFC8126"/>.</t>
+      <t>This document is creating 2 registries called "UDP-notif media types"
+      and "UDP-notif option types" under the new heading "UDP-notif protocol".
+      The registration procedure is made using the Standards Action process
+      defined in <xref target="RFC8126"/>.</t>
 
       <t>The first requested registry is the following:</t>
 
@@ -981,8 +979,7 @@ module ietf-udp-notif {
   Maximum value: 15]]></artwork>
         </figure></t>
 
-      <t>These are the initial registrations for "UDP-notif encoding
-      types":</t>
+      <t>These are the initial registrations for "UDP-notif media types":</t>
 
       <t><figure>
           <artwork align="left"><![CDATA[
