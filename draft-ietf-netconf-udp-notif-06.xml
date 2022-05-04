@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="3" month="March" year="2022"/>
+    <date day="4" month="May" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -833,11 +833,12 @@
     </section>
 
     <section anchor="sec_yang_model" title="YANG Module">
-      <t/>
+      <t>
+      </t>
 
       <t><figure>
           <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif@2020-10-18.yang"
+<CODE BEGINS> file "ietf-udp-notif@2022-05-04.yang"
 module ietf-udp-notif {
   yang-version 1.1;
   namespace
@@ -853,6 +854,11 @@ module ietf-udp-notif {
     reference
       "RFC 6991: Common YANG Data Types";
   }
+  import ietf-tls-server {
+    prefix tlss;
+    reference
+      "RFC YYYY: YANG Groupings for TLS Clients and TLS Servers";
+  }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
   contact
@@ -867,6 +873,8 @@ module ietf-udp-notif {
                <mailto:thomas.graf@swisscom.com>
                Pierre Francois
                <mailto:pierre.francois@insa-lyon.fr>
+               Alex Huang Feng
+               <mailto:alex.huang-feng@insa-lyon.fr>
                Paolo Lucente
                <mailto:paolo@ntt.net>";
 
@@ -886,9 +894,9 @@ module ietf-udp-notif {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2021-10-18 {
+  revision 2022-05-04 {
     description
-    "Slight change to the name of two parameters.";
+    "Add DTLS as part of the YANG module. Changed grouping to 'udp-receiver-grouping' instead of 'target-receiver'.";
     reference
     "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -921,7 +929,7 @@ module ietf-udp-notif {
         Data Modeled with YANG";
   }
 
-  grouping target-receiver {
+  grouping udp-receiver-grouping {
     description
       "Provides a reusable description of a UDP-Notif target
       receiver.";
@@ -950,10 +958,25 @@ module ietf-udp-notif {
     }
 
     leaf max-segmentation-size {
-    when "../enable-segmentation = 'true'";
-    type uint32;
-    description "UDP-Notif provides a configurable 
-      max-segmentation-size to control the size of each message.";
+      when "../enable-segmentation = 'true'";
+      type uint32;
+      description "UDP-Notif provides a configurable 
+        max-segmentation-size to control the size of each message.";
+    }
+
+    leaf enable-dtls {
+      type boolean;
+      default false;
+      description
+        "The switch for the DTLS encryption feature. When disabled, the
+        publisher will not allow fragment for a very large data";
+    }
+
+    leaf dtls {
+      when "../enable-dtls = 'true'";
+      type uint32;
+      description "UDP-Notif provides a configurable 
+        max-segmentation-size to control the size of each message.";
     }
   }
 
@@ -963,7 +986,7 @@ module ietf-udp-notif {
       "This augmentation allows UDP-Notif specific parameters to be
        exposed for a subscription.";
 
-    uses target-receiver;
+    uses udp-receiver-grouping;
   }
 }
 <CODE ENDS>]]></artwork>
