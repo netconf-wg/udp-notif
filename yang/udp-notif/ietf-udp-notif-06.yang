@@ -13,8 +13,8 @@ module ietf-udp-notif {
     reference
       "RFC 6991: Common YANG Data Types";
   }
-  import ietf-tls-server {
-    prefix tlss;
+  import ietf-tls-client {
+    prefix tlsc;
     reference
       "RFC YYYY: YANG Groupings for TLS Clients and TLS Servers";
   }
@@ -153,7 +153,7 @@ module ietf-udp-notif {
     container dtls {
       when "../enable-dtls = 'true'";
       if-feature dtls-supported;
-      uses tlss:tls-server-grouping;
+      uses tlsc:tls-client-grouping;
       description 
         "Container for configuring DTLS parameters if DTLS is enabled.";
     }

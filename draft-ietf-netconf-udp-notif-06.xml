@@ -831,36 +831,36 @@ module: ietf-udp-notif
     +--rw port                     inet:port-number
     +--rw enable-segmentation?     boolean {segmentation}?
     +--rw max-segmentation-size?   uint32 {segmentation}?
-    +--rw enable-dtls?             boolean {dtls-encryption}?
-    +--rw dtls {dtls-encryption}?
-       +--rw server-identity
+    +--rw enable-dtls?             boolean {dtls-supported}?
+    +--rw dtls {dtls-supported}?
+       +--rw client-identity!
        |  +--rw (auth-type)
-       |     +--:(certificate) {server-ident-x509-cert}?
+       |     +--:(certificate) {client-ident-x509-cert}?
        |     |     ...
-       |     +--:(raw-private-key) {server-ident-raw-public-key}?
+       |     +--:(raw-public-key) {client-ident-raw-public-key}?
        |     |     ...
-       |     +--:(tls12-psk) {server-ident-tls12-psk}?
+       |     +--:(tls12-psk) {client-ident-tls12-psk}?
        |     |     ...
-       |     +--:(tls13-epsk) {server-ident-tls13-epsk}?
+       |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
        |           ...
-       +--rw client-authentication! {client-auth-supported}?
-       |  +--rw ca-certs! {client-auth-x509-cert}?
+       +--rw server-authentication
+       |  +--rw ca-certs! {server-auth-x509-cert}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw ee-certs! {client-auth-x509-cert}?
+       |  +--rw ee-certs! {server-auth-x509-cert}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw raw-public-keys! {client-auth-raw-public-key}?
+       |  +--rw raw-public-keys! {server-auth-raw-public-key}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw tls12-psks?        empty {client-auth-tls12-psk}?
-       |  +--rw tls13-epsks?       empty {client-auth-tls13-epsk}?
+       |  +--rw tls12-psks?        empty {server-auth-tls12-psk}?
+       |  +--rw tls13-epsks?       empty {server-auth-tls13-epsk}?
        +--rw hello-params {tlscmn:hello-params}?
        |  +--rw tls-versions
        |  |  +--rw tls-version*   identityref
        |  +--rw cipher-suites
        |     +--rw cipher-suite*   identityref
-       +--rw keepalives {tls-server-keepalives}?
+       +--rw keepalives {tls-client-keepalives}?
           +--rw peer-allowed-to-send?   empty
           +--rw test-peer-aliveness!
              +--rw max-wait?       uint16
@@ -895,8 +895,8 @@ module ietf-udp-notif {
     reference
       "RFC 6991: Common YANG Data Types";
   }
-  import ietf-tls-server {
-    prefix tlss;
+  import ietf-tls-client {
+    prefix tlsc;
     reference
       "RFC YYYY: YANG Groupings for TLS Clients and TLS Servers";
   }
@@ -1035,7 +1035,7 @@ module ietf-udp-notif {
     container dtls {
       when "../enable-dtls = 'true'";
       if-feature dtls-supported;
-      uses tlss:tls-server-grouping;
+      uses tlsc:tls-client-grouping;
       description 
         "Container for configuring DTLS parameters if DTLS is enabled.";
     }
