@@ -1,7 +1,7 @@
 # IETF Drafts
 
 ## Requirements
-- pyang
+- pyang (tested in pyang==2.5.3)
 - xml2rfc
 
 ## UDP-notif

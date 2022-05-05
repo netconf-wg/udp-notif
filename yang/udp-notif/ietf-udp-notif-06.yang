@@ -55,10 +55,11 @@ module ietf-udp-notif {
 
   revision 2022-05-04 {
     description
-      "Add DTLS as part of the YANG module. 
+      "Add DTLS container for its parameters. 
       Changed grouping name to 'udp-receiver-grouping'.
       Port mandatory.
-      Add segmentation feature.";
+      Add segmentation feature.
+      Add dtls-supported feature.";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -71,7 +72,7 @@ module ietf-udp-notif {
       "This feature indicates that CBOR encoding of notification
        messages is supported.";
   }
-  feature dtls-encryption {
+  feature dtls-supported {
     description
       "This feature indicates that DTLS encryption of notification
        messages is supported.";
@@ -141,7 +142,7 @@ module ietf-udp-notif {
     }
 
     leaf enable-dtls {
-      if-feature dtls-encryption;
+      if-feature dtls-supported;
       type boolean;
       default false;
       description
@@ -151,11 +152,10 @@ module ietf-udp-notif {
 
     container dtls {
       when "../enable-dtls = 'true'";
-      if-feature dtls-encryption;
+      if-feature dtls-supported;
       uses tlss:tls-server-grouping;
       description 
-        "TODO: UDP-Notif provides a configurable 
-        max-segmentation-size to control the size of each message.";
+        "Container for configuring DTLS parameters if DTLS is enabled.";
     }
   }
 
