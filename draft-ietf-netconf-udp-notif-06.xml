@@ -935,7 +935,7 @@ module ietf-udp-notif {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2022-05-04 {
+  revision 2022-05-09 {
     description
       "Added container for DTLS parameters.
       Changed grouping name to 'udp-receiver-grouping'.
