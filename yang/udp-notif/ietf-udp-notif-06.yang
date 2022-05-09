@@ -55,11 +55,11 @@ module ietf-udp-notif {
 
   revision 2022-05-04 {
     description
-      "Add DTLS container for its parameters. 
+      "Added container for DTLS parameters.
       Changed grouping name to 'udp-receiver-grouping'.
-      Port mandatory.
-      Add segmentation feature.
-      Add dtls-supported feature.";
+      Port made mandatory.
+      Added segmentation feature.
+      Added dtls-supported feature.";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -119,8 +119,7 @@ module ietf-udp-notif {
       type inet:port-number;
       mandatory true;
       description
-        "Port number of target UDP-Notif receiver, if not specified,
-        the system should use default port number.";
+        "Port number of target UDP-Notif receiver.";
     }
 
     leaf enable-segmentation {
@@ -138,7 +137,7 @@ module ietf-udp-notif {
       type uint32;
       description 
         "UDP-Notif provides a configurable max-segmentation-size to
-        control the size of each message.";
+        control the size of each segment.";
     }
 
     leaf enable-dtls {
