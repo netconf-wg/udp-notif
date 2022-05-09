@@ -59,7 +59,8 @@ module ietf-udp-notif {
       Changed grouping name to 'udp-receiver-grouping'.
       Port made mandatory.
       Added segmentation feature.
-      Added dtls-supported feature.";
+      Added dtls-supported feature.
+      Changed 'max-segmentation-size' leaf name to 'max-segment-size'.";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -131,13 +132,14 @@ module ietf-udp-notif {
         publisher will not allow fragment for a very large data";
     }
 
-    leaf max-segmentation-size {
+    leaf max-segment-size {
       when "../enable-segmentation = 'true'";
       if-feature segmentation;
       type uint32;
       description 
-        "UDP-Notif provides a configurable max-segmentation-size to
-        control the size of each segment.";
+        "UDP-Notif provides a configurable max-segment-size to
+        control the size of each segment (UDP-Notif header, with
+        options, included).";
     }
 
     leaf enable-dtls {

@@ -792,7 +792,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
        +--rw address                  inet:ip-address
        +--rw port                     inet:port-number
        +--rw enable-segmentation?     boolean {segmentation}?
-       +--rw max-segmentation-size?   uint32 {segmentation}?
+       +--rw max-segment-size?        uint32 {segmentation}?
        +--rw enable-dtls?             boolean {dtls-supported}?
        +--rw dtls {dtls-supported}?
           +--rw client-identity!
@@ -842,7 +842,7 @@ Zheng, et al.           Expires 10 November 2022               [Page 15]
 Internet-Draft               unyte-udp-notif                    May 2022
 
 
-   <CODE BEGINS> file "ietf-udp-notif@2022-05-05.yang"
+   <CODE BEGINS> file "ietf-udp-notif@2022-05-09.yang"
    module ietf-udp-notif {
      yang-version 1.1;
      namespace
@@ -912,7 +912,8 @@ Internet-Draft               unyte-udp-notif                    May 2022
          Changed grouping name to 'udp-receiver-grouping'.
          Port made mandatory.
          Added segmentation feature.
-         Added dtls-supported feature.";
+         Added dtls-supported feature.
+         Changed 'max-segmentation-size' leaf name to 'max-segment-size'.";
        reference
          "RFC XXXX: UDP-based Transport for Configured Subscriptions";
      }
@@ -945,7 +946,6 @@ Internet-Draft               unyte-udp-notif                    May 2022
          "UDP-Notif is used as transport for notification messages
            and state change notifications.";
      }
-
 
 
 
@@ -992,16 +992,16 @@ Internet-Draft               unyte-udp-notif                    May 2022
            publisher will not allow fragment for a very large data";
        }
 
-       leaf max-segmentation-size {
+       leaf max-segment-size {
          when "../enable-segmentation = 'true'";
          if-feature segmentation;
          type uint32;
          description
-           "UDP-Notif provides a configurable max-segmentation-size to
-           control the size of each segment.";
+           "UDP-Notif provides a configurable max-segment-size to
+           control the size of each segment (UDP-Notif header, with
+           options, included).";
        }
 
-       leaf enable-dtls {
 
 
 
@@ -1010,6 +1010,7 @@ Zheng, et al.           Expires 10 November 2022               [Page 18]
 Internet-Draft               unyte-udp-notif                    May 2022
 
 
+       leaf enable-dtls {
          if-feature dtls-supported;
          type boolean;
          default false;
@@ -1057,7 +1058,6 @@ Internet-Draft               unyte-udp-notif                    May 2022
      Value: 0
      Description: Reserved
      Reference: this document
-
 
 
 
