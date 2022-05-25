@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="9" month="May" year="2022"/>
+    <date day="25" month="May" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -923,8 +923,8 @@ module ietf-udp-notif {
     "Defines UDP-Notif as a supported transport for subscribed
     event notifications.
 
-    Copyright (c) 2018 IETF Trust and the persons identified as authors
-    of the code.  All rights reserved.
+    Copyright (c) 2018-2022 IETF Trust and the persons identified as
+    authors of the code.  All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
     modification, is permitted pursuant to, and subject to the license
@@ -935,7 +935,7 @@ module ietf-udp-notif {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2022-05-09 {
+  revision 2022-05-25 {
     description
       "Added container for DTLS parameters.
       Changed grouping name to 'udp-receiver-grouping'.

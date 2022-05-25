@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 10 November 2022                                        T. Graf
+Expires: 26 November 2022                                        T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                              9 May 2022
+                                                             25 May 2022
 
 
             UDP-based Transport for Configured Subscriptions
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 November 2022.
+   This Internet-Draft will expire on 26 November 2022.
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 1]
+Zheng, et al.           Expires 26 November 2022                [Page 1]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 2]
+Zheng, et al.           Expires 26 November 2022                [Page 2]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -165,7 +165,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 3]
+Zheng, et al.           Expires 26 November 2022                [Page 3]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -221,7 +221,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 4]
+Zheng, et al.           Expires 26 November 2022                [Page 4]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -277,7 +277,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 5]
+Zheng, et al.           Expires 26 November 2022                [Page 5]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -333,7 +333,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 6]
+Zheng, et al.           Expires 26 November 2022                [Page 6]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -389,7 +389,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 7]
+Zheng, et al.           Expires 26 November 2022                [Page 7]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -445,7 +445,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 8]
+Zheng, et al.           Expires 26 November 2022                [Page 8]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -501,7 +501,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022                [Page 9]
+Zheng, et al.           Expires 26 November 2022                [Page 9]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -557,7 +557,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 10]
+Zheng, et al.           Expires 26 November 2022               [Page 10]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -613,7 +613,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 11]
+Zheng, et al.           Expires 26 November 2022               [Page 11]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -669,7 +669,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 12]
+Zheng, et al.           Expires 26 November 2022               [Page 12]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -725,7 +725,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 13]
+Zheng, et al.           Expires 26 November 2022               [Page 13]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -781,7 +781,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 14]
+Zheng, et al.           Expires 26 November 2022               [Page 14]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -837,7 +837,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 15]
+Zheng, et al.           Expires 26 November 2022               [Page 15]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -886,14 +886,14 @@ Internet-Draft               unyte-udp-notif                    May 2022
        "Defines UDP-Notif as a supported transport for subscribed
        event notifications.
 
-       Copyright (c) 2018 IETF Trust and the persons identified as authors
-       of the code.  All rights reserved.
+       Copyright (c) 2018-2022 IETF Trust and the persons identified as
+       authors of the code.  All rights reserved.
 
        Redistribution and use in source and binary forms, with or without
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 16]
+Zheng, et al.           Expires 26 November 2022               [Page 16]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -906,7 +906,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
        This version of this YANG module is part of RFC XXXX; see the RFC
        itself for full legal notices.";
 
-     revision 2022-05-04 {
+     revision 2022-05-25 {
        description
          "Added container for DTLS parameters.
          Changed grouping name to 'udp-receiver-grouping'.
@@ -949,7 +949,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 17]
+Zheng, et al.           Expires 26 November 2022               [Page 17]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -1005,7 +1005,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 18]
+Zheng, et al.           Expires 26 November 2022               [Page 18]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -1061,7 +1061,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 19]
+Zheng, et al.           Expires 26 November 2022               [Page 19]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -1117,7 +1117,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 20]
+Zheng, et al.           Expires 26 November 2022               [Page 20]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -1173,7 +1173,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 21]
+Zheng, et al.           Expires 26 November 2022               [Page 21]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -1229,7 +1229,7 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 22]
+Zheng, et al.           Expires 26 November 2022               [Page 22]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -1285,7 +1285,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 23]
+Zheng, et al.           Expires 26 November 2022               [Page 23]
 
 Internet-Draft               unyte-udp-notif                    May 2022
 
@@ -1341,4 +1341,4 @@ Internet-Draft               unyte-udp-notif                    May 2022
 
 
 
-Zheng, et al.           Expires 10 November 2022               [Page 24]
+Zheng, et al.           Expires 26 November 2022               [Page 24]
