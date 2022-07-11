@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="29" month="June" year="2022"/>
+    <date day="11" month="July" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -354,7 +354,7 @@
 
         <t><list style="symbols">
             <t>Ver represents the PDU (Protocol Data Unit) encoding version.
-            The initial version value is 0.</t>
+            The current version value is 1.</t>
 
             <t>S represents the space of media type specified in the MT field.
             When S is unset, MT represents the standard media types as defined
