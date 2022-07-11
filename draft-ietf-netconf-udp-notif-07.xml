@@ -1,0 +1,1265 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc category="std" docName="draft-ietf-netconf-udp-notif-07"
+     ipr="trust200902">
+  <front>
+    <title abbrev="unyte-udp-notif">UDP-based Transport for Configured
+    Subscriptions</title>
+
+    <author fullname="Guangying Zheng" initials="G." surname="Zheng">
+      <organization>Huawei</organization>
+
+      <address>
+        <postal>
+          <street>101 Yu-Hua-Tai Software Road</street>
+
+          <city>Nanjing</city>
+
+          <code/>
+
+          <region>Jiangsu</region>
+
+          <country>China</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>zhengguangying@huawei.com</email>
+      </address>
+    </author>
+
+    <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+      <organization>Huawei</organization>
+
+      <address>
+        <postal>
+          <street>156 Beiqing Rd., Haidian District</street>
+
+          <city>Beijing</city>
+
+          <region/>
+
+          <code/>
+
+          <country>China</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>zhoutianran@huawei.com</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Thomas Graf" initials="T." surname="Graf">
+      <organization>Swisscom</organization>
+
+      <address>
+        <postal>
+          <street>Binzring 17</street>
+
+          <city>Zuerich 8045</city>
+
+          <region/>
+
+          <code/>
+
+          <country>Switzerland</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>thomas.graf@swisscom.com</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Pierre Francois" initials="P." surname="Francois">
+      <organization>INSA-Lyon</organization>
+
+      <address>
+        <postal>
+          <street/>
+
+          <city>Lyon</city>
+
+          <region/>
+
+          <code/>
+
+          <country>France</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>pierre.francois@insa-lyon.fr</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
+      <organization>INSA-Lyon</organization>
+
+      <address>
+        <postal>
+          <street/>
+
+          <city>Lyon</city>
+
+          <region/>
+
+          <code/>
+
+          <country>France</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>alex.huang-feng@insa-lyon.fr</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <author fullname="Paolo Lucente" initials="P." surname="Lucente">
+      <organization>NTT</organization>
+
+      <address>
+        <postal>
+          <street>Siriusdreef 70-72</street>
+
+          <city>Hoofddorp, WT 2132</city>
+
+          <region/>
+
+          <code/>
+
+          <country>NL</country>
+        </postal>
+
+        <phone/>
+
+        <facsimile/>
+
+        <email>paolo@ntt.net</email>
+
+        <uri/>
+      </address>
+    </author>
+
+    <date day="29" month="June" year="2022"/>
+
+    <workgroup>NETCONF</workgroup>
+
+    <abstract>
+      <t>This document describes an UDP-based notification mechanism to
+      collect data from networking devices. A shim header is proposed to
+      facilitate the data streaming directly from the publishing process on
+      network processor of line cards to receivers. The objective is to
+      provide a lightweight approach to enable higher frequency and less
+      performance impact on publisher and receiver processes compared to
+      already established notification mechanisms.</t>
+    </abstract>
+
+    <note title="Requirements Language">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+      document are to be interpreted as described in <xref
+      target="RFC2119">RFC 2119</xref>.</t>
+    </note>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t><xref target="RFC8639">Sub-Notif</xref> defines a mechanism that lets
+      a receiver subscribe to the publication of YANG-defined data maintained
+      in a <xref target="RFC7950">YANG</xref> datastore. The mechanism
+      separates the management and control of subscriptions from the transport
+      used to deliver the data. Three transport mechanisms, namely <xref
+      target="RFC8640">NETCONF transport</xref>, <xref
+      target="RFC8650">RESTCONF transport</xref>, and <xref
+      target="I-D.ietf-netconf-https-notif">HTTPS transport</xref> have been
+      defined so far for such notification messages.</t>
+
+      <t>While powerful in their features and general in their architecture,
+      the currently available transport mechanisms need to be complemented to
+      support data publications at high velocity from devices that feature a
+      distributed architecture. The currently available transports are based
+      on TCP and lack the efficiency needed to continuously send notifications
+      at high velocity.</t>
+
+      <t>This document specifies a transport option for Sub-Notif that
+      leverages UDP. Specifically, it facilitates the distributed data
+      collection mechanism described in <xref
+      target="I-D.ietf-netconf-distributed-notif"/>. In the case of publishing
+      from multiple network processors on multiple line cards, centralized
+      designs require data to be internally forwarded from those network
+      processors to the push server, presumably on a route processor, which
+      then combines the individual data items into a single consolidated
+      stream. The centralized data collection mechanism can result in a
+      performance bottleneck, especially when large amounts of data are
+      involved.</t>
+
+      <t>What is needed is a mechanism that allows for directly publishing
+      from multiple network processors on line cards, without passing them
+      through an additional processing stage for internal consolidation. The
+      proposed UDP-based transport allows for such a distributed data
+      publishing approach.</t>
+
+      <t><list style="symbols">
+          <t>Firstly, a UDP approach reduces the burden of maintaining a large
+          amount of active TCP connections at the receiver, notably in cases
+          where it collects data from network processors on line cards from a
+          large amount of networking devices.</t>
+
+          <t>Secondly, as no connection state needs to be maintained, UDP
+          encapsulation can be easily implemented by the hardware of the
+          publication streamer, which will further improve performance.</t>
+
+          <t>Ultimately, such advantages allow for a larger data analysis
+          feature set, as more voluminous, finer grained data sets can be
+          streamed to the receiver.</t>
+        </list></t>
+
+      <t>The transport described in this document can be used for transmitting
+      notification messages over both IPv4 and IPv6.</t>
+
+      <t>This document describes the notification mechanism. It is intended to
+      be used in conjunction with <xref target="RFC8639"/>, extended by <xref
+      target="I-D.ietf-netconf-distributed-notif"/>.</t>
+
+      <t><xref target="sec_transport"/> describes the control of the proposed
+      transport mechanism. <xref target="sec_ups_transport"/> details the
+      notification mechanism and message format. <xref target="sec_options"/>
+      describes the use of options in the notification message header. <xref
+      target="sec_applicability"/> covers the applicability of the proposed
+      mechanism. <xref target="sec_dtls_udp_notif"/> describes a mechanism to
+      secure the protocol in open networks.</t>
+    </section>
+
+    <section anchor="sec_transport"
+             title="Configured Subscription to UDP-Notif">
+      <t>This section describes how the proposed mechanism can be controlled
+      using subscription channels based on NETCONF or RESTCONF.</t>
+
+      <t>Following the usual approach of Sub-Notif, configured subscriptions
+      contain the location information of all the receivers, including the IP
+      address and the port number, so that the publisher can actively send
+      UDP-Notif messages to the corresponding receivers.</t>
+
+      <t>Note that receivers MAY NOT be already up and running when the
+      configuration of the subscription takes effect on the monitored device.
+      The first message MUST be a separate subscription-started notification
+      to indicate the Receiver that the stream has started flowing. Then, the
+      notifications can be sent immediately without delay. All the
+      subscription state notifications, as defined in <xref
+      target="RFC8639"/>, MUST be encapsulated in separate notification
+      messages.</t>
+    </section>
+
+    <section anchor="sec_ups_transport" title="UDP-Based Transport">
+      <t>In this section, we specify the UDP-Notif Transport behavior. <xref
+      target="sec_design"/> describes the general design of the solution.
+      <xref target="sec_ups_format"/> specifies the UDP-Notif message format.
+      <xref target="sec_options"/> describes a generic optional sub TLV
+      format. <xref target="sec_fragmentation"/> uses such options to provide
+      a segmentation solution for large UDP-Notif message payloads. <xref
+      target="sec_encoding"/> describes the encoding of the message
+      payload.</t>
+
+      <section anchor="sec_design" title="Design Overview">
+        <t>As specified in Sub-Notif, the telemetry data is encapsulated in
+        the NETCONF/RESTCONF notification message, which is then encapsulated
+        and carried using transport protocols such as TLS or HTTP2. This
+        document defines a UDP based transport. <xref
+        target="fig_ups_message"/> illustrates the structure of an UDP-Notif
+        message.</t>
+
+        <t><list style="symbols">
+            <t>The Message Header contains information that facilitate the
+            message transmission before deserializing the notification
+            message.</t>
+
+            <t>Notification Message is the encoded content that the
+            publication stream transports. The common encoding methods
+            are listed in <xref target="sec_ups_format"/>. <xref
+            target="I-D.ietf-netconf-notification-messages"/> describes the
+            structure of the Notification Message for single notifications and
+            bundled notifications.</t>
+          </list></t>
+
+        <t><figure anchor="fig_ups_message" title="UDP-Notif Message Overview">
+            <artwork align="center"><![CDATA[
++-------+  +--------------+  +--------------+
+|  UDP  |  |   Message    |  | Notification |
+|       |  |   Header     |  | Message      |
++-------+  +--------------+  +--------------+
+]]></artwork>
+          </figure></t>
+
+        <t/>
+      </section>
+
+      <section anchor="sec_ups_format"
+               title="Format of the UDP-Notif Message Header">
+        <t>The UDP-Notif Message Header contains information that facilitate
+        the message transmission before deserializing the notification
+        message. The data format is shown in <xref
+        target="fig_ups_header"/>.</t>
+
+        <figure anchor="fig_ups_header"
+                title="UDP-Notif Message Header Format">
+          <artwork align="center"><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-----+-+-------+---------------+-------------------------------+
+ | Ver |S|  MT   |  Header Len   |      Message Length           |
+ +-----+-+-------+---------------+-------------------------------+
+ |                    Observation-Domain-ID                      |
+ +---------------------------------------------------------------+
+ |                         Message-ID                            |
+ +---------------------------------------------------------------+
+ ~                          Options                              ~
+ +---------------------------------------------------------------+
+
+]]></artwork>
+        </figure>
+
+        <t/>
+
+        <t>The Message Header contains the following field:</t>
+
+        <t><list style="symbols">
+            <t>Ver represents the PDU (Protocol Data Unit) encoding version.
+            The initial version value is 0.</t>
+
+            <t>S represents the space of media type specified in the MT field.
+            When S is unset, MT represents the standard media types as defined
+            in this document. When S is set, MT represents a private space to
+            be freely used for non standard encodings.</t>
+
+            <t>MT is a 4 bit identifier to indicate the media type used for
+            the Notification Message. 16 types of encoding can be expressed.
+            When the S bit is unset, the following values apply:<list
+                style="symbols">
+                <t>0: Reserved;</t>
+
+                <t>1: application/yang-data+json <xref target="RFC8040"/></t>
+
+                <t>2: application/yang-data+xml <xref target="RFC8040"/></t>
+
+                <t>3: application/yang-data+cbor <xref
+                target="I-D.ietf-core-yang-cbor"/></t>
+              </list></t>
+
+            <t>Header Len is the length of the message header in octets,
+            including both the fixed header and the options.</t>
+
+            <t>Message Length is the total length of the message within one
+            UDP datagram, measured in octets, including the message
+            header.</t>
+
+            <t>Observation-Domain-ID is a 32-bit identifier of the Observation
+            Domain that led to the production of the notification message, as
+            defined in <xref
+            target="I-D.ietf-netconf-notification-messages"/>. This allows
+            disambiguation of an information source, such as the
+            identification of different line cards sending the notification
+            messages. The source IP address of the UDP datagrams SHOULD NOT be
+            interpreted as the identifier for the host that originated the
+            UDP-Notif message. Indeed, the streamer sending the UDP-Notif
+            message could be a relay for the actual source of data carried
+            within UDP-Notif messages.</t>
+
+            <t>The Message ID is generated continuously by the publisher of
+            UDP-Notif messages. Different subscribers share the same Message
+            ID sequence.</t>
+
+            <t>Options is a variable-length field in the TLV format. When the
+            Header Length is larger than 12 octets, which is the length of the
+            fixed header, Options TLVs follow directly after the fixed message
+            header (i.e., Message ID). The details of the options are
+            described in <xref target="sec_options"/>.</t>
+          </list></t>
+
+        <t/>
+      </section>
+
+      <section anchor="sec_encoding" title="Data Encoding">
+        <t>UDP-Notif message data can be encoded in CBOR, XML or JSON format.
+        It is conceivable that additional encodings may be supported in the
+        future. This can be accomplished by augmenting the subscription data
+        model with additional identity statements used to refer to requested
+        encodings.</t>
+
+        <t>Private encodings can be supported through the use of the S bit of
+        the header. When the S bit is set, the value of the MT field is left
+        to be defined and agreed upon by the users of the private encoding. An
+        option is defined in <xref target="sec_enc_opt"/> for more verbose
+        encoding descriptions than what can be described with the MT
+        field.</t>
+
+        <t>Implementation MAY support multiple encoding methods per
+        subscription. When bundled notifications are supported between the
+        publisher and the receiver, only subscribed notifications with the
+        same encoding can be bundled in a given message.</t>
+      </section>
+    </section>
+
+    <section anchor="sec_options" title="Options">
+      <t>All the options are defined with the following format, illustrated in
+      <xref target="fig_ups_message_options"/>.</t>
+
+      <t><figure anchor="fig_ups_message_options"
+          title="Generic Option Format">
+          <artwork align="center"><![CDATA[
+  0                   1                   2                   3        
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +---------------+---------------+--------------------------------
+ |     Type      |    Length     |    Variable-length data     
+ +---------------+---------------+--------------------------------]]></artwork>
+        </figure></t>
+
+      <t><list style="symbols">
+          <t>Type: 1 octet describing the option type;</t>
+
+          <t>Length: 1 octet representing the total number of octets in the
+          TLV, including the Type and Length fields;</t>
+
+          <t>Variable-length data: 0 or more octets of TLV Value.</t>
+        </list></t>
+
+      <t>When more than one option are used in the UDP-notif header, options
+      MUST be ordered by the Type value.</t>
+
+      <section anchor="sec_fragmentation" title="Segmentation Option">
+        <t>The UDP payload length is limited to 65535. Application level
+        headers will make the actual payload shorter. Even though binary
+        encodings such as CBOR may not require more space than what is left,
+        more voluminous encodings such as JSON and XML may suffer from this
+        size limitation. Although IPv4 and IPv6 publishers can fragment
+        outgoing packets exceeding their Maximum Transmission Unit(MTU),
+        fragmented IP packets may not be desired for operational and
+        performance reasons.</t>
+
+        <t>Consequently, implementations of the mechanism SHOULD provide a
+        configurable max-segment-size option to control the maximum size of a
+        payload.</t>
+
+        <figure anchor="fig_frag_option" title="Segmentation Option Format">
+          <artwork align="center"><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +---------------+---------------+-----------------------------+-+
+ |     Type      |     Length    |        Segment Number       |L|
+ +---------------+---------------+-----------------------------+-+
+ ]]></artwork>
+        </figure>
+
+        <t>The Segmentation Option is to be included when the message content
+        is segmented into multiple pieces. Different segments of one message
+        share the same Message ID. An illustration is provided in <xref
+        target="fig_frag_option"/>. The fields of this TLV are:</t>
+
+        <t><list style="symbols">
+            <t>Type: Generic option field which indicates a Segmentation
+            Option. The Type value is to be assigned TBD1.</t>
+
+            <t>Length: Generic option field which indicates the length of this
+            option. It is a fixed value of 4 octets for the Segmentation
+            Option.</t>
+
+            <t>Segment Number: 15-bit value indicating the sequence number of
+            the current segment. The first segment of a segmented message has
+            a Segment Number value of 0.</t>
+
+            <t>L: is a flag to indicate whether the current segment is the
+            last one of the message. When 0 is set, the current segment is not
+            the last one. When 1 is set, the current segment is the last one,
+            meaning that the total number of segments used to transport this
+            message is the value of the current Segment Number + 1.</t>
+          </list></t>
+
+        <t>An implementation of this specification MUST NOT rely on IP
+        fragmentation by default to carry large messages. An implementation of
+        this specification MUST either restrict the size of individual
+        messages carried over this protocol, or support the segmentation
+        option.</t>
+
+        <t>When a message has multiple options and is segmented using the
+        described mechanism, all the options MUST be present on the first
+        segment ordered by the options Type. The rest of segmented messages
+        MAY include all the options ordered by options type.</t>
+      </section>
+
+      <section anchor="sec_enc_opt" title="Private Encoding Option">
+        <t>The space to describe private encodings in the MT field of the
+        UDP-Notif header being limited, an option is provided to describe
+        custom encodings. The fields of this option are as follows.</t>
+
+        <figure anchor="fig_enc_option" title="Private Encoding Option Format">
+          <artwork align="center"><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +---------------+---------------+--------------------------------
+ |     Type      |     Length    |   Variable length enc. descr.  
+ +---------------+---------------+--------------------------------
+
+ ]]></artwork>
+        </figure>
+
+        <t><list style="symbols">
+            <t>Type: Generic option field which indicates a Private Encoding
+            Option. The Type value is to be assigned TBD2.</t>
+
+            <t>Length: Generic option field which indicates the length of this
+            option. It is a variable value.</t>
+
+            <t>Enc. Descr: The description of the private encoding used for
+            this message. The values to be used for such private encodings is
+            left to be defined by the users of private encodings.</t>
+          </list></t>
+
+        <t>This option SHOULD only be used when the S bit of the header is
+        set, as providing a private encoding description for standard
+        encodings is meaningless.</t>
+      </section>
+    </section>
+
+    <section anchor="sec_applicability" title="Applicability">
+      <t>In this section, we provide an applicability statement for the
+      proposed mechanism, following the recommendations of <xref
+      target="RFC8085"/>.</t>
+
+      <t>The proposed mechanism falls in the category of UDP applications
+      "designed for use within the network of a single network operator or on
+      networks of an adjacent set of cooperating network operators, to be
+      deployed in controlled environments". Implementations of the proposed
+      mechanism SHOULD thus follow the recommendations in place for such
+      specific applications. In the following, we discuss recommendations on
+      congestion control, message size guidelines, reliability considerations
+      and security considerations.</t>
+
+      <section anchor="sec_congestion_control" title="Congestion Control">
+        <t>The proposed application falls into the category of applications
+        performing transfer of large amounts of data. It is expected that the
+        operator using the solution configures QoS on its related flows. As
+        per <xref target="RFC8085"/>, such applications MAY choose not to
+        implement any form of congestion control, but follow the following
+        principles.</t>
+
+        <t>It is NOT RECOMMENDED to use the proposed mechanism over
+        congestion-sensitive network paths. The only environments where
+        UDP-Notif is expected to be used are managed networks. The deployments
+        require that the network path has been explicitly provisioned to
+        handle the traffic through traffic engineering mechanisms, such as
+        rate limiting or capacity reservations.</t>
+
+        <t>Implementation of the proposal SHOULD NOT push unlimited amounts of
+        traffic by default, and SHOULD require the users to explicitly
+        configure such a mode of operation.</t>
+
+        <t>Burst mitigation through packet pacing is RECOMMENDED. Disabling
+        burst mitigation SHOULD require the users to explicitly configure such
+        a mode of operation.</t>
+
+        <t>Applications SHOULD monitor packet losses and provide means to the
+        user for retrieving information on such losses. The UDP-Notif Message
+        ID can be used to deduce congestion based on packet loss detection.
+        Hence the receiver can notify the device to use a lower streaming
+        rate. The interaction to control the streaming rate on the device is
+        out of the scope of this document.</t>
+
+        <!-- <t>Congestion control mechanisms that respond to congestion by reducing
+      traffic rates and establish a degree of fairness between flows that
+      share the same path are vital to the stable operation of the Internet
+      <xref target="RFC2914"/>. While efficient, UDP has no built-in
+      congestion control mechanism. Because streaming telemetry can generate
+      unlimited amounts of data, transferring this data over UDP may be considered
+      problematic. -->
+      </section>
+
+      <section anchor="sec_message_size" title="Message Size">
+        <t><xref target="RFC8085"/> recommends not to rely on IP fragmentation
+        for messages whose size result in IP packets exceeding the MTU along
+        the path. The segmentation option of the current specification permits
+        segmentation of the UDP Notif message content without relying on IP
+        fragmentation. Implementation of the current specification SHOULD
+        allow for the configuration of the MTU.</t>
+      </section>
+
+      <section anchor="sec_reliability" title="Reliability">
+        <t>The target application for UDP-Notif is the collection of
+        data-plane information. The lack of reliability of the data streaming
+        mechanism is thus considered acceptable as the mechanism is to be used
+        in controlled environments, mitigating the risk of information loss,
+        while allowing for publication of very large amounts of data.
+        Moreover, in this context, sporadic events when incomplete data
+        collection is provided is not critical for the proper management of
+        the network, as information collected for the devices through the
+        means of the proposed mechanism is to be often refreshed.</t>
+
+        <t>A receiver implementation for this protocol SHOULD deal with
+        potential loss of packets carrying a part of segmented payload, by
+        discarding packets that were received, but cannot be re-assembled as a
+        complete message within a given amount of time. This time SHOULD be
+        configurable.</t>
+      </section>
+
+      <section anchor="sec_security_considerations"
+               title="Security Considerations">
+        <t><xref target="RFC8085"/> states that "UDP applications that need to
+        protect their communications againts eavesdropping, tampering, or
+        message forgery SHOULD employ end-to-end security services provided by
+        other IETF protocols". As mentioned above, the proposed mechanism is
+        designed to be used in controlled environments and thus, a security
+        layer is unrequired. Nevertheless, a DTLS layer SHOULD be implemented
+        in open or unsecured networks. A DTLS layered implementation is
+        presented in <xref target="sec_dtls_udp_notif"/>.</t>
+
+        <!-- <t>As stated in the Applicability analysis in <xref
+        target="sec_applicability"/>, this protocol is to be used in controlled
+        environments, so that network operators might not require to secure the transport
+        mechanism described in this document. An approach to secure this protocol
+        is out of the scope of this document. </t> -->
+      </section>
+    </section>
+
+    <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-notif">
+      <t>In open or unsecured networks, UDP-notif messages SHOULD be secured
+      or encrypted. In this section, a mechanism using DTLS 1.3 to secure
+      UDP-notif protocol is presented. The following sections defines the
+      requirements for the implementation of the secured layer of DTLS for
+      UDP-notif. No DTLS 1.3 extensions are defined nor needed.</t>
+
+      <t>The DTLS 1.3 protocol <xref target="I-D.draft-ietf-tls-dtls13"/> is
+      designed to meet the requirements of applications that need to secure
+      datagram transport.</t>
+
+      <t>DTLS can be used as a secure transport to counter all the primary
+      threats to UDP-notif:</t>
+
+      <t><list style="symbols">
+          <t>Confidentiality to counter disclosure of the message
+          contents.</t>
+
+          <t>Integrity checking to counter modifications to a message on a
+          hop-by-hop basis.</t>
+
+          <t>Server or mutual authentication to counter masquerade.</t>
+        </list></t>
+
+      <t>In addition, DTLS also provides:</t>
+
+      <t><list style="symbols">
+          <t>A cookie exchange mechanism during handshake to counter Denial of
+          Service attacks.</t>
+
+          <t>A sequence number in the header to counter replay attacks.</t>
+        </list></t>
+
+      <t>Even though this security layer is unrequired, DTLS 1.3 SHOULD be
+      implemented on unsecured networks to achieve privacy.</t>
+
+      <section anchor="sec_dtl_transport" title="Transport">
+        <t>As shown in <xref target="fig_dtls_layers"/>, the DTLS is layered
+        next to the UDP transport providing reusable security and
+        authentication functions over UDP. No DTLS extension is required to
+        enable UDP-notif messages over DTLS.</t>
+
+        <t><figure anchor="fig_dtls_layers"
+            title="Protocol Stack for DTLS secured UDP-notif">
+            <artwork align="center"><![CDATA[
++-----------------------------+
+|      UDP-notif Message      |
++-----------------------------+
+|            DTLS             |
++-----------------------------+
+|            UDP              |
++-----------------------------+
+|            IP               |
++-----------------------------+
+          ]]></artwork>
+          </figure></t>
+
+        <t>The application implementer will map a unique combination of the
+        remote address, remote port number, local address, and local port
+        number to a session.</t>
+
+        <t>Each UDP-notif message is delivered by the DTLS record protocol,
+        which assigns a sequence number to each DTLS record. Although the DTLS
+        implementer may adopt a queue mechanism to resolve reordering, it may
+        not assure that all the messages are delivered in order when mapping
+        on the UDP transport.</t>
+
+        <t>Since UDP is an unreliable transport, with DTLS, an originator or a
+        relay may not realize that a collector has gone down or lost its DTLS
+        connection state, so messages may be lost.</t>
+
+        <t>The DTLS record has its own sequence number, encryption and
+        decryption will be done by the DTLS layer, so that the UDP-notif
+        Message layer is not impacted by the use of DTLS.</t>
+      </section>
+
+      <section anchor="sec_port_assignment" title="Port Assignment">
+        <t>When this security layer is used, the Publisher MUST always be a
+        DTLS client, and the Receiver MUST always be a DTLS server. The
+        Receivers MUST support accepting UDP-notif Messages on the specified
+        UDP port, but MAY be configurable to listen on a different port. The
+        Publisher MUST support sending UDP-notif messages to the specified UDP
+        port, but MAY be configurable to send messages to a different port.
+        The Publisher MAY use any source UDP port for transmitting
+        messages.</t>
+      </section>
+
+      <section anchor="sec_session_lifecycle" title="Session lifecycle">
+        <section title="DTLS Session Initiation">
+          <t>The Publisher initiates a DTLS connection by sending a DTLS
+          ClientHello to the Receiver. Implementations MAY support the denial
+          of service countermeasures defined by DTLS 1.3. When these
+          countermeasures are used, the Receiver responds with a DTLS
+          HelloRetryRequest containing a stateless cookie. The Publisher MUST
+          send a new DTLS ClientHello message containing the received cookie,
+          which initiates the DTLS handshake.</t>
+
+          <t>When DTLS is implemented, the Publisher MUST NOT send any
+          UDP-notif messages before the DTLS handshake has successfully
+          completed.</t>
+
+          <t>Implementations of this security layer MUST support DTLS 1.3
+          <xref target="I-D.draft-ietf-tls-dtls13"/> and MUST support the
+          mandatory to implement cipher suite TLS_AES_128_GCM_SHA256 and
+          SHOULD implement TLS_AES_256_GCM_SHA384 and
+          TLS_CHACHA20_POLY1305_SHA256 cipher suites, as specified in TLS 1.3
+          <xref target="RFC8446"/>. If additional cipher suites are supported,
+          then implementations MUST NOT negotiate a cipher suite that employs
+          NULL integrity or authentication algorithms.</t>
+
+          <t>Where privacy is REQUIRED, then implementations must either
+          negotiate a cipher suite that employs a non-NULL encryption
+          algorithm or otherwise achieve privacy by other means, such as a
+          physically secured network.</t>
+        </section>
+
+        <section title="Publish Data">
+          <t>When DTLS is used, all UDP-notif messages MUST be published as
+          DTLS "application_data". It is possible that multiple UDP-notif
+          messages are contained in one DTLS record, or that a publication
+          message is transferred in multiple DTLS records. The application
+          data is defined with the following ABNF <xref target="RFC5234"/>
+          expression:</t>
+
+          <t>APPLICATION-DATA = 1*UDP-NOTIF-FRAME</t>
+
+          <t>UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG</t>
+
+          <t>MSG-LEN = NONZERO-DIGIT *DIGIT</t>
+
+          <t>SP = %d32</t>
+
+          <t>NONZERO-DIGIT = %d49-57</t>
+
+          <t>DIGIT = %d48 / NONZERO-DIGIT</t>
+
+          <t>UDP-NOTIF-MSG is defined in <xref
+          target="sec_ups_transport"/>.</t>
+
+          <t>The Publisher SHOULD attempt to avoid IP fragmentation by using
+          the Segmentation Option in the UDP-notif message.</t>
+        </section>
+
+        <section title="Session termination">
+          <t>A Publisher MUST close the associated DTLS connection if the
+          connection is not expected to deliver any UDP-notif Messages later.
+          It MUST send a DTLS close_notify alert before closing the
+          connection. A Publisher (DTLS client) MAY choose to not wait for the
+          Receiver's close_notify alert and simply close the DTLS connection.
+          Once the Receiver gets a close_notify from the Publisher, it MUST
+          reply with a close_notify.</t>
+
+          <t>When no data is received from a DTLS connection for a long time,
+          the Receiver MAY close the connection. Implementations SHOULD set
+          the timeout value to 10 minutes but application specific profiles
+          MAY recommend shorter or longer values. The Receiver (DTLS server)
+          MUST attempt to initiate an exchange of close_notify alerts with the
+          Publisher before closing the connection. Receivers that are
+          unprepared to receive any more data MAY close the connection after
+          sending the close_notify alert.</t>
+
+          <t>Although closure alerts are a component of TLS and so of DTLS,
+          they, like all alerts, are not retransmitted by DTLS and so may be
+          lost over an unreliable network.</t>
+        </section>
+      </section>
+    </section>
+
+    <section title="A YANG Data Model for Management of UDP-Notif">
+      <t>The YANG model defined in <xref target="sec_yang_model"/> has five
+      leaves augmenting the model of <xref
+      target="RFC8639">Sub-Notif</xref>, and one container to configure
+      DTLS encryption parameters.</t>
+
+      <t><figure>
+          <artwork><![CDATA[
+module: ietf-udp-notif
+
+  augment /sn:subscriptions/sn:subscription/sn:receivers/sn:receiver:
+    +--rw address                  inet:ip-address
+    +--rw port                     inet:port-number
+    +--rw enable-segmentation?     boolean {segmentation}?
+    +--rw max-segment-size?        uint32 {segmentation}?
+    +--rw enable-dtls?             boolean {dtls-supported}?
+    +--rw dtls {dtls-supported}?
+       +--rw client-identity!
+       |  +--rw (auth-type)
+       |     +--:(certificate) {client-ident-x509-cert}?
+       |     |     ...
+       |     +--:(raw-public-key) {client-ident-raw-public-key}?
+       |     |     ...
+       |     +--:(tls12-psk) {client-ident-tls12-psk}?
+       |     |     ...
+       |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
+       |           ...
+       +--rw server-authentication
+       |  +--rw ca-certs! {server-auth-x509-cert}?
+       |  |  +--rw (local-or-truststore)
+       |  |        ...
+       |  +--rw ee-certs! {server-auth-x509-cert}?
+       |  |  +--rw (local-or-truststore)
+       |  |        ...
+       |  +--rw raw-public-keys! {server-auth-raw-public-key}?
+       |  |  +--rw (local-or-truststore)
+       |  |        ...
+       |  +--rw tls12-psks?        empty {server-auth-tls12-psk}?
+       |  +--rw tls13-epsks?       empty {server-auth-tls13-epsk}?
+       +--rw hello-params {tlscmn:hello-params}?
+       |  +--rw tls-versions
+       |  |  +--rw tls-version*   identityref
+       |  +--rw cipher-suites
+       |     +--rw cipher-suite*   identityref
+       +--rw keepalives {tls-client-keepalives}?
+          +--rw peer-allowed-to-send?   empty
+          +--rw test-peer-aliveness!
+             +--rw max-wait?       uint16
+             +--rw max-attempts?   uint8
+       ]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="sec_yang_model" title="YANG Module">
+      <t>
+      This YANG module is a definition of a receiver willing 
+      to consume notification messages generated by the publisher.
+      This module augments "ietf-subscribed-notifications" module 
+      to define a transport specific receiver.
+      </t>
+
+      <t><figure>
+          <artwork><![CDATA[
+<CODE BEGINS> file "ietf-udp-notif@2022-05-09.yang"
+module ietf-udp-notif {
+  yang-version 1.1;
+  namespace
+    "urn:ietf:params:xml:ns:yang:ietf-udp-notif";
+  prefix un;
+  import ietf-subscribed-notifications {
+    prefix sn;
+    reference
+      "RFC 8639: Subscription to YANG Notifications";
+  }
+  import ietf-inet-types {
+    prefix inet;
+    reference
+      "RFC 6991: Common YANG Data Types";
+  }
+  import ietf-tls-client {
+    prefix tlsc;
+    reference
+      "RFC YYYY: YANG Groupings for TLS Clients and TLS Servers";
+  }
+
+  organization "IETF NETCONF (Network Configuration) Working Group";
+  contact
+    "WG Web:   <http:/tools.ietf.org/wg/netconf/>
+     WG List:  <mailto:netconf@ietf.org>
+
+     Authors:  Guangying Zheng
+               <mailto:zhengguangying@huawei.com>
+               Tianran Zhou
+               <mailto:zhoutianran@huawei.com>
+               Thomas Graf
+               <mailto:thomas.graf@swisscom.com>
+               Pierre Francois
+               <mailto:pierre.francois@insa-lyon.fr>
+               Alex Huang Feng
+               <mailto:alex.huang-feng@insa-lyon.fr>
+               Paolo Lucente
+               <mailto:paolo@ntt.net>";
+
+  description
+    "Defines UDP-Notif as a supported transport for subscribed
+    event notifications.
+
+    Copyright (c) 2018-2022 IETF Trust and the persons identified as
+    authors of the code.  All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, is permitted pursuant to, and subject to the license
+    terms contained in, the Simplified BSD License set forth in Section
+    4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
+    (https://trustee.ietf.org/license-info).
+
+    This version of this YANG module is part of RFC XXXX; see the RFC
+    itself for full legal notices.";
+
+  revision 2022-05-25 {
+    description
+      "Added container for DTLS parameters.
+      Changed grouping name to 'udp-receiver-grouping'.
+      Port made mandatory.
+      Added segmentation feature.
+      Added dtls-supported feature.
+      Changed 'max-segmentation-size' leaf name to 'max-segment-size'.";
+    reference
+      "RFC XXXX: UDP-based Transport for Configured Subscriptions";
+  }
+ 
+ /*
+  * FEATURES
+  */
+  feature encode-cbor {
+    description
+      "This feature indicates that CBOR encoding of notification
+       messages is supported.";
+  }
+  feature dtls-supported {
+    description
+      "This feature indicates that DTLS encryption of notification
+       messages is supported.";
+  }
+  feature segmentation {
+    description
+      "This feature indicates segmentation of notification messages 
+      is supported.";
+  }
+
+ /*
+  * IDENTITIES
+  */  
+  identity udp-notif {
+    base sn:transport;
+    description
+      "UDP-Notif is used as transport for notification messages
+        and state change notifications.";
+  }
+
+  identity encode-cbor {
+    base sn:encoding;
+    description
+      "Encode data using CBOR as described in RFC XXX.";
+    reference
+      "RFC XXX: draft-ietf-core-yang-cbor-18, CBOR Encoding of 
+        Data Modeled with YANG";
+  }
+
+  grouping udp-receiver-grouping {
+    description
+      "Provides a reusable description of a UDP-Notif target
+      receiver.";
+
+    leaf address {
+      type inet:ip-address;
+      mandatory true;
+      description
+        "IP address of target UDP-Notif receiver, which can be an
+        IPv4 address or an IPV6 address.";
+    }
+  
+    leaf port {
+      type inet:port-number;
+      mandatory true;
+      description
+        "Port number of target UDP-Notif receiver.";
+    }
+
+    leaf enable-segmentation {
+      if-feature segmentation;
+      type boolean;
+      default false;
+      description 
+        "The switch for the segmentation feature. When disabled, the
+        publisher will not allow fragment for a very large data";
+    }
+
+    leaf max-segment-size {
+      when "../enable-segmentation = 'true'";
+      if-feature segmentation;
+      type uint32;
+      description 
+        "UDP-Notif provides a configurable max-segment-size to
+        control the size of each segment (UDP-Notif header, with
+        options, included).";
+    }
+
+    leaf enable-dtls {
+      if-feature dtls-supported;
+      type boolean;
+      default false;
+      description
+        "The switch for the DTLS encryption feature. When disabled, the
+        publisher will not encrypt UDP-Notif messages.";
+    }
+
+    container dtls {
+      when "../enable-dtls = 'true'";
+      if-feature dtls-supported;
+      uses tlsc:tls-client-grouping;
+      description 
+        "Container for configuring DTLS parameters if DTLS is enabled.";
+    }
+  }
+
+  augment "/sn:subscriptions/sn:subscription/sn:receivers/sn:receiver" {
+    when "derived-from(../../transport, 'un:udp-notif')";
+    description
+      "This augmentation allows UDP-Notif specific parameters to be
+       exposed for a subscription.";
+
+    uses udp-receiver-grouping;
+  }
+}
+<CODE ENDS>]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t>This document is creating 2 registries called "UDP-notif media types"
+      and "UDP-notif option types" under the new heading "UDP-notif protocol".
+      The registration procedure is made using the Standards Action process
+      defined in <xref target="RFC8126"/>.</t>
+
+      <t>The first requested registry is the following:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Registry Name: UDP-notif media types
+  Registry Category: UDP-notif protocol.
+  Registration Procedure: Standard Action as defined in RFC8126
+  Maximum value: 15]]></artwork>
+        </figure></t>
+
+      <t>These are the initial registrations for "UDP-notif media types":</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 0
+  Description: Reserved
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 1
+  Description: media type application/yang-data+json
+  Reference: <xref target="RFC8040"/>]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 2
+  Description: media type application/yang-data+xml
+  Reference: <xref target="RFC8040"/>]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 3
+  Description: media type application/yang-data+cbor
+  Reference: <xref target="I-D.ietf-core-yang-cbor"/>]]></artwork>
+        </figure></t>
+
+      <t>The second requested registry is the following:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Registry Name: UDP-notif option types
+  Registry Category: UDP-notif protocol.
+  Registration Procedure: Standard Action as defined in RFC8126
+  Maximum value: 255]]></artwork>
+        </figure></t>
+
+      <t>These are the initial registrations for "UDP-notif options
+      types":</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 0
+  Description: Reserved
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: TBD1 (suggested value: 1)
+  Description: Segmentation Option
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: TBD2 (suggested value: 2)
+  Description: Private Encoding Option
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t>IANA is also requested to assign a new URI from the <xref
+      target="RFC3688">IETF XML Registry</xref>. The following URI is
+      suggested:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.]]></artwork>
+        </figure></t>
+
+      <t>This document also requests a new YANG module name in the <xref
+      target="RFC7950">YANG Module Names registry</xref> with the following
+      suggestion:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+name: ietf-udp-notif
+namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif
+prefix: un
+reference: RFC XXXX]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="Acknowledgements" title="Acknowledgements">
+      <t>The authors of this documents would like to thank Alexander Clemm,
+      Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
+      Frenot, Timothy Carey, Tim Jenkins, Yunan Gu and Marco Tollini for their
+      constructive suggestions for improving this document.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <!-- <?rfc include='reference.RFC.2119'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+      <!-- <?rfc include='reference.RFC.3688'?> -->
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
+      <!-- <?rfc include='reference.RFC.5234'?> -->
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
+      <!-- <?rfc include='reference.RFC.7950'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"?>
+      <!-- <?rfc include='reference.RFC.8085'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"?>
+      <!-- <?rfc include='reference.RFC.8126'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
+      <!-- <?rfc include='reference.RFC.8446'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
+      <!-- <?rfc include='reference.RFC.8639'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8639.xml"?>
+      <!-- <?rfc include='reference.RFC.8640'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8640.xml"?>
+      <!-- <?rfc include='reference.RFC.8650'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8650.xml"?>
+
+    </references>
+
+    <references title="Informative References">
+      <!-- <?rfc include='reference.I-D.ietf-netconf-https-notif'?> -->
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
+
+      <!-- <?rfc include='reference.I-D.ietf-netconf-notification-messages"?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
+
+      <!-- <?rfc include='reference.RFC.8040'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
+
+      <!-- <?rfc include='reference.I-D.ietf-core-yang-cbor'?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-core-yang-cbor.xml"?>
+
+      <reference anchor="I-D.draft-ietf-tls-dtls13" target="">
+        <front>
+          <title>The Datagram Transport Layer Security (DTLS) Protocol Version
+          1.3</title>
+
+          <author fullname="Eric Rescorla" initials="E." surname="Rescorla">
+            <organization>RTFM, Inc.</organization>
+          </author>
+
+          <author fullname="Hannes Tschofenig" initials="H."
+                  surname="Tschofenig">
+            <organization>Arm Limited</organization>
+          </author>
+
+          <author fullname="Nagendra Modadugu" initials="N."
+                  surname="Modadugu">
+            <organization>Google, Inc.</organization>
+          </author>
+
+          <date month="July" year="2021"/>
+        </front>
+
+        <seriesInfo name="Internet-Draft" value="draft-ietf-tls-dtls13-43"/>
+      </reference>
+
+      <reference anchor="I-D.ietf-netconf-distributed-notif" target="">
+        <front>
+          <title>Subscription to Distributed Notifications</title>
+
+          <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+            <organization>Huawei</organization>
+          </author>
+
+          <author fullname="Guangying Zheng" initials="G." surname="Zheng">
+            <organization>Huawei</organization>
+          </author>
+
+          <author fullname="Eric Voit" initials="E." surname="Voit">
+            <organization>Cisco Systems</organization>
+          </author>
+
+          <author fullname="Thomas Graf" initials="T." surname="Graf">
+            <organization>Swisscom</organization>
+          </author>
+
+          <author fullname="Pierre Francois" initials="P." surname="Francois">
+            <organization>INSA-Lyon</organization>
+          </author>
+
+          <date month="May" year="2021"/>
+        </front>
+
+        <seriesInfo name="Internet-Draft"
+                    value="draft-ietf-netconf-distributed-notif-02"/>
+      </reference>
+    </references>
+  </back>
+</rfc>
