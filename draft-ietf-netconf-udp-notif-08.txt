@@ -101,8 +101,8 @@ Table of Contents
    13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
      13.1.  Normative References . . . . . . . . . . . . . . . . . .  20
      13.2.  Informative References . . . . . . . . . . . . . . . . .  21
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
-
+   Appendix A.  Configuration Examples . . . . . . . . . . . . . . .  22
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
 
 
 
@@ -1219,11 +1219,11 @@ Internet-Draft               unyte-udp-notif                 August 2022
               RFC 9254, DOI 10.17487/RFC9254, July 2022,
               <https://www.rfc-editor.org/info/rfc9254>.
 
-Authors' Addresses
+Appendix A.  Configuration Examples
 
-
-
-
+   This non-normative section shows a example for how the "ietf-udp-
+   notif" module can be used to configure a publisher to send
+   notifications to a receiver using Subscribed Notifications.
 
 
 
@@ -1233,6 +1233,13 @@ Zheng, et al.           Expires 24 February 2023               [Page 22]
 
 Internet-Draft               unyte-udp-notif                 August 2022
 
+
+   In this examples, the publisher is a client configured to send
+   notifications to a receiver.
+
+     TBD
+
+Authors' Addresses
 
    Guangying Zheng
    Huawei
@@ -1275,19 +1282,15 @@ Internet-Draft               unyte-udp-notif                 August 2022
    Lyon
    France
 
-   Email: alex.huang-feng@insa-lyon.fr
-
-
-
-
-
-
 
 
 
 Zheng, et al.           Expires 24 February 2023               [Page 23]
 
 Internet-Draft               unyte-udp-notif                 August 2022
+
+
+   Email: alex.huang-feng@insa-lyon.fr
 
 
    Paolo Lucente
@@ -1297,9 +1300,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
    Netherlands
 
    Email: paolo@ntt.net
-
-
-
 
 
 

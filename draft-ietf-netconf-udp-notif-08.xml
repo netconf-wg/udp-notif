@@ -1180,5 +1180,21 @@ reference: RFC XXXX]]></artwork>
                     value="draft-ietf-netconf-distributed-notif-04"/>
       </reference>
     </references>
+
+    <section anchor="configuration_examples" title="Configuration Examples">
+      <t>This non-normative section shows a example for how the "ietf-udp-notif" 
+      module can be used to configure a publisher to send notifications to a
+      receiver using Subscribed Notifications.</t>
+
+      <t>In this examples, the publisher is a client configured
+      to send notifications to a receiver.</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  TBD
+  ]]></artwork>
+        </figure></t>
+    </section>
+
   </back>
 </rfc>
