@@ -89,20 +89,20 @@ Table of Contents
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  11
      5.4.  Security Considerations . . . . . . . . . . . . . . . . .  11
    6.  Secured layer for UDP-notif . . . . . . . . . . . . . . . . .  11
-     6.1.  Transport . . . . . . . . . . . . . . . . . . . . . . . .  12
-     6.2.  Port Assignment . . . . . . . . . . . . . . . . . . . . .  13
-     6.3.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  13
+     6.1.  Transport . . . . . . . . . . . . . . . . . . . . . . . .  11
+     6.2.  Port Assignment . . . . . . . . . . . . . . . . . . . . .  12
+     6.3.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  12
        6.3.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  13
        6.3.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  13
        6.3.3.  Session termination . . . . . . . . . . . . . . . . .  14
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  14
    8.  YANG Module . . . . . . . . . . . . . . . . . . . . . . . . .  15
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  20
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  21
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  21
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  21
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  22
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
 
 
 
@@ -300,7 +300,7 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
       -  2: application/yang-data+xml [RFC8040]
 
-      -  3: application/yang-data+cbor [I-D.ietf-core-yang-cbor]
+      -  3: application/yang-data+cbor [RFC9254]
 
    *  Header Len is the length of the message header in octets,
       including both the fixed header and the options.
@@ -593,23 +593,23 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
 6.  Secured layer for UDP-notif
 
-   In open or unsecured networks, UDP-notif messages SHOULD be secured
-   or encrypted.  In this section, a mechanism using DTLS 1.3 to secure
+   In open or unsecured networks, UDP-notif messages MUST be secured or
+   encrypted.  In this section, a mechanism using DTLS 1.3 to secure
    UDP-notif protocol is presented.  The following sections defines the
    requirements for the implementation of the secured layer of DTLS for
    UDP-notif.  No DTLS 1.3 extensions are defined nor needed.
 
-   The DTLS 1.3 protocol [I-D.draft-ietf-tls-dtls13] is designed to meet
-   the requirements of applications that need to secure datagram
-   transport.
+   The DTLS 1.3 protocol [RFC9147] is designed to meet the requirements
+   of applications that need to secure datagram transport.
 
-   DTLS can be used as a secure transport to counter all the primary
-   threats to UDP-notif:
+6.1.  Transport
 
-   *  Confidentiality to counter disclosure of the message contents.
+   As shown in Figure 6, the DTLS is layered next to the UDP transport
+   providing reusable security and authentication functions over UDP.
+   No DTLS extension is required to enable UDP-notif messages over DTLS.
 
-   *  Integrity checking to counter modifications to a message on a hop-
-      by-hop basis.
+
+
 
 
 
@@ -617,24 +617,6 @@ Zheng, et al.           Expires 24 February 2023               [Page 11]
 
 Internet-Draft               unyte-udp-notif                 August 2022
 
-
-   *  Server or mutual authentication to counter masquerade.
-
-   In addition, DTLS also provides:
-
-   *  A cookie exchange mechanism during handshake to counter Denial of
-      Service attacks.
-
-   *  A sequence number in the header to counter replay attacks.
-
-   Even though this security layer is unrequired, DTLS 1.3 SHOULD be
-   implemented on unsecured networks to achieve privacy.
-
-6.1.  Transport
-
-   As shown in Figure 6, the DTLS is layered next to the UDP transport
-   providing reusable security and authentication functions over UDP.
-   No DTLS extension is required to enable UDP-notif messages over DTLS.
 
                       +-----------------------------+
                       |      UDP-notif Message      |
@@ -666,14 +648,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
    decryption will be done by the DTLS layer, so that the UDP-notif
    Message layer is not impacted by the use of DTLS.
 
-
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 12]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
 6.2.  Port Assignment
 
    When this security layer is used, the Publisher MUST always be a DTLS
@@ -685,6 +659,20 @@ Internet-Draft               unyte-udp-notif                 August 2022
    Publisher MAY use any source UDP port for transmitting messages.
 
 6.3.  Session lifecycle
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 12]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
 
 6.3.1.  DTLS Session Initiation
 
@@ -700,13 +688,12 @@ Internet-Draft               unyte-udp-notif                 August 2022
    messages before the DTLS handshake has successfully completed.
 
    Implementations of this security layer MUST support DTLS 1.3
-   [I-D.draft-ietf-tls-dtls13] and MUST support the mandatory to
-   implement cipher suite TLS_AES_128_GCM_SHA256 and SHOULD implement
-   TLS_AES_256_GCM_SHA384 and TLS_CHACHA20_POLY1305_SHA256 cipher
-   suites, as specified in TLS 1.3 [RFC8446].  If additional cipher
-   suites are supported, then implementations MUST NOT negotiate a
-   cipher suite that employs NULL integrity or authentication
-   algorithms.
+   [RFC9147] and MUST support the mandatory to implement cipher suite
+   TLS_AES_128_GCM_SHA256 and SHOULD implement TLS_AES_256_GCM_SHA384
+   and TLS_CHACHA20_POLY1305_SHA256 cipher suites, as specified in TLS
+   1.3 [RFC8446].  If additional cipher suites are supported, then
+   implementations MUST NOT negotiate a cipher suite that employs NULL
+   integrity or authentication algorithms.
 
    Where privacy is REQUIRED, then implementations must either negotiate
    a cipher suite that employs a non-NULL encryption algorithm or
@@ -723,13 +710,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
    APPLICATION-DATA = 1*UDP-NOTIF-FRAME
 
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 13]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
    UDP-NOTIF-FRAME = MSG-LEN SP UDP-NOTIF-MSG
 
    MSG-LEN = NONZERO-DIGIT *DIGIT
@@ -741,6 +721,14 @@ Internet-Draft               unyte-udp-notif                 August 2022
    DIGIT = %d48 / NONZERO-DIGIT
 
    UDP-NOTIF-MSG is defined in Section 3.
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 13]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
 
    The Publisher SHOULD attempt to avoid IP fragmentation by using the
    Segmentation Option in the UDP-notif message.
@@ -773,6 +761,18 @@ Internet-Draft               unyte-udp-notif                 August 2022
    The YANG model defined in Section 8 has five leaves augmenting the
    model of Sub-Notif [RFC8639], and one container to configure DTLS
    encryption parameters.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1027,10 +1027,10 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
 9.  IANA Considerations
 
-   This document is creating 2 registries called "UDP-notif media types"
-   and "UDP-notif option types" under the new heading "UDP-notif
-   protocol".  The registration procedure is made using the Standards
-   Action process defined in [RFC8126].
+   This document is creating 3 registries called "UDP-notif media
+   types", "UDP-notif option types" and "UDP-notif header version" under
+   the new heading "UDP-notif protocol".  The registration procedure is
+   made using the Standards Action process defined in [RFC8126].
 
    The first requested registry is the following:
 
@@ -1055,7 +1055,7 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
      Value: 3
      Description: media type application/yang-data+cbor
-     Reference: <xref target="I-D.ietf-core-yang-cbor"/>
+     Reference: <xref target="RFC9254"/>
 
    The second requested registry is the following:
 
@@ -1085,6 +1085,23 @@ Internet-Draft               unyte-udp-notif                 August 2022
      Description: Private Encoding Option
      Reference: this document
 
+   The third requested registry is the following:
+
+     Registry Name: UDP-notif header version
+     Registry Category: UDP-notif protocol.
+     Registration Procedure: Standard Action as defined in RFC8126
+     Maximum value: 7
+
+   These are the initial registrations for "UDP-notif header version":
+
+     Value: 0
+     Description: First version
+     Reference: draft-ietf-netconf-udp-pub-channel-05
+
+     Value: 1
+     Description: RFCXXXX, current version.
+     Reference: this document
+
    IANA is also requested to assign a new URI from the IETF XML Registry
    [RFC3688].  The following URI is suggested:
 
@@ -1094,6 +1111,16 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
    This document also requests a new YANG module name in the YANG Module
    Names registry [RFC7950] with the following suggestion:
+
+
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 20]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
 
    name: ietf-udp-notif
    namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif
@@ -1110,17 +1137,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
 11.  References
 
 11.1.  Normative References
-
-
-
-
-
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 20]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1153,6 +1169,15 @@ Internet-Draft               unyte-udp-notif                 August 2022
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
 
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 21]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
+
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Subscription to YANG Notifications",
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
@@ -1171,35 +1196,13 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
 11.2.  Informative References
 
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 21]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
-   [I-D.draft-ietf-tls-dtls13]
-              Rescorla, E., Tschofenig, H., and N. Modadugu, "The
-              Datagram Transport Layer Security (DTLS) Protocol Version
-              1.3", Work in Progress, Internet-Draft, draft-ietf-tls-
-              dtls13-43, July 2021,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-tls-
-              dtls13-43>.
-
-   [I-D.ietf-core-yang-cbor]
-              Veillette, M., Petrov, I., Pelov, A., Bormann, C., and M.
-              Richardson, "CBOR Encoding of Data Modeled with YANG",
-              Work in Progress, Internet-Draft, draft-ietf-core-yang-
-              cbor-20, 11 April 2022, <https://www.ietf.org/archive/id/
-              draft-ietf-core-yang-cbor-20.txt>.
-
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
               "Subscription to Distributed Notifications", Work in
               Progress, Internet-Draft, draft-ietf-netconf-distributed-
-              notif-02, May 2021,
+              notif-04, May 2021,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
-              distributed-notif-02>.
+              distributed-notif-04>.
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -1220,12 +1223,9 @@ Internet-Draft               unyte-udp-notif                 August 2022
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/info/rfc8040>.
 
-Authors' Addresses
 
-   Guangying Zheng
-   Huawei
-   101 Yu-Hua-Tai Software Road
-   Nanjing
+
+
 
 
 
@@ -1234,6 +1234,23 @@ Zheng, et al.           Expires 24 February 2023               [Page 22]
 Internet-Draft               unyte-udp-notif                 August 2022
 
 
+   [RFC9147]  Rescorla, E., Tschofenig, H., and N. Modadugu, "The
+              Datagram Transport Layer Security (DTLS) Protocol Version
+              1.3", RFC 9147, DOI 10.17487/RFC9147, April 2022,
+              <https://www.rfc-editor.org/info/rfc9147>.
+
+   [RFC9254]  Veillette, M., Ed., Petrov, I., Ed., Pelov, A., Bormann,
+              C., and M. Richardson, "Encoding of Data Modeled with YANG
+              in the Concise Binary Object Representation (CBOR)",
+              RFC 9254, DOI 10.17487/RFC9254, July 2022,
+              <https://www.rfc-editor.org/info/rfc9254>.
+
+Authors' Addresses
+
+   Guangying Zheng
+   Huawei
+   101 Yu-Hua-Tai Software Road
+   Nanjing
    Jiangsu,
    China
 
@@ -1266,6 +1283,13 @@ Internet-Draft               unyte-udp-notif                 August 2022
    Email: pierre.francois@insa-lyon.fr
 
 
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 23]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
+
    Alex Huang Feng
    INSA-Lyon
    Lyon
@@ -1285,4 +1309,36 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
 
 
-Zheng, et al.           Expires 24 February 2023               [Page 23]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 24]

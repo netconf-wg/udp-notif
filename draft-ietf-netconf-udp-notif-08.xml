@@ -371,8 +371,7 @@
 
                 <t>2: application/yang-data+xml <xref target="RFC8040"/></t>
 
-                <t>3: application/yang-data+cbor <xref
-                target="I-D.ietf-core-yang-cbor"/></t>
+                <t>3: application/yang-data+cbor <xref target="RFC9254"/></t>
               </list></t>
 
             <t>Header Len is the length of the message header in octets,
@@ -642,40 +641,15 @@
     </section>
 
     <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-notif">
-      <t>In open or unsecured networks, UDP-notif messages SHOULD be secured
+      <t>In open or unsecured networks, UDP-notif messages MUST be secured
       or encrypted. In this section, a mechanism using DTLS 1.3 to secure
       UDP-notif protocol is presented. The following sections defines the
       requirements for the implementation of the secured layer of DTLS for
       UDP-notif. No DTLS 1.3 extensions are defined nor needed.</t>
 
-      <t>The DTLS 1.3 protocol <xref target="I-D.draft-ietf-tls-dtls13"/> is
+      <t>The DTLS 1.3 protocol <xref target="RFC9147"/> is
       designed to meet the requirements of applications that need to secure
       datagram transport.</t>
-
-      <t>DTLS can be used as a secure transport to counter all the primary
-      threats to UDP-notif:</t>
-
-      <t><list style="symbols">
-          <t>Confidentiality to counter disclosure of the message
-          contents.</t>
-
-          <t>Integrity checking to counter modifications to a message on a
-          hop-by-hop basis.</t>
-
-          <t>Server or mutual authentication to counter masquerade.</t>
-        </list></t>
-
-      <t>In addition, DTLS also provides:</t>
-
-      <t><list style="symbols">
-          <t>A cookie exchange mechanism during handshake to counter Denial of
-          Service attacks.</t>
-
-          <t>A sequence number in the header to counter replay attacks.</t>
-        </list></t>
-
-      <t>Even though this security layer is unrequired, DTLS 1.3 SHOULD be
-      implemented on unsecured networks to achieve privacy.</t>
 
       <section anchor="sec_dtl_transport" title="Transport">
         <t>As shown in <xref target="fig_dtls_layers"/>, the DTLS is layered
@@ -743,7 +717,7 @@
           completed.</t>
 
           <t>Implementations of this security layer MUST support DTLS 1.3
-          <xref target="I-D.draft-ietf-tls-dtls13"/> and MUST support the
+          <xref target="RFC9147"/> and MUST support the
           mandatory to implement cipher suite TLS_AES_128_GCM_SHA256 and
           SHOULD implement TLS_AES_256_GCM_SHA384 and
           TLS_CHACHA20_POLY1305_SHA256 cipher suites, as specified in TLS 1.3
@@ -1030,10 +1004,10 @@ module ietf-udp-notif {
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This document is creating 2 registries called "UDP-notif media types"
-      and "UDP-notif option types" under the new heading "UDP-notif protocol".
-      The registration procedure is made using the Standards Action process
-      defined in <xref target="RFC8126"/>.</t>
+      <t>This document is creating 3 registries called "UDP-notif media types",
+      "UDP-notif option types" and "UDP-notif header version" under the new 
+      heading "UDP-notif protocol". The registration procedure is made using
+      the Standards Action process defined in <xref target="RFC8126"/>.</t>
 
       <t>The first requested registry is the following:</t>
 
@@ -1072,7 +1046,7 @@ module ietf-udp-notif {
           <artwork align="left"><![CDATA[
   Value: 3
   Description: media type application/yang-data+cbor
-  Reference: <xref target="I-D.ietf-core-yang-cbor"/>]]></artwork>
+  Reference: <xref target="RFC9254"/>]]></artwork>
         </figure></t>
 
       <t>The second requested registry is the following:</t>
@@ -1106,6 +1080,33 @@ module ietf-udp-notif {
           <artwork align="left"><![CDATA[
   Value: TBD2 (suggested value: 2)
   Description: Private Encoding Option
+  Reference: this document]]></artwork>
+        </figure></t>
+
+      <t>The third requested registry is the following:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Registry Name: UDP-notif header version
+  Registry Category: UDP-notif protocol.
+  Registration Procedure: Standard Action as defined in RFC8126
+  Maximum value: 7]]></artwork>
+        </figure></t>
+
+      <t>These are the initial registrations for "UDP-notif header
+      version":</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 0
+  Description: First version
+  Reference: draft-ietf-netconf-udp-pub-channel-05]]></artwork>
+        </figure></t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  Value: 1
+  Description: RFCXXXX, current version.
   Reference: this document]]></artwork>
         </figure></t>
 
@@ -1176,33 +1177,9 @@ reference: RFC XXXX]]></artwork>
       <!-- <?rfc include='reference.RFC.8040'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
 
-      <!-- <?rfc include='reference.I-D.ietf-core-yang-cbor'?> -->
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-core-yang-cbor.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
 
-      <reference anchor="I-D.draft-ietf-tls-dtls13" target="">
-        <front>
-          <title>The Datagram Transport Layer Security (DTLS) Protocol Version
-          1.3</title>
-
-          <author fullname="Eric Rescorla" initials="E." surname="Rescorla">
-            <organization>RTFM, Inc.</organization>
-          </author>
-
-          <author fullname="Hannes Tschofenig" initials="H."
-                  surname="Tschofenig">
-            <organization>Arm Limited</organization>
-          </author>
-
-          <author fullname="Nagendra Modadugu" initials="N."
-                  surname="Modadugu">
-            <organization>Google, Inc.</organization>
-          </author>
-
-          <date month="July" year="2021"/>
-        </front>
-
-        <seriesInfo name="Internet-Draft" value="draft-ietf-tls-dtls13-43"/>
-      </reference>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
 
       <reference anchor="I-D.ietf-netconf-distributed-notif" target="">
         <front>
@@ -1232,7 +1209,7 @@ reference: RFC XXXX]]></artwork>
         </front>
 
         <seriesInfo name="Internet-Draft"
-                    value="draft-ietf-netconf-distributed-notif-02"/>
+                    value="draft-ietf-netconf-distributed-notif-04"/>
       </reference>
     </references>
   </back>
