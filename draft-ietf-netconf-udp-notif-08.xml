@@ -556,7 +556,8 @@
       <t>The proposed mechanism falls in the category of UDP applications
       "designed for use within the network of a single network operator or on
       networks of an adjacent set of cooperating network operators, to be
-      deployed in controlled environments". Implementations of the proposed
+      deployed in controlled environments", as defined in <xref
+      target="RFC8085"/>. Implementations of the proposed
       mechanism SHOULD thus follow the recommendations in place for such
       specific applications. In the following, we discuss recommendations on
       congestion control, message size guidelines, reliability considerations
@@ -621,23 +622,6 @@
         configurable.</t>
       </section>
 
-      <section anchor="sec_security_considerations"
-               title="Security Considerations">
-        <t><xref target="RFC8085"/> states that "UDP applications that need to
-        protect their communications againts eavesdropping, tampering, or
-        message forgery SHOULD employ end-to-end security services provided by
-        other IETF protocols". As mentioned above, the proposed mechanism is
-        designed to be used in controlled environments and thus, a security
-        layer is unrequired. Nevertheless, a DTLS layer SHOULD be implemented
-        in open or unsecured networks. A DTLS layered implementation is
-        presented in <xref target="sec_dtls_udp_notif"/>.</t>
-
-        <!-- <t>As stated in the Applicability analysis in <xref
-        target="sec_applicability"/>, this protocol is to be used in controlled
-        environments, so that network operators might not require to secure the transport
-        mechanism described in this document. An approach to secure this protocol
-        is out of the scope of this document. </t> -->
-      </section>
     </section>
 
     <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-notif">
@@ -1134,6 +1118,25 @@ reference: RFC XXXX]]></artwork>
         </figure></t>
     </section>
 
+    <section anchor="sec_op_considerations" title="Operational considerations">
+    <t>TBD: when we have a perf test?</t>
+    </section>
+
+    <section anchor="sec_security_considerations"
+              title="Security Considerations">
+      <t><xref target="RFC8085"/> states that "UDP applications that need to
+      protect their communications againts eavesdropping, tampering, or
+      message forgery SHOULD employ end-to-end security services provided by
+      other IETF protocols". As mentioned above, the proposed mechanism is
+      designed to be used in controlled environments, as defined in <xref 
+      target="RFC8085"/> or also known as "limited domains", as defined in 
+      <xref target="RFC8799"/>, and thus, a security layer is unrequired.
+      Nevertheless, a DTLS layer MUST be implemented in open or unsecured
+      networks. A proposed DTLS layered implementation is presented in
+      <xref target="sec_dtls_udp_notif"/>.</t>
+
+    </section>
+
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors of this documents would like to thank Alexander Clemm,
       Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
@@ -1176,6 +1179,8 @@ reference: RFC XXXX]]></artwork>
 
       <!-- <?rfc include='reference.RFC.8040'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8799.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
 

@@ -87,23 +87,23 @@ Table of Contents
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  10
      5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  10
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  11
-     5.4.  Security Considerations . . . . . . . . . . . . . . . . .  11
    6.  Secured layer for UDP-notif . . . . . . . . . . . . . . . . .  11
      6.1.  Transport . . . . . . . . . . . . . . . . . . . . . . . .  11
      6.2.  Port Assignment . . . . . . . . . . . . . . . . . . . . .  12
      6.3.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  12
-       6.3.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  13
+       6.3.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  12
        6.3.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  13
-       6.3.3.  Session termination . . . . . . . . . . . . . . . . .  14
+       6.3.3.  Session termination . . . . . . . . . . . . . . . . .  13
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  14
    8.  YANG Module . . . . . . . . . . . . . . . . . . . . . . . . .  15
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  21
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  21
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  22
+   10. Operational considerations  . . . . . . . . . . . . . . . . .  21
+   11. Security Considerations . . . . . . . . . . . . . . . . . . .  21
+   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  21
+   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
+     13.1.  Normative References . . . . . . . . . . . . . . . . . .  21
+     13.2.  Informative References . . . . . . . . . . . . . . . . .  22
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
-
 
 
 
@@ -506,11 +506,12 @@ Zheng, et al.           Expires 24 February 2023                [Page 9]
 Internet-Draft               unyte-udp-notif                 August 2022
 
 
-   be deployed in controlled environments".  Implementations of the
-   proposed mechanism SHOULD thus follow the recommendations in place
-   for such specific applications.  In the following, we discuss
-   recommendations on congestion control, message size guidelines,
-   reliability considerations and security considerations.
+   be deployed in controlled environments", as defined in [RFC8085].
+   Implementations of the proposed mechanism SHOULD thus follow the
+   recommendations in place for such specific applications.  In the
+   following, we discuss recommendations on congestion control, message
+   size guidelines, reliability considerations and security
+   considerations.
 
 5.1.  Congestion Control
 
@@ -556,7 +557,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
 
 
-
 Zheng, et al.           Expires 24 February 2023               [Page 10]
 
 Internet-Draft               unyte-udp-notif                 August 2022
@@ -580,17 +580,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
    a complete message within a given amount of time.  This time SHOULD
    be configurable.
 
-5.4.  Security Considerations
-
-   [RFC8085] states that "UDP applications that need to protect their
-   communications againts eavesdropping, tampering, or message forgery
-   SHOULD employ end-to-end security services provided by other IETF
-   protocols".  As mentioned above, the proposed mechanism is designed
-   to be used in controlled environments and thus, a security layer is
-   unrequired.  Nevertheless, a DTLS layer SHOULD be implemented in open
-   or unsecured networks.  A DTLS layered implementation is presented in
-   Section 6.
-
 6.  Secured layer for UDP-notif
 
    In open or unsecured networks, UDP-notif messages MUST be secured or
@@ -608,16 +597,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
    providing reusable security and authentication functions over UDP.
    No DTLS extension is required to enable UDP-notif messages over DTLS.
 
-
-
-
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 11]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
                       +-----------------------------+
                       |      UDP-notif Message      |
                       +-----------------------------+
@@ -629,6 +608,15 @@ Internet-Draft               unyte-udp-notif                 August 2022
                       +-----------------------------+
 
             Figure 6: Protocol Stack for DTLS secured UDP-notif
+
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 11]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
 
    The application implementer will map a unique combination of the
    remote address, remote port number, local address, and local port
@@ -660,6 +648,18 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
 6.3.  Session lifecycle
 
+6.3.1.  DTLS Session Initiation
+
+   The Publisher initiates a DTLS connection by sending a DTLS
+   ClientHello to the Receiver.  Implementations MAY support the denial
+   of service countermeasures defined by DTLS 1.3.  When these
+   countermeasures are used, the Receiver responds with a DTLS
+   HelloRetryRequest containing a stateless cookie.  The Publisher MUST
+   send a new DTLS ClientHello message containing the received cookie,
+   which initiates the DTLS handshake.
+
+   When DTLS is implemented, the Publisher MUST NOT send any UDP-notif
+   messages before the DTLS handshake has successfully completed.
 
 
 
@@ -673,19 +673,6 @@ Zheng, et al.           Expires 24 February 2023               [Page 12]
 
 Internet-Draft               unyte-udp-notif                 August 2022
 
-
-6.3.1.  DTLS Session Initiation
-
-   The Publisher initiates a DTLS connection by sending a DTLS
-   ClientHello to the Receiver.  Implementations MAY support the denial
-   of service countermeasures defined by DTLS 1.3.  When these
-   countermeasures are used, the Receiver responds with a DTLS
-   HelloRetryRequest containing a stateless cookie.  The Publisher MUST
-   send a new DTLS ClientHello message containing the received cookie,
-   which initiates the DTLS handshake.
-
-   When DTLS is implemented, the Publisher MUST NOT send any UDP-notif
-   messages before the DTLS handshake has successfully completed.
 
    Implementations of this security layer MUST support DTLS 1.3
    [RFC9147] and MUST support the mandatory to implement cipher suite
@@ -722,14 +709,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
 
    UDP-NOTIF-MSG is defined in Section 3.
 
-
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 13]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
    The Publisher SHOULD attempt to avoid IP fragmentation by using the
    Segmentation Option in the UDP-notif message.
 
@@ -742,6 +721,14 @@ Internet-Draft               unyte-udp-notif                 August 2022
    close_notify alert and simply close the DTLS connection.  Once the
    Receiver gets a close_notify from the Publisher, it MUST reply with a
    close_notify.
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 13]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
 
    When no data is received from a DTLS connection for a long time, the
    Receiver MAY close the connection.  Implementations SHOULD set the
@@ -761,6 +748,19 @@ Internet-Draft               unyte-udp-notif                 August 2022
    The YANG model defined in Section 8 has five leaves augmenting the
    model of Sub-Notif [RFC8639], and one container to configure DTLS
    encryption parameters.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1127,16 +1127,32 @@ Internet-Draft               unyte-udp-notif                 August 2022
    prefix: un
    reference: RFC XXXX
 
-10.  Acknowledgements
+10.  Operational considerations
+
+   TBD: when we have a perf test?
+
+11.  Security Considerations
+
+   [RFC8085] states that "UDP applications that need to protect their
+   communications againts eavesdropping, tampering, or message forgery
+   SHOULD employ end-to-end security services provided by other IETF
+   protocols".  As mentioned above, the proposed mechanism is designed
+   to be used in controlled environments, as defined in [RFC8085] or
+   also known as "limited domains", as defined in [RFC8799], and thus, a
+   security layer is unrequired.  Nevertheless, a DTLS layer MUST be
+   implemented in open or unsecured networks.  A proposed DTLS layered
+   implementation is presented in Section 6.
+
+12.  Acknowledgements
 
    The authors of this documents would like to thank Alexander Clemm,
    Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
    Frenot, Timothy Carey, Tim Jenkins, Yunan Gu and Marco Tollini for
    their constructive suggestions for improving this document.
 
-11.  References
+13.  References
 
-11.1.  Normative References
+13.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1151,6 +1167,16 @@ Internet-Draft               unyte-udp-notif                 August 2022
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
+
+
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 21]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
 
    [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
@@ -1169,15 +1195,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/info/rfc8446>.
 
-
-
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 21]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
    [RFC8639]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Subscription to YANG Notifications",
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
@@ -1194,7 +1211,7 @@ Internet-Draft               unyte-udp-notif                 August 2022
               Datastores over RESTCONF", RFC 8650, DOI 10.17487/RFC8650,
               November 2019, <https://www.rfc-editor.org/info/rfc8650>.
 
-11.2.  Informative References
+13.2.  Informative References
 
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
@@ -1203,6 +1220,19 @@ Internet-Draft               unyte-udp-notif                 August 2022
               notif-04, May 2021,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
               distributed-notif-04>.
+
+
+
+
+
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 22]
+
+Internet-Draft               unyte-udp-notif                 August 2022
+
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -1223,16 +1253,9 @@ Internet-Draft               unyte-udp-notif                 August 2022
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/info/rfc8040>.
 
-
-
-
-
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 22]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
+   [RFC8799]  Carpenter, B. and B. Liu, "Limited Domains and Internet
+              Protocols", RFC 8799, DOI 10.17487/RFC8799, July 2020,
+              <https://www.rfc-editor.org/info/rfc8799>.
 
    [RFC9147]  Rescorla, E., Tschofenig, H., and N. Modadugu, "The
               Datagram Transport Layer Security (DTLS) Protocol Version
@@ -1255,6 +1278,16 @@ Authors' Addresses
    China
 
    Email: zhengguangying@huawei.com
+
+
+
+
+
+
+
+Zheng, et al.           Expires 24 February 2023               [Page 23]
+
+Internet-Draft               unyte-udp-notif                 August 2022
 
 
    Tianran Zhou
@@ -1283,13 +1316,6 @@ Authors' Addresses
    Email: pierre.francois@insa-lyon.fr
 
 
-
-
-Zheng, et al.           Expires 24 February 2023               [Page 23]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
    Alex Huang Feng
    INSA-Lyon
    Lyon
@@ -1305,32 +1331,6 @@ Internet-Draft               unyte-udp-notif                 August 2022
    Netherlands
 
    Email: paolo@ntt.net
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
