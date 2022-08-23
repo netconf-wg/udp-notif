@@ -593,13 +593,6 @@
         rate. The interaction to control the streaming rate on the device is
         out of the scope of this document.</t>
 
-        <!-- <t>Congestion control mechanisms that respond to congestion by reducing
-      traffic rates and establish a degree of fairness between flows that
-      share the same path are vital to the stable operation of the Internet
-      <xref target="RFC2914"/>. While efficient, UDP has no built-in
-      congestion control mechanism. Because streaming telemetry can generate
-      unlimited amounts of data, transferring this data over UDP may be considered
-      problematic. -->
       </section>
 
       <section anchor="sec_message_size" title="Message Size">
@@ -827,35 +820,31 @@
 module: ietf-udp-notif
 
   augment /sn:subscriptions/sn:subscription/sn:receivers/sn:receiver:
-    +--rw address                  inet:ip-address
-    +--rw port                     inet:port-number
-    +--rw enable-segmentation?     boolean {segmentation}?
-    +--rw max-segment-size?        uint32 {segmentation}?
-    +--rw enable-dtls?             boolean {dtls-supported}?
-    +--rw dtls {dtls-supported}?
+    +--rw address                inet:ip-address
+    +--rw port                   inet:port-number
+    +--rw enable-segmentation?   boolean {segmentation}?
+    +--rw max-segment-size?      uint32 {segmentation}?
+    +--rw dtls! {dtls-supported}?
        +--rw client-identity!
        |  +--rw (auth-type)
-       |     +--:(certificate) {client-ident-x509-cert}?
+       |     +--:(certificate) {x509-certificate-auth}?
        |     |     ...
-       |     +--:(raw-public-key) {client-ident-raw-public-key}?
+       |     +--:(raw-public-key) {raw-public-key-auth}?
        |     |     ...
-       |     +--:(tls12-psk) {client-ident-tls12-psk}?
-       |     |     ...
-       |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
+       |     +--:(psk) {psk-auth}?
        |           ...
        +--rw server-authentication
-       |  +--rw ca-certs! {server-auth-x509-cert}?
+       |  +--rw ca-certs! {x509-certificate-auth}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw ee-certs! {server-auth-x509-cert}?
+       |  +--rw ee-certs! {x509-certificate-auth}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw raw-public-keys! {server-auth-raw-public-key}?
+       |  +--rw raw-public-keys! {raw-public-key-auth}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw tls12-psks?        empty {server-auth-tls12-psk}?
-       |  +--rw tls13-epsks?       empty {server-auth-tls13-epsk}?
-       +--rw hello-params {tlscmn:hello-params}?
+       |  +--rw psks?              empty {psk-auth}?
+       +--rw hello-params {tls-client-hello-params-config}?
        |  +--rw tls-versions
        |  |  +--rw tls-version*   identityref
        |  +--rw cipher-suites
@@ -879,7 +868,7 @@ module: ietf-udp-notif
 
       <t><figure>
           <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif@2022-05-09.yang"
+<CODE BEGINS> file "ietf-udp-notif@2022-08-23.yang"
 module ietf-udp-notif {
   yang-version 1.1;
   namespace
@@ -935,14 +924,9 @@ module ietf-udp-notif {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2022-05-25 {
+  revision 2022-08-23 {
     description
-      "Added container for DTLS parameters.
-      Changed grouping name to 'udp-receiver-grouping'.
-      Port made mandatory.
-      Added segmentation feature.
-      Added dtls-supported feature.
-      Changed 'max-segmentation-size' leaf name to 'max-segment-size'.";
+      "Removed enable-dtls leaf and changed container dtls to presence container.";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -979,10 +963,9 @@ module ietf-udp-notif {
   identity encode-cbor {
     base sn:encoding;
     description
-      "Encode data using CBOR as described in RFC XXX.";
+      "Encode data using CBOR as described in RFC 9254.";
     reference
-      "RFC XXX: draft-ietf-core-yang-cbor-18, CBOR Encoding of 
-        Data Modeled with YANG";
+      "RFC 9254: CBOR Encoding of Data Modeled with YANG";
   }
 
   grouping udp-receiver-grouping {
@@ -1024,18 +1007,9 @@ module ietf-udp-notif {
         options, included).";
     }
 
-    leaf enable-dtls {
-      if-feature dtls-supported;
-      type boolean;
-      default false;
-      description
-        "The switch for the DTLS encryption feature. When disabled, the
-        publisher will not encrypt UDP-Notif messages.";
-    }
-
     container dtls {
-      when "../enable-dtls = 'true'";
       if-feature dtls-supported;
+      presence dtls;
       uses tlsc:tls-client-grouping;
       description 
         "Container for configuring DTLS parameters if DTLS is enabled.";

@@ -3,32 +3,25 @@ module ietf-tls-common {
   namespace "urn:ietf:params:xml:ns:yang:ietf-tls-common";
   prefix tlscmn;
 
-  import iana-tls-cipher-suite-algs {
-    prefix tlscsa;
-    reference
-      "RFC FFFF: YANG Groupings for TLS Clients and SSH Servers";
-  }
-
   organization
     "IETF NETCONF (Network Configuration) Working Group";
 
   contact
-    "WG List:  NETCONF WG list <mailto:netconf@ietf.org>
-     WG Web:   https://datatracker.ietf.org/wg/netconf
+    "WG Web:   <http://datatracker.ietf.org/wg/netconf/>
+     WG List:  <mailto:netconf@ietf.org>
      Author:   Kent Watsen <mailto:kent+ietf@watsen.net>
-     Author:   Gary Wu <mailto:garywu@cisco.com>
-     Author:   Jeff Hartley <mailto:jeff.hartley@commscope.com>";
+     Author:   Gary Wu <mailto:garywu@cisco.com>";
 
    description
-    "This module defines a common features and groupings for
-     Transport Layer Security (TLS).
+    "This module defines a common features, identities, and
+     groupings for Transport Layer Security (TLS).
 
-     Copyright (c) 2021 IETF Trust and the persons identified
+     Copyright (c) 2020 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
      or without modification, is permitted pursuant to, and
-     subject to the license terms contained in, the Revised
+     subject to the license terms contained in, the Simplified
      BSD License set forth in Section 4.c of the IETF Trust's
      Legal Provisions Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
@@ -44,7 +37,7 @@ module ietf-tls-common {
      (RFC 8174) when, and only when, they appear in all
      capitals, as shown here.";
 
-  revision 2022-03-07 {
+  revision 2020-08-20 {
     description
       "Initial version";
     reference
@@ -53,47 +46,78 @@ module ietf-tls-common {
 
   // Features
 
-  feature tls10 {
-    status "obsolete";
+  feature tls-1_0 {
     description
-      "TLS Protocol Version 1.0 is supported.  TLS 1.0 is obsolete
-       and thus it is NOT RECOMMENDED to enable this feature.";
+      "TLS Protocol Version 1.0 is supported.";
     reference
       "RFC 2246: The TLS Protocol Version 1.0";
   }
 
-  feature tls11 {
-    status "obsolete";
+  feature tls-1_1 {
     description
-      "TLS Protocol Version 1.1 is supported.  TLS 1.1 is obsolete
-       and thus it is NOT RECOMMENDED to enable this feature.";
+      "TLS Protocol Version 1.1 is supported.";
     reference
       "RFC 4346: The Transport Layer Security (TLS) Protocol
                  Version 1.1";
   }
 
-  feature tls12 {
-    status "deprecated";
+  feature tls-1_2 {
     description
-      "TLS Protocol Version 1.2 is supported  TLS 1.2 is obsolete
-       and thus it is NOT RECOMMENDED to enable this feature.";
+      "TLS Protocol Version 1.2 is supported.";
     reference
       "RFC 5246: The Transport Layer Security (TLS) Protocol
                  Version 1.2";
   }
 
-  feature tls13 {
+  feature tls-1_3 {
     description
-      "TLS Protocol Version 1.3 is supported.";
+      "TLS Protocol Version 1.2 is supported.";
     reference
-      "RFC 8446: The Transport Layer Security (TLS)
-                 Protocol Version 1.3";
+      "RFC 8446: The Transport Layer Security (TLS) Protocol
+                 Version 1.3";
   }
 
-  feature hello-params {
+  feature tls-ecc {
     description
-      "TLS hello message parameters are configurable.";
+      "Elliptic Curve Cryptography (ECC) is supported for TLS.";
+    reference
+      "RFC 8422: Elliptic Curve Cryptography (ECC) Cipher Suites
+                 for Transport Layer Security (TLS)";
   }
+
+  feature tls-dhe {
+    description
+      "Ephemeral Diffie-Hellman key exchange is supported for TLS.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  feature tls-3des {
+    description
+      "The Triple-DES block cipher is supported for TLS.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  feature tls-gcm {
+    description
+      "The Galois/Counter Mode authenticated encryption mode is
+       supported for TLS.";
+    reference
+      "RFC 5288: AES Galois Counter Mode (GCM) Cipher Suites for
+                 TLS";
+  }
+
+  feature tls-sha2 {
+    description
+      "The SHA2 family of cryptographic hash functions is supported
+       for TLS.";
+    reference
+      "FIPS PUB 180-4: Secure Hash Standard (SHS)";
+  }
+
   // Identities
 
   identity tls-version-base {
@@ -101,20 +125,18 @@ module ietf-tls-common {
       "Base identity used to identify TLS protocol versions.";
   }
 
-  identity tls10 {
-    if-feature "tls10";
+  identity tls-1.0 {
+    if-feature "tls-1_0";
     base tls-version-base;
-    status "obsolete";
     description
       "TLS Protocol Version 1.0.";
     reference
       "RFC 2246: The TLS Protocol Version 1.0";
   }
 
-  identity tls11 {
-    if-feature "tls11";
+  identity tls-1.1 {
+    if-feature "tls-1_1";
     base tls-version-base;
-    status "obsolete";
     description
       "TLS Protocol Version 1.1.";
     reference
@@ -122,10 +144,9 @@ module ietf-tls-common {
                  Version 1.1";
   }
 
-  identity tls12 {
-    if-feature "tls12";
+  identity tls-1.2 {
+    if-feature "tls-1_2";
     base tls-version-base;
-    status "deprecated";
     description
       "TLS Protocol Version 1.2.";
     reference
@@ -133,37 +154,206 @@ module ietf-tls-common {
                  Version 1.2";
   }
 
-  identity tls13 {
-    if-feature "tls13";
-    base tls-version-base;
+  identity cipher-suite-base {
     description
-      "TLS Protocol Version 1.3.";
-    reference
-      "RFC 8446: The Transport Layer Security (TLS)
-                 Protocol Version 1.3";
+      "Base identity used to identify TLS cipher suites.";
   }
-  typedef epsk-supported-hash {
-    type enumeration {
-      enum sha-256 {
-        description
-          "The SHA-256 Hash.";
-      }
-      enum sha-384 {
-        description
-          "The SHA-384 Hash.";
-      }
-    }
+
+  identity rsa-with-aes-128-cbc-sha {
+    base cipher-suite-base;
     description
-      "As per Section 4.2.11 of RFC 8446, the hash algorithm
-       supported by an instance of an External Pre-Shared
-       Key (EPSK).";
+      "Cipher suite TLS_RSA_WITH_AES_128_CBC_SHA.";
     reference
-      "RFC 8446: The Transport Layer Security (TLS)
-                 Protocol Version 1.3
-       I-D.ietf-tls-external-psk-importer: Importing
-                 External PSKs for TLS
-       I-D.ietf-tls-external-psk-guidance: Guidance
-                 for External PSK Usage in TLS";
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity rsa-with-aes-256-cbc-sha {
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_RSA_WITH_AES_256_CBC_SHA.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity rsa-with-aes-128-cbc-sha256 {
+    if-feature "tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_RSA_WITH_AES_128_CBC_SHA256.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity rsa-with-aes-256-cbc-sha256 {
+    if-feature "tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_RSA_WITH_AES_256_CBC_SHA256.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity dhe-rsa-with-aes-128-cbc-sha {
+    if-feature "tls-dhe";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_DHE_RSA_WITH_AES_128_CBC_SHA.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity dhe-rsa-with-aes-256-cbc-sha {
+    if-feature "tls-dhe";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_DHE_RSA_WITH_AES_256_CBC_SHA.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity dhe-rsa-with-aes-128-cbc-sha256 {
+    if-feature "tls-dhe and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_DHE_RSA_WITH_AES_128_CBC_SHA256.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity dhe-rsa-with-aes-256-cbc-sha256 {
+    if-feature "tls-dhe and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_DHE_RSA_WITH_AES_256_CBC_SHA256.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity ecdhe-ecdsa-with-aes-128-cbc-sha256 {
+    if-feature "tls-ecc and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity ecdhe-ecdsa-with-aes-256-cbc-sha384 {
+    if-feature "tls-ecc and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity ecdhe-rsa-with-aes-128-cbc-sha256 {
+    if-feature "tls-ecc and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity ecdhe-rsa-with-aes-256-cbc-sha384 {
+    if-feature "tls-ecc and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity ecdhe-ecdsa-with-aes-128-gcm-sha256 {
+    if-feature "tls-ecc and tls-gcm and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity ecdhe-ecdsa-with-aes-256-gcm-sha384 {
+    if-feature "tls-ecc and tls-gcm and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity ecdhe-rsa-with-aes-128-gcm-sha256 {
+    if-feature "tls-ecc and tls-gcm and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity ecdhe-rsa-with-aes-256-gcm-sha384 {
+    if-feature "tls-ecc and tls-gcm and tls-sha2";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384.";
+    reference
+      "RFC 5289: TLS Elliptic Curve Cipher Suites with
+                 SHA-256/384 and AES Galois Counter Mode (GCM)";
+  }
+
+  identity rsa-with-3des-ede-cbc-sha {
+    if-feature "tls-3des";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_RSA_WITH_3DES_EDE_CBC_SHA.";
+    reference
+      "RFC 5246: The Transport Layer Security (TLS) Protocol
+                 Version 1.2";
+  }
+
+  identity ecdhe-rsa-with-3des-ede-cbc-sha {
+    if-feature "tls-ecc and tls-3des";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA.";
+    reference
+      "RFC 8422: Elliptic Curve Cryptography (ECC) Cipher Suites
+                 for Transport Layer Security (TLS)";
+  }
+
+  identity ecdhe-rsa-with-aes-128-cbc-sha {
+    if-feature "tls-ecc";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA.";
+    reference
+      "RFC 8422: Elliptic Curve Cryptography (ECC) Cipher Suites
+                 for Transport Layer Security (TLS)";
+  }
+  identity ecdhe-rsa-with-aes-256-cbc-sha {
+    if-feature "tls-ecc";
+    base cipher-suite-base;
+    description
+      "Cipher suite TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA.";
+    reference
+      "RFC 8422: Elliptic Curve Cryptography (ECC) Cipher Suites
+                 for Transport Layer Security (TLS)";
   }
 
   // Groupings
@@ -173,9 +363,7 @@ module ietf-tls-common {
       "A reusable grouping for TLS hello message parameters.";
     reference
       "RFC 5246: The Transport Layer Security (TLS) Protocol
-                 Version 1.2
-       RFC 8446: The Transport Layer Security (TLS) Protocol
-                 Version 1.3";
+                 Version 1.2";
     container tls-versions {
       description
         "Parameters regarding TLS versions.";
@@ -196,7 +384,7 @@ module ietf-tls-common {
         "Parameters regarding cipher suites.";
       leaf-list cipher-suite {
         type identityref {
-          base tlscsa:cipher-suite-alg-base;
+          base cipher-suite-base;
         }
         ordered-by user;
         description
@@ -213,6 +401,5 @@ module ietf-tls-common {
           "RFC FFFF: YANG Groupings for TLS Clients and TLS Servers";
       }
     }
-  } // hello-params-grouping
-
+  }
 }

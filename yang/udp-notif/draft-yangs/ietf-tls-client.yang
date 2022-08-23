@@ -29,7 +29,7 @@ module ietf-tls-client {
 
   import ietf-tls-common {
     prefix tlscmn;
-    revision-date 2022-03-07; // stable grouping definitions
+    revision-date 2020-08-20; // stable grouping definitions
     reference
       "RFC FFFF: YANG Groupings for TLS Clients and TLS Servers";
   }
@@ -38,22 +38,21 @@ module ietf-tls-client {
     "IETF NETCONF (Network Configuration) Working Group";
 
   contact
-    "WG List:  NETCONF WG list <mailto:netconf@ietf.org>
-     WG Web:   https://datatracker.ietf.org/wg/netconf
+    "WG Web:   <http://datatracker.ietf.org/wg/netconf/>
+     WG List:  <mailto:netconf@ietf.org>
      Author:   Kent Watsen <mailto:kent+ietf@watsen.net>
-     Author:   Gary Wu <mailto:garywu@cisco.com>
-     Author:   Jeff Hartley <mailto:jeff.hartley@commscope.com>";
+     Author:   Gary Wu <mailto:garywu@cisco.com>";
 
   description
     "This module defines reusable groupings for TLS clients that
      can be used as a basis for specific TLS client instances.
 
-     Copyright (c) 2021 IETF Trust and the persons identified
+     Copyright (c) 2020 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
      or without modification, is permitted pursuant to, and
-     subject to the license terms contained in, the Revised
+     subject to the license terms contained in, the Simplified
      BSD License set forth in Section 4.c of the IETF Trust's
      Legal Provisions Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
@@ -69,7 +68,7 @@ module ietf-tls-client {
      (RFC 8174) when, and only when, they appear in all
      capitals, as shown here.";
 
-  revision 2022-03-07 {
+  revision 2020-08-20 {
     description
       "Initial version";
     reference
@@ -78,87 +77,34 @@ module ietf-tls-client {
 
   // Features
 
+  feature tls-client-hello-params-config {
+    description
+      "TLS hello message parameters are configurable on a TLS
+       client.";
+  }
+
   feature tls-client-keepalives {
     description
       "Per socket TLS keepalive parameters are configurable for
        TLS clients on the server implementing this feature.";
   }
 
-  feature client-ident-x509-cert {
-    description
-      "Indicates that the client supports identifying itself
-       using X.509 certificates.";
-    reference
-      "RFC 5280:
-         Internet X.509 Public Key Infrastructure Certificate
-         and Certificate Revocation List (CRL) Profile";
-  }
-
-  feature client-ident-raw-public-key {
-    description
-      "Indicates that the client supports identifying itself
-       using raw public keys.";
-    reference
-      "RFC 7250:
-         Using Raw Public Keys in Transport Layer Security (TLS)
-         and Datagram Transport Layer Security (DTLS)";
-  }
-
-  feature client-ident-tls12-psk {
-    description
-      "Indicates that the client supports identifying itself
-       using TLS-1.2 PSKs (pre-shared or pairwise-symmetric keys).";
-    reference
-      "RFC 4279:
-         Pre-Shared Key Ciphersuites for Transport Layer Security
-         (TLS)";
-  }
-
-  feature client-ident-tls13-epsk {
-    description
-      "Indicates that the client supports identifying itself
-       using TLS-1.3 External PSKs (pre-shared keys).";
-    reference
-      "RFC 8446:
-         The Transport Layer Security (TLS) Protocol Version 1.3";
-  }
-
-  feature server-auth-x509-cert {
+  feature x509-certificate-auth {
     description
       "Indicates that the client supports authenticating servers
        using X.509 certificates.";
-    reference
-      "RFC 5280:
-         Internet X.509 Public Key Infrastructure Certificate
-         and Certificate Revocation List (CRL) Profile";
   }
 
-  feature server-auth-raw-public-key {
+  feature raw-public-key-auth {
     description
       "Indicates that the client supports authenticating servers
-       using raw public keys.";
-    reference
-      "RFC 7250:
-         Using Raw Public Keys in Transport Layer Security (TLS)
-         and Datagram Transport Layer Security (DTLS)";
+       using ray public keys.";
   }
-  feature server-auth-tls12-psk {
+
+  feature psk-auth {
     description
       "Indicates that the client supports authenticating servers
        using PSKs (pre-shared or pairwise-symmetric keys).";
-    reference
-      "RFC 4279:
-         Pre-Shared Key Ciphersuites for Transport Layer Security
-         (TLS)";
-  }
-
-  feature server-auth-tls13-epsk {
-    description
-      "Indicates that the client supports authenticating servers
-       using TLS-1.3 External PSKs (pre-shared keys).";
-    reference
-      "RFC 8446:
-         The Transport Layer Security (TLS) Protocol Version 1.3";
   }
 
   // Groupings
@@ -169,7 +115,7 @@ module ietf-tls-client {
        any consideration for how an underlying TCP session is
        established.
 
-       Note that this grouping uses fairly typical descendant
+       Note that this grouping uses fairly typical descendent
        node names such that a stack of 'uses' statements will
        have name conflicts.  It is intended that the consuming
        data model will resolve the issue (e.g., by wrapping
@@ -181,9 +127,10 @@ module ietf-tls-client {
     container client-identity {
       nacm:default-deny-write;
       presence
-        "Indicates that a TLS-level client identity has been
-         configured.  This statement is present so the mandatory
-         descendant do not imply that this node must be configured.";
+        "Indicates that TLS-level client authentication
+         is sent.  Present so that the 'choice' node's
+         mandatory true doesn't imply that a client
+         identity must be configured.";
       description
         "Identity credentials the TLS client MAY present when
          establishing a connection to a TLS server.  If not
@@ -192,20 +139,17 @@ module ietf-tls-client {
          and requested by the TLS server when establishing a
          TLS session, these credentials are passed in the
          Certificate message defined in Section 7.4.2 of
-         RFC 5246 and Section 4.4.2 in RFC 8446.";
+         RFC 5246.";
       reference
-        "RFC 5246: The Transport Layer Security (TLS)
-                   Protocol Version 1.2
-         RFC 8446: The Transport Layer Security (TLS)
-                   Protocol Version 1.3
+        "RFC 5246: The Transport Layer Security (TLS) Protocol
+                   Version 1.2
          RFC CCCC: A YANG Data Model for a Keystore";
       choice auth-type {
         mandatory true;
         description
-          "A choice amongst authentication types, of which one must
-           be enabled (via its associated 'feature') and selected.";
+          "A choice amongst available authentication types.";
         case certificate {
-          if-feature "client-ident-x509-cert";
+          if-feature x509-certificate-auth;
           container certificate {
             description
               "Specifies the client identity using a certificate.";
@@ -213,18 +157,18 @@ module ietf-tls-client {
               ks:local-or-keystore-end-entity-cert-with-key-grouping{
               refine "local-or-keystore/local/local-definition" {
                 must 'public-key-format'
-                   + ' = "ct:subject-public-key-info-format"';
+                     + ' = "ct:subject-public-key-info-format"';
               }
               refine "local-or-keystore/keystore/keystore-reference"
-                   + "/asymmetric-key" {
+                     + "/asymmetric-key" {
                 must 'deref(.)/../ks:public-key-format'
-                   + ' = "ct:subject-public-key-info-format"';
+                     + ' = "ct:subject-public-key-info-format"';
               }
             }
           }
         }
         case raw-public-key {
-          if-feature "client-ident-raw-public-key";
+          if-feature raw-public-key-auth;
           container raw-private-key {
             description
               "Specifies the client identity using a raw
@@ -232,22 +176,22 @@ module ietf-tls-client {
             uses ks:local-or-keystore-asymmetric-key-grouping {
               refine "local-or-keystore/local/local-definition" {
                 must 'public-key-format'
-                   + ' = "ct:subject-public-key-info-format"';
+                     + ' = "ct:subject-public-key-info-format"';
               }
               refine "local-or-keystore/keystore"
-                   + "/keystore-reference" {
+                     + "/keystore-reference" {
                 must 'deref(.)/../ks:public-key-format'
-                   + ' = "ct:subject-public-key-info-format"';
+                     + ' = "ct:subject-public-key-info-format"';
               }
             }
           }
         }
-        case tls12-psk {
-          if-feature "client-ident-tls12-psk";
-          container tls12-psk {
+        case psk {
+          if-feature psk-auth;
+          container psk {
             description
               "Specifies the client identity using a PSK (pre-shared
-               or pairwise-symmetric key).";
+              or pairwise-symmetric key).";
             uses ks:local-or-keystore-symmetric-key-grouping;
             leaf id {
               type string;
@@ -260,114 +204,12 @@ module ietf-tls-client {
             }
           }
         }
-        case tls13-epsk {
-          if-feature "client-ident-tls13-epsk";
-          container tls13-epsk {
-            description
-              "An External Pre-Shared Key (EPSK) is established
-              or provisioned out-of-band, i.e., not from a TLS
-              connection.  An EPSK is a tuple of (Base Key,
-              External Identity, Hash).  External PSKs MUST NOT
-              be imported for (D)TLS 1.2 or prior versions.  When
-              PSKs are provisioned out of band, the PSK identity
-              and the KDF hash algorithm to be used with the PSK
-              MUST also be provisioned.
-
-              The structure of this container is designed
-              to satisfy the requirements of RFC 8446
-              Section 4.2.11, the recommendations from I-D
-              ietf-tls-external-psk-guidance Section 6,
-              and the EPSK input fields detailed in I-D
-              draft-ietf-tls-external-psk-importer
-              Section 3.1.  The base-key is based upon
-              ks:local-or-keystore-symmetric-key-grouping
-              in order to provide users with flexible and
-              secure storage options.";
-            reference
-              "RFC 8446: The Transport Layer Security (TLS)
-                         Protocol Version 1.3
-               I-D.ietf-tls-external-psk-importer:
-                         Importing External PSKs for TLS
-               I-D.ietf-tls-external-psk-guidance:
-                         Guidance for External PSK Usage in TLS";
-            uses ks:local-or-keystore-symmetric-key-grouping;
-            leaf external-identity {
-              type string;
-              mandatory true;
-              description
-                "As per Section 4.2.11 of RFC 8446, and Section 4.1
-                 of I-D. ietf-tls-external-psk-guidance:
-                 A sequence of bytes used to identify an EPSK. A
-                 label for a pre-shared key established externally.";
-              reference
-                "RFC 8446: The Transport Layer Security (TLS)
-                           Protocol Version 1.3
-                 I-D.ietf-tls-external-psk-guidance:
-                           Guidance for External PSK Usage in TLS";
-            }
-            leaf hash {
-              type tlscmn:epsk-supported-hash;
-              mandatory true;
-              description
-                "As per Section 4.2.11 of RFC 8446, for externally
-                 established PSKs, the Hash algorithm MUST be set
-                 when the PSK is established or default to SHA-256
-                 if no such algorithm is defined.  The server MUST
-                 ensure that it selects a compatible PSK (if any)
-                 and cipher suite.  Each PSK MUST only be used with
-                 a single hash function.";
-              reference
-                "RFC 8446: The Transport Layer Security (TLS)
-                           Protocol Version 1.3";
-            }
-            leaf context {
-              type string;
-              description
-                "As per Section 4.1 of I-D.
-                 ietf-tls-external-psk-guidance: Context may include
-                 information about peer roles or identities to
-                 mitigate Selfie-style reflection attacks [Selfie].
-                 If the EPSK is a key derived from some other
-                 protocol or sequence of protocols, context
-                 MUST include a channel binding for the deriving
-                 protocols [RFC5056].  The details of this binding
-                 are protocol specific.";
-              reference
-                "I-D.ietf-tls-external-psk-importer:
-                           Importing External PSKs for TLS
-                 I-D.ietf-tls-external-psk-guidance:
-                           Guidance for External PSK Usage in TLS";
-            }
-            leaf target-protocol {
-              type uint16;
-              description
-                "As per Section 3.1 of I-D.
-                 ietf-tls-external-psk-guidance:
-                 The protocol for which a PSK is imported for use.";
-              reference
-                "I-D.ietf-tls-external-psk-importer:
-                           Importing External PSKs for TLS";
-            }
-            leaf target-kdf {
-              type uint16;
-              description
-                "As per Section 3.1 of I-D.
-                 ietf-tls-external-psk-guidance:
-                 The specific Key Derivation Function (KDF) for which
-                 a PSK is imported for use.";
-              reference
-                "I-D.ietf-tls-external-psk-importer:
-                           Importing External PSKs for TLS";
-            }
-          }
-        }
       }
     } // container client-identity
 
     container server-authentication {
       nacm:default-deny-write;
-      must 'ca-certs or ee-certs or raw-public-keys or tls12-psks
-        or tls13-epsks';
+      must 'ca-certs or ee-certs or raw-public-keys or psks';
       description
         "Specifies how the TLS client can authenticate TLS servers.
          Any combination of credentials is additive and unordered.
@@ -377,11 +219,10 @@ module ietf-tls-client {
          is necessarily the same as configured in the '../client-
          identity' node.";
       container ca-certs {
-        if-feature "server-auth-x509-cert";
+        if-feature "x509-certificate-auth";
         presence
-          "Indicates that CA certificates have been configured.
-           This statement is present so the mandatory descendant
-           nodes do not imply that this node must be configured.";
+          "Indicates that the TLS client can authenticate TLS servers
+           using configured certificate authority certificates.";
         description
           "A set of certificate authority (CA) certificates used by
            the TLS client to authenticate TLS server certificates.
@@ -392,11 +233,10 @@ module ietf-tls-client {
         uses ts:local-or-truststore-certs-grouping;
       }
       container ee-certs {
-        if-feature "server-auth-x509-cert";
+        if-feature "x509-certificate-auth";
         presence
-          "Indicates that EE certificates have been configured.
-           This statement is present so the mandatory descendant
-           nodes do not imply that this node must be configured.";
+          "Indicates that the TLS client can authenticate TLS
+           servers using configured server certificates.";
         description
           "A set of server certificates (i.e., end entity
            certificates) used by the TLS client to authenticate
@@ -408,11 +248,10 @@ module ietf-tls-client {
         uses ts:local-or-truststore-certs-grouping;
       }
       container raw-public-keys {
-        if-feature "server-auth-raw-public-key";
+        if-feature "raw-public-key-auth";
         presence
-          "Indicates that raw public keys have been configured.
-           This statement is present so the mandatory descendant
-           nodes do not imply that this node must be configured.";
+          "Indicates that the TLS client can authenticate TLS
+           servers using configured server certificates.";
         description
           "A set of raw public keys used by the TLS client to
            authenticate raw public keys presented by the TLS
@@ -422,19 +261,19 @@ module ietf-tls-client {
           "RFC BBBB: A YANG Data Model for a Truststore";
         uses ts:local-or-truststore-public-keys-grouping {
           refine "local-or-truststore/local/local-definition"
-               + "/public-key" {
+                 + "/public-key" {
             must 'public-key-format'
-               + ' = "ct:subject-public-key-info-format"';
+                 + ' = "ct:subject-public-key-info-format"';
           }
           refine "local-or-truststore/truststore"
-               + "/truststore-reference" {
+                 + "/truststore-reference" {
             must 'deref(.)/../*/ts:public-key-format'
-               + ' = "ct:subject-public-key-info-format"';
+                 + ' = "ct:subject-public-key-info-format"';
           }
         }
       }
-      leaf tls12-psks {
-        if-feature "server-auth-tls12-psk";
+      leaf psks {
+        if-feature "psk-auth";
         type empty;
         description
           "Indicates that the TLS client can authenticate TLS servers
@@ -445,22 +284,11 @@ module ietf-tls-client {
            same as PSK value configured in the 'client-identity'
            node.";
       }
-      leaf tls13-epsks {
-        if-feature "server-auth-tls13-epsk";
-        type empty;
-        description
-          "Indicates that the TLS client can authenticate TLS servers
-           using configured external PSKs (pre-shared keys).
-
-           No configuration is required since the PSK value is the
-           same as PSK value configured in the 'client-identity'
-           node.";
-      }
     } // container server-authentication
 
     container hello-params {
       nacm:default-deny-write;
-      if-feature "tlscmn:hello-params";
+      if-feature "tls-client-hello-params-config";
       uses tlscmn:hello-params-grouping;
       description
         "Configurable parameters for the TLS hello message.";
@@ -518,5 +346,4 @@ module ietf-tls-client {
       }
     }
   } // grouping tls-client-grouping
-
-}
+} // module ietf-tls-client
