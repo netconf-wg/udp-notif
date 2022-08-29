@@ -53,9 +53,10 @@ module ietf-udp-notif {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2022-08-23 {
+  revision 2022-08-29 {
     description
-      "Removed enable-dtls leaf and changed container dtls to presence container.";
+      "Removed enable-dtls leaf and changed container dtls to presence container.
+      Removed TLS1.2 references from tls-client-grouping";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -139,9 +140,20 @@ module ietf-udp-notif {
     container dtls {
       if-feature dtls-supported;
       presence dtls;
-      uses tlsc:tls-client-grouping;
+      uses tlsc:tls-client-grouping {
+        // Using tls-client-grouping without TLS1.2 parameters
+        // allowing only DTLS1.3
+        refine "client-identity/auth-type/tls12-psk" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:client-ident-tls12-psk";
+        }
+        refine "server-authentication/tls12-psks" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:server-auth-tls12-psk";
+        }
+      }
       description 
-        "Container for configuring DTLS parameters if DTLS is enabled.";
+        "Container for configuring DTLS1.3 parameters if DTLS is enabled.";
     }
   }
 

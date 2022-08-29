@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="23" month="August" year="2022"/>
+    <date day="29" month="August" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -732,7 +732,7 @@
       <t>The YANG model defined in <xref target="sec_yang_model"/> has four
       leaves augmenting the model of <xref
       target="RFC8639">Sub-Notif</xref>, and one presence container to configure
-      DTLS encryption parameters.</t>
+      DTLS1.3 encryption parameters.</t>
 
       <t><figure>
           <artwork><![CDATA[
@@ -746,24 +746,24 @@ module: ietf-udp-notif
     +--rw dtls! {dtls-supported}?
        +--rw client-identity!
        |  +--rw (auth-type)
-       |     +--:(certificate) {x509-certificate-auth}?
+       |     +--:(certificate) {client-ident-x509-cert}?
        |     |     ...
-       |     +--:(raw-public-key) {raw-public-key-auth}?
+       |     +--:(raw-public-key) {client-ident-raw-public-key}?
        |     |     ...
-       |     +--:(psk) {psk-auth}?
+       |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
        |           ...
        +--rw server-authentication
-       |  +--rw ca-certs! {x509-certificate-auth}?
+       |  +--rw ca-certs! {server-auth-x509-cert}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw ee-certs! {x509-certificate-auth}?
+       |  +--rw ee-certs! {server-auth-x509-cert}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw raw-public-keys! {raw-public-key-auth}?
+       |  +--rw raw-public-keys! {server-auth-raw-public-key}?
        |  |  +--rw (local-or-truststore)
        |  |        ...
-       |  +--rw psks?              empty {psk-auth}?
-       +--rw hello-params {tls-client-hello-params-config}?
+       |  +--rw tls13-epsks?       empty {server-auth-tls13-epsk}?
+       +--rw hello-params {tlscmn:hello-params}?
        |  +--rw tls-versions
        |  |  +--rw tls-version*   identityref
        |  +--rw cipher-suites
@@ -782,12 +782,13 @@ module: ietf-udp-notif
       This YANG module defines in the publisher a receiver willing 
       to consume notification messages. This module augments 
       "ietf-subscribed-notifications" module to define a transport
-      specific receiver.
+      specific receiver and uses tls-client-grouping defined in <xref
+      target="I-D.ietf-netconf-tls-client-server"/> to add DTLS1.3 parameters.
       </t>
 
       <t><figure>
           <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif@2022-08-23.yang"
+<CODE BEGINS> file "ietf-udp-notif@2022-08-29.yang"
 module ietf-udp-notif {
   yang-version 1.1;
   namespace
@@ -843,9 +844,10 @@ module ietf-udp-notif {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2022-08-23 {
+  revision 2022-08-29 {
     description
-      "Removed enable-dtls leaf and changed container dtls to presence container.";
+      "Removed enable-dtls leaf and changed container dtls to presence container.
+      Removed TLS1.2 references from tls-client-grouping";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -929,9 +931,20 @@ module ietf-udp-notif {
     container dtls {
       if-feature dtls-supported;
       presence dtls;
-      uses tlsc:tls-client-grouping;
+      uses tlsc:tls-client-grouping {
+        // Using tls-client-grouping without TLS1.2 parameters
+        // allowing only DTLS1.3
+        refine "client-identity/auth-type/tls12-psk" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:client-ident-tls12-psk";
+        }
+        refine "server-authentication/tls12-psks" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:server-auth-tls12-psk";
+        }
+      }
       description 
-        "Container for configuring DTLS parameters if DTLS is enabled.";
+        "Container for configuring DTLS1.3 parameters if DTLS is enabled.";
     }
   }
 
@@ -1034,7 +1047,7 @@ module ietf-udp-notif {
           <artwork align="left"><![CDATA[
   Registry Name: UDP-notif header version
   Registry Category: UDP-notif protocol.
-  Registration Procedure: Standard Action as defined in RFC8126
+  Registration Procedure: IETF Review as defined in RFC8126
   Maximum value: 7]]></artwork>
         </figure></t>
 
