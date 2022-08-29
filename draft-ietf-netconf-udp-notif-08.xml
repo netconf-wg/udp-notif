@@ -1092,9 +1092,9 @@ reference: RFC XXXX]]></artwork>
         </figure></t>
     </section>
 
-    <section anchor="sec_op_considerations" title="Operational considerations">
+    <!-- <section anchor="sec_op_considerations" title="Operational considerations">
     <t>TBD: when we have a perf test?</t>
-    </section>
+    </section> -->
 
     <section anchor="sec_security_considerations"
               title="Security Considerations">
@@ -1194,7 +1194,7 @@ reference: RFC XXXX]]></artwork>
       </reference>
     </references>
 
-    <section anchor="configuration_examples" title="Configuration Examples">
+    <!-- <section anchor="configuration_examples" title="Configuration Examples">
       <t>This non-normative section shows a example for how the "ietf-udp-notif" 
       module can be used to configure a publisher to send notifications to a
       receiver using Subscribed Notifications.</t>
@@ -1207,7 +1207,7 @@ reference: RFC XXXX]]></artwork>
   TBD
   ]]></artwork>
         </figure></t>
-    </section>
+    </section> -->
 
   </back>
 </rfc>

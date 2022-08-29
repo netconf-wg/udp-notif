@@ -95,14 +95,14 @@ Table of Contents
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  13
    8.  YANG Module . . . . . . . . . . . . . . . . . . . . . . . . .  14
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
-   10. Operational considerations  . . . . . . . . . . . . . . . . .  20
-   11. Security Considerations . . . . . . . . . . . . . . . . . . .  20
-   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
-   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
-     13.1.  Normative References . . . . . . . . . . . . . . . . . .  20
-     13.2.  Informative References . . . . . . . . . . . . . . . . .  21
-   Appendix A.  Configuration Examples . . . . . . . . . . . . . . .  23
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  20
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  20
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  20
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  20
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  21
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  22
+
+
 
 
 
@@ -1085,11 +1085,7 @@ Internet-Draft               unyte-udp-notif                 August 2022
    prefix: un
    reference: RFC XXXX
 
-10.  Operational considerations
-
-   TBD: when we have a perf test?
-
-11.  Security Considerations
+10.  Security Considerations
 
    [RFC8085] states that "UDP applications that need to protect their
    communications againts eavesdropping, tampering, or message forgery
@@ -1101,17 +1097,21 @@ Internet-Draft               unyte-udp-notif                 August 2022
    implemented in open or unsecured networks.  A proposed DTLS layered
    implementation is presented in Section 6.
 
-12.  Acknowledgements
+11.  Acknowledgements
 
    The authors of this documents would like to thank Alexander Clemm,
    Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Stephane
    Frenot, Timothy Carey, Tim Jenkins, Yunan Gu and Marco Tollini for
    their constructive suggestions for improving this document.
 
-13.  References
+12.  References
 
-13.1.  Normative References
+12.1.  Normative References
 
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
 
 
@@ -1121,11 +1121,6 @@ Zheng, et al.             Expires 2 March 2023                 [Page 20]
 
 Internet-Draft               unyte-udp-notif                 August 2022
 
-
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
@@ -1169,7 +1164,12 @@ Internet-Draft               unyte-udp-notif                 August 2022
               Datastores over RESTCONF", RFC 8650, DOI 10.17487/RFC8650,
               November 2019, <https://www.rfc-editor.org/info/rfc8650>.
 
-13.2.  Informative References
+12.2.  Informative References
+
+   [I-D.ietf-netconf-distributed-notif]
+              Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
+              "Subscription to Distributed Notifications", Work in
+              Progress, Internet-Draft, draft-ietf-netconf-distributed-
 
 
 
@@ -1178,10 +1178,6 @@ Zheng, et al.             Expires 2 March 2023                 [Page 21]
 Internet-Draft               unyte-udp-notif                 August 2022
 
 
-   [I-D.ietf-netconf-distributed-notif]
-              Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
-              "Subscription to Distributed Notifications", Work in
-              Progress, Internet-Draft, draft-ietf-netconf-distributed-
               notif-04, May 2021,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
               distributed-notif-04>.
@@ -1227,25 +1223,16 @@ Internet-Draft               unyte-udp-notif                 August 2022
               RFC 9254, DOI 10.17487/RFC9254, July 2022,
               <https://www.rfc-editor.org/info/rfc9254>.
 
+Authors' Addresses
+
+
+
 
 
 Zheng, et al.             Expires 2 March 2023                 [Page 22]
 
 Internet-Draft               unyte-udp-notif                 August 2022
 
-
-Appendix A.  Configuration Examples
-
-   This non-normative section shows a example for how the "ietf-udp-
-   notif" module can be used to configure a publisher to send
-   notifications to a receiver using Subscribed Notifications.
-
-   In this examples, the publisher is a client configured to send
-   notifications to a receiver.
-
-     TBD
-
-Authors' Addresses
 
    Guangying Zheng
    Huawei
@@ -1283,19 +1270,24 @@ Authors' Addresses
    Email: pierre.francois@insa-lyon.fr
 
 
-
-
-Zheng, et al.             Expires 2 March 2023                 [Page 23]
-
-Internet-Draft               unyte-udp-notif                 August 2022
-
-
    Alex Huang Feng
    INSA-Lyon
    Lyon
    France
 
    Email: alex.huang-feng@insa-lyon.fr
+
+
+
+
+
+
+
+
+
+Zheng, et al.             Expires 2 March 2023                 [Page 23]
+
+Internet-Draft               unyte-udp-notif                 August 2022
 
 
    Paolo Lucente
@@ -1305,6 +1297,14 @@ Internet-Draft               unyte-udp-notif                 August 2022
    Netherlands
 
    Email: paolo@ntt.net
+
+
+
+
+
+
+
+
 
 
 
