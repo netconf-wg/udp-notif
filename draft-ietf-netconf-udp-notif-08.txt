@@ -1099,8 +1099,8 @@ Internet-Draft               unyte-udp-notif              September 2022
    communications againts eavesdropping, tampering, or message forgery
    SHOULD employ end-to-end security services provided by other IETF
    protocols".  As mentioned above, the proposed mechanism is designed
-   to be used in controlled environments, as defined in [RFC8085] or
-   also known as "limited domains", as defined in [RFC8799], and thus, a
+   to be used in controlled environments, as defined in [RFC8085] also
+   known as "limited domains", as defined in [RFC8799].  Thus, a
    security layer is not necessary required.  Nevertheless, a DTLS layer
    MUST be implemented in open or unsecured networks.  A specification
    of udp-notif using DTLS is presented in Section 6.
