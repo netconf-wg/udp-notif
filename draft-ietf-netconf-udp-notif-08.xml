@@ -1052,7 +1052,7 @@ module ietf-udp-notif {
           <artwork align="left"><![CDATA[
   Registry Name: UDP-notif header version
   Registry Category: UDP-notif protocol.
-  Registration Procedure: IETF Review as defined in RFC8126
+  Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 7]]></artwork>
         </figure></t>
 
