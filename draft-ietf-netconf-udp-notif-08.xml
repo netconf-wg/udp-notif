@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="2" month="September" year="2022"/>
+    <date day="12" month="September" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -185,10 +185,11 @@
     </abstract>
 
     <note title="Requirements Language">
-      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-      document are to be interpreted as described in <xref
-      target="RFC2119">RFC 2119</xref>.</t>
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+      NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+      "MAY", and "OPTIONAL" in this document are to be interpreted as
+      described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> 
+      when, and only when, they appear in all capitals, as shown here.</t>
     </note>
   </front>
 
@@ -1143,6 +1144,7 @@ reference: RFC XXXX]]></artwork>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"?>
       <!-- <?rfc include='reference.RFC.8126'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
       <!-- <?rfc include='reference.RFC.8446'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
       <!-- <?rfc include='reference.RFC.8639'?> -->
