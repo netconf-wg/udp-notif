@@ -34,4 +34,7 @@ UDP-notif
 [ ] Operational consideration Section when DTLS is used with UDP-notif
 [ ] prefix un to sn -> Ask why https no?
 [ ] why ip address with a zone 
-[ ] add rfc8040 tree diagrams -> Ask Tom
+[x] add rfc8040 tree diagrams -> Ask Tom --> add reference !
+[/] Add phrase for one message id sequence for a observation domain id --> ask to the ML
+[x] when options are not in order -> MAY be dropped
+[ ] Use HTTPS-notif YANG module for consistency
