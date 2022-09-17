@@ -1,4 +1,4 @@
-module ietf-udp-notif {
+module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
     "urn:ietf:params:xml:ns:yang:ietf-udp-notif";
