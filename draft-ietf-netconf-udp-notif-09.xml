@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-netconf-udp-notif-08"
+<rfc category="std" docName="draft-ietf-netconf-udp-notif-09"
      ipr="trust200902">
   <front>
     <title abbrev="unyte-udp-notif">UDP-based Transport for Configured
@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="12" month="September" year="2022"/>
+    <date day="17" month="September" year="2022"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -395,7 +395,8 @@
             within UDP-Notif messages.</t>
 
             <t>The Message ID is generated continuously by the publisher of
-            UDP-Notif messages. Different subscribers share the same Message
+            UDP-Notif messages. Only one Message ID sequence per Observation-Domain-ID
+            MUST be implemented. Different subscribers share the same Message
             ID sequence.</t>
 
             <t>Options is a variable-length field in the TLV format. When the
@@ -453,7 +454,8 @@
         </list></t>
 
       <t>When more than one option are used in the UDP-notif header, options
-      MUST be ordered by the Type value.</t>
+      MUST be ordered by the Type value. Messages with unordered options MAY
+      be dropped by the Receiver.</t>
 
       <section anchor="sec_fragmentation" title="Segmentation Option">
         <t>The UDP payload length is limited to 65535. Application level
@@ -1123,51 +1125,40 @@ reference: RFC XXXX]]></artwork>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors of this documents would like to thank Alexander Clemm,
-      Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Marco Tollini,
-      Stephane Frenot, Timothy Carey, Tim Jenkins and Yunan Gu for their
-      constructive suggestions for improving this document.</t>
+      Benoit Claise, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani,
+      Marco Tollini, Rob Wilton, Sean Turner, Stephane Frenot, Timothy Carey,
+      Tim Jenkins, Tom Petch and Yunan Gu for their constructive suggestions
+      for improving this document.</t>
     </section>
   </middle>
 
   <back>
     <references title="Normative References">
-      <!-- <?rfc include='reference.RFC.2119'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
-      <!-- <?rfc include='reference.RFC.3688'?> -->
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
-      <!-- <?rfc include='reference.RFC.5234'?> -->
       <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
-      <!-- <?rfc include='reference.RFC.7950'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"?>
-      <!-- <?rfc include='reference.RFC.8085'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"?>
-      <!-- <?rfc include='reference.RFC.8126'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
-      <!-- <?rfc include='reference.RFC.8446'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
-      <!-- <?rfc include='reference.RFC.8639'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8639.xml"?>
-      <!-- <?rfc include='reference.RFC.8640'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8640.xml"?>
-      <!-- <?rfc include='reference.RFC.8650'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8650.xml"?>
-
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netconf-tls-client-server-29.xml"?>
     </references>
 
     <references title="Informative References">
-      <!-- <?rfc include='reference.I-D.ietf-netconf-https-notif'?> -->
       <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
 
-      <!-- <?rfc include='reference.I-D.ietf-netconf-notification-messages"?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
 
-      <!-- <?rfc include='reference.RFC.8040'?> -->
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8799.xml"?>
 
@@ -1175,36 +1166,6 @@ reference: RFC XXXX]]></artwork>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-distributed-notif.xml"?>
 
-      <!-- <reference anchor="I-D.ietf-netconf-distributed-notif" target="">
-        <front>
-          <title>Subscription to Distributed Notifications</title>
-
-          <author fullname="Tianran Zhou" initials="T." surname="Zhou">
-            <organization>Huawei</organization>
-          </author>
-
-          <author fullname="Guangying Zheng" initials="G." surname="Zheng">
-            <organization>Huawei</organization>
-          </author>
-
-          <author fullname="Eric Voit" initials="E." surname="Voit">
-            <organization>Cisco Systems</organization>
-          </author>
-
-          <author fullname="Thomas Graf" initials="T." surname="Graf">
-            <organization>Swisscom</organization>
-          </author>
-
-          <author fullname="Pierre Francois" initials="P." surname="Francois">
-            <organization>INSA-Lyon</organization>
-          </author>
-
-          <date month="May" year="2021"/>
-        </front>
-
-        <seriesInfo name="Internet-Draft"
-                    value="draft-ietf-netconf-distributed-notif-04"/>
-      </reference> -->
     </references>
 
     <!-- <section anchor="configuration_examples" title="Configuration Examples">

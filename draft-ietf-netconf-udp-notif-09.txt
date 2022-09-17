@@ -5,18 +5,18 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 16 March 2023                                           T. Graf
+Expires: 21 March 2023                                           T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                       12 September 2022
+                                                       17 September 2022
 
 
             UDP-based Transport for Configured Subscriptions
-                    draft-ietf-netconf-udp-notif-08
+                    draft-ietf-netconf-udp-notif-09
 
 Abstract
 
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Zheng, et al.             Expires 16 March 2023                 [Page 1]
+Zheng, et al.             Expires 21 March 2023                 [Page 1]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
 
-   This Internet-Draft will expire on 16 March 2023.
+   This Internet-Draft will expire on 21 March 2023.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.             Expires 16 March 2023                 [Page 2]
+Zheng, et al.             Expires 21 March 2023                 [Page 2]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -165,7 +165,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                 [Page 3]
+Zheng, et al.             Expires 21 March 2023                 [Page 3]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -221,7 +221,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                 [Page 4]
+Zheng, et al.             Expires 21 March 2023                 [Page 4]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -277,7 +277,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                 [Page 5]
+Zheng, et al.             Expires 21 March 2023                 [Page 5]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -320,8 +320,9 @@ Internet-Draft               unyte-udp-notif              September 2022
       within UDP-Notif messages.
 
    *  The Message ID is generated continuously by the publisher of UDP-
-      Notif messages.  Different subscribers share the same Message ID
-      sequence.
+      Notif messages.  Only one Message ID sequence per Observation-
+      Domain-ID MUST be implemented.  Different subscribers share the
+      same Message ID sequence.
 
    *  Options is a variable-length field in the TLV format.  When the
       Header Length is larger than 12 octets, which is the length of the
@@ -332,8 +333,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-
-Zheng, et al.             Expires 16 March 2023                 [Page 6]
+Zheng, et al.             Expires 21 March 2023                 [Page 6]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -378,7 +378,8 @@ Internet-Draft               unyte-udp-notif              September 2022
    *  Variable-length data: 0 or more octets of TLV Value.
 
    When more than one option are used in the UDP-notif header, options
-   MUST be ordered by the Type value.
+   MUST be ordered by the Type value.  Messages with unordered options
+   MAY be dropped by the Receiver.
 
 
 
@@ -388,8 +389,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-
-Zheng, et al.             Expires 16 March 2023                 [Page 7]
+Zheng, et al.             Expires 21 March 2023                 [Page 7]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -445,7 +445,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                 [Page 8]
+Zheng, et al.             Expires 21 March 2023                 [Page 8]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -501,7 +501,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                 [Page 9]
+Zheng, et al.             Expires 21 March 2023                 [Page 9]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -557,7 +557,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 10]
+Zheng, et al.             Expires 21 March 2023                [Page 10]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -613,7 +613,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 11]
+Zheng, et al.             Expires 21 March 2023                [Page 11]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -669,7 +669,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 12]
+Zheng, et al.             Expires 21 March 2023                [Page 12]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -725,7 +725,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 13]
+Zheng, et al.             Expires 21 March 2023                [Page 13]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -781,7 +781,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 14]
+Zheng, et al.             Expires 21 March 2023                [Page 14]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -837,7 +837,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 15]
+Zheng, et al.             Expires 21 March 2023                [Page 15]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -893,7 +893,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 16]
+Zheng, et al.             Expires 21 March 2023                [Page 16]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -949,7 +949,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 17]
+Zheng, et al.             Expires 21 March 2023                [Page 17]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -1005,7 +1005,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 18]
+Zheng, et al.             Expires 21 March 2023                [Page 18]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -1061,7 +1061,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 19]
+Zheng, et al.             Expires 21 March 2023                [Page 19]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -1108,16 +1108,16 @@ Internet-Draft               unyte-udp-notif              September 2022
 11.  Acknowledgements
 
    The authors of this documents would like to thank Alexander Clemm,
-   Eric Voit, Huiyang Yang, Kent Watsen, Mahesh Jethanandani, Marco
-   Tollini, Stephane Frenot, Timothy Carey, Tim Jenkins and Yunan Gu for
-   their constructive suggestions for improving this document.
+   Benoit Claise, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh
+   Jethanandani, Marco Tollini, Rob Wilton, Sean Turner, Stephane
+   Frenot, Timothy Carey, Tim Jenkins, Tom Petch and Yunan Gu for their
+   constructive suggestions for improving this document.
 
 12.  References
 
 
 
-
-Zheng, et al.             Expires 16 March 2023                [Page 20]
+Zheng, et al.             Expires 21 March 2023                [Page 20]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -1173,7 +1173,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 21]
+Zheng, et al.             Expires 21 March 2023                [Page 21]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -1229,7 +1229,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-Zheng, et al.             Expires 16 March 2023                [Page 22]
+Zheng, et al.             Expires 21 March 2023                [Page 22]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
@@ -1237,6 +1237,10 @@ Internet-Draft               unyte-udp-notif              September 2022
    [RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/info/rfc8040>.
+
+   [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
+              BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
+              <https://www.rfc-editor.org/info/rfc8340>.
 
    [RFC8799]  Carpenter, B. and B. Liu, "Limited Domains and Internet
               Protocols", RFC 8799, DOI 10.17487/RFC8799, July 2020,
@@ -1277,18 +1281,19 @@ Authors' Addresses
    Email: thomas.graf@swisscom.com
 
 
+
+
+
+
+Zheng, et al.             Expires 21 March 2023                [Page 23]
+
+Internet-Draft               unyte-udp-notif              September 2022
+
+
    Pierre Francois
    INSA-Lyon
    Lyon
    France
-
-
-
-
-Zheng, et al.             Expires 16 March 2023                [Page 23]
-
-Internet-Draft               unyte-udp-notif              September 2022
-
 
    Email: pierre.francois@insa-lyon.fr
 
@@ -1336,9 +1341,4 @@ Internet-Draft               unyte-udp-notif              September 2022
 
 
 
-
-
-
-
-
-Zheng, et al.             Expires 16 March 2023                [Page 24]
+Zheng, et al.             Expires 21 March 2023                [Page 24]
