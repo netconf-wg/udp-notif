@@ -392,17 +392,26 @@
             interpreted as the identifier for the host that originated the
             UDP-Notif message. Indeed, the streamer sending the UDP-Notif
             message could be a relay for the actual source of data carried
-            within UDP-Notif messages.</t>
+            within UDP-Notif messages. Note that if a relay is used,
+            Observation-Domain-ID unicity MUST be preserved in order to ensure
+            unicity of the Message-ID field described below.</t>
 
-            <t>The Message ID is generated continuously by the publisher of
-            UDP-Notif messages. Only one Message ID sequence per Observation-Domain-ID
-            MUST be implemented. Different subscribers share the same Message
-            ID sequence.</t>
+            <t>The Message-ID is generated continuously by the publisher of
+            UDP-Notif messages. A publisher MUST use different Message-ID
+            values for different messages generated with the same Observation-Domain-ID.
+            Note that the sole purpose of the Message-ID is to reconstruct
+            messages which were segmented using the segmentation option described
+            in section <xref target="sec_fragmentation"/>. The Message-ID values 
+            SHOULD be incremented by one for each successive message originated with 
+            the same Observation-Domain-ID, so that message loss can be detected.
+            Furthermore, incrementing the Message-ID by one allows for a large amount 
+            of time to happen before the Message-ID's are reused due to wrapping around.
+            Different subscribers MAY share the same Message-ID sequence.</t>
 
             <t>Options is a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
             fixed header, Options TLVs follow directly after the fixed message
-            header (i.e., Message ID). The details of the options are
+            header (i.e., Message-ID). The details of the options are
             described in <xref target="sec_options"/>.</t>
           </list></t>
 
@@ -483,7 +492,7 @@
 
         <t>The Segmentation Option is to be included when the message content
         is segmented into multiple pieces. Different segments of one message
-        share the same Message ID. An illustration is provided in <xref
+        share the same Message-ID. An illustration is provided in <xref
         target="fig_frag_option"/>. The fields of this TLV are:</t>
 
         <t><list style="symbols">

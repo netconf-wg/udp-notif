@@ -85,12 +85,12 @@ Table of Contents
    4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   7
      4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   8
      4.2.  Private Encoding Option . . . . . . . . . . . . . . . . .   9
-   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .   9
+   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  10
-     5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  10
+     5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  11
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  11
    6.  Secured layer for UDP-notif . . . . . . . . . . . . . . . . .  11
-     6.1.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  11
+     6.1.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  12
        6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  12
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  12
        6.1.3.  Session termination . . . . . . . . . . . . . . . . .  13
@@ -317,25 +317,36 @@ Internet-Draft               unyte-udp-notif              September 2022
       be interpreted as the identifier for the host that originated the
       UDP-Notif message.  Indeed, the streamer sending the UDP-Notif
       message could be a relay for the actual source of data carried
-      within UDP-Notif messages.
+      within UDP-Notif messages.  Note that if a relay is used,
+      Observation-Domain-ID unicity MUST be preserved in order to ensure
+      unicity of the Message-ID field described below.
 
-   *  The Message ID is generated continuously by the publisher of UDP-
-      Notif messages.  Only one Message ID sequence per Observation-
-      Domain-ID MUST be implemented.  Different subscribers share the
-      same Message ID sequence.
-
-   *  Options is a variable-length field in the TLV format.  When the
-      Header Length is larger than 12 octets, which is the length of the
-      fixed header, Options TLVs follow directly after the fixed message
-      header (i.e., Message ID).  The details of the options are
-      described in Section 4.
-
+   *  The Message-ID is generated continuously by the publisher of UDP-
+      Notif messages.  A publisher MUST use different Message-ID values
+      for different messages generated with the same Observation-Domain-
+      ID.  Note that the sole purpose of the Message-ID is to
+      reconstruct messages which were segmented using the segmentation
+      option described in section Section 4.1.  The Message-ID values
+      SHOULD be incremented by one for each successive message
+      originated with the same Observation-Domain-ID, so that message
+      loss can be detected.  Furthermore, incrementing the Message-ID by
 
 
 
 Zheng, et al.             Expires 21 March 2023                 [Page 6]
 
 Internet-Draft               unyte-udp-notif              September 2022
+
+
+      one allows for a large amount of time to happen before the
+      Message-ID's are reused due to wrapping around.  Different
+      subscribers MAY share the same Message-ID sequence.
+
+   *  Options is a variable-length field in the TLV format.  When the
+      Header Length is larger than 12 octets, which is the length of the
+      fixed header, Options TLVs follow directly after the fixed message
+      header (i.e., Message-ID).  The details of the options are
+      described in Section 4.
 
 
 3.3.  Data Encoding
@@ -375,17 +386,6 @@ Internet-Draft               unyte-udp-notif              September 2022
    *  Length: 1 octet representing the total number of octets in the
       TLV, including the Type and Length fields;
 
-   *  Variable-length data: 0 or more octets of TLV Value.
-
-   When more than one option are used in the UDP-notif header, options
-   MUST be ordered by the Type value.  Messages with unordered options
-   MAY be dropped by the Receiver.
-
-
-
-
-
-
 
 
 
@@ -393,6 +393,12 @@ Zheng, et al.             Expires 21 March 2023                 [Page 7]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
+
+   *  Variable-length data: 0 or more octets of TLV Value.
+
+   When more than one option are used in the UDP-notif header, options
+   MUST be ordered by the Type value.  Messages with unordered options
+   MAY be dropped by the Receiver.
 
 4.1.  Segmentation Option
 
@@ -419,7 +425,7 @@ Internet-Draft               unyte-udp-notif              September 2022
 
    The Segmentation Option is to be included when the message content is
    segmented into multiple pieces.  Different segments of one message
-   share the same Message ID.  An illustration is provided in Figure 4.
+   share the same Message-ID.  An illustration is provided in Figure 4.
    The fields of this TLV are:
 
    *  Type: Generic option field which indicates a Segmentation Option.
@@ -433,12 +439,6 @@ Internet-Draft               unyte-udp-notif              September 2022
       current segment.  The first segment of a segmented message has a
       Segment Number value of 0.
 
-   *  L: is a flag to indicate whether the current segment is the last
-      one of the message.  When 0 is set, the current segment is not the
-      last one.  When 1 is set, the current segment is the last one,
-      meaning that the total number of segments used to transport this
-      message is the value of the current Segment Number + 1.
-
 
 
 
@@ -449,6 +449,12 @@ Zheng, et al.             Expires 21 March 2023                 [Page 8]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
+
+   *  L: is a flag to indicate whether the current segment is the last
+      one of the message.  When 0 is set, the current segment is not the
+      last one.  When 1 is set, the current segment is the last one,
+      meaning that the total number of segments used to transport this
+      message is the value of the current Segment Number + 1.
 
    An implementation of this specification MUST NOT rely on IP
    fragmentation by default to carry large messages.  An implementation
@@ -490,14 +496,8 @@ Internet-Draft               unyte-udp-notif              September 2022
    as providing a private encoding description for standard encodings is
    meaningless.
 
-5.  Applicability
 
-   In this section, we provide an applicability statement for the
-   proposed mechanism, following the recommendations of [RFC8085].
 
-   The proposed mechanism falls in the category of UDP applications
-   "designed for use within the network of a single network operator or
-   on networks of an adjacent set of cooperating network operators, to
 
 
 
@@ -506,6 +506,14 @@ Zheng, et al.             Expires 21 March 2023                 [Page 9]
 Internet-Draft               unyte-udp-notif              September 2022
 
 
+5.  Applicability
+
+   In this section, we provide an applicability statement for the
+   proposed mechanism, following the recommendations of [RFC8085].
+
+   The proposed mechanism falls in the category of UDP applications
+   "designed for use within the network of a single network operator or
+   on networks of an adjacent set of cooperating network operators, to
    be deployed in controlled environments", as defined in [RFC8085].
    Implementations of the proposed mechanism SHOULD thus follow the
    recommendations in place for such specific applications.  In the
@@ -543,14 +551,6 @@ Internet-Draft               unyte-udp-notif              September 2022
    streaming rate.  The interaction to control the streaming rate on the
    device is out of the scope of this document.
 
-5.2.  Message Size
-
-   [RFC8085] recommends not to rely on IP fragmentation for messages
-   whose size result in IP packets exceeding the MTU along the path.
-   The segmentation option of the current specification permits
-   segmentation of the UDP Notif message content without relying on IP
-   fragmentation.  Implementation of the current specification SHOULD
-   allow for the configuration of the MTU.
 
 
 
@@ -561,6 +561,15 @@ Zheng, et al.             Expires 21 March 2023                [Page 10]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
+
+5.2.  Message Size
+
+   [RFC8085] recommends not to rely on IP fragmentation for messages
+   whose size result in IP packets exceeding the MTU along the path.
+   The segmentation option of the current specification permits
+   segmentation of the UDP Notif message content without relying on IP
+   fragmentation.  Implementation of the current specification SHOULD
+   allow for the configuration of the MTU.
 
 5.3.  Reliability
 
@@ -601,15 +610,6 @@ Internet-Draft               unyte-udp-notif              September 2022
    but MAY be configurable to send messages to a different port.  The
    Publisher MAY use any source UDP port for transmitting messages.
 
-6.1.  Session lifecycle
-
-
-
-
-
-
-
-
 
 
 
@@ -617,6 +617,8 @@ Zheng, et al.             Expires 21 March 2023                [Page 11]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
+
+6.1.  Session lifecycle
 
 6.1.1.  DTLS Session Initiation
 
@@ -664,8 +666,6 @@ Internet-Draft               unyte-udp-notif              September 2022
 
    NONZERO-DIGIT = %d49-57
 
-   DIGIT = %d48 / NONZERO-DIGIT
-
 
 
 
@@ -673,6 +673,8 @@ Zheng, et al.             Expires 21 March 2023                [Page 12]
 
 Internet-Draft               unyte-udp-notif              September 2022
 
+
+   DIGIT = %d48 / NONZERO-DIGIT
 
    UDP-NOTIF-MSG is defined in Section 3.
 
@@ -707,8 +709,6 @@ Internet-Draft               unyte-udp-notif              September 2022
    The YANG model defined in Section 8 has four leaves augmenting the
    model of Sub-Notif [RFC8639], and one presence container to configure
    DTLS1.3 encryption parameters.
-
-
 
 
 
