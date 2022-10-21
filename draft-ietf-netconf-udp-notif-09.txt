@@ -324,7 +324,7 @@ Internet-Draft               unyte-udp-notif                October 2022
    *  The Message-ID is generated continuously by the publisher of UDP-
       Notif messages.  A publisher MUST use different Message-ID values
       for different messages generated with the same Observation-Domain-
-      ID.  Note that the sole purpose of the Message-ID is to
+      ID.  Note that the main purpose of the Message-ID is to
       reconstruct messages which were segmented using the segmentation
       option described in section Section 4.1.  The Message-ID values
       SHOULD be incremented by one for each successive message
