@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="19" month="October" year="2022"/>
+    <date day="13" month="January" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -801,16 +801,22 @@ module: ietf-udp-notif
 
       <t><figure>
           <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif@2022-08-29.yang"
-module ietf-udp-notif {
+<CODE BEGINS> file "ietf-udp-notif-transport@2023-01-13.yang"
+module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
-    "urn:ietf:params:xml:ns:yang:ietf-udp-notif";
-  prefix un;
+    "urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport";
+  prefix unt;
   import ietf-subscribed-notifications {
     prefix sn;
     reference
       "RFC 8639: Subscription to YANG Notifications";
+  }
+  import ietf-subscribed-notif-receivers {
+    prefix snr;
+    reference
+      "RFC XXXX: An HTTPS-based Transport for
+                 Configured Subscriptions";
   }
   import ietf-inet-types {
     prefix inet;
@@ -857,10 +863,9 @@ module ietf-udp-notif {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2022-08-29 {
+  revision 2023-01-13 {
     description
-      "Removed enable-dtls leaf and changed container dtls to presence container.
-      Removed TLS1.2 references from tls-client-grouping";
+      "Initial revision";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -908,7 +913,7 @@ module ietf-udp-notif {
       receiver.";
 
     leaf address {
-      type inet:ip-address;
+      type inet:ip-address-no-zone;
       mandatory true;
       description
         "IP address of target UDP-Notif receiver, which can be an
@@ -961,13 +966,18 @@ module ietf-udp-notif {
     }
   }
 
-  augment "/sn:subscriptions/sn:subscription/sn:receivers/sn:receiver" {
-    when "derived-from(../../transport, 'un:udp-notif')";
+  augment "/sn:subscriptions/snr:receiver-instances/" +
+          "snr:receiver-instance/snr:transport-type" {
+    case udp-notif {
+      container udp-notif-receiver {
+        description
+          "The UDP-notif receiver to send notifications to.";
+        uses udp-receiver-grouping;
+      }
+    }
     description
-      "This augmentation allows UDP-Notif specific parameters to be
-       exposed for a subscription.";
-
-    uses udp-receiver-grouping;
+      "Augment the transport-type choice to include the 'udp-notif'
+       transport.";
   }
 }
 <CODE ENDS>]]></artwork>
@@ -1092,7 +1102,7 @@ module ietf-udp-notif {
 
       <t><figure>
           <artwork align="left"><![CDATA[
-URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif
+URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
 Registrant Contact: The IESG.
 XML: N/A; the requested URI is an XML namespace.]]></artwork>
         </figure></t>
@@ -1106,21 +1116,17 @@ XML: N/A; the requested URI is an XML namespace.]]></artwork>
       <t><figure>
           <artwork align="left"><![CDATA[
 name: ietf-udp-notif
-namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif
-prefix: un
+namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
+prefix: unt
 reference: RFC XXXX]]></artwork>
         </figure></t>
       </section>
     </section>
 
-    <!-- <section anchor="sec_op_considerations" title="Operational considerations">
-    <t>TBD: when we have a perf test?</t>
-    </section> -->
-
     <section anchor="sec_security_considerations"
               title="Security Considerations">
       <t><xref target="RFC8085"/> states that "UDP applications that need to
-      protect their communications againts eavesdropping, tampering, or
+      protect their communications against eavesdropping, tampering, or
       message forgery SHOULD employ end-to-end security services provided by
       other IETF protocols". As mentioned above, the proposed mechanism is
       designed to be used in controlled environments, as defined in <xref 

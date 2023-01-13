@@ -1,8 +1,8 @@
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
-    "urn:ietf:params:xml:ns:yang:ietf-udp-notif";
-  prefix un;
+    "urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport";
+  prefix unt;
   import ietf-subscribed-notifications {
     prefix sn;
     reference
@@ -59,10 +59,9 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2022-09-17 {
+  revision 2023-01-13 {
     description
-      "Use ietf-subscribed-notif-receivers module to be consistent with
-      HTTPS-notif transport";
+      "Initial revision";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -110,7 +109,7 @@ module ietf-udp-notif-transport {
       receiver.";
 
     leaf address {
-      type inet:ip-address;
+      type inet:ip-address-no-zone;
       mandatory true;
       description
         "IP address of target UDP-Notif receiver, which can be an
@@ -176,5 +175,4 @@ module ietf-udp-notif-transport {
       "Augment the transport-type choice to include the 'udp-notif'
        transport.";
   }
-
 }

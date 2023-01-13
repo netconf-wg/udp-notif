@@ -1,0 +1,39 @@
+{
+    "ietf-notification:notification": {
+        "eventTime": "2022-10-05T15:44:20.717Z",
+        "ietf-yang-push:push-update": {
+            "id": 0,
+            "datastore-contents": {
+                "huawei-debug:debug": {
+                    "memory-infos": {
+                        "memory-info": [
+                            {
+                                "position": "3",
+                                "overload-threshold": 80,
+                                "unoverload-threshold": 75,
+                                "memreli-notice-threshold": 70,
+                                "memreli-overload-threshold": 85,
+                                "memreli-exception-threshold": 90,
+                                "index": 16973825,
+                                "os-memory-total": 15856424,
+                                "os-memory-use": 3488352,
+                                "os-memory-free": 12368072,
+                                "os-memory-usage": 21,
+                                "do-memory-total": 2021828,
+                                "do-memory-use": 1762113,
+                                "do-memory-free": 259715,
+                                "do-memory-usage": 87,
+                                "simple-memory-total": 102285,
+                                "simple-memory-use": 76111,
+                                "simple-memory-free": 26174,
+                                "simple-memory-usage": 74,
+                                "overload-state-change-time": "0000-00-00 00:00:00",
+                                "current-overload-state": "Unoverload"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
