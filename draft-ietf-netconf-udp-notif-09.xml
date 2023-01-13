@@ -1164,10 +1164,10 @@ reference: RFC XXXX]]></artwork>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netconf-tls-client-server-29.xml"?>
+      <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
     </references>
 
     <references title="Informative References">
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
 

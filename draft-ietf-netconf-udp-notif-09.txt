@@ -1134,6 +1134,13 @@ Internet-Draft               unyte-udp-notif                January 2023
 
 12.1.  Normative References
 
+   [I-D.ietf-netconf-https-notif]
+              Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
+              for YANG Notifications", Work in Progress, Internet-Draft,
+              draft-ietf-netconf-https-notif-13, 4 November 2022,
+              <https://www.ietf.org/archive/id/draft-ietf-netconf-https-
+              notif-13.txt>.
+
    [I-D.ietf-netconf-tls-client-server]
               Watsen, K., "YANG Groupings for TLS Clients and TLS
               Servers", Work in Progress, Internet-Draft, draft-ietf-
@@ -1163,13 +1170,6 @@ Internet-Draft               unyte-udp-notif                January 2023
               RFC 7950, DOI 10.17487/RFC7950, August 2016,
               <https://www.rfc-editor.org/info/rfc7950>.
 
-   [RFC8085]  Eggert, L., Fairhurst, G., and G. Shepherd, "UDP Usage
-              Guidelines", BCP 145, RFC 8085, DOI 10.17487/RFC8085,
-              March 2017, <https://www.rfc-editor.org/info/rfc8085>.
-
-
-
-
 
 
 
@@ -1177,6 +1177,10 @@ Zheng, et al.             Expires 17 July 2023                 [Page 21]
 
 Internet-Draft               unyte-udp-notif                January 2023
 
+
+   [RFC8085]  Eggert, L., Fairhurst, G., and G. Shepherd, "UDP Usage
+              Guidelines", BCP 145, RFC 8085, DOI 10.17487/RFC8085,
+              March 2017, <https://www.rfc-editor.org/info/rfc8085>.
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
@@ -1223,20 +1227,12 @@ Internet-Draft               unyte-udp-notif                January 2023
               <https://www.ietf.org/archive/id/draft-ietf-netconf-
               distributed-notif-05.txt>.
 
-   [I-D.ietf-netconf-https-notif]
-              Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
-              for YANG Notifications", Work in Progress, Internet-Draft,
-
 
 
 Zheng, et al.             Expires 17 July 2023                 [Page 22]
 
 Internet-Draft               unyte-udp-notif                January 2023
 
-
-              draft-ietf-netconf-https-notif-13, 4 November 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-netconf-https-
-              notif-13.txt>.
 
    [I-D.ietf-netconf-notification-messages]
               Voit, E., Jenkins, T., Birkholz, H., Bierman, A., and A.
@@ -1282,6 +1278,10 @@ Authors' Addresses
    China
 
    Email: zhoutianran@huawei.com
+
+
+
+
 
 
 
