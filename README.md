@@ -14,6 +14,8 @@ $ cd yang/udp-notif
 $ ln -s ietf-notif-06.yang ietf-notif.yang
 $ pyang ietf-udp-notif.yang
 $ pyang -f tree ietf-udp-notif.yang -p draft-yangs
+$ pyang ietf-udp-notif-transport.yang -p draft-yangs
+$ pyang ietf-udp-notif-transport.yang -p draft-yangs -f tree --tree-line-length=70 --tree-depth=6
 ```
 
 To generate draft .txt

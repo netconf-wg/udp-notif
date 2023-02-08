@@ -59,7 +59,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-01-13 {
+  revision 2023-02-08 {
     description
       "Initial revision";
     reference
@@ -103,7 +103,7 @@ module ietf-udp-notif-transport {
       "RFC 9254: CBOR Encoding of Data Modeled with YANG";
   }
 
-  grouping udp-receiver-grouping {
+  grouping udp-notif-receiver-grouping {
     description
       "Provides a reusable description of a UDP-Notif target
       receiver.";
@@ -168,7 +168,7 @@ module ietf-udp-notif-transport {
       container udp-notif-receiver {
         description
           "The UDP-notif receiver to send notifications to.";
-        uses udp-receiver-grouping;
+        uses udp-notif-receiver-grouping;
       }
     }
     description
