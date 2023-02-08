@@ -1188,20 +1188,29 @@ reference: RFC XXXX]]></artwork>
 
     </references>
 
-    <!-- <section anchor="configuration_examples" title="Configuration Examples">
-      <t>This non-normative section shows a example for how the "ietf-udp-notif" 
-      module can be used to configure a publisher to send notifications to a
-      receiver using Subscribed Notifications.</t>
+    <section anchor="configuration_examples" title="Configuration Examples">
+      <t>This non-normative section shows two examples of how the 
+      the "ietf-udp-notif-transport" module can be used to configure a 
+      <xref target="RFC8639"/> based publisher to send notifications to a
+      receiver.</t>
 
-      <t>In this examples, the publisher is a client configured
-      to send notifications to a receiver.</t>
-
+      <section anchor="example_no_dtls" title="With DTLS disabled">
+      <t>This example shows how UDP-notif can be configured without DTLS encryption.</t>
       <t><figure>
           <artwork align="left"><![CDATA[
-  TBD
+  TBD1
   ]]></artwork>
         </figure></t>
-    </section> -->
+      </section>
+      <section anchor="example_dtls" title="With DTLS enabled">
+      <t>This example shows how UDP-notif can be configured with DTLS encryption.</t>
+      <t><figure>
+          <artwork align="left"><![CDATA[
+  TBD2
+  ]]></artwork>
+        </figure></t>
+      </section>
+    </section>
 
   </back>
 </rfc>

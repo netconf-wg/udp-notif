@@ -105,7 +105,7 @@ Table of Contents
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  21
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  21
      12.2.  Informative References . . . . . . . . . . . . . . . . .  23
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
+   Appendix A.  Configuration Examples . . . . . . . . . . . . . . .  23
 
 
 
@@ -113,6 +113,10 @@ Zheng, et al.            Expires 12 August 2023                 [Page 2]
 
 Internet-Draft               unyte-udp-notif               February 2023
 
+
+     A.1.  With DTLS disabled  . . . . . . . . . . . . . . . . . . .  24
+     A.2.  With DTLS enabled . . . . . . . . . . . . . . . . . . . .  24
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
 
 1.  Introduction
 
@@ -159,16 +163,16 @@ Internet-Draft               unyte-udp-notif               February 2023
       encapsulation can be easily implemented by the hardware of the
       publication streamer, which will further improve performance.
 
-   *  Ultimately, such advantages allow for a larger data analysis
-      feature set, as more voluminous, finer grained data sets can be
-      streamed to the receiver.
-
 
 
 Zheng, et al.            Expires 12 August 2023                 [Page 3]
 
 Internet-Draft               unyte-udp-notif               February 2023
 
+
+   *  Ultimately, such advantages allow for a larger data analysis
+      feature set, as more voluminous, finer grained data sets can be
+      streamed to the receiver.
 
    The transport described in this document can be used for transmitting
    notification messages over both IPv4 and IPv6.
@@ -211,10 +215,6 @@ Internet-Draft               unyte-udp-notif               February 2023
    options to provide a segmentation solution for large UDP-Notif
    message payloads.  Section 3.3 describes the encoding of the message
    payload.
-
-
-
-
 
 
 
@@ -1275,11 +1275,11 @@ Internet-Draft               unyte-udp-notif               February 2023
               1.3", RFC 9147, DOI 10.17487/RFC9147, April 2022,
               <https://www.rfc-editor.org/info/rfc9147>.
 
-Authors' Addresses
+Appendix A.  Configuration Examples
 
-
-
-
+   This non-normative section shows two examples of how the the "ietf-
+   udp-notif-transport" module can be used to configure a [RFC8639]
+   based publisher to send notifications to a receiver.
 
 
 
@@ -1289,6 +1289,22 @@ Zheng, et al.            Expires 12 August 2023                [Page 23]
 
 Internet-Draft               unyte-udp-notif               February 2023
 
+
+A.1.  With DTLS disabled
+
+   This example shows how UDP-notif can be configured without DTLS
+   encryption.
+
+     TBD1
+
+A.2.  With DTLS enabled
+
+   This example shows how UDP-notif can be configured with DTLS
+   encryption.
+
+     TBD2
+
+Authors' Addresses
 
    Guangying Zheng
    Huawei
@@ -1322,6 +1338,14 @@ Internet-Draft               unyte-udp-notif               February 2023
    Email: pierre.francois@insa-lyon.fr
 
 
+
+
+
+Zheng, et al.            Expires 12 August 2023                [Page 24]
+
+Internet-Draft               unyte-udp-notif               February 2023
+
+
    Alex Huang Feng
    INSA-Lyon
    Lyon
@@ -1341,4 +1365,36 @@ Internet-Draft               unyte-udp-notif               February 2023
 
 
 
-Zheng, et al.            Expires 12 August 2023                [Page 24]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.            Expires 12 August 2023                [Page 25]
