@@ -1175,26 +1175,24 @@ reference: RFC XXXX]]></artwork>
     <references title="Informative References">
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
-
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7951.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
-
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8641.xml"?>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml"?>
-
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8799.xml"?>
-
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
-
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-distributed-notif.xml"?>
 
     </references>
 
-    <section anchor="configuration_examples" title="Configuration Examples">
+    <section anchor="example" title="UDP-notif Examples">
       <t>This non-normative section shows two examples of how the 
-      the "ietf-udp-notif-transport" module can be used to configure a 
+      the "ietf-udp-notif-transport" YANG module can be used to configure a 
       <xref target="RFC8639"/> based publisher to send notifications to a
-      receiver.</t>
+      receiver and an example of a YANG Push notification message using UDP-notif
+      transport protocol.</t>
 
-      <section anchor="example_no_dtls" title="UDP-notif transport with DTLS disabled">
+      <section anchor="example_no_dtls" title="Configuration for UDP-notif transport with DTLS disabled">
       <t>This example shows how UDP-notif can be configured without DTLS encryption.</t>
       <t><figure>
           <artwork align="left"><![CDATA[
@@ -1238,7 +1236,7 @@ udp-notif-transport">
   ]]></artwork>
         </figure></t>
       </section>
-      <section anchor="example_dtls" title="UDP-notif transport with DTLS enabled">
+      <section anchor="example_dtls" title="Configuration for UDP-notif transport with DTLS enabled">
       <t>This example shows how UDP-notif can be configured with DTLS encryption.</t>
       <t><figure>
           <artwork align="left"><![CDATA[
@@ -1344,6 +1342,61 @@ rmat</public-key-format>
     </receiver-instances>
   </subscriptions>
 </config>
+  ]]></artwork>
+        </figure></t>
+      </section>
+
+      <section anchor="example_yp_message" title="YANG Push message 
+      with UDP-notif transport protocol">
+      <t>This example shows how UDP-notif is used as a transport protocol
+      to send a "push-update" notification <xref target="RFC8641"/> encoded
+      in JSON <xref target="RFC7951"/>.</t>
+
+      <t>Assuming the publisher needs to send the JSON payload showed in
+      <xref target="fig_ex_json_payload"/>, the UDP-notif transport is
+      encoded following the <xref target="fig_udp_notif_ex"/>. The UDP-notif 
+      message is then encapsulated in a UDP frame.</t>
+
+      <t><figure anchor="fig_ex_json_payload" title="JSON Payload to be sent">
+          <artwork align="center"><![CDATA[
+{
+    "ietf-notification:notification": {
+        "eventTime": "2023-02-10T08:00:11.22Z",
+        "ietf-yang-push:push-update": {
+            "id": 1011,
+            "datastore-contents": {
+                "ietf-interfaces:interfaces": [
+                    {
+                        "interface": {
+                            "name": "eth0",
+                            "oper-status": "up"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
+  ]]></artwork>
+        </figure></t>
+
+      <t><figure anchor="fig_udp_notif_ex" title="UDP-notif transport message">
+          <artwork align="center"><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-----+-+-------+---------------+-------------------------------+
+ |Ver=1|0|  MT=1 | Header_Len=12 |      Message_Length=230       |
+ +-----+-+-------+---------------+-------------------------------+
+ |                   Observation-Domain-ID=2                     |
+ +---------------------------------------------------------------+
+ |                      Message-ID=1563                          |
+ +---------------------------------------------------------------+
+ |              YANG Push JSON payload (Len=218 octets)          |
+ |{"ietf-notification:notification":{"eventTime":"2023-02-10T08:0|
+ |0:11.22Z","ietf-yang-push:push-update":{"id":1011,"datastore-co|
+ |ntents":{"ietf-interfaces:interfaces":[{"interface":{"name":"et|
+ |h0","oper-status":"up"}}]}}}}                                  |
+ +---------------------------------------------------------------+
   ]]></artwork>
         </figure></t>
       </section>
