@@ -1,11 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-  <filters xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
-    <stream-filter>
-      <name/>
-      <stream-xpath-filter/>
-    </stream-filter>
-  </filters>
   <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
     <subscription>
       <id/>

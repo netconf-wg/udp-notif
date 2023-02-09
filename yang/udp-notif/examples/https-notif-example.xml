@@ -1,0 +1,86 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<subscriptions
+    xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
+  <receiver-instances
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">
+    <receiver-instance>
+      <name>global-receiver-def</name>
+      <https-receiver
+          xmlns="urn:ietf:params:xml:ns:yang:ietf-https-notif-transport"
+          xmlns:x509c2n="urn:ietf:params:xml:ns:yang:ietf-x509-cert-to-name">
+        <tls>
+          <tcp-client-parameters>
+            <remote-address>receiver.example.com</remote-address>
+            <remote-port>443</remote-port>
+          </tcp-client-parameters>
+          <tls-client-parameters>
+            <server-authentication>
+              <ca-certs>
+                <local-definition>
+                  <certificate>
+                    <name>Server Cert Issuer #1</name>
+                    <cert-data>base64encodedvalue==</cert-data>
+                  </certificate>
+                </local-definition>
+              </ca-certs>
+            </server-authentication>
+          </tls-client-parameters>
+          <http-client-parameters>
+            <client-identity>
+              <basic>
+                <user-id>my-name</user-id>
+                <cleartext-password>my-password</cleartext-password>
+              </basic>
+            </client-identity>
+            <path
+                xmlns="urn:ietf:params:xml:ns:yang:ietf-https-notif-transport">/some/path</path>
+          </http-client-parameters>
+        </tls>
+        <receiver-identity>
+          <cert-maps>
+            <cert-to-name>
+              <id>1</id>
+              <fingerprint>11:0A:05:11:00</fingerprint>
+              <map-type>x509c2n:san-any</map-type>
+            </cert-to-name>
+          </cert-maps>
+        </receiver-identity>
+      </https-receiver>
+    </receiver-instance>
+  </receiver-instances>
+  <subscription>
+    <id>6666</id>
+    <transport xmlns:ph="urn:ietf:params:xml:ns:yang:ietf-https-notif-transport">ph:https</transport>
+    <stream-subtree-filter>some-subtree-filter</stream-subtree-filter>
+    <stream>some-stream</stream>
+    <receivers>
+      <receiver>
+        <name>subscription-specific-receiver-def</name>
+        <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">global-receiver-def</receiver-instance-ref>
+      </receiver>
+    </receivers>
+  </subscription>
+</subscriptions>
+<truststore xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore">
+  <certificate-bags>
+    <certificate-bag>
+      <name>explicitly-trusted-server-ca-certs</name>
+      <description>
+        Trust anchors (i.e. CA certs) that are used to
+        authenticate connections to receivers.  Receivers
+        are authenticated if their certificate has a chain
+        of trust to one of these CA certificates.
+        certificates.
+      </description>
+      <certificate>
+        <name>ca.example.com</name>
+        <cert-data>base64encodedvalue==</cert-data>
+      </certificate>
+      <certificate>
+        <name>Fred Flintstone</name>
+        <cert-data>base64encodedvalue==</cert-data>
+      </certificate>
+    </certificate-bag>
+  </certificate-bags>
+</truststore>

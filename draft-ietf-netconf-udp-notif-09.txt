@@ -114,9 +114,9 @@ Zheng, et al.            Expires 12 August 2023                 [Page 2]
 Internet-Draft               unyte-udp-notif               February 2023
 
 
-     A.1.  With DTLS disabled  . . . . . . . . . . . . . . . . . . .  24
-     A.2.  With DTLS enabled . . . . . . . . . . . . . . . . . . . .  24
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  24
+     A.1.  UDP-notif transport with DTLS disabled  . . . . . . . . .  24
+     A.2.  UDP-notif transport with DTLS enabled . . . . . . . . . .  24
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  27
 
 1.  Introduction
 
@@ -1290,19 +1290,180 @@ Zheng, et al.            Expires 12 August 2023                [Page 23]
 Internet-Draft               unyte-udp-notif               February 2023
 
 
-A.1.  With DTLS disabled
+A.1.  UDP-notif transport with DTLS disabled
 
    This example shows how UDP-notif can be configured without DTLS
    encryption.
 
-     TBD1
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
 
-A.2.  With DTLS enabled
+   <?xml version='1.0' encoding='UTF-8'?>
+   <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+     <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-\
+   notifications">
+       <subscription>
+         <id>6666</id>
+         <stream-subtree-filter>some-subtree-filter</stream-subtree-fil\
+   ter>
+         <stream>some-stream</stream>
+         <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
+   if-transport">unt:udp-notif</transport>
+         <receivers>
+           <receiver>
+             <name>subscription-specific-receiver-def</name>
+             <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
+   ietf-subscribed-notif-receivers">global-udp-notif-receiver-def</rece\
+   iver-instance-ref>
+           </receiver>
+         </receivers>
+       </subscription>
+       <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
+   cribed-notif-receivers">
+         <receiver-instance>
+           <name>global-udp-notif-receiver-def</name>
+           <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
+   udp-notif-transport">
+             <address>192.0.5.1</address>
+             <port>12345</port>
+             <enable-segmentation>false</enable-segmentation>
+             <max-segment-size/>
+           </udp-notif-receiver>
+         </receiver-instance>
+       </receiver-instances>
+     </subscriptions>
+   </config>
+
+A.2.  UDP-notif transport with DTLS enabled
 
    This example shows how UDP-notif can be configured with DTLS
    encryption.
 
-     TBD2
+
+
+
+Zheng, et al.            Expires 12 August 2023                [Page 24]
+
+Internet-Draft               unyte-udp-notif               February 2023
+
+
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
+   <?xml version='1.0' encoding='UTF-8'?>
+   <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+     <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-\
+   notifications">
+       <subscription>
+         <id>6666</id>
+         <stream-subtree-filter>some-subtree-filter</stream-subtree-fil\
+   ter>
+         <stream>some-stream</stream>
+         <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
+   if-transport">unt:udp-notif</transport>
+         <receivers>
+           <receiver>
+             <name>subscription-specific-receiver-def</name>
+             <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
+   ietf-subscribed-notif-receivers">global-udp-notif-receiver-dtls-def<\
+   /receiver-instance-ref>
+           </receiver>
+         </receivers>
+       </subscription>
+       <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
+   cribed-notif-receivers">
+         <receiver-instance>
+           <name>global-udp-notif-receiver-dtls-def</name>
+           <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
+   udp-notif-transport">
+             <address>192.0.5.1</address>
+             <port>12345</port>
+             <enable-segmentation>false</enable-segmentation>
+             <max-segment-size/>
+             <dtls>
+               <client-identity>
+                 <tls13-epsk>
+                   <local-definition>
+                     <key-format>ct:octet-string-key-format</key-format>
+                     <cleartext-key>BASE64VALUE=</cleartext-key>
+                   </local-definition>
+                   <external-identity>example_external_id</external-ide\
+   ntity>
+                   <hash>sha-256</hash>
+                   <context>example_context_string</context>
+                   <target-protocol>8443</target-protocol>
+                   <target-kdf>12345</target-kdf>
+                 </tls13-epsk>
+               </client-identity>
+               <server-authentication>
+
+
+
+Zheng, et al.            Expires 12 August 2023                [Page 25]
+
+Internet-Draft               unyte-udp-notif               February 2023
+
+
+                 <ca-certs>
+                   <local-definition>
+                     <certificate>
+                       <name>Server Cert Issuer #1</name>
+                       <cert-data>BASE64VALUE=</cert-data>
+                     </certificate>
+                     <certificate>
+                       <name>Server Cert Issuer #2</name>
+                       <cert-data>BASE64VALUE=</cert-data>
+                     </certificate>
+                   </local-definition>
+                 </ca-certs>
+                 <ee-certs>
+                   <local-definition>
+                     <certificate>
+                       <name>My Application #1</name>
+                       <cert-data>BASE64VALUE=</cert-data>
+                     </certificate>
+                     <certificate>
+                       <name>My Application #2</name>
+                       <cert-data>BASE64VALUE=</cert-data>
+                     </certificate>
+                   </local-definition>
+                 </ee-certs>
+                 <raw-public-keys>
+                   <local-definition>
+                     <public-key>
+                       <name>corp-fw1</name>
+                       <public-key-format>ct:subject-public-key-info-fo\
+   rmat</public-key-format>
+                       <public-key>BASE64VALUE=</public-key>
+                     </public-key>
+                     <public-key>
+                       <name>corp-fw2</name>
+                       <public-key-format>ct:subject-public-key-info-fo\
+   rmat</public-key-format>
+                       <public-key>BASE64VALUE=</public-key>
+                     </public-key>
+                   </local-definition>
+                 </raw-public-keys>
+                 <tls13-epsks/>
+               </server-authentication>
+               <keepalives>
+                 <test-peer-aliveness>
+                   <max-wait>30</max-wait>
+                   <max-attempts>3</max-attempts>
+                 </test-peer-aliveness>
+               </keepalives>
+
+
+
+Zheng, et al.            Expires 12 August 2023                [Page 26]
+
+Internet-Draft               unyte-udp-notif               February 2023
+
+
+             </dtls>
+           </udp-notif-receiver>
+         </receiver-instance>
+       </receiver-instances>
+     </subscriptions>
+   </config>
 
 Authors' Addresses
 
@@ -1338,19 +1499,19 @@ Authors' Addresses
    Email: pierre.francois@insa-lyon.fr
 
 
-
-
-
-Zheng, et al.            Expires 12 August 2023                [Page 24]
-
-Internet-Draft               unyte-udp-notif               February 2023
-
-
    Alex Huang Feng
    INSA-Lyon
    Lyon
    France
    Email: alex.huang-feng@insa-lyon.fr
+
+
+
+
+
+Zheng, et al.            Expires 12 August 2023                [Page 27]
+
+Internet-Draft               unyte-udp-notif               February 2023
 
 
    Paolo Lucente
@@ -1397,4 +1558,11 @@ Internet-Draft               unyte-udp-notif               February 2023
 
 
 
-Zheng, et al.            Expires 12 August 2023                [Page 25]
+
+
+
+
+
+
+
+Zheng, et al.            Expires 12 August 2023                [Page 28]

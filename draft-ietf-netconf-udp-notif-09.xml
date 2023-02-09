@@ -1194,19 +1194,156 @@ reference: RFC XXXX]]></artwork>
       <xref target="RFC8639"/> based publisher to send notifications to a
       receiver.</t>
 
-      <section anchor="example_no_dtls" title="With DTLS disabled">
+      <section anchor="example_no_dtls" title="UDP-notif transport with DTLS disabled">
       <t>This example shows how UDP-notif can be configured without DTLS encryption.</t>
       <t><figure>
           <artwork align="left"><![CDATA[
-  TBD1
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+<?xml version='1.0' encoding='UTF-8'?>
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-\
+notifications">
+    <subscription>
+      <id>6666</id>
+      <stream-subtree-filter>some-subtree-filter</stream-subtree-fil\
+ter>
+      <stream>some-stream</stream>
+      <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
+if-transport">unt:udp-notif</transport>
+      <receivers>
+        <receiver>
+          <name>subscription-specific-receiver-def</name>
+          <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
+ietf-subscribed-notif-receivers">global-udp-notif-receiver-def</rece\
+iver-instance-ref>
+        </receiver>
+      </receivers>
+    </subscription>
+    <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
+cribed-notif-receivers">
+      <receiver-instance>
+        <name>global-udp-notif-receiver-def</name>
+        <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
+udp-notif-transport">
+          <address>192.0.5.1</address>
+          <port>12345</port>
+          <enable-segmentation>false</enable-segmentation>
+          <max-segment-size/>
+        </udp-notif-receiver>
+      </receiver-instance>
+    </receiver-instances>
+  </subscriptions>
+</config>
   ]]></artwork>
         </figure></t>
       </section>
-      <section anchor="example_dtls" title="With DTLS enabled">
+      <section anchor="example_dtls" title="UDP-notif transport with DTLS enabled">
       <t>This example shows how UDP-notif can be configured with DTLS encryption.</t>
       <t><figure>
           <artwork align="left"><![CDATA[
-  TBD2
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
+<?xml version='1.0' encoding='UTF-8'?>
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-\
+notifications">
+    <subscription>
+      <id>6666</id>
+      <stream-subtree-filter>some-subtree-filter</stream-subtree-fil\
+ter>
+      <stream>some-stream</stream>
+      <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
+if-transport">unt:udp-notif</transport>
+      <receivers>
+        <receiver>
+          <name>subscription-specific-receiver-def</name>
+          <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
+ietf-subscribed-notif-receivers">global-udp-notif-receiver-dtls-def<\
+/receiver-instance-ref>
+        </receiver>
+      </receivers>
+    </subscription>
+    <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
+cribed-notif-receivers">
+      <receiver-instance>
+        <name>global-udp-notif-receiver-dtls-def</name>
+        <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
+udp-notif-transport">
+          <address>192.0.5.1</address>
+          <port>12345</port>
+          <enable-segmentation>false</enable-segmentation>
+          <max-segment-size/>
+          <dtls>
+            <client-identity>
+              <tls13-epsk>
+                <local-definition>
+                  <key-format>ct:octet-string-key-format</key-format>
+                  <cleartext-key>BASE64VALUE=</cleartext-key>
+                </local-definition>
+                <external-identity>example_external_id</external-ide\
+ntity>
+                <hash>sha-256</hash>
+                <context>example_context_string</context>
+                <target-protocol>8443</target-protocol>
+                <target-kdf>12345</target-kdf>
+              </tls13-epsk>
+            </client-identity>
+            <server-authentication>
+              <ca-certs>
+                <local-definition>
+                  <certificate>
+                    <name>Server Cert Issuer #1</name>
+                    <cert-data>BASE64VALUE=</cert-data>
+                  </certificate>
+                  <certificate>
+                    <name>Server Cert Issuer #2</name>
+                    <cert-data>BASE64VALUE=</cert-data>
+                  </certificate>
+                </local-definition>
+              </ca-certs>
+              <ee-certs>
+                <local-definition>
+                  <certificate>
+                    <name>My Application #1</name>
+                    <cert-data>BASE64VALUE=</cert-data>
+                  </certificate>
+                  <certificate>
+                    <name>My Application #2</name>
+                    <cert-data>BASE64VALUE=</cert-data>
+                  </certificate>
+                </local-definition>
+              </ee-certs>
+              <raw-public-keys>
+                <local-definition>
+                  <public-key>
+                    <name>corp-fw1</name>
+                    <public-key-format>ct:subject-public-key-info-fo\
+rmat</public-key-format>
+                    <public-key>BASE64VALUE=</public-key>
+                  </public-key>
+                  <public-key>
+                    <name>corp-fw2</name>
+                    <public-key-format>ct:subject-public-key-info-fo\
+rmat</public-key-format>
+                    <public-key>BASE64VALUE=</public-key>
+                  </public-key>
+                </local-definition>
+              </raw-public-keys>
+              <tls13-epsks/>
+            </server-authentication>
+            <keepalives>
+              <test-peer-aliveness>
+                <max-wait>30</max-wait>
+                <max-attempts>3</max-attempts>
+              </test-peer-aliveness>
+            </keepalives>
+          </dtls>
+        </udp-notif-receiver>
+      </receiver-instance>
+    </receiver-instances>
+  </subscriptions>
+</config>
   ]]></artwork>
         </figure></t>
       </section>

@@ -1,1 +1,4 @@
-pyang -f sample-xml-skeleton -p draft-yangs --sample-xml-skeleton-doctype=config -V --sample-xml-skeleton-defaults -o ietf-udp-notif-example.xml /Users/ahuangfeng/.pyenv/versions/3.9.5/share/yang/modules/ietf/ietf-subscribed-notifications.yang draft-yangs/ietf-subscribed-notif-receivers.yang ietf-udp-notif-transport.yang
+pyang -f sample-xml-skeleton -p draft-yangs --sample-xml-skeleton-doctype=config -V --sample-xml-skeleton-defaults -o examples/ietf-udp-notif-example-09.xml /Users/ahuangfeng/.pyenv/versions/3.9.5/share/yang/modules/ietf/ietf-subscribed-notifications.yang draft-yangs/ietf-subscribed-notif-receivers.yang ietf-udp-notif-transport.yang
+
+
+./rfcfold.sh -s 1 -i ietf-udp-notif-example-09withoutDTLS.xml -o example_rfc8792.xml
