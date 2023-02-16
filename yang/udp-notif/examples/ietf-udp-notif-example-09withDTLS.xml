@@ -13,6 +13,9 @@
           <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">global-udp-notif-receiver-dtls-def</receiver-instance-ref>
         </receiver>
       </receivers>
+      <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+        <period>6000</period>
+      </periodic>
     </subscription>
     <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">
       <receiver-instance>

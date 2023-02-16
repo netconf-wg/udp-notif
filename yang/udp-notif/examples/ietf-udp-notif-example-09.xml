@@ -1,5 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <filters xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
+    <stream-filter>
+      <name/>
+      <stream-xpath-filter/>
+    </stream-filter>
+    <selection-filter xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+      <filter-id/>
+      <datastore-xpath-filter/>
+    </selection-filter>
+  </filters>
   <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
     <subscription>
       <id/>
@@ -7,6 +17,9 @@
       <stream-xpath-filter/>
       <stream/>
       <configured-replay/>
+      <datastore xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push"/>
+      <selection-filter-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push"/>
+      <datastore-xpath-filter xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push"/>
       <stop-time/>
       <dscp>0</dscp>
       <weighting/>
@@ -23,6 +36,17 @@
           <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers"/>
         </receiver>
       </receivers>
+      <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+        <period/>
+        <anchor-time/>
+      </periodic>
+      <on-change xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+        <dampening-period>0</dampening-period>
+        <sync-on-start>true</sync-on-start>
+        <excluded-change>
+          <!-- # entries: 0.. -->
+        </excluded-change>
+      </on-change>
     </subscription>
     <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">
       <receiver-instance>
