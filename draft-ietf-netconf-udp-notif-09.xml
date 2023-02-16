@@ -1209,6 +1209,7 @@ ter>
       <stream>some-stream</stream>
       <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
 if-transport">unt:udp-notif</transport>
+      <encoding>encode-json</encoding>
       <receivers>
         <receiver>
           <name>subscription-specific-receiver-def</name>
@@ -1253,6 +1254,7 @@ ter>
       <stream>some-stream</stream>
       <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
 if-transport">unt:udp-notif</transport>
+      <encoding>encode-json</encoding>
       <receivers>
         <receiver>
           <name>subscription-specific-receiver-def</name>
