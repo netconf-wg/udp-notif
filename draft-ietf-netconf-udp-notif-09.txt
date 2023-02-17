@@ -1163,7 +1163,7 @@ Internet-Draft               unyte-udp-notif               February 2023
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
+              <https://www.rfc-editor.org/rfc/rfc2119>.
 
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
@@ -1202,7 +1202,7 @@ Internet-Draft               unyte-udp-notif               February 2023
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
@@ -1359,6 +1359,7 @@ Internet-Draft               unyte-udp-notif               February 2023
          <stream>some-stream</stream>
          <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
    if-transport">unt:udp-notif</transport>
+         <encoding>encode-json</encoding>
          <receivers>
            <receiver>
              <name>subscription-specific-receiver-def</name>
@@ -1367,6 +1368,9 @@ Internet-Draft               unyte-udp-notif               February 2023
    iver-instance-ref>
            </receiver>
          </receivers>
+         <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+           <period>6000</period>
+         </periodic>
        </subscription>
        <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
    cribed-notif-receivers">
@@ -1393,10 +1397,6 @@ A.2.  Configuration for UDP-notif transport with DTLS enabled
 
 
 
-
-
-
-
 Zheng, et al.            Expires 12 August 2023                [Page 25]
 
 Internet-Draft               unyte-udp-notif               February 2023
@@ -1415,6 +1415,7 @@ Internet-Draft               unyte-udp-notif               February 2023
          <stream>some-stream</stream>
          <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
    if-transport">unt:udp-notif</transport>
+         <encoding>encode-json</encoding>
          <receivers>
            <receiver>
              <name>subscription-specific-receiver-def</name>
@@ -1423,6 +1424,9 @@ Internet-Draft               unyte-udp-notif               February 2023
    /receiver-instance-ref>
            </receiver>
          </receivers>
+         <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+           <period>6000</period>
+         </periodic>
        </subscription>
        <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
    cribed-notif-receivers">
@@ -1446,10 +1450,6 @@ Internet-Draft               unyte-udp-notif               February 2023
                    <hash>sha-256</hash>
                    <context>example_context_string</context>
                    <target-protocol>8443</target-protocol>
-                   <target-kdf>12345</target-kdf>
-                 </tls13-epsk>
-               </client-identity>
-               <server-authentication>
 
 
 
@@ -1458,6 +1458,10 @@ Zheng, et al.            Expires 12 August 2023                [Page 26]
 Internet-Draft               unyte-udp-notif               February 2023
 
 
+                   <target-kdf>12345</target-kdf>
+                 </tls13-epsk>
+               </client-identity>
+               <server-authentication>
                  <ca-certs>
                    <local-definition>
                      <certificate>
@@ -1502,10 +1506,6 @@ Internet-Draft               unyte-udp-notif               February 2023
                </server-authentication>
                <keepalives>
                  <test-peer-aliveness>
-                   <max-wait>30</max-wait>
-                   <max-attempts>3</max-attempts>
-                 </test-peer-aliveness>
-               </keepalives>
 
 
 
@@ -1514,6 +1514,10 @@ Zheng, et al.            Expires 12 August 2023                [Page 27]
 Internet-Draft               unyte-udp-notif               February 2023
 
 
+                   <max-wait>30</max-wait>
+                   <max-attempts>3</max-attempts>
+                 </test-peer-aliveness>
+               </keepalives>
              </dtls>
            </udp-notif-receiver>
          </receiver-instance>
@@ -1551,10 +1555,6 @@ A.3.  YANG Push message with UDP-notif transport protocol
               }
 
                      Figure 6: JSON Payload to be sent
-
-
-
-
 
 
 
