@@ -315,13 +315,14 @@ Internet-Draft               unyte-udp-notif               February 2023
       defined in [I-D.ietf-netconf-notification-messages].  This allows
       disambiguation of an information source, such as the
       identification of different line cards sending the notification
-      messages.  The source IP address of the UDP datagrams SHOULD NOT
-      be interpreted as the identifier for the host that originated the
-      UDP-Notif message.  Indeed, the streamer sending the UDP-Notif
-      message could be a relay for the actual source of data carried
-      within UDP-Notif messages.  Note that if a relay is used,
-      Observation-Domain-ID unicity MUST be preserved in order to ensure
-      unicity of the Message-ID field described below.
+      messages.  Message unicity is obtained from the conjonction of the
+      Observation-Domain-ID and the Message-ID field described below.
+      If Observation-Domain-ID unicity is not preserved through the
+      collection domain, the source IP address of the UDP datagram
+      SHOULD be used in addition to the Observation-Domain-ID to
+      identify the information source.  If a transport layer relay is
+      used, Observation-Domain-ID unicity must be preserved through the
+      collection domain.
 
    *  The Message-ID is generated continuously by the publisher of UDP-
       Notif messages.  A publisher MUST use different Message-ID values
@@ -329,7 +330,6 @@ Internet-Draft               unyte-udp-notif               February 2023
       ID.  Note that the main purpose of the Message-ID is to
       reconstruct messages which were segmented using the segmentation
       option described in section Section 4.1.  The Message-ID values
-      SHOULD be incremented by one for each successive message
 
 
 
@@ -338,6 +338,7 @@ Zheng, et al.            Expires 24 August 2023                 [Page 6]
 Internet-Draft               unyte-udp-notif               February 2023
 
 
+      SHOULD be incremented by one for each successive message
       originated with the same Observation-Domain-ID, so that message
       loss can be detected.  Furthermore, incrementing the Message-ID by
       one allows for a large amount of time to happen before the
@@ -384,7 +385,6 @@ Internet-Draft               unyte-udp-notif               February 2023
                       Figure 3: Generic Option Format
 
    *  Type: 1 octet describing the option type;
-
 
 
 
@@ -1163,7 +1163,7 @@ Internet-Draft               unyte-udp-notif               February 2023
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/rfc/rfc2119>.
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
@@ -1202,7 +1202,7 @@ Internet-Draft               unyte-udp-notif               February 2023
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
