@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="08" month="February" year="2023"/>
+    <date day="20" month="February" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -827,7 +827,7 @@ module ietf-udp-notif-transport {
   import ietf-subscribed-notif-receivers {
     prefix snr;
     reference
-      "RFC XXXX: An HTTPS-based Transport for
+      "RFC YYYY: An HTTPS-based Transport for
                  Configured Subscriptions";
   }
   import ietf-inet-types {
