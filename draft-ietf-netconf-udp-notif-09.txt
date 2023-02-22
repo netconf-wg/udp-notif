@@ -821,7 +821,7 @@ Internet-Draft               unyte-udp-notif               February 2023
      import ietf-tls-client {
        prefix tlsc;
        reference
-         "RFC YYYY: YANG Groupings for TLS Clients and TLS Servers";
+         "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
      }
 
      organization "IETF NETCONF (Network Configuration) Working Group";
@@ -1150,8 +1150,8 @@ Internet-Draft               unyte-udp-notif               February 2023
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
               for YANG Notifications", Work in Progress, Internet-Draft,
               draft-ietf-netconf-https-notif-13, 4 November 2022,
-              <https://www.ietf.org/archive/id/draft-ietf-netconf-https-
-              notif-13.txt>.
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
+              https-notif-13>.
 
    [I-D.ietf-netconf-tls-client-server]
               Watsen, K., "YANG Groupings for TLS Clients and TLS
@@ -1163,7 +1163,7 @@ Internet-Draft               unyte-udp-notif               February 2023
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
+              <https://www.rfc-editor.org/rfc/rfc2119>.
 
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
@@ -1202,7 +1202,7 @@ Internet-Draft               unyte-udp-notif               February 2023
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,

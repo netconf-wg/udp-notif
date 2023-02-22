@@ -22,7 +22,7 @@ module ietf-udp-notif-transport {
   import ietf-tls-client {
     prefix tlsc;
     reference
-      "RFC YYYY: YANG Groupings for TLS Clients and TLS Servers";
+      "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
   }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
