@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="20" month="February" year="2023"/>
+    <date day="10" month="March" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -306,10 +306,10 @@
 
             <t>Notification Message is the encoded content that the
             publication stream transports. The common encoding methods
-            are listed in <xref target="sec_ups_format"/>. <xref
-            target="I-D.ietf-netconf-notification-messages"/> describes the
-            structure of the Notification Message for single notifications and
-            bundled notifications.</t>
+            are listed in <xref target="sec_ups_format"/>. The structure of
+            the message are defined in Section 2.6 of <xref target="RFC8639"/>.
+            <xref target="I-D.ietf-netconf-notification-messages"/> describes a
+            structure to send bundled notifications in a single message.</t>
           </list></t>
 
         <t><figure anchor="fig_ups_message" title="UDP-Notif Message Overview">
@@ -816,7 +816,7 @@ module: ietf-udp-notif-transport
 
       <t><figure>
           <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2023-02-08.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2023-03-10.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -878,7 +878,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2023-02-08 {
+  revision 2023-03-10 {
     description
       "Initial revision";
     reference
