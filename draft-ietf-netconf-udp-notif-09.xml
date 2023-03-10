@@ -307,8 +307,8 @@
             <t>Notification Message is the encoded content that the
             publication stream transports. The common encoding methods
             are listed in <xref target="sec_ups_format"/>. The structure of
-            the message are defined in Section 2.6 of <xref target="RFC8639"/>.
-            <xref target="I-D.ietf-netconf-notification-messages"/> describes a
+            the Notification Message is defined in Section 2.6 of
+            <xref target="RFC8639"/>. <xref target="I-D.ietf-netconf-notification-messages"/> proposes a
             structure to send bundled notifications in a single message.</t>
           </list></t>
 

@@ -242,9 +242,9 @@ Internet-Draft               unyte-udp-notif                  March 2023
 
    *  Notification Message is the encoded content that the publication
       stream transports.  The common encoding methods are listed in
-      Section 3.2.  The structure of the message are defined in
-      Section 2.6 of [RFC8639].
-      [I-D.ietf-netconf-notification-messages] describes a structure to
+      Section 3.2.  The structure of the Notification Message is defined
+      in Section 2.6 of [RFC8639].
+      [I-D.ietf-netconf-notification-messages] proposes a structure to
       send bundled notifications in a single message.
 
                +-------+  +--------------+  +--------------+
