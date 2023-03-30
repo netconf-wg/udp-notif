@@ -768,40 +768,40 @@ module: ietf-udp-client
     +-- remote-address    inet:ip-address-no-zone
     +-- remote-port       inet:port-number
     +-- dtls!
-      +-- client-identity!
-      |  +-- (auth-type)
-      |     +--:(certificate) {client-ident-x509-cert}?
-      |     |     ...
-      |     +--:(raw-public-key) {client-ident-raw-public-key}?
-      |     |     ...
-      |     +--:(tls12-psk)
-      |     |        {client-ident-tls12-psk,not tlsc:client-ident-tls12-psk}?
-      |     |     ...
-      |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
-      |           ...
-      +-- server-authentication
-      |  +-- ca-certs! {server-auth-x509-cert}?
-      |  |  +-- (local-or-truststore)
-      |  |        ...
-      |  +-- ee-certs! {server-auth-x509-cert}?
-      |  |  +-- (local-or-truststore)
-      |  |        ...
-      |  +-- raw-public-keys! {server-auth-raw-public-key}?
-      |  |  +-- (local-or-truststore)
-      |  |        ...
-      |  +-- tls12-psks?        empty
-      |  |       {server-auth-tls12-psk,not tlsc:server-auth-tls12-psk}?
-      |  +-- tls13-epsks?       empty {server-auth-tls13-epsk}?
-      +-- hello-params {tlscmn:hello-params}?
-      |  +-- tls-versions
-      |  |  +-- tls-version*   identityref
-      |  +-- cipher-suites
-      |     +-- cipher-suite*   identityref
-      +-- keepalives {tls-client-keepalives}?
+       +-- client-identity!
+       |  +-- (auth-type)
+       |     +--:(certificate) {client-ident-x509-cert}?
+       |     |     ...
+       |     +--:(raw-public-key) {client-ident-raw-public-key}?
+       |     |     ...
+       |     +--:(tls12-psk)
+       |     |        {client-ident-tls12-psk,not tlsc:client-ident-tls12-psk}?
+       |     |     ...
+       |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
+       |           ...
+       +-- server-authentication
+       |  +-- ca-certs! {server-auth-x509-cert}?
+       |  |  +-- (local-or-truststore)
+       |  |        ...
+       |  +-- ee-certs! {server-auth-x509-cert}?
+       |  |  +-- (local-or-truststore)
+       |  |        ...
+       |  +-- raw-public-keys! {server-auth-raw-public-key}?
+       |  |  +-- (local-or-truststore)
+       |  |        ...
+       |  +-- tls12-psks?        empty
+       |  |       {server-auth-tls12-psk,not tlsc:server-auth-tls12-psk}?
+       |  +-- tls13-epsks?       empty {server-auth-tls13-epsk}?
+       +-- hello-params {tlscmn:hello-params}?
+       |  +-- tls-versions
+       |  |  +-- tls-version*   identityref
+       |  +-- cipher-suites
+       |     +-- cipher-suite*   identityref
+       +-- keepalives {tls-client-keepalives}?
           +-- peer-allowed-to-send?   empty
           +-- test-peer-aliveness!
-            +-- max-wait?       uint16
-            +-- max-attempts?   uint8
+             +-- max-wait?       uint16
+             +-- max-attempts?   uint8
           ]]></artwork>
             </figure>
           </t>
@@ -861,14 +861,14 @@ module ietf-udp-client {
     4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
     (https://trustee.ietf.org/license-info).
 
-    This version of this YANG module is part of RFC XXXX; see the RFC
+    This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
   revision 2023-03-29 {
     description
       "Initial revision";
     reference
-      "RFC XXXX: UDP-based Transport for Configured Subscriptions";
+      "RFC-to-be: UDP-based Transport for Configured Subscriptions";
   }
 
  /*
@@ -924,75 +924,73 @@ module ietf-udp-client {
         </t>
         </section>
       </section>
-      </section>
-      <section title="YANG to configure UDP-notif">
-        <t>The YANG model described in <xref target="sec_yang_model"/> defines
-        a new receiver instance for UDP-notif transport. When this transport is 
-        used, four new leaves and a dtls container allow configuring UDP-notif
-        receiver parameters.</t>
+        <section title="YANG to configure UDP-notif">
+          <t>The YANG model described in <xref target="sec_yang_model"/> defines
+          a new receiver instance for UDP-notif transport. When this transport is 
+          used, four new leaves and a dtls container allow configuring UDP-notif
+          receiver parameters.</t>
+
+          <t><figure>
+              <artwork><![CDATA[
+ module: ietf-udp-notif-transport
+
+  augment /sn:subscriptions/snr:receiver-instances
+            /snr:receiver-instance/snr:transport-type:
+    +--:(udp-notif)
+       +--rw udp-notif-receiver
+          +--rw remote-address         inet:ip-address-no-zone
+          +--rw remote-port            inet:port-number
+          +--rw dtls!
+          |  +--rw client-identity!
+          |  |  +--rw (auth-type)
+          |  |     +--:(certificate) {client-ident-x509-cert}?
+          |  |     |     ...
+          |  |     +--:(raw-public-key) {client-ident-raw-public-key}?
+          |  |     |     ...
+          |  |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
+          |  |           ...
+          |  +--rw server-authentication
+          |  |  +--rw ca-certs! {server-auth-x509-cert}?
+          |  |  |  +--rw (local-or-truststore)
+          |  |  |        ...
+          |  |  +--rw ee-certs! {server-auth-x509-cert}?
+          |  |  |  +--rw (local-or-truststore)
+          |  |  |        ...
+          |  |  +--rw raw-public-keys! {server-auth-raw-public-key}?
+          |  |  |  +--rw (local-or-truststore)
+          |  |  |        ...
+          |  |  +--rw tls13-epsks?       empty
+          |  |          {server-auth-tls13-epsk}?
+          |  +--rw hello-params {tlscmn:hello-params}?
+          |  |  +--rw tls-versions
+          |  |  |  +--rw tls-version*   identityref
+          |  |  +--rw cipher-suites
+          |  |     +--rw cipher-suite*   identityref
+          |  +--rw keepalives {tls-client-keepalives}?
+          |     +--rw peer-allowed-to-send?   empty
+          |     +--rw test-peer-aliveness!
+          |        +--rw max-wait?       uint16
+          |        +--rw max-attempts?   uint8
+          +--rw enable-segmentation?   boolean {segmentation}?
+          +--rw max-segment-size?      uint32 {segmentation}?
+          ]]></artwork>
+            </figure></t>
+        </section>
+
+      <section anchor="sec_yang_model" title="YANG Module">
+        <t>This YANG module is used to configure, on a publisher, a receiver
+        willing to consume notification messages. This module augments 
+        the "ietf-subscribed-notif-receivers" module to define a UDP-notif 
+        transport receiver. The grouping "udp-notif-receiver-grouping" 
+        defines the necessary parameters to configure this transport.
+        The grouping uses tls-client-grouping defined in <xref
+        target="I-D.ietf-netconf-tls-client-server"/> to add DTLS 1.3
+        parameters.
+        </t>
 
         <t><figure>
             <artwork><![CDATA[
-  module: ietf-udp-notif-transport
-
-    augment /sn:subscriptions/snr:receiver-instances
-              /snr:receiver-instance/snr:transport-type:
-      +--:(udp-notif)
-        +--rw udp-notif-receiver
-            +--rw address                inet:ip-address-no-zone
-            +--rw port                   inet:port-number
-            +--rw enable-segmentation?   boolean {segmentation}?
-            +--rw max-segment-size?      uint32 {segmentation}?
-            +--rw dtls! {dtls-supported}?
-              +--rw client-identity!
-              |  +--rw (auth-type)
-              |     +--:(certificate) {client-ident-x509-cert}?
-              |     |     ...
-              |     +--:(raw-public-key) {client-ident-raw-public-key}?
-              |     |     ...
-              |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
-              |           ...
-              +--rw server-authentication
-              |  +--rw ca-certs! {server-auth-x509-cert}?
-              |  |  +--rw (local-or-truststore)
-              |  |        ...
-              |  +--rw ee-certs! {server-auth-x509-cert}?
-              |  |  +--rw (local-or-truststore)
-              |  |        ...
-              |  +--rw raw-public-keys! {server-auth-raw-public-key}?
-              |  |  +--rw (local-or-truststore)
-              |  |        ...
-              |  +--rw tls13-epsks?       empty
-              |          {server-auth-tls13-epsk}?
-              +--rw hello-params {tlscmn:hello-params}?
-              |  +--rw tls-versions
-              |  |  +--rw tls-version*   identityref
-              |  +--rw cipher-suites
-              |     +--rw cipher-suite*   identityref
-              +--rw keepalives {tls-client-keepalives}?
-                  +--rw peer-allowed-to-send?   empty
-                  +--rw test-peer-aliveness!
-                    +--rw max-wait?       uint16
-                    +--rw max-attempts?   uint8
-        ]]></artwork>
-          </figure></t>
-      </section>
-    <!-- </section> -->
-
-    <section anchor="sec_yang_model" title="YANG Module">
-      <t>This YANG module is used to configure, on a publisher, a receiver
-      willing to consume notification messages. This module augments 
-      the "ietf-subscribed-notif-receivers" module to define a UDP-notif 
-      transport receiver. The grouping "udp-notif-receiver-grouping" 
-      defines the necessary parameters to configure this transport.
-      The grouping uses tls-client-grouping defined in <xref
-      target="I-D.ietf-netconf-tls-client-server"/> to add DTLS 1.3
-      parameters.
-      </t>
-
-      <t><figure>
-          <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2023-03-10.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2023-03-29.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -1009,15 +1007,10 @@ module ietf-udp-notif-transport {
       "RFC YYYY: An HTTPS-based Transport for
                  Configured Subscriptions";
   }
-  import ietf-inet-types {
-    prefix inet;
+  import ietf-udp-client {
+    prefix udpc;
     reference
-      "RFC 6991: Common YANG Data Types";
-  }
-  import ietf-tls-client {
-    prefix tlsc;
-    reference
-      "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
+      "RFC-to-be: UDP-based Transport for Configured Subscriptions";
   }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
@@ -1051,14 +1044,14 @@ module ietf-udp-notif-transport {
     4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
     (https://trustee.ietf.org/license-info).
 
-    This version of this YANG module is part of RFC XXXX; see the RFC
+    This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2023-03-10 {
+  revision 2023-03-29 {
     description
       "Initial revision";
     reference
-      "RFC XXXX: UDP-based Transport for Configured Subscriptions";
+      "RFC-to-be: UDP-based Transport for Configured Subscriptions";
   }
  
  /*
@@ -1067,11 +1060,6 @@ module ietf-udp-notif-transport {
   feature encode-cbor {
     description
       "This feature indicates that CBOR encoding of notification
-       messages is supported.";
-  }
-  feature dtls-supported {
-    description
-      "This feature indicates that DTLS encryption of notification
        messages is supported.";
   }
   feature segmentation {
@@ -1103,20 +1091,7 @@ module ietf-udp-notif-transport {
       "Provides a reusable description of a UDP-Notif target
       receiver.";
 
-    leaf address {
-      type inet:ip-address-no-zone;
-      mandatory true;
-      description
-        "IP address of target UDP-Notif receiver, which can be an
-        IPv4 address or an IPV6 address.";
-    }
-  
-    leaf port {
-      type inet:port-number;
-      mandatory true;
-      description
-        "Port number of target UDP-Notif receiver.";
-    }
+    uses udpc:udp-client;
 
     leaf enable-segmentation {
       if-feature segmentation;
@@ -1136,25 +1111,6 @@ module ietf-udp-notif-transport {
         control the size of each segment (UDP-Notif header, with
         options, included).";
     }
-
-    container dtls {
-      if-feature dtls-supported;
-      presence dtls;
-      uses tlsc:tls-client-grouping {
-        // Using tls-client-grouping without TLS1.2 parameters
-        // allowing only DTLS 1.3
-        refine "client-identity/auth-type/tls12-psk" {
-          // create the logical impossibility of enabling TLS1.2
-          if-feature "not tlsc:client-ident-tls12-psk";
-        }
-        refine "server-authentication/tls12-psks" {
-          // create the logical impossibility of enabling TLS1.2
-          if-feature "not tlsc:server-auth-tls12-psk";
-        }
-      }
-      description 
-        "Container for configuring DTLS 1.3 parameters if DTLS is enabled.";
-    }
   }
 
   augment "/sn:subscriptions/snr:receiver-instances/" +
@@ -1172,12 +1128,13 @@ module ietf-udp-notif-transport {
   }
 }
 <CODE ENDS>]]></artwork>
-        </figure></t>
+          </figure></t>
+      </section>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
-      <t>This document describes a number of new registries, the URI from IETF
-      XML Registry and the registration of a new YANG module name.</t>
+      <t>This document describes a number of new registries, the URIs from IETF
+      XML Registry and the registration of a two new YANG module name.</t>
       <section title="IANA registries">
       <t>This document is creating 3 registries called "UDP-notif media types",
       "UDP-notif option types", and "UDP-notif header version" under the new 
@@ -1200,7 +1157,7 @@ module ietf-udp-notif-transport {
           <artwork align="left"><![CDATA[
   Value: 0
   Description: Reserved
-  Reference: this document]]></artwork>
+  Reference: RFC-to-be]]></artwork>
         </figure></t>
 
       <t><figure>
@@ -1241,21 +1198,21 @@ module ietf-udp-notif-transport {
           <artwork align="left"><![CDATA[
   Value: 0
   Description: Reserved
-  Reference: this document]]></artwork>
+  Reference: RFC-to-be]]></artwork>
         </figure></t>
 
       <t><figure>
           <artwork align="left"><![CDATA[
   Value: TBD1 (suggested value: 1)
   Description: Segmentation Option
-  Reference: this document]]></artwork>
+  Reference: RFC-to-be]]></artwork>
         </figure></t>
 
       <t><figure>
           <artwork align="left"><![CDATA[
   Value: TBD2 (suggested value: 2)
   Description: Private Encoding Option
-  Reference: this document]]></artwork>
+  Reference: RFC-to-be]]></artwork>
         </figure></t>
 
       <t>The third requested registry is the following:</t>
@@ -1282,14 +1239,21 @@ module ietf-udp-notif-transport {
           <artwork align="left"><![CDATA[
   Value: 1
   Description: RFCXXXX, current version.
-  Reference: this document]]></artwork>
+  Reference: RFC-to-be]]></artwork>
         </figure></t>
       </section>
 
       <section title="URI">
-      <t>IANA is also requested to assign a new URI from the <xref
-      target="RFC3688">IETF XML Registry</xref>. The following URI is
+      <t>IANA is also requested to assign a two new URI from the <xref
+      target="RFC3688">IETF XML Registry</xref>. The following two URIs are
       suggested:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+URI: urn:ietf:params:xml:ns:yang:ietf-udp-client
+Registrant Contact: The IESG.
+XML: N/A; the requested URI is an XML namespace.]]></artwork>
+        </figure></t>
 
       <t><figure>
           <artwork align="left"><![CDATA[
@@ -1300,16 +1264,24 @@ XML: N/A; the requested URI is an XML namespace.]]></artwork>
       </section>
       <section title="YANG module name">
 
-      <t>This document also requests a new YANG module name in the <xref
+      <t>This document also requests a two new YANG module names in the <xref
       target="RFC7950">YANG Module Names registry</xref> with the following
-      suggestion:</t>
+      suggestions:</t>
+
+      <t><figure>
+          <artwork align="left"><![CDATA[
+name: ietf-udp-client
+namespace: urn:ietf:params:xml:ns:yang:ietf-udp-client
+prefix: udpc
+reference: RFC-to-be]]></artwork>
+        </figure></t>
 
       <t><figure>
           <artwork align="left"><![CDATA[
 name: ietf-udp-notif
 namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
 prefix: unt
-reference: RFC XXXX]]></artwork>
+reference: RFC-to-be]]></artwork>
         </figure></t>
       </section>
     </section>

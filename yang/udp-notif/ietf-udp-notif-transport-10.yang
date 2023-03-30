@@ -19,16 +19,6 @@ module ietf-udp-notif-transport {
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
-  import ietf-inet-types {
-    prefix inet;
-    reference
-      "RFC 6991: Common YANG Data Types";
-  }
-  import ietf-tls-client {
-    prefix tlsc;
-    reference
-      "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
-  }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
   contact
