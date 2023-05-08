@@ -1148,7 +1148,7 @@ module ietf-udp-notif-transport {
     <section anchor="IANA" title="IANA Considerations">
       <t>This document describes a number of new registries, the URIs from
       IETF XML Registry and the registration of a two new YANG module
-      name.</t>
+      names.</t>
 
       <section title="IANA registries">
         <t>This document is creating 3 registries called "UDP-notif media

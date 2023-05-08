@@ -1184,7 +1184,8 @@ Internet-Draft               unyte-udp-notif                    May 2023
 8.  IANA Considerations
 
    This document describes a number of new registries, the URIs from
-   IETF XML Registry and the registration of a two new YANG module name.
+   IETF XML Registry and the registration of a two new YANG module
+   names.
 
 8.1.  IANA registries
 
@@ -1225,7 +1226,6 @@ Internet-Draft               unyte-udp-notif                    May 2023
      Registration Procedure: Standard Action as defined in RFC8126
      Maximum value: 255
 
-   These are the initial registrations for "UDP-notif options types":
 
 
 
@@ -1233,6 +1233,8 @@ Zheng, et al.            Expires 9 November 2023               [Page 22]
 
 Internet-Draft               unyte-udp-notif                    May 2023
 
+
+   These are the initial registrations for "UDP-notif options types":
 
      Value: 0
      Description: Reserved
@@ -1280,8 +1282,6 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
    This document also requests a two new YANG module names in the YANG
    Module Names registry [RFC7950] with the following suggestions:
-
-
 
 
 
