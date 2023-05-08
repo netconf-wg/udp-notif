@@ -35,7 +35,7 @@ module ietf-udp-client {
   description
     "Defines a generic grouping for UDP-based client applications.
 
-    Copyright (c) 2022 IETF Trust and the persons identified as
+    Copyright (c) 2023 IETF Trust and the persons identified as
     authors of the code.  All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -44,26 +44,26 @@ module ietf-udp-client {
     4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
     (https://trustee.ietf.org/license-info).
 
-    This version of this YANG module is part of RFC XXXX; see the RFC
+    This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2023-03-29 {
+  revision 2023-05-08 {
     description
       "Initial revision";
     reference
-      "RFC XXXX: UDP-based Transport for Configured Subscriptions";
+      "RFC-to-be: UDP-based Transport for Configured Subscriptions";
   }
 
  /*
   * FEATURES
   */
-  feature dtls13-supported {
+  feature dtls13 {
     description
-      "This feature indicates that DTLS 1.3 encryption of notification
-       messages is supported.";
+      "This feature indicates that DTLS 1.3 encryption of UDP
+       packets is supported.";
   }
 
-  grouping udp-client {
+  grouping udp-client-grouping {
     description
       "Provides a reusable grouping for configuring a UDP client.";
 
@@ -83,7 +83,7 @@ module ietf-udp-client {
     }
 
     container dtls {
-      // if-feature dtls-supported;
+      if-feature dtls13;
       presence dtls;
       uses tlsc:tls-client-grouping {
         // Using tls-client-grouping without TLS1.2 parameters

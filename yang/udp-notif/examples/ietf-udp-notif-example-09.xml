@@ -52,8 +52,8 @@
       <receiver-instance>
         <name/>
         <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">
-          <address/>
-          <port/>
+          <remote-address/>
+          <remote-port/>
           <enable-segmentation>false</enable-segmentation>
           <max-segment-size/>
           <dtls>

@@ -21,8 +21,8 @@
       <receiver-instance>
         <name>global-udp-notif-receiver-def</name>
         <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">
-          <address>192.0.5.1</address>
-          <port>12345</port>
+          <remote-address>192.0.5.1</remote-address>
+          <remote-port>12345</remote-port>
           <enable-segmentation>false</enable-segmentation>
           <max-segment-size/>
         </udp-notif-receiver>
