@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="22" month="April" year="2023"/>
+    <date day="08" month="May" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -1404,7 +1404,7 @@ reference: RFC-to-be]]></artwork>
       </reference>
 
       <reference anchor="INSA-Lyon-Receiver"
-                 target="https://github.com/insa-unyte/udp-notif-c-collector">
+                 target="https://github.com/network-analytics/udp-notif-c-collector">
         <front>
           <title>INSA Lyon, YANG Push receiver library implementation</title>
 
