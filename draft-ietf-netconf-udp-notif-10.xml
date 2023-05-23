@@ -197,7 +197,7 @@
     <section title="Introduction">
       <t><xref target="RFC8639">Sub-Notif</xref> defines a mechanism that lets
       a receiver subscribe to the publication of YANG-defined data maintained
-      in a <xref target="RFC7950">YANG</xref> datastore. The mechanism
+      in a YANG <xref target="RFC6241">datastore</xref>. The mechanism
       separates the management and control of subscriptions from the transport
       used to deliver the data. Three transport mechanisms, namely <xref
       target="RFC8640">NETCONF transport</xref>, <xref
@@ -1403,6 +1403,8 @@ reference: RFC-to-be]]></artwork>
     <references title="Informative References">
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
       <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?> -->
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7951.xml"?>
 

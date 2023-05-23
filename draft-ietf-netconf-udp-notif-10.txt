@@ -134,7 +134,7 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
    Sub-Notif [RFC8639] defines a mechanism that lets a receiver
    subscribe to the publication of YANG-defined data maintained in a
-   YANG [RFC7950] datastore.  The mechanism separates the management and
+   YANG datastore [RFC6241].  The mechanism separates the management and
    control of subscriptions from the transport used to deliver the data.
    Three transport mechanisms, namely NETCONF transport [RFC8640],
    RESTCONF transport [RFC8650], and HTTPS transport
@@ -1487,6 +1487,11 @@ Internet-Draft               unyte-udp-notif                    May 2023
               "Paolo Lucente, Pmacct open source Network Telemetry Data
               Collection", <https://github.com/pmacct/pmacct>.
 
+   [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
+              and A. Bierman, Ed., "Network Configuration Protocol
+              (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
+              <https://www.rfc-editor.org/info/rfc6241>.
+
    [RFC7951]  Lhotka, L., "JSON Encoding of Data Modeled with YANG",
               RFC 7951, DOI 10.17487/RFC7951, August 2016,
               <https://www.rfc-editor.org/info/rfc7951>.
@@ -1499,13 +1504,8 @@ Internet-Draft               unyte-udp-notif                    May 2023
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
 
-   [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
-              for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
-              September 2019, <https://www.rfc-editor.org/info/rfc8641>.
 
-   [RFC8799]  Carpenter, B. and B. Liu, "Limited Domains and Internet
-              Protocols", RFC 8799, DOI 10.17487/RFC8799, July 2020,
-              <https://www.rfc-editor.org/info/rfc8799>.
+
 
 
 
@@ -1513,6 +1513,14 @@ Zheng, et al.           Expires 24 November 2023               [Page 27]
 
 Internet-Draft               unyte-udp-notif                    May 2023
 
+
+   [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
+              for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
+              September 2019, <https://www.rfc-editor.org/info/rfc8641>.
+
+   [RFC8799]  Carpenter, B. and B. Liu, "Limited Domains and Internet
+              Protocols", RFC 8799, DOI 10.17487/RFC8799, July 2020,
+              <https://www.rfc-editor.org/info/rfc8799>.
 
    [RFC9147]  Rescorla, E., Tschofenig, H., and N. Modadugu, "The
               Datagram Transport Layer Security (DTLS) Protocol Version
@@ -1530,14 +1538,6 @@ A.1.  Configuration for UDP-notif transport with DTLS disabled
 
    This example shows how UDP-notif can be configured without DTLS
    encryption.
-
-
-
-
-
-
-
-
 
 
 
