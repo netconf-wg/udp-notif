@@ -253,12 +253,13 @@ Internet-Draft               unyte-udp-notif                    May 2023
       message transmission before deserializing the notification
       message.
 
-   *  Notification Message is the encoded content that the publication
-      stream transports.  The common encoding methods are listed in
+   *  Notification Message is the encoded content that is transported by
+      the publication stream.  The common encoding methods are listed in
       Section 3.2.  The structure of the Notification Message is defined
-      in Section 2.6 of [RFC8639].
+      in Section 2.6 of [RFC8639] and a YANG model has been proposed in
+      [I-D.ahuang-netconf-notif-yang].
       [I-D.ietf-netconf-notification-messages] proposes a structure to
-      send bundled notifications in a single message and
+      send bundled notifications in a single message.
 
                +-------+  +--------------+  +--------------+
                |  UDP  |  |   Message    |  | Notification |
@@ -273,7 +274,6 @@ Internet-Draft               unyte-udp-notif                    May 2023
    The UDP-Notif Message Header contains information that facilitate the
    message transmission before deserializing the notification message.
    The data format is shown in Figure 2.
-
 
 
 
@@ -1466,6 +1466,13 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 12.2.  Informative References
 
+   [I-D.ahuang-netconf-notif-yang]
+              Feng, A. H., Francois, P., Graf, T., and B. Claise, "YANG
+              model for NETCONF Event Notifications", Work in Progress,
+              Internet-Draft, draft-ahuang-netconf-notif-yang-01, 3
+              March 2023, <https://datatracker.ietf.org/doc/html/draft-
+              ahuang-netconf-notif-yang-01>.
+
    [I-D.ietf-netconf-notification-messages]
               Voit, E., Jenkins, T., Birkholz, H., Bierman, A., and A.
               Clemm, "Notification Message Headers and Bundles", Work in
@@ -1500,19 +1507,16 @@ Internet-Draft               unyte-udp-notif                    May 2023
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
               <https://www.rfc-editor.org/info/rfc8040>.
 
-   [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
-              BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
-              <https://www.rfc-editor.org/info/rfc8340>.
-
-
-
-
 
 
 Zheng, et al.           Expires 24 November 2023               [Page 27]
 
 Internet-Draft               unyte-udp-notif                    May 2023
 
+
+   [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
+              BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
+              <https://www.rfc-editor.org/info/rfc8340>.
 
    [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
               for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
@@ -1538,10 +1542,6 @@ A.1.  Configuration for UDP-notif transport with DTLS disabled
 
    This example shows how UDP-notif can be configured without DTLS
    encryption.
-
-
-
-
 
 
 

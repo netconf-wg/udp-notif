@@ -306,13 +306,14 @@
             message transmission before deserializing the notification
             message.</t>
 
-            <t>Notification Message is the encoded content that the
-            publication stream transports. The common encoding methods are
+            <t>Notification Message is the encoded content that is transported
+            by the publication stream. The common encoding methods are
             listed in <xref target="sec_ups_format"/>. The structure of the
             Notification Message is defined in Section 2.6 of <xref
-            target="RFC8639"/>. <xref
+            target="RFC8639"/> and a YANG model has been proposed in
+            <xref target="I-D.ahuang-netconf-notif-yang"/>. <xref
             target="I-D.ietf-netconf-notification-messages"/> proposes a
-            structure to send bundled notifications in a single message and </t>
+            structure to send bundled notifications in a single message.</t>
           </list></t>
 
         <t><figure anchor="fig_ups_message" title="UDP-Notif Message Overview">
@@ -1402,7 +1403,7 @@ reference: RFC-to-be]]></artwork>
 
     <references title="Informative References">
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?>
-      <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
 
