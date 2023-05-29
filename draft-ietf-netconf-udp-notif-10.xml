@@ -1321,7 +1321,7 @@ reference: RFC-to-be]]></artwork>
       </section>
 
       <section anchor="OpenSourceReceiver"
-               title="Open Source Reveiver Library">
+               title="Open Source Receiver Library">
         <t>INSA Lyon implemented this document for a YANG Push receiver as a
         library.</t>
 
@@ -1330,7 +1330,7 @@ reference: RFC-to-be]]></artwork>
       </section>
 
       <section anchor="pmacct" title="Pmacct Data Collection">
-        <t>The open source YANG push reveiver library has been integrated into
+        <t>The open source YANG push receiver library has been integrated into
         the Pmacct open source Network Telemetry data collection.</t>
       </section>
 

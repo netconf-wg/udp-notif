@@ -114,7 +114,7 @@ Zheng, et al.           Expires 30 November 2023                [Page 2]
 Internet-Draft               unyte-udp-notif                    May 2023
 
 
-     9.2.  Open Source Reveiver Library  . . . . . . . . . . . . . .  24
+     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  24
      9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  24
      9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  24
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  24
@@ -1311,7 +1311,7 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
    The open source code can be obtained here: [INSA-Lyon-Publisher].
 
-9.2.  Open Source Reveiver Library
+9.2.  Open Source Receiver Library
 
    INSA Lyon implemented this document for a YANG Push receiver as a
    library.
@@ -1320,7 +1320,7 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 9.3.  Pmacct Data Collection
 
-   The open source YANG push reveiver library has been integrated into
+   The open source YANG push receiver library has been integrated into
    the Pmacct open source Network Telemetry data collection.
 
 9.4.  Huawei VRP
