@@ -175,11 +175,11 @@
     <workgroup>NETCONF</workgroup>
 
     <abstract>
-      <t>This document describes an UDP-based notification mechanism to
-      collect data from networking devices. A shim header is proposed to
-      facilitate the data streaming directly from the publishing process on
-      network processor of line cards to receivers. The objective is to
-      provide a lightweight approach to enable higher frequency and less
+      <t>This document describes an UDP-based protocol for sending YANG
+      notifications to collect data from networking devices. A shim header is
+      proposed to facilitate the data streaming directly from the publishing
+      process on network processor of line cards to receivers. The objective
+      is to provide a lightweight approach to enable higher frequency and less
       performance impact on publisher and receiver processes compared to
       already established notification mechanisms.</t>
     </abstract>
@@ -195,12 +195,25 @@
 
   <middle>
     <section title="Introduction">
+<<<<<<< HEAD
+      <t>The mechanism to support a subscription of a continuous and
+      customized stream of updates from a YANG datastore <xref
+      target="RFC8342"/> is defined in <xref target="RFC8639"/> and <xref
+      target="RFC8641"/> and is abbreviated as Sub-Notif. Requirements for
+      Subscription to YANG Datastores are defined in <xref
+      target="RFC7923"/>.</t>
+
+      <t>The mechanism separates the management and control of subscriptions
+      from the transport used to deliver the data. Three transport mechanisms,
+      namely <xref target="RFC8640">NETCONF transport</xref>, <xref
+=======
       <t><xref target="RFC8639">Sub-Notif</xref> defines a mechanism that lets
       a receiver subscribe to the publication of YANG-defined data maintained
       in a YANG <xref target="RFC6241">datastore</xref>. The mechanism
       separates the management and control of subscriptions from the transport
       used to deliver the data. Three transport mechanisms, namely <xref
       target="RFC8640">NETCONF transport</xref>, <xref
+>>>>>>> 5f8e89db1efc997f9dc0038fc908aca2ce59a992
       target="RFC8650">RESTCONF transport</xref>, and <xref
       target="I-D.ietf-netconf-https-notif">HTTPS transport</xref> have been
       defined so far for such notification messages.</t>
@@ -238,7 +251,7 @@
 
           <t>Secondly, as no connection state needs to be maintained, UDP
           encapsulation can be easily implemented by the hardware of the
-          publication streamer, which will further improve performance.</t>
+          publication streamer, which further improves performance.</t>
 
           <t>Ultimately, such advantages allow for a larger data analysis
           feature set, as more voluminous, finer grained data sets can be
@@ -266,17 +279,17 @@
       <t>This section describes how the proposed mechanism can be controlled
       using subscription channels based on NETCONF or RESTCONF.</t>
 
-      <t>Following the usual approach of Sub-Notif, configured subscriptions
-      contain the location information of all the receivers, including the IP
-      address and the port number, so that the publisher can actively send
-      UDP-Notif messages to the corresponding receivers.</t>
+      <t>As specified in Sub-Notif, configured subscriptions contain the
+      location information of all the receivers, including the IP address and
+      the port number, so that the publisher can actively send UDP-Notif
+      messages to the corresponding receivers.</t>
 
       <t>Note that receivers MAY NOT be already up and running when the
       configuration of the subscription takes effect on the monitored device.
       The first message MUST be a separate subscription-started notification
       to indicate the Receiver that the stream has started flowing. Then, the
       notifications can be sent immediately without delay. All the
-      subscription state notifications, as defined in <xref
+      subscription state notifications, as defined in Section 2.7 of <xref
       target="RFC8639"/>, MUST be encapsulated in separate notification
       messages.</t>
     </section>
@@ -294,12 +307,20 @@
 
 
       <section anchor="sec_design" title="Design Overview">
+<<<<<<< HEAD
+        <t>As specified in Sub-Notif, the YANG data is encapsulated in the
+        NETCONF/RESTCONF notification message, which is then encapsulated and
+        carried using transport protocols such as TLS or HTTP2. This document
+        defines a UDP based transport. <xref target="fig_ups_message"/>
+        illustrates the structure of an UDP-Notif message.</t>
+=======
         <t>As specified in Sub-Notif, the telemetry data is encapsulated in
         a NETCONF/RESTCONF notification message, which is then encapsulated
         and carried using a transport protocols such as TLS or HTTP2. This
         document defines a UDP based transport. <xref
         target="fig_ups_message"/> illustrates the structure of an UDP-Notif
         message.</t>
+>>>>>>> 5f8e89db1efc997f9dc0038fc908aca2ce59a992
 
         <t><list style="symbols">
             <t>The Message Header contains information that facilitate the
@@ -355,7 +376,7 @@
 
         <t/>
 
-        <t>The Message Header contains the following field:</t>
+        <t>The Message Header contains the following fields:</t>
 
         <t><list style="symbols">
             <t>Ver represents the PDU (Protocol Data Unit) encoding version.
@@ -390,6 +411,14 @@
             <xref target="I-D.ietf-netconf-distributed-notif"/>. 
             <!-- of the Observation
             Domain that led to the production of the notification message, as
+<<<<<<< HEAD
+            defined in <xref target="I-D.ietf-netconf-distributed-notif"/>.
+            This allows disambiguation of an information source, such as the
+            identification of different line cards sending the notification
+            messages. Message unicity is obtained from the conjunction of the
+            Observation-Domain-ID and the Message-ID field described below.
+            <!-- If Observation-Domain-ID unicity is preserved through the collection domain, it SHOULD be used
+=======
             defined in <xref target="I-D.ietf-netconf-distributed-notif"/>. -->
             This identifier is unique within the publisher node and identifies
             the exporter process of the node allowing the disambiguation of
@@ -399,6 +428,7 @@
             Message unicity is obtained from the conjonction of the
             Observation Domain ID and the Message ID field described below.
             <!-- If Observation Domain ID unicity is preserved through the collection domain, it SHOULD be used
+>>>>>>> 5f8e89db1efc997f9dc0038fc908aca2ce59a992
             to identify the information source, notably to reconstruct segmented messages using the segmentation option.-->
             If Observation Domain ID unicity is not preserved through the
             collection domain, the source IP address of the UDP datagram
@@ -418,10 +448,17 @@
             <t>The Message ID is generated continuously by the publisher of
             UDP-Notif messages. A publisher MUST use different Message ID
             values for different messages generated with the same
+<<<<<<< HEAD
+            Observation-Domain-ID. Note that the main purpose of the
+            Message-ID is to reconstruct messages which were segmented using
+            the segmentation option described in <xref
+            target="sec_fragmentation"/>. The Message-ID values SHOULD be
+=======
             Observation Domain ID. Note that the main purpose of the
             Message ID is to reconstruct messages which were segmented using
             the segmentation option described in section <xref
             target="sec_fragmentation"/>. The Message ID values SHOULD be
+>>>>>>> 5f8e89db1efc997f9dc0038fc908aca2ce59a992
             incremented by one for each successive message originated with the
             same Observation Domain ID, so that message loss can be detected.
             Furthermore, incrementing the Message ID by one allows for a large
@@ -446,12 +483,11 @@
         model with additional identity statements used to refer to requested
         encodings.</t>
 
-        <t>Private encodings can be supported through the use of the S bit of
-        the header. When the S bit is set, the value of the MT field is left
-        to be defined and agreed upon by the users of the private encoding. An
-        option is defined in <xref target="sec_enc_opt"/> for more verbose
-        encoding descriptions than what can be described with the MT
-        field.</t>
+        <t>Private encodings can be using the S bit of the header. When the S
+        bit is set, the value of the MT field is left to be defined and agreed
+        upon by the users of the private encoding. An option is defined in
+        <xref target="sec_enc_opt"/> for more verbose encoding descriptions
+        than what can be described with the MT field.</t>
 
         <t>Implementation MAY support multiple encoding methods per
         subscription. When bundled notifications are supported between the
@@ -483,7 +519,7 @@
           <t>Variable-length data: 0 or more octets of TLV Value.</t>
         </list></t>
 
-      <t>When more than one option are used in the UDP-notif header, options
+      <t>When more than one option is used in the UDP-notif header, options
       MUST be ordered by the Type value. Messages with unordered options MAY
       be dropped by the Receiver.</t>
 
@@ -493,7 +529,7 @@
         encodings such as CBOR may not require more space than what is left,
         more voluminous encodings such as JSON and XML may suffer from this
         size limitation. Although IPv4 and IPv6 publishers can fragment
-        outgoing packets exceeding their Maximum Transmission Unit(MTU),
+        outgoing packets exceeding their Maximum Transmission Unit (MTU),
         fragmented IP packets may not be desired for operational and
         performance reasons.</t>
 
@@ -512,8 +548,13 @@
         </figure>
 
         <t>The Segmentation Option is to be included when the message content
+<<<<<<< HEAD
+        is segmented into multiple segments. Different segments of one message
+        share the same Message-ID. An illustration is provided in <xref
+=======
         is segmented into multiple pieces. Different segments of one message
         share the same Message ID. An illustration is provided in <xref
+>>>>>>> 5f8e89db1efc997f9dc0038fc908aca2ce59a992
         target="fig_frag_option"/>. The fields of this TLV are:</t>
 
         <t><list style="symbols">
@@ -582,7 +623,7 @@
     </section>
 
     <section anchor="sec_applicability" title="Applicability">
-      <t>In this section, we provide an applicability statement for the
+      <t>In this section we provide an applicability statement for the
       proposed mechanism, following the recommendations of <xref
       target="RFC8085"/>.</t>
 
@@ -1154,9 +1195,14 @@ module ietf-udp-notif-transport {
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
+<<<<<<< HEAD
+      <t>This document describes several new registries, the URIs from IETF
+      XML Registry and the registration of a two new YANG module name.</t>
+=======
       <t>This document describes a number of new registries, the URIs from
       IETF XML Registry and the registration of a two new YANG module
       names.</t>
+>>>>>>> 5f8e89db1efc997f9dc0038fc908aca2ce59a992
 
       <section title="IANA registries">
         <t>This document is creating 3 registries called "UDP-notif media
@@ -1290,7 +1336,7 @@ XML: N/A; the requested URI is an XML namespace.]]></artwork>
 
       <section title="YANG module name">
         <t>This document also requests a two new YANG module names in the
-        <xref target="RFC7950">YANG Module Names registry</xref> with the
+        <xref target="RFC8342">YANG Module Names registry</xref> with the
         following suggestions:</t>
 
         <t><figure>
@@ -1324,7 +1370,7 @@ reference: RFC-to-be]]></artwork>
       </section>
 
       <section anchor="OpenSourceReceiver"
-               title="Open Source Reveiver Library">
+               title="Open Source Receiver Library">
         <t>INSA Lyon implemented this document for a YANG Push receiver as a
         library.</t>
 
@@ -1333,7 +1379,7 @@ reference: RFC-to-be]]></artwork>
       </section>
 
       <section anchor="pmacct" title="Pmacct Data Collection">
-        <t>The open source YANG push reveiver library has been integrated into
+        <t>The open source YANG push receiver library has been integrated into
         the Pmacct open source Network Telemetry data collection.</t>
       </section>
 
@@ -1376,13 +1422,13 @@ reference: RFC-to-be]]></artwork>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7950.xml"?>
-
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
 
@@ -1406,6 +1452,8 @@ reference: RFC-to-be]]></artwork>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7923.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7951.xml"?>
 
