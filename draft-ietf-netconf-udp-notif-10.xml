@@ -170,12 +170,12 @@
       </address>
     </author>
 
-    <date day="29" month="May" year="2023"/>
+    <date day="30" month="May" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
     <abstract>
-      <t>This document describes an UDP-based protocol for sending YANG
+      <t>This document describes a UDP-based protocol for YANG
       notifications to collect data from networking devices. A shim header is
       proposed to facilitate the data streaming directly from the publishing
       process on network processor of line cards to receivers. The objective
