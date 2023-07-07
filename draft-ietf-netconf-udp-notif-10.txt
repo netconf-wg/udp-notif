@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 30 November 2023                                        T. Graf
+Expires: 8 January 2024                                          T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                             29 May 2023
+                                                             7 July 2023
 
 
             UDP-based Transport for Configured Subscriptions
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 1]
+Zheng, et al.            Expires 8 January 2024                 [Page 1]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
-   This Internet-Draft will expire on 30 November 2023.
+   This Internet-Draft will expire on 8 January 2024.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 2]
+Zheng, et al.            Expires 8 January 2024                 [Page 2]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
      9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  24
@@ -165,9 +165,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 3]
+Zheng, et al.            Expires 8 January 2024                 [Page 3]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    What is needed is a mechanism that allows for directly publishing
@@ -221,9 +221,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 4]
+Zheng, et al.            Expires 8 January 2024                 [Page 4]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    delay.  All the subscription state notifications, as defined in
@@ -277,9 +277,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 5]
+Zheng, et al.            Expires 8 January 2024                 [Page 5]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
       0                   1                   2                   3
@@ -333,9 +333,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 6]
+Zheng, et al.            Expires 8 January 2024                 [Page 6]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
       Observation Domain ID and the Message ID field described below.
@@ -389,9 +389,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 7]
+Zheng, et al.            Expires 8 January 2024                 [Page 7]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
 4.  Options
@@ -445,9 +445,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 8]
+Zheng, et al.            Expires 8 January 2024                 [Page 8]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    The Segmentation Option is to be included when the message content is
@@ -501,9 +501,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023                [Page 9]
+Zheng, et al.            Expires 8 January 2024                 [Page 9]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    *  Type: Generic option field which indicates a Private Encoding
@@ -557,9 +557,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 10]
+Zheng, et al.            Expires 8 January 2024                [Page 10]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    Burst mitigation through packet pacing is RECOMMENDED.  Disabling
@@ -613,9 +613,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 11]
+Zheng, et al.            Expires 8 January 2024                [Page 11]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    The DTLS 1.3 protocol [RFC9147] is designed to meet the requirements
@@ -669,9 +669,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 12]
+Zheng, et al.            Expires 8 January 2024                [Page 12]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
 6.1.2.  Publish Data
@@ -725,9 +725,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 13]
+Zheng, et al.            Expires 8 January 2024                [Page 13]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
 7.  A YANG Data Model for Management of UDP-Notif
@@ -781,9 +781,9 @@ module: ietf-udp-client
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 14]
+Zheng, et al.            Expires 8 January 2024                [Page 14]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
        |  +-- raw-public-keys! {server-auth-raw-public-key}?
@@ -837,9 +837,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 15]
+Zheng, et al.            Expires 8 January 2024                [Page 15]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
      contact
@@ -893,9 +893,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 16]
+Zheng, et al.            Expires 8 January 2024                [Page 16]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
      grouping udp-client-grouping {
@@ -949,9 +949,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 17]
+Zheng, et al.            Expires 8 January 2024                [Page 17]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
   module: ietf-udp-notif-transport
@@ -1005,9 +1005,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 18]
+Zheng, et al.            Expires 8 January 2024                [Page 18]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
 7.3.  YANG Module
@@ -1061,9 +1061,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 19]
+Zheng, et al.            Expires 8 January 2024                [Page 19]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
                   <mailto:paolo@ntt.net>";
@@ -1117,9 +1117,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 20]
+Zheng, et al.            Expires 8 January 2024                [Page 20]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
      identity encode-cbor {
@@ -1173,9 +1173,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 21]
+Zheng, et al.            Expires 8 January 2024                [Page 21]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    }
@@ -1229,9 +1229,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 22]
+Zheng, et al.            Expires 8 January 2024                [Page 22]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
      Value: 0
@@ -1285,9 +1285,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 23]
+Zheng, et al.            Expires 8 January 2024                [Page 23]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    name: ietf-udp-client
@@ -1341,9 +1341,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 24]
+Zheng, et al.            Expires 8 January 2024                [Page 24]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    of udp-notif using DTLS is presented in Section 6.
@@ -1397,9 +1397,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 25]
+Zheng, et al.            Expires 8 January 2024                [Page 25]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
@@ -1453,9 +1453,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 26]
+Zheng, et al.            Expires 8 January 2024                [Page 26]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    [RFC9254]  Veillette, M., Ed., Petrov, I., Ed., Pelov, A., Bormann,
@@ -1509,9 +1509,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 27]
+Zheng, et al.            Expires 8 January 2024                [Page 27]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    [RFC7951]  Lhotka, L., "JSON Encoding of Data Modeled with YANG",
@@ -1565,9 +1565,9 @@ A.1.  Configuration for UDP-notif transport with DTLS disabled
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 28]
+Zheng, et al.            Expires 8 January 2024                [Page 28]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -1621,9 +1621,9 @@ A.2.  Configuration for UDP-notif transport with DTLS enabled
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 29]
+Zheng, et al.            Expires 8 January 2024                [Page 29]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -1677,9 +1677,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 30]
+Zheng, et al.            Expires 8 January 2024                [Page 30]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
                    <target-kdf>12345</target-kdf>
@@ -1733,9 +1733,9 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 31]
+Zheng, et al.            Expires 8 January 2024                [Page 31]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
                    <max-wait>30</max-wait>
@@ -1789,9 +1789,9 @@ A.3.  YANG Push message with UDP-notif transport protocol
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 32]
+Zheng, et al.            Expires 8 January 2024                [Page 32]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
       0                   1                   2                   3
@@ -1845,9 +1845,9 @@ Authors' Addresses
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 33]
+Zheng, et al.            Expires 8 January 2024                [Page 33]
 
-Internet-Draft               unyte-udp-notif                    May 2023
+Internet-Draft               unyte-udp-notif                   July 2023
 
 
    Pierre Francois
@@ -1901,4 +1901,4 @@ Internet-Draft               unyte-udp-notif                    May 2023
 
 
 
-Zheng, et al.           Expires 30 November 2023               [Page 34]
+Zheng, et al.            Expires 8 January 2024                [Page 34]
