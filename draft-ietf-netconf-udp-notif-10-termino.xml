@@ -344,7 +344,7 @@
  +-----+-+-------+---------------+-------------------------------+
  | Ver |S|  MT   |  Header Len   |      Message Length           |
  +-----+-+-------+---------------+-------------------------------+
- |                    Observation Domain ID                      |
+ |                        Publisher ID                           |
  +---------------------------------------------------------------+
  |                         Message ID                            |
  +---------------------------------------------------------------+
@@ -387,7 +387,7 @@
             UDP datagram, measured in octets, including the message
             header.</t>
 
-            <t>Observation Domain ID is a 32-bit identifier defined in <xref
+            <t>Publisher ID is the 32-bit identifier defined in <xref
             target="I-D.ietf-netconf-distributed-notif"/>. <!-- of the Observation
             Domain that led to the production of the notification message, as
             defined in <xref target="I-D.ietf-netconf-distributed-notif"/>. -->
@@ -395,14 +395,14 @@
             the exporter process of the node allowing the disambiguation of an
             information source. <!-- , such as the identification of different line
             cards sending the notification messages. --> Message unicity is
-            obtained from the conjonction of the Observation Domain ID and the
+            obtained from the conjonction of the Pubisher ID and the
             Message ID field described below. <!-- If Observation Domain ID unicity is preserved through the collection domain, it SHOULD be used
             to identify the information source, notably to reconstruct segmented messages using the segmentation option.-->
-            If Observation Domain ID unicity is not preserved through the
+            If Publisher ID unicity is not preserved through the
             collection domain, the source IP address of the UDP datagram
-            SHOULD be used in addition to the Observation Domain ID to
+            SHOULD be used in addition to the Publisher ID to
             identify the information source. If a transport layer relay is
-            used, Observation Domain ID unicity must be preserved through the
+            used, Publisher ID unicity must be preserved through the
             collection domain.</t>
 
             <!--The source IP address of the UDP datagrams SHOULD NOT be
@@ -414,19 +414,18 @@
             unicity of the Message ID field described below.</t>-->
 
             <t>The Message ID is generated continuously by the publisher of
-            UDP-Notif messages. A publisher MUST use different Message ID
-            values for different messages generated with the same Observation
-            Domain ID. Note that the main purpose of the Message ID is to
-            reconstruct messages which were segmented using the segmentation
-            option described in section <xref target="sec_fragmentation"/>.
-            The Message ID values SHOULD be incremented by one for each
-            successive message originated with the same Observation Domain ID,
-            so that message loss can be detected. Furthermore, incrementing
-            the Message ID by one allows for a large amount of time to happen
-            before the Message ID's are reused due to wrapping around.
-            Different subscribers MAY share the same Message ID sequence.</t>
+            UDP-Notif messages. A publisher using a given Publisher ID MUST use different
+            Message ID values for different messages it generates. Note that the main
+            purpose of the Message ID is to reconstruct messages which were segmented using
+            the segmentation option described in section <xref
+            target="sec_fragmentation"/>.  The Message ID values SHOULD be incremented by
+            one for each successive message originated with the same Publisher ID,
+            so that message loss can be detected. Furthermore, incrementing the Message ID
+            by one allows for a large amount of time to happen before the Message ID's are
+            reused due to wrapping around.  Different subscribers MAY share the same
+            Message ID sequence.</t>
 
-            <t>Options is a variable-length field in the TLV format. When the
+                <t>Options is a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
             fixed header, Options TLVs follow directly after the fixed message
             header (i.e., Message ID). The details of the options are
@@ -1673,7 +1672,7 @@ rmat</public-key-format>
  +-----+-+-------+---------------+-------------------------------+
  |Ver=1|0|  MT=1 | Header_Len=12 |      Message_Length=230       |
  +-----+-+-------+---------------+-------------------------------+
- |                   Observation Domain ID=2                     |
+ |                       Publisher ID=2                          |
  +---------------------------------------------------------------+
  |                      Message ID=1563                          |
  +---------------------------------------------------------------+
