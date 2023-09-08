@@ -535,11 +535,10 @@ Internet-Draft               unyte-udp-notif              September 2023
    size guidelines, reliability considerations and security
    considerations.
 
-   The proposed mechanism's main use case at a network operator is for
-   collecting statistical metrics for accounting purposes where
-   potential loss is not a concern.  Such metrics are typically
-   subscribed in a periodical subscription as described in Section 3.1
-   of [RFC8641].
+   The main use case of the proposed mechanism is the collection of
+   statistical metrics for accounting purposes, where potential loss is
+   not a concern.  Such metrics are typically exported in a periodical
+   subscription as describing in Section 3.1 of [RFC8641].
 
 5.1.  Congestion Control
 
@@ -549,11 +548,12 @@ Internet-Draft               unyte-udp-notif              September 2023
    As per [RFC8085], such applications MAY choose not to implement any
    form of congestion control, but follow the following principles.
 
-
-
-
-
-
+   It is NOT RECOMMENDED to use the proposed mechanism over congestion-
+   sensitive network paths.  The only environments where UDP-Notif is
+   expected to be used are managed networks.  The deployments require
+   that the network path has been explicitly provisioned to handle the
+   traffic through traffic engineering mechanisms, such as rate limiting
+   or capacity reservations.
 
 
 
@@ -561,13 +561,6 @@ Zheng, et al.             Expires 12 March 2024                [Page 10]
 
 Internet-Draft               unyte-udp-notif              September 2023
 
-
-   It is NOT RECOMMENDED to use the proposed mechanism over congestion-
-   sensitive network paths.  The only environments where UDP-Notif is
-   expected to be used are managed networks.  The deployments require
-   that the network path has been explicitly provisioned to handle the
-   traffic through traffic engineering mechanisms, such as rate limiting
-   or capacity reservations.
 
    Implementation of the proposal SHOULD NOT push unlimited amounts of
    traffic by default, and SHOULD require the users to explicitly
@@ -610,6 +603,13 @@ Internet-Draft               unyte-udp-notif              September 2023
    discarding packets that were received, but cannot be re-assembled as
    a complete message within a given amount of time.  This time SHOULD
    be configurable.
+
+
+
+
+
+
+
 
 
 

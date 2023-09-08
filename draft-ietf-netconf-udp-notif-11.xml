@@ -592,10 +592,10 @@
       message size guidelines, reliability considerations and security
       considerations.</t>
 
-      <t>The proposed mechanism's main use case at a network operator is for
-      collecting statistical metrics for accounting purposes where potential
-      loss is not a concern. Such metrics are typically subscribed in a
-      periodical subscription as described in Section 3.1 of <xref
+      <t>The main use case of the proposed mechanism is the collection of
+      statistical metrics for accounting purposes, where potential loss is not
+      a concern. Such metrics are typically exported in a periodical
+      subscription as describing in Section 3.1 of <xref
       target="RFC8641"/>.</t>
 
       <section anchor="sec_congestion_control" title="Congestion Control">
