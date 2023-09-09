@@ -287,7 +287,7 @@ Internet-Draft               unyte-udp-notif              September 2023
      +-----+-+-------+---------------+-------------------------------+
      | Ver |S|  MT   |  Header Len   |      Message Length           |
      +-----+-+-------+---------------+-------------------------------+
-     |                    Observation Domain ID                      |
+     |                     Message Publisher ID                      |
      +---------------------------------------------------------------+
      |                         Message ID                            |
      +---------------------------------------------------------------+
@@ -325,11 +325,11 @@ Internet-Draft               unyte-udp-notif              September 2023
    *  Message Length is the total length of the message within one UDP
       datagram, measured in octets, including the message header.
 
-   *  Observation Domain ID is a 32-bit identifier defined in
+   *  Message Publisher ID is a 32-bit identifier defined in
       [I-D.ietf-netconf-distributed-notif].  This identifier is unique
-      within the publisher node and identifies the exporter process of
-      the node allowing the disambiguation of an information source.
-      Message unicity is obtained from the conjonction of the
+      to the publisher node and identifies the publishing process of the
+      node to allow the disambiguation of an information source.
+      Message unicity is obtained from the conjunction of the Message
 
 
 
@@ -338,22 +338,22 @@ Zheng, et al.             Expires 12 March 2024                 [Page 6]
 Internet-Draft               unyte-udp-notif              September 2023
 
 
-      Observation Domain ID and the Message ID field described below.
-      If Observation Domain ID unicity is not preserved through the
-      collection domain, the source IP address of the UDP datagram
-      SHOULD be used in addition to the Observation Domain ID to
-      identify the information source.  If a transport layer relay is
-      used, Observation Domain ID unicity must be preserved through the
-      collection domain.
+      Publisher ID and the Message ID field described below.  If Message
+      Publisher ID unicity is not preserved through the collection
+      domain, the source IP address of the UDP datagram SHOULD be used
+      in addition to the Message Publisher ID to identify the
+      information source.  If a transport layer relay is used, Message
+      Publisher ID unicity must be preserved through the collection
+      domain.
 
    *  The Message ID is generated continuously by the publisher of UDP-
       Notif messages.  A publisher MUST use different Message ID values
-      for different messages generated with the same Observation Domain
+      for different messages generated with the same Message Publisher
       ID.  Note that the main purpose of the Message ID is to
       reconstruct messages which were segmented using the segmentation
       option described in section Section 4.1.  The Message ID values
       SHOULD be incremented by one for each successive message
-      originated with the same Observation Domain ID, so that message
+      originated with the same Message Publisher ID, so that message
       loss can be detected.  Furthermore, incrementing the Message ID by
       one allows for a large amount of time to happen before the Message
       ID's are reused due to wrapping around.  Different subscribers MAY
@@ -1799,7 +1799,7 @@ Internet-Draft               unyte-udp-notif              September 2023
      +-----+-+-------+---------------+-------------------------------+
      |Ver=1|0|  MT=1 | Header_Len=12 |      Message_Length=230       |
      +-----+-+-------+---------------+-------------------------------+
-     |                   Observation Domain ID=2                     |
+     |                   Message Publisher ID=2                      |
      +---------------------------------------------------------------+
      |                      Message ID=1563                          |
      +---------------------------------------------------------------+

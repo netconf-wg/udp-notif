@@ -344,7 +344,7 @@
  +-----+-+-------+---------------+-------------------------------+
  | Ver |S|  MT   |  Header Len   |      Message Length           |
  +-----+-+-------+---------------+-------------------------------+
- |                    Observation Domain ID                      |
+ |                     Message Publisher ID                      |
  +---------------------------------------------------------------+
  |                         Message ID                            |
  +---------------------------------------------------------------+
@@ -387,40 +387,27 @@
             UDP datagram, measured in octets, including the message
             header.</t>
 
-            <t>Observation Domain ID is a 32-bit identifier defined in <xref
-            target="I-D.ietf-netconf-distributed-notif"/>. <!-- of the Observation
-            Domain that led to the production of the notification message, as
-            defined in <xref target="I-D.ietf-netconf-distributed-notif"/>. -->
-            This identifier is unique within the publisher node and identifies
-            the exporter process of the node allowing the disambiguation of an
-            information source. <!-- , such as the identification of different line
-            cards sending the notification messages. --> Message unicity is
-            obtained from the conjonction of the Observation Domain ID and the
-            Message ID field described below. <!-- If Observation Domain ID unicity is preserved through the collection domain, it SHOULD be used
-            to identify the information source, notably to reconstruct segmented messages using the segmentation option.-->
-            If Observation Domain ID unicity is not preserved through the
-            collection domain, the source IP address of the UDP datagram
-            SHOULD be used in addition to the Observation Domain ID to
-            identify the information source. If a transport layer relay is
-            used, Observation Domain ID unicity must be preserved through the
-            collection domain.</t>
-
-            <!--The source IP address of the UDP datagrams SHOULD NOT be
-            interpreted as the identifier for the host that originated the
-            UDP-Notif message. Indeed, the streamer sending the UDP-Notif
-            message could be a relay for the actual source of data carried
-            within UDP-Notif messages. Note that if a relay is used,
-            Observation Domain ID unicity MUST be preserved in order to ensure
-            unicity of the Message ID field described below.</t>-->
+            <t>Message Publisher ID is a 32-bit identifier defined in <xref
+            target="I-D.ietf-netconf-distributed-notif"/>. This identifier is
+            unique to the publisher node and identifies the publishing process
+            of the node to allow the disambiguation of an information source.
+            Message unicity is obtained from the conjunction of the Message
+            Publisher ID and the Message ID field described below. If Message
+            Publisher ID unicity is not preserved through the collection
+            domain, the source IP address of the UDP datagram SHOULD be used
+            in addition to the Message Publisher ID to identify the
+            information source. If a transport layer relay is used, Message
+            Publisher ID unicity must be preserved through the collection
+            domain.</t>
 
             <t>The Message ID is generated continuously by the publisher of
             UDP-Notif messages. A publisher MUST use different Message ID
-            values for different messages generated with the same Observation
-            Domain ID. Note that the main purpose of the Message ID is to
+            values for different messages generated with the same Message
+            Publisher ID. Note that the main purpose of the Message ID is to
             reconstruct messages which were segmented using the segmentation
             option described in section <xref target="sec_fragmentation"/>.
             The Message ID values SHOULD be incremented by one for each
-            successive message originated with the same Observation Domain ID,
+            successive message originated with the same Message Publisher ID,
             so that message loss can be detected. Furthermore, incrementing
             the Message ID by one allows for a large amount of time to happen
             before the Message ID's are reused due to wrapping around.
@@ -1679,7 +1666,7 @@ rmat</public-key-format>
  +-----+-+-------+---------------+-------------------------------+
  |Ver=1|0|  MT=1 | Header_Len=12 |      Message_Length=230       |
  +-----+-+-------+---------------+-------------------------------+
- |                   Observation Domain ID=2                     |
+ |                   Message Publisher ID=2                      |
  +---------------------------------------------------------------+
  |                      Message ID=1563                          |
  +---------------------------------------------------------------+
