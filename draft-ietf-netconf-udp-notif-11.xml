@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="09" month="September" year="2023"/>
+    <date day="12" month="September" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -581,9 +581,10 @@
 
       <t>The main use case of the proposed mechanism is the collection of
       statistical metrics for accounting purposes, where potential loss is not
-      a concern. Such metrics are typically exported in a periodical
-      subscription as describing in Section 3.1 of <xref
-      target="RFC8641"/>.</t>
+      a concern, but should however be reported (such as IPFIX Flow Records
+      exported with UDP <xref target="RFC7011"/>). Such metrics are typically
+      exported in a periodical subscription as described in Section 3.1 of
+      <xref target="RFC8641"/>.</t>
 
       <section anchor="sec_congestion_control" title="Congestion Control">
         <t>The proposed application falls into the category of applications
@@ -1397,6 +1398,8 @@ reference: RFC-to-be]]></artwork>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
+
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7011.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7923.xml"?>
 
