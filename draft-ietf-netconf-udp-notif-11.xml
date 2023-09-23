@@ -176,7 +176,7 @@
 
     <abstract>
       <t>This document describes a UDP-based protocol for YANG notifications
-      to collect data from networking devices. A shim header is proposed to
+      to collect data from network nodes. A shim header is proposed to
       facilitate the data streaming directly from the publishing process on
       network processor of line cards to receivers. The objective is to
       provide a lightweight approach to enable higher frequency and less
@@ -211,10 +211,10 @@
 
       <t>While powerful in their features and general in their architecture,
       the currently available transport mechanisms need to be complemented to
-      support data publications at high velocity from devices that feature a
-      distributed architecture. The currently available transports are based
-      on TCP and lack the efficiency needed to continuously send notifications
-      at high velocity.</t>
+      support data publications at high velocity from network nodes that
+      feature a distributed architecture. The currently available transports
+      are based on TCP and lack the efficiency needed to continuously send
+      notifications at high velocity.</t>
 
       <t>This document specifies a transport option for Sub-Notif that
       leverages UDP. Specifically, it facilitates the distributed data
@@ -238,7 +238,7 @@
           <t>Firstly, a UDP approach reduces the burden of maintaining a large
           amount of active TCP connections at the receiver, notably in cases
           where it collects data from network processors on line cards from a
-          large amount of networking devices.</t>
+          large amount of network nodes.</t>
 
           <t>Secondly, as no connection state needs to be maintained, UDP
           encapsulation can be easily implemented by the hardware of the
@@ -276,12 +276,12 @@
       messages to the corresponding receivers.</t>
 
       <t>Note that receivers MAY NOT be already up and running when the
-      configuration of the subscription takes effect on the monitored device.
-      The first message MUST be a separate subscription-started notification
-      to indicate the Receiver that the stream has started flowing. Then, the
-      notifications can be sent immediately without delay. All the
-      subscription state notifications, as defined in Section 2.7 of <xref
-      target="RFC8639"/>, MUST be encapsulated in separate notification
+      configuration of the subscription takes effect on the monitored network
+      node. The first message MUST be a separate subscription-started
+      notification to indicate the Receiver that the stream has started
+      flowing. Then, the notifications can be sent immediately without delay.
+      All the subscription state notifications, as defined in Section 2.7 of
+      <xref target="RFC8639"/>, MUST be encapsulated in separate notification
       messages.</t>
     </section>
 
@@ -360,8 +360,8 @@
 
         <t><list style="symbols">
             <t>Ver indicates the UDP-notif protocol header version. The values
-            are allocated by the IANA registry "UDP-notif header version".
-            The current header version number is 1.</t>
+            are allocated by the IANA registry "UDP-notif header version". The
+            current header version number is 1.</t>
 
             <t>S represents the space of media type specified in the MT field.
             When S is unset, MT represents the standard media types as defined
@@ -386,11 +386,11 @@
 
             <t>Message Length is the total length of the UDP-notif message
             within one UDP datagram, measured in octets, including the message
-            header. When the Notification Message is segmented using the 
+            header. When the Notification Message is segmented using the
             Segmentation Options defined in <xref target="sec_fragmentation"/>
-            the Message Length remains the total length of the UDP-notif message 
-            within one single UDP datagram and not the total length of the not yet
-            segmented Notification Message.</t>
+            the Message Length remains the total length of the UDP-notif
+            message within one single UDP datagram and not the total length of
+            the not yet segmented Notification Message.</t>
 
             <t>Message Publisher ID is a 32-bit identifier defined in <xref
             target="I-D.ietf-netconf-distributed-notif"/>. This identifier is
@@ -617,9 +617,9 @@
         <t>Applications SHOULD monitor packet losses and provide means to the
         user for retrieving information on such losses. The UDP-Notif Message
         ID can be used to deduce congestion based on packet loss detection.
-        Hence the receiver can notify the device to use a lower streaming
-        rate. The interaction to control the streaming rate on the device is
-        out of the scope of this document.</t>
+        Hence the receiver can notify the Publisher to use a lower streaming
+        rate. The interaction to control the streaming rate on the Publisher
+        is out of the scope of this document.</t>
       </section>
 
       <section anchor="sec_message_size" title="Message Size">
@@ -632,16 +632,6 @@
       </section>
 
       <section anchor="sec_reliability" title="Reliability">
-        <t>The target application for UDP-Notif is the collection of
-        data-plane information. The lack of reliability of the data streaming
-        mechanism is thus considered acceptable as the mechanism is to be used
-        in controlled environments, mitigating the risk of information loss,
-        while allowing for publication of very large amounts of data.
-        Moreover, in this context, sporadic events when incomplete data
-        collection is provided is not critical for the proper management of
-        the network, as information collected for the devices through the
-        means of the proposed mechanism is to be often refreshed.</t>
-
         <t>A receiver implementation for this protocol SHOULD deal with
         potential loss of packets carrying a part of segmented payload, by
         discarding packets that were received, but cannot be re-assembled as a
@@ -677,8 +667,8 @@
           of service countermeasures defined by DTLS 1.3 if a given deployment
           can ensure that DoS attacks are not a concern. When these
           countermeasures are used, the Receiver responds with a DTLS
-          HelloRetryRequest containing a stateless cookie. The Publisher 
-          sends a second DTLS ClientHello message containing the received cookie.
+          HelloRetryRequest containing a stateless cookie. The Publisher sends
+          a second DTLS ClientHello message containing the received cookie.
           Details can be found in Section 5.1 of <xref target="RFC9147"/>.</t>
 
           <t>When DTLS is implemented, the Publisher MUST NOT send any
@@ -696,8 +686,8 @@
           authentication algorithms.</t>
 
           <t>Where confidentiality protection with DTLS is required,
-          implementations must negotiate a cipher suite that employs a non-NULL
-          encryption algorithm.</t>
+          implementations must negotiate a cipher suite that employs a
+          non-NULL encryption algorithm.</t>
         </section>
 
         <section title="Publish Data">
@@ -1390,6 +1380,7 @@ reference: RFC-to-be]]></artwork>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
+
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netconf-tls-client-server-29.xml"?>
 
       <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
