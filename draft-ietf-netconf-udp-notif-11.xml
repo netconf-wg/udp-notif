@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="13" month="September" year="2023"/>
+    <date day="26" month="September" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -388,9 +388,9 @@
             within one UDP datagram, measured in octets, including the message
             header. When the Notification Message is segmented using the
             Segmentation Options defined in <xref target="sec_fragmentation"/>
-            the Message Length remains the total length of the UDP-notif
-            message within one single UDP datagram and not the total length of
-            the not yet segmented Notification Message.</t>
+            the Message Length is the total length of the current, segmented 
+            UDP-notif message, not the length of the entire Notification 
+            message.</t>
 
             <t>Message Publisher ID is a 32-bit identifier defined in <xref
             target="I-D.ietf-netconf-distributed-notif"/>. This identifier is
