@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="26" month="September" year="2023"/>
+    <date day="29" month="September" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -523,9 +523,9 @@
             message is the value of the current Segment Number + 1.</t>
           </list></t>
 
-        <t>An implementation of this specification MUST NOT rely on IP
+        <t>An implementation of this specification SHOULD NOT rely on IP
         fragmentation by default to carry large messages. An implementation of
-        this specification MUST either restrict the size of individual
+        this specification SHOULD either restrict the size of individual
         messages carried over this protocol, or support the segmentation
         option.</t>
 
