@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-netconf-udp-notif-10"
+<rfc category="std" docName="draft-ietf-netconf-udp-notif-12"
      ipr="trust200902">
   <front>
     <title abbrev="unyte-udp-notif">UDP-based Transport for Configured
@@ -170,16 +170,16 @@
       </address>
     </author>
 
-    <date day="30" month="May" year="2023"/>
+    <date day="4" month="December" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
     <abstract>
-      <t>This document describes a UDP-based protocol for YANG
-      notifications to collect data from networking devices. A shim header is
-      proposed to facilitate the data streaming directly from the publishing
-      process on network processor of line cards to receivers. The objective
-      is to provide a lightweight approach to enable higher frequency and less
+      <t>This document describes a UDP-based protocol for YANG notifications
+      to collect data from network nodes. A shim header is proposed to
+      facilitate the data streaming directly from the publishing process on
+      network processor of line cards to receivers. The objective is to
+      provide a lightweight approach to enable higher frequency and less
       performance impact on publisher and receiver processes compared to
       already established notification mechanisms.</t>
     </abstract>
@@ -211,10 +211,10 @@
 
       <t>While powerful in their features and general in their architecture,
       the currently available transport mechanisms need to be complemented to
-      support data publications at high velocity from devices that feature a
-      distributed architecture. The currently available transports are based
-      on TCP and lack the efficiency needed to continuously send notifications
-      at high velocity.</t>
+      support data publications at high velocity from network nodes that
+      feature a distributed architecture. The currently available transports
+      are based on TCP and lack the efficiency needed to continuously send
+      notifications at high velocity.</t>
 
       <t>This document specifies a transport option for Sub-Notif that
       leverages UDP. Specifically, it facilitates the distributed data
@@ -238,7 +238,7 @@
           <t>Firstly, a UDP approach reduces the burden of maintaining a large
           amount of active TCP connections at the receiver, notably in cases
           where it collects data from network processors on line cards from a
-          large amount of networking devices.</t>
+          large amount of network nodes.</t>
 
           <t>Secondly, as no connection state needs to be maintained, UDP
           encapsulation can be easily implemented by the hardware of the
@@ -276,12 +276,12 @@
       messages to the corresponding receivers.</t>
 
       <t>Note that receivers MAY NOT be already up and running when the
-      configuration of the subscription takes effect on the monitored device.
-      The first message MUST be a separate subscription-started notification
-      to indicate the Receiver that the stream has started flowing. Then, the
-      notifications can be sent immediately without delay. All the
-      subscription state notifications, as defined in Section 2.7 of <xref
-      target="RFC8639"/>, MUST be encapsulated in separate notification
+      configuration of the subscription takes effect on the monitored network
+      node. The first message MUST be a separate subscription-started
+      notification to indicate the Receiver that the stream has started
+      flowing. Then, the notifications can be sent immediately without delay.
+      All the subscription state notifications, as defined in Section 2.7 of
+      <xref target="RFC8639"/>, MUST be encapsulated in separate notification
       messages.</t>
     </section>
 
@@ -344,7 +344,7 @@
  +-----+-+-------+---------------+-------------------------------+
  | Ver |S|  MT   |  Header Len   |      Message Length           |
  +-----+-+-------+---------------+-------------------------------+
- |                        Publisher ID                           |
+ |                     Message Publisher ID                      |
  +---------------------------------------------------------------+
  |                         Message ID                            |
  +---------------------------------------------------------------+
@@ -359,8 +359,9 @@
         <t>The Message Header contains the following field:</t>
 
         <t><list style="symbols">
-            <t>Ver represents the PDU (Protocol Data Unit) encoding version.
-            The current version value is 1.</t>
+            <t>Ver indicates the UDP-notif protocol header version. The values
+            are allocated by the IANA registry "UDP-notif header version". The
+            current header version number is 1.</t>
 
             <t>S represents the space of media type specified in the MT field.
             When S is unset, MT represents the standard media types as defined
@@ -383,49 +384,41 @@
             <t>Header Len is the length of the message header in octets,
             including both the fixed header and the options.</t>
 
-            <t>Message Length is the total length of the message within one
-            UDP datagram, measured in octets, including the message
-            header.</t>
+            <t>Message Length is the total length of the UDP-notif message
+            within one UDP datagram, measured in octets, including the message
+            header. When the Notification Message is segmented using the
+            Segmentation Options defined in <xref target="sec_fragmentation"/>
+            the Message Length is the total length of the current, segmented 
+            UDP-notif message, not the length of the entire Notification 
+            message.</t>
 
-            <t>Publisher ID is the 32-bit identifier defined in <xref
-            target="I-D.ietf-netconf-distributed-notif"/>. <!-- of the Observation
-            Domain that led to the production of the notification message, as
-            defined in <xref target="I-D.ietf-netconf-distributed-notif"/>. -->
-            This identifier is unique within the publisher node and identifies
-            the exporter process of the node allowing the disambiguation of an
-            information source. <!-- , such as the identification of different line
-            cards sending the notification messages. --> Message unicity is
-            obtained from the conjonction of the Pubisher ID and the
-            Message ID field described below. <!-- If Observation Domain ID unicity is preserved through the collection domain, it SHOULD be used
-            to identify the information source, notably to reconstruct segmented messages using the segmentation option.-->
-            If Publisher ID unicity is not preserved through the
-            collection domain, the source IP address of the UDP datagram
-            SHOULD be used in addition to the Publisher ID to
-            identify the information source. If a transport layer relay is
-            used, Publisher ID unicity must be preserved through the
-            collection domain.</t>
-
-            <!--The source IP address of the UDP datagrams SHOULD NOT be
-            interpreted as the identifier for the host that originated the
-            UDP-Notif message. Indeed, the streamer sending the UDP-Notif
-            message could be a relay for the actual source of data carried
-            within UDP-Notif messages. Note that if a relay is used,
-            Observation Domain ID unicity MUST be preserved in order to ensure
-            unicity of the Message ID field described below.</t>-->
+            <t>Message Publisher ID is a 32-bit identifier defined in <xref
+            target="I-D.ietf-netconf-distributed-notif"/>. This identifier is
+            unique to the publisher node and identifies the publishing process
+            of the node to allow the disambiguation of an information source.
+            Message unicity is obtained from the conjunction of the Message
+            Publisher ID and the Message ID field described below. If Message
+            Publisher ID unicity is not preserved through the collection
+            domain, the source IP address of the UDP datagram SHOULD be used
+            in addition to the Message Publisher ID to identify the
+            information source. If a transport layer relay is used, Message
+            Publisher ID unicity must be preserved through the collection
+            domain.</t>
 
             <t>The Message ID is generated continuously by the publisher of
-            UDP-Notif messages. A publisher using a given Publisher ID MUST use different
-            Message ID values for different messages it generates. Note that the main
-            purpose of the Message ID is to reconstruct messages which were segmented using
-            the segmentation option described in section <xref
-            target="sec_fragmentation"/>.  The Message ID values SHOULD be incremented by
-            one for each successive message originated with the same Publisher ID,
-            so that message loss can be detected. Furthermore, incrementing the Message ID
-            by one allows for a large amount of time to happen before the Message ID's are
-            reused due to wrapping around.  Different subscribers MAY share the same
-            Message ID sequence.</t>
+            UDP-Notif messages. A publisher MUST use different Message ID
+            values for different messages generated with the same Message
+            Publisher ID. Note that the main purpose of the Message ID is to
+            reconstruct messages which were segmented using the segmentation
+            option described in section <xref target="sec_fragmentation"/>.
+            The Message ID values SHOULD be incremented by one for each
+            successive message originated with the same Message Publisher ID,
+            so that message loss can be detected. Furthermore, incrementing
+            the Message ID by one allows for a large amount of time to happen
+            before the Message ID's are reused due to wrapping around.
+            Different subscribers MAY share the same Message ID sequence.</t>
 
-                <t>Options is a variable-length field in the TLV format. When the
+            <t>Options is a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
             fixed header, Options TLVs follow directly after the fixed message
             header (i.e., Message ID). The details of the options are
@@ -530,9 +523,9 @@
             message is the value of the current Segment Number + 1.</t>
           </list></t>
 
-        <t>An implementation of this specification MUST NOT rely on IP
+        <t>An implementation of this specification SHOULD NOT rely on IP
         fragmentation by default to carry large messages. An implementation of
-        this specification MUST either restrict the size of individual
+        this specification SHOULD either restrict the size of individual
         messages carried over this protocol, or support the segmentation
         option.</t>
 
@@ -591,6 +584,13 @@
       message size guidelines, reliability considerations and security
       considerations.</t>
 
+      <t>The main use case of the proposed mechanism is the collection of
+      statistical metrics for accounting purposes, where potential loss is not
+      a concern, but should however be reported (such as IPFIX Flow Records
+      exported with UDP <xref target="RFC7011"/>). Such metrics are typically
+      exported in a periodical subscription as described in Section 3.1 of
+      <xref target="RFC8641"/>.</t>
+
       <section anchor="sec_congestion_control" title="Congestion Control">
         <t>The proposed application falls into the category of applications
         performing transfer of large amounts of data. It is expected that the
@@ -617,9 +617,9 @@
         <t>Applications SHOULD monitor packet losses and provide means to the
         user for retrieving information on such losses. The UDP-Notif Message
         ID can be used to deduce congestion based on packet loss detection.
-        Hence the receiver can notify the device to use a lower streaming
-        rate. The interaction to control the streaming rate on the device is
-        out of the scope of this document.</t>
+        Hence the receiver can notify the Publisher to use a lower streaming
+        rate. The interaction to control the streaming rate on the Publisher
+        is out of the scope of this document.</t>
       </section>
 
       <section anchor="sec_message_size" title="Message Size">
@@ -632,16 +632,6 @@
       </section>
 
       <section anchor="sec_reliability" title="Reliability">
-        <t>The target application for UDP-Notif is the collection of
-        data-plane information. The lack of reliability of the data streaming
-        mechanism is thus considered acceptable as the mechanism is to be used
-        in controlled environments, mitigating the risk of information loss,
-        while allowing for publication of very large amounts of data.
-        Moreover, in this context, sporadic events when incomplete data
-        collection is provided is not critical for the proper management of
-        the network, as information collected for the devices through the
-        means of the proposed mechanism is to be often refreshed.</t>
-
         <t>A receiver implementation for this protocol SHOULD deal with
         potential loss of packets carrying a part of segmented payload, by
         discarding packets that were received, but cannot be re-assembled as a
@@ -651,17 +641,16 @@
     </section>
 
     <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-notif">
-      <t>In open or unsecured networks, UDP-notif messages MUST be secured or
+      <t>In unsecured networks, UDP-notif messages MUST be secured or
       encrypted. In this section, a mechanism using DTLS 1.3 to secure
       UDP-notif protocol is presented. The following sections defines the
       requirements for the implementation of the secured layer of DTLS for
-      UDP-notif. No DTLS 1.3 extensions are defined nor needed.</t>
+      UDP-notif. No DTLS 1.3 extensions are defined in this document.</t>
 
       <t>The DTLS 1.3 protocol <xref target="RFC9147"/> is designed to meet
       the requirements of applications that need to secure datagram transport.
       Implementations using DTLS to secure UDP-notif messages MUST use DTLS
-      1.3 protocol as defined in <xref target="RFC9147"/> without any new
-      extensions.</t>
+      1.3 protocol as defined in <xref target="RFC9147"/>.</t>
 
       <t>When this security layer is used, the Publisher MUST always be a DTLS
       client, and the Receiver MUST always be a DTLS server. The Receivers
@@ -675,11 +664,12 @@
         <section title="DTLS Session Initiation">
           <t>The Publisher initiates a DTLS connection by sending a DTLS
           ClientHello to the Receiver. Implementations MAY support the denial
-          of service countermeasures defined by DTLS 1.3. When these
+          of service countermeasures defined by DTLS 1.3 if a given deployment
+          can ensure that DoS attacks are not a concern. When these
           countermeasures are used, the Receiver responds with a DTLS
-          HelloRetryRequest containing a stateless cookie. The Publisher MUST
-          send a new DTLS ClientHello message containing the received cookie,
-          which initiates the DTLS handshake.</t>
+          HelloRetryRequest containing a stateless cookie. The Publisher sends
+          a second DTLS ClientHello message containing the received cookie.
+          Details can be found in Section 5.1 of <xref target="RFC9147"/>.</t>
 
           <t>When DTLS is implemented, the Publisher MUST NOT send any
           UDP-notif messages before the DTLS handshake has successfully
@@ -695,10 +685,9 @@
           NOT negotiate a cipher suite that employs NULL integrity or
           authentication algorithms.</t>
 
-          <t>Where privacy is REQUIRED, then implementations must either
-          negotiate a cipher suite that employs a non-NULL encryption
-          algorithm or otherwise achieve privacy by other means, such as a
-          physically secured network.</t>
+          <t>Where confidentiality protection with DTLS is required,
+          implementations must negotiate a cipher suite that employs a
+          non-NULL encryption algorithm.</t>
         </section>
 
         <section title="Publish Data">
@@ -828,7 +817,7 @@ module: ietf-udp-client
           <t>The "ietf-udp-client" module defines a reusable
           "udp-client-grouping" grouping with the remote server IP address,
           remote port and a DTLS container to configure DTLS1.3 when DTLS
-          encription is supported. When configuring the DTLS layer, the
+          encryption is supported. When configuring the DTLS layer, the
           grouping uses "tls-client-grouping" defined in <xref
           target="I-D.ietf-netconf-tls-client-server"/> to add DTLS 1.3
           parameters.</t>
@@ -1348,7 +1337,7 @@ reference: RFC-to-be]]></artwork>
       designed to be used in controlled environments, as defined in <xref
       target="RFC8085"/> also known as "limited domains", as defined in <xref
       target="RFC8799"/>. Thus, a security layer is not necessary required.
-      Nevertheless, a DTLS layer MUST be implemented in open or unsecured
+      Nevertheless, a DTLS layer MUST be implemented in unsecured
       networks. A specification of udp-notif using DTLS is presented in <xref
       target="sec_dtls_udp_notif"/>.</t>
     </section>
@@ -1356,9 +1345,9 @@ reference: RFC-to-be]]></artwork>
     <section anchor="Acknowledgements" title="Acknowledgements">
       <t>The authors of this documents would like to thank Alexander Clemm,
       Benoit Claise, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh
-      Jethanandani, Marco Tollini, Rob Wilton, Sean Turner, Stephane Frenot,
-      Timothy Carey, Tim Jenkins, Tom Petch and Yunan Gu for their
-      constructive suggestions for improving this document.</t>
+      Jethanandani, Marco Tollini, Hannes Tschofenig, Michael Tuxen, Rob Wilton,
+      Sean Turner, Stephane Frenot, Timothy Carey, Tim Jenkins, Tom Petch and
+      Yunan Gu for their constructive suggestions for improving this document.</t>
     </section>
   </middle>
 
@@ -1390,6 +1379,8 @@ reference: RFC-to-be]]></artwork>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
 
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
+
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netconf-tls-client-server-29.xml"?>
 
       <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
@@ -1404,6 +1395,8 @@ reference: RFC-to-be]]></artwork>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
 
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7011.xml"?>
+
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7923.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7951.xml"?>
@@ -1415,8 +1408,6 @@ reference: RFC-to-be]]></artwork>
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml"?>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8799.xml"?>
-
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
 
       <reference anchor="INSA-Lyon-Publisher"
                  target="https://github.com/network-analytics/udp-notif-scapy">
@@ -1672,7 +1663,7 @@ rmat</public-key-format>
  +-----+-+-------+---------------+-------------------------------+
  |Ver=1|0|  MT=1 | Header_Len=12 |      Message_Length=230       |
  +-----+-+-------+---------------+-------------------------------+
- |                       Publisher ID=2                          |
+ |                   Message Publisher ID=2                      |
  +---------------------------------------------------------------+
  |                      Message ID=1563                          |
  +---------------------------------------------------------------+
