@@ -95,17 +95,17 @@ Table of Contents
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  13
        6.1.3.  Session termination . . . . . . . . . . . . . . . . .  13
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  14
-     7.1.  Generic grouping for UDP-based applications . . . . . . .  14
-       7.1.1.  YANG Tree . . . . . . . . . . . . . . . . . . . . . .  14
-       7.1.2.  YANG Module . . . . . . . . . . . . . . . . . . . . .  15
-     7.2.  YANG to configure UDP-notif . . . . . . . . . . . . . . .  18
-     7.3.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  20
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  23
-     8.1.  IANA registries . . . . . . . . . . . . . . . . . . . . .  23
-     8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  24
-     8.3.  YANG module name  . . . . . . . . . . . . . . . . . . . .  24
-   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  25
-     9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  25
+     7.1.  YANG to configure UDP-notif . . . . . . . . . . . . . . .  14
+     7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  16
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
+     8.1.  IANA registries . . . . . . . . . . . . . . . . . . . . .  19
+     8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  21
+     8.3.  YANG module name  . . . . . . . . . . . . . . . . . . . .  21
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  21
+     9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  21
+     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  22
+     9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  22
+     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  22
 
 
 
@@ -114,21 +114,18 @@ Zheng, et al.              Expires 6 June 2024                  [Page 2]
 Internet-Draft               unyte-udp-notif               December 2023
 
 
-     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  25
-     9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  25
-     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  25
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  25
-   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  26
-   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  26
-     12.1.  Normative References . . . . . . . . . . . . . . . . . .  26
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  28
-   Appendix A.  UDP-notif Examples . . . . . . . . . . . . . . . . .  29
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  22
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  22
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  22
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  24
+   Appendix A.  UDP-notif Examples . . . . . . . . . . . . . . . . .  26
      A.1.  Configuration for UDP-notif transport with DTLS
-           disabled  . . . . . . . . . . . . . . . . . . . . . . . .  29
+           disabled  . . . . . . . . . . . . . . . . . . . . . . . .  26
      A.2.  Configuration for UDP-notif transport with DTLS
-           enabled . . . . . . . . . . . . . . . . . . . . . . . . .  30
-     A.3.  YANG Push message with UDP-notif transport protocol . . .  33
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  34
+           enabled . . . . . . . . . . . . . . . . . . . . . . . . .  27
+     A.3.  YANG Push message with UDP-notif transport protocol . . .  30
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  31
 
 1.  Introduction
 
@@ -162,6 +159,9 @@ Internet-Draft               unyte-udp-notif               December 2023
    stream.  The centralized data collection mechanism can result in a
    performance bottleneck, especially when large amounts of data are
    involved.
+
+
+
 
 
 
@@ -745,229 +745,9 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 7.  A YANG Data Model for Management of UDP-Notif
 
-7.1.  Generic grouping for UDP-based applications
+7.1.  YANG to configure UDP-notif
 
-   The "ietf-udp-client" module defines a generic "grouping" to
-   configure a UDP client.
-
-7.1.1.  YANG Tree
-
-   The following tree diagram [RFC8340] illustrates the "udp-client-
-   grouping" grouping:
-
-module: ietf-udp-client
-
-  grouping udp-client-grouping:
-    +-- remote-address    inet:ip-address-no-zone
-    +-- remote-port       inet:port-number
-    +-- dtls! {dtls13}?
-       +-- client-identity!
-       |  +-- (auth-type)
-       |     +--:(certificate) {client-ident-x509-cert}?
-       |     |  +-- certificate
-       |     |        ...
-       |     +--:(raw-public-key) {client-ident-raw-public-key}?
-       |     |  +-- raw-private-key
-       |     |        ...
-       |     +--:(tls12-psk)
-       |     |        {client-ident-tls12-psk,not tlsc:client-ident-tls12-psk}?
-       |     |  +-- tls12-psk
-       |     |        ...
-       |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
-       |        +-- tls13-epsk
-       |              ...
-       +-- server-authentication
-       |  +-- ca-certs! {server-auth-x509-cert}?
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 14]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
-       |  |  +-- (local-or-truststore)
-       |  |     +--:(local) {local-definitions-supported}?
-       |  |     |     ...
-       |  |     +--:(truststore)
-       |  |              {central-truststore-supported,certificates}?
-       |  |           ...
-       |  +-- ee-certs! {server-auth-x509-cert}?
-       |  |  +-- (local-or-truststore)
-       |  |     +--:(local) {local-definitions-supported}?
-       |  |     |     ...
-       |  |     +--:(truststore)
-       |  |              {central-truststore-supported,certificates}?
-       |  |           ...
-       |  +-- raw-public-keys! {server-auth-raw-public-key}?
-       |  |  +-- (local-or-truststore)
-       |  |     +--:(local) {local-definitions-supported}?
-       |  |     |     ...
-       |  |     +--:(truststore)
-       |  |              {central-truststore-supported,public-keys}?
-       |  |           ...
-       |  +-- tls12-psks?        empty
-       |  |       {server-auth-tls12-psk,not tlsc:server-auth-tls12-psk}?
-       |  +-- tls13-epsks?       empty {server-auth-tls13-epsk}?
-       +-- hello-params {tlscmn:hello-params}?
-       |  +-- tls-versions
-       |  |  +-- tls-version*   identityref
-       |  +-- cipher-suites
-       |     +-- cipher-suite*   identityref
-       +-- keepalives {tls-client-keepalives}?
-          +-- peer-allowed-to-send?   empty
-          +-- test-peer-aliveness!
-             +-- max-wait?       uint16
-             +-- max-attempts?   uint8
-
-7.1.2.  YANG Module
-
-   The "ietf-udp-client" module defines a reusable "udp-client-grouping"
-   grouping with the remote server IP address, remote port and a DTLS
-   container to configure DTLS1.3 when DTLS encryption is supported.
-   When configuring the DTLS layer, the grouping uses "tls-client-
-   grouping" defined in [I-D.ietf-netconf-tls-client-server] to add DTLS
-   1.3 parameters.
-
-
-
-
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 15]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
-   <CODE BEGINS> file "ietf-udp-client@2023-05-08.yang"
-   module ietf-udp-client {
-     yang-version 1.1;
-     namespace
-       "urn:ietf:params:xml:ns:yang:ietf-udp-client";
-     prefix udpc;
-     import ietf-inet-types {
-       prefix inet;
-       reference
-         "RFC 6991: Common YANG Data Types";
-     }
-     import ietf-tls-client {
-       prefix tlsc;
-       reference
-         "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
-     }
-
-     organization "IETF NETCONF (Network Configuration) Working Group";
-     contact
-       "WG Web:   <http:/tools.ietf.org/wg/netconf/>
-        WG List:  <mailto:netconf@ietf.org>
-
-        Authors:  Alex Huang Feng
-                  <mailto:alex.huang-feng@insa-lyon.fr>
-                  Pierre Francois
-                  <mailto:pierre.francois@insa-lyon.fr>
-                  Guangying Zheng
-                  <mailto:zhengguangying@huawei.com>
-                  Tianran Zhou
-                  <mailto:zhoutianran@huawei.com>
-                  Thomas Graf
-                  <mailto:thomas.graf@swisscom.com>
-                  Paolo Lucente
-                  <mailto:paolo@ntt.net>";
-
-     description
-       "Defines a generic grouping for UDP-based client applications.
-
-       Copyright (c) 2023 IETF Trust and the persons identified as
-       authors of the code.  All rights reserved.
-
-       Redistribution and use in source and binary forms, with or without
-       modification, is permitted pursuant to, and subject to the license
-       terms contained in, the Revised BSD License set forth in Section
-       4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
-       (https://trustee.ietf.org/license-info).
-
-       This version of this YANG module is part of RFC-to-be; see the RFC
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 16]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
-       itself for full legal notices.";
-
-     revision 2023-05-08 {
-       description
-         "Initial revision";
-       reference
-         "RFC-to-be: UDP-based Transport for Configured Subscriptions";
-     }
-
-    /*
-     * FEATURES
-     */
-     feature dtls13 {
-       description
-         "This feature indicates that DTLS 1.3 encryption of UDP
-          packets is supported.";
-     }
-
-     grouping udp-client-grouping {
-       description
-         "Provides a reusable grouping for configuring a UDP client.";
-
-       leaf remote-address {
-         type inet:ip-address-no-zone;
-         mandatory true;
-         description
-           "IP address of the UDP client, which can be an
-           IPv4 address or an IPV6 address.";
-       }
-
-       leaf remote-port {
-         type inet:port-number;
-         mandatory true;
-         description
-           "Port number of the UDP client.";
-       }
-
-       container dtls {
-         if-feature dtls13;
-         presence dtls;
-         uses tlsc:tls-client-grouping {
-           // Using tls-client-grouping without TLS1.2 parameters
-           // allowing only DTLS 1.3
-           refine "client-identity/auth-type/tls12-psk" {
-             // create the logical impossibility of enabling TLS1.2
-             if-feature "not tlsc:client-ident-tls12-psk";
-           }
-           refine "server-authentication/tls12-psks" {
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 17]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
-             // create the logical impossibility of enabling TLS1.2
-             if-feature "not tlsc:server-auth-tls12-psk";
-           }
-         }
-         description
-           "Container for configuring DTLS 1.3 parameters.";
-       }
-     }
-   }
-   <CODE ENDS>
-
-7.2.  YANG to configure UDP-notif
-
-   The YANG model described in Section 7.3 defines a new receiver
+   The YANG model described in Section 7.2 defines a new receiver
    instance for UDP-notif transport.  When this transport is used, four
    new leaves and a dtls container allow configuring UDP-notif receiver
    parameters.
@@ -1001,11 +781,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 18]
+Zheng, et al.              Expires 6 June 2024                 [Page 14]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1061,21 +837,23 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 19]
+Zheng, et al.              Expires 6 June 2024                 [Page 15]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
 
-7.3.  YANG Module
+7.2.  YANG Module
 
    This YANG module is used to configure, on a publisher, a receiver
    willing to consume notification messages.  This module augments the
    "ietf-subscribed-notif-receivers" module to define a UDP-notif
    transport receiver.  The grouping "udp-notif-receiver-grouping"
    defines the necessary parameters to configure the transport defined
-   in this document using the generic "udp-client-grouping" grouping.
+   in this document using the generic "udp-client-grouping" grouping
+   from the "ietf-udp-client" module and the "tls-client-grouping"
+   defined in the "ietf-tls-client" module.
 
-   <CODE BEGINS> file "ietf-udp-notif-transport@2023-05-08.yang"
+   <CODE BEGINS> file "ietf-udp-notif-transport@2023-12-05.yang"
    module ietf-udp-notif-transport {
      yang-version 1.1;
      namespace
@@ -1095,7 +873,12 @@ Internet-Draft               unyte-udp-notif               December 2023
      import ietf-udp-client {
        prefix udpc;
        reference
-         "RFC-to-be: UDP-based Transport for Configured Subscriptions";
+         "RFC ZZZZ: YANG Grouping for UDP Clients and UDP Servers";
+     }
+     import ietf-tls-client {
+       prefix tlsc;
+       reference
+         "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
      }
 
      organization "IETF NETCONF (Network Configuration) Working Group";
@@ -1107,6 +890,14 @@ Internet-Draft               unyte-udp-notif               December 2023
                   <mailto:zhengguangying@huawei.com>
                   Tianran Zhou
                   <mailto:zhoutianran@huawei.com>
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 16]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
                   Thomas Graf
                   <mailto:thomas.graf@swisscom.com>
                   Pierre Francois
@@ -1114,14 +905,6 @@ Internet-Draft               unyte-udp-notif               December 2023
                   Alex Huang Feng
                   <mailto:alex.huang-feng@insa-lyon.fr>
                   Paolo Lucente
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 20]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
                   <mailto:paolo@ntt.net>";
 
      description
@@ -1140,7 +923,7 @@ Internet-Draft               unyte-udp-notif               December 2023
        This version of this YANG module is part of RFC-to-be; see the RFC
        itself for full legal notices.";
 
-     revision 2023-05-08 {
+     revision 2023-12-05 {
        description
          "Initial revision";
        reference
@@ -1155,9 +938,22 @@ Internet-Draft               unyte-udp-notif               December 2023
          "This feature indicates that CBOR encoding of notification
           messages is supported.";
      }
+     feature dtls13 {
+       description
+         "This feature indicates that DTLS 1.3 encryption of UDP
+          packets is supported.";
+     }
      feature segmentation {
        description
          "This feature indicates segmentation of notification messages
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 17]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
          is supported.";
      }
 
@@ -1170,13 +966,6 @@ Internet-Draft               unyte-udp-notif               December 2023
          "UDP-Notif is used as transport for notification messages
            and state change notifications.";
      }
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 21]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
      identity encode-cbor {
        base sn:encoding;
@@ -1193,7 +982,34 @@ Internet-Draft               unyte-udp-notif               December 2023
 
        uses udpc:udp-client-grouping;
 
+       container dtls {
+         if-feature dtls13;
+         presence dtls;
+         uses tlsc:tls-client-grouping {
+           // Using tls-client-grouping without TLS1.2 parameters
+           // allowing only DTLS 1.3
+           refine "client-identity/auth-type/tls12-psk" {
+             // create the logical impossibility of enabling TLS1.2
+             if-feature "not tlsc:client-ident-tls12-psk";
+           }
+           refine "server-authentication/tls12-psks" {
+             // create the logical impossibility of enabling TLS1.2
+             if-feature "not tlsc:server-auth-tls12-psk";
+           }
+         }
+         description
+           "Container for configuring DTLS 1.3 parameters.";
+       }
+
        leaf enable-segmentation {
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 18]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
          if-feature segmentation;
          type boolean;
          default false;
@@ -1226,14 +1042,6 @@ Internet-Draft               unyte-udp-notif               December 2023
          "Augment the transport-type choice to include the 'udp-notif'
           transport.";
      }
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 22]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
    }
    <CODE ENDS>
 
@@ -1250,6 +1058,13 @@ Internet-Draft               unyte-udp-notif               December 2023
    is made using the Standards Action process defined in [RFC8126].
 
    The first requested registry is the following:
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 19]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
      Registry Name: UDP-notif media types
      Registry Category: UDP-notif protocol.
@@ -1283,13 +1098,6 @@ Internet-Draft               unyte-udp-notif               December 2023
 
    These are the initial registrations for "UDP-notif options types":
 
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 23]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
      Value: 0
      Description: Reserved
      Reference: RFC-to-be
@@ -1303,6 +1111,16 @@ Internet-Draft               unyte-udp-notif               December 2023
      Reference: RFC-to-be
 
    The third requested registry is the following:
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 20]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
      Registry Name: UDP-notif header version
      Registry Category: UDP-notif protocol.
@@ -1324,10 +1142,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    IANA is also requested to assign a two new URI from the IETF XML
    Registry [RFC3688].  The following two URIs are suggested:
 
-   URI: urn:ietf:params:xml:ns:yang:ietf-udp-client
-   Registrant Contact: The IESG.
-   XML: N/A; the requested URI is an XML namespace.
-
    URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
    Registrant Contact: The IESG.
    XML: N/A; the requested URI is an XML namespace.
@@ -1336,20 +1150,6 @@ Internet-Draft               unyte-udp-notif               December 2023
 
    This document also requests a two new YANG module names in the YANG
    Module Names registry [RFC8342] with the following suggestions:
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 24]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
-   name: ietf-udp-client
-   namespace: urn:ietf:params:xml:ns:yang:ietf-udp-client
-   prefix: udpc
-   reference: RFC-to-be
 
    name: ietf-udp-notif
    namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
@@ -1366,6 +1166,17 @@ Internet-Draft               unyte-udp-notif               December 2023
    example implementation.
 
    The open source code can be obtained here: [INSA-Lyon-Publisher].
+
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 21]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
 9.2.  Open Source Receiver Library
 
@@ -1394,14 +1205,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    known as "limited domains", as defined in [RFC8799].  Thus, a
    security layer is not necessary required.  Nevertheless, a DTLS layer
    MUST be implemented in unsecured networks.  A specification of udp-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 25]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
    notif using DTLS is presented in Section 6.
 
 11.  Acknowledgements
@@ -1416,6 +1219,20 @@ Internet-Draft               unyte-udp-notif               December 2023
 12.  References
 
 12.1.  Normative References
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 22]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
@@ -1448,16 +1265,6 @@ Internet-Draft               unyte-udp-notif               December 2023
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
 
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 26]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
@@ -1475,6 +1282,13 @@ Internet-Draft               unyte-udp-notif               December 2023
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
               <https://www.rfc-editor.org/info/rfc8126>.
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 23]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -1505,15 +1319,6 @@ Internet-Draft               unyte-udp-notif               December 2023
               Datastores over RESTCONF", RFC 8650, DOI 10.17487/RFC8650,
               November 2019, <https://www.rfc-editor.org/info/rfc8650>.
 
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 27]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
    [RFC9147]  Rescorla, E., Tschofenig, H., and N. Modadugu, "The
               Datagram Transport Layer Security (DTLS) Protocol Version
               1.3", RFC 9147, DOI 10.17487/RFC9147, April 2022,
@@ -1533,6 +1338,13 @@ Internet-Draft               unyte-udp-notif               December 2023
               Internet-Draft, draft-ahuang-netconf-notif-yang-03, 20
               October 2023, <https://datatracker.ietf.org/doc/html/
               draft-ahuang-netconf-notif-yang-03>.
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 24]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
    [I-D.ietf-netconf-notification-messages]
               Voit, E., Jenkins, T., Birkholz, H., Bierman, A., and A.
@@ -1560,16 +1372,6 @@ Internet-Draft               unyte-udp-notif               December 2023
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 28]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
    [RFC7011]  Claise, B., Ed., Trammell, B., Ed., and P. Aitken,
               "Specification of the IP Flow Information Export (IPFIX)
               Protocol for the Exchange of Flow Information", STD 77,
@@ -1592,6 +1394,13 @@ Internet-Draft               unyte-udp-notif               December 2023
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 25]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
    [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
               for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
@@ -1621,7 +1430,30 @@ A.1.  Configuration for UDP-notif transport with DTLS disabled
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 29]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 26]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1677,7 +1509,7 @@ A.2.  Configuration for UDP-notif transport with DTLS enabled
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 30]
+Zheng, et al.              Expires 6 June 2024                 [Page 27]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1733,7 +1565,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 31]
+Zheng, et al.              Expires 6 June 2024                 [Page 28]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1789,7 +1621,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 32]
+Zheng, et al.              Expires 6 June 2024                 [Page 29]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1845,7 +1677,7 @@ A.3.  YANG Push message with UDP-notif transport protocol
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 33]
+Zheng, et al.              Expires 6 June 2024                 [Page 30]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1901,7 +1733,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 34]
+Zheng, et al.              Expires 6 June 2024                 [Page 31]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1957,4 +1789,4 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 35]
+Zheng, et al.              Expires 6 June 2024                 [Page 32]

@@ -752,196 +752,6 @@
     </section>
 
     <section title="A YANG Data Model for Management of UDP-Notif">
-      <section title="Generic grouping for UDP-based applications">
-        <t>The "ietf-udp-client" module defines a generic "grouping" to
-        configure a UDP client.</t>
-
-        <section title="YANG Tree">
-          <t>The following tree diagram <xref target="RFC8340"/> illustrates
-          the "udp-client-grouping" grouping:</t>
-
-          <t><figure>
-              <artwork><![CDATA[
-module: ietf-udp-client
-
-  grouping udp-client-grouping:
-    +-- remote-address    inet:ip-address-no-zone
-    +-- remote-port       inet:port-number
-    +-- dtls! {dtls13}?
-       +-- client-identity!
-       |  +-- (auth-type)
-       |     +--:(certificate) {client-ident-x509-cert}?
-       |     |  +-- certificate
-       |     |        ...
-       |     +--:(raw-public-key) {client-ident-raw-public-key}?
-       |     |  +-- raw-private-key
-       |     |        ...
-       |     +--:(tls12-psk)
-       |     |        {client-ident-tls12-psk,not tlsc:client-ident-tls12-psk}?
-       |     |  +-- tls12-psk
-       |     |        ...
-       |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
-       |        +-- tls13-epsk
-       |              ...
-       +-- server-authentication
-       |  +-- ca-certs! {server-auth-x509-cert}?
-       |  |  +-- (local-or-truststore)
-       |  |     +--:(local) {local-definitions-supported}?
-       |  |     |     ...
-       |  |     +--:(truststore)
-       |  |              {central-truststore-supported,certificates}?
-       |  |           ...
-       |  +-- ee-certs! {server-auth-x509-cert}?
-       |  |  +-- (local-or-truststore)
-       |  |     +--:(local) {local-definitions-supported}?
-       |  |     |     ...
-       |  |     +--:(truststore)
-       |  |              {central-truststore-supported,certificates}?
-       |  |           ...
-       |  +-- raw-public-keys! {server-auth-raw-public-key}?
-       |  |  +-- (local-or-truststore)
-       |  |     +--:(local) {local-definitions-supported}?
-       |  |     |     ...
-       |  |     +--:(truststore)
-       |  |              {central-truststore-supported,public-keys}?
-       |  |           ...
-       |  +-- tls12-psks?        empty
-       |  |       {server-auth-tls12-psk,not tlsc:server-auth-tls12-psk}?
-       |  +-- tls13-epsks?       empty {server-auth-tls13-epsk}?
-       +-- hello-params {tlscmn:hello-params}?
-       |  +-- tls-versions
-       |  |  +-- tls-version*   identityref
-       |  +-- cipher-suites
-       |     +-- cipher-suite*   identityref
-       +-- keepalives {tls-client-keepalives}?
-          +-- peer-allowed-to-send?   empty
-          +-- test-peer-aliveness!
-             +-- max-wait?       uint16
-             +-- max-attempts?   uint8
-          ]]></artwork>
-            </figure></t>
-        </section>
-
-        <section title="YANG Module">
-          <t>The "ietf-udp-client" module defines a reusable
-          "udp-client-grouping" grouping with the remote server IP address,
-          remote port and a DTLS container to configure DTLS1.3 when DTLS
-          encryption is supported. When configuring the DTLS layer, the
-          grouping uses "tls-client-grouping" defined in <xref
-          target="I-D.ietf-netconf-tls-client-server"/> to add DTLS 1.3
-          parameters.</t>
-
-          <t><figure>
-              <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-client@2023-05-08.yang"
-module ietf-udp-client {
-  yang-version 1.1;
-  namespace
-    "urn:ietf:params:xml:ns:yang:ietf-udp-client";
-  prefix udpc;
-  import ietf-inet-types {
-    prefix inet;
-    reference
-      "RFC 6991: Common YANG Data Types";
-  }
-  import ietf-tls-client {
-    prefix tlsc;
-    reference
-      "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
-  }
-
-  organization "IETF NETCONF (Network Configuration) Working Group";
-  contact
-    "WG Web:   <http:/tools.ietf.org/wg/netconf/>
-     WG List:  <mailto:netconf@ietf.org>
-
-     Authors:  Alex Huang Feng
-               <mailto:alex.huang-feng@insa-lyon.fr>
-               Pierre Francois
-               <mailto:pierre.francois@insa-lyon.fr>
-               Guangying Zheng
-               <mailto:zhengguangying@huawei.com>
-               Tianran Zhou
-               <mailto:zhoutianran@huawei.com>
-               Thomas Graf
-               <mailto:thomas.graf@swisscom.com>
-               Paolo Lucente
-               <mailto:paolo@ntt.net>";
-
-  description
-    "Defines a generic grouping for UDP-based client applications.
-
-    Copyright (c) 2023 IETF Trust and the persons identified as
-    authors of the code.  All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, is permitted pursuant to, and subject to the license
-    terms contained in, the Revised BSD License set forth in Section
-    4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
-    (https://trustee.ietf.org/license-info).
-
-    This version of this YANG module is part of RFC-to-be; see the RFC
-    itself for full legal notices.";
-
-  revision 2023-05-08 {
-    description
-      "Initial revision";
-    reference
-      "RFC-to-be: UDP-based Transport for Configured Subscriptions";
-  }
-
- /*
-  * FEATURES
-  */
-  feature dtls13 {
-    description
-      "This feature indicates that DTLS 1.3 encryption of UDP
-       packets is supported.";
-  }
-
-  grouping udp-client-grouping {
-    description
-      "Provides a reusable grouping for configuring a UDP client.";
-
-    leaf remote-address {
-      type inet:ip-address-no-zone;
-      mandatory true;
-      description
-        "IP address of the UDP client, which can be an
-        IPv4 address or an IPV6 address.";
-    }
-
-    leaf remote-port {
-      type inet:port-number;
-      mandatory true;
-      description
-        "Port number of the UDP client.";
-    }
-
-    container dtls {
-      if-feature dtls13;
-      presence dtls;
-      uses tlsc:tls-client-grouping {
-        // Using tls-client-grouping without TLS1.2 parameters
-        // allowing only DTLS 1.3
-        refine "client-identity/auth-type/tls12-psk" {
-          // create the logical impossibility of enabling TLS1.2
-          if-feature "not tlsc:client-ident-tls12-psk";
-        }
-        refine "server-authentication/tls12-psks" {
-          // create the logical impossibility of enabling TLS1.2
-          if-feature "not tlsc:server-auth-tls12-psk";
-        }
-      }
-      description 
-        "Container for configuring DTLS 1.3 parameters.";
-    }
-  }
-}
-<CODE ENDS>]]></artwork>
-            </figure></t>
-        </section>
-      </section>
 
       <section title="YANG to configure UDP-notif">
         <t>The YANG model described in <xref target="sec_yang_model"/> defines
@@ -1002,11 +812,13 @@ module: ietf-udp-notif-transport
         "ietf-subscribed-notif-receivers" module to define a UDP-notif
         transport receiver. The grouping "udp-notif-receiver-grouping" defines
         the necessary parameters to configure the transport defined in this
-        document using the generic "udp-client-grouping" grouping.</t>
+        document using the generic "udp-client-grouping" grouping from the 
+        "ietf-udp-client" module and the "tls-client-grouping" defined 
+        in the "ietf-tls-client" module.</t>
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2023-05-08.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2023-12-05.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -1026,7 +838,12 @@ module ietf-udp-notif-transport {
   import ietf-udp-client {
     prefix udpc;
     reference
-      "RFC-to-be: UDP-based Transport for Configured Subscriptions";
+      "RFC ZZZZ: YANG Grouping for UDP Clients and UDP Servers";
+  }
+  import ietf-tls-client {
+    prefix tlsc;
+    reference
+      "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
   }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
@@ -1063,7 +880,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2023-05-08 {
+  revision 2023-12-05 {
     description
       "Initial revision";
     reference
@@ -1077,6 +894,11 @@ module ietf-udp-notif-transport {
     description
       "This feature indicates that CBOR encoding of notification
        messages is supported.";
+  }
+  feature dtls13 {
+    description
+      "This feature indicates that DTLS 1.3 encryption of UDP
+       packets is supported.";
   }
   feature segmentation {
     description
@@ -1108,6 +930,25 @@ module ietf-udp-notif-transport {
       receiver.";
 
     uses udpc:udp-client-grouping;
+
+    container dtls {
+      if-feature dtls13;
+      presence dtls;
+      uses tlsc:tls-client-grouping {
+        // Using tls-client-grouping without TLS1.2 parameters
+        // allowing only DTLS 1.3
+        refine "client-identity/auth-type/tls12-psk" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:client-ident-tls12-psk";
+        }
+        refine "server-authentication/tls12-psks" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:server-auth-tls12-psk";
+        }
+      }
+      description 
+        "Container for configuring DTLS 1.3 parameters.";
+    }
 
     leaf enable-segmentation {
       if-feature segmentation;
@@ -1269,13 +1110,6 @@ module ietf-udp-notif-transport {
 
         <t><figure>
             <artwork align="left"><![CDATA[
-URI: urn:ietf:params:xml:ns:yang:ietf-udp-client
-Registrant Contact: The IESG.
-XML: N/A; the requested URI is an XML namespace.]]></artwork>
-          </figure></t>
-
-        <t><figure>
-            <artwork align="left"><![CDATA[
 URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
 Registrant Contact: The IESG.
 XML: N/A; the requested URI is an XML namespace.]]></artwork>
@@ -1286,14 +1120,6 @@ XML: N/A; the requested URI is an XML namespace.]]></artwork>
         <t>This document also requests a two new YANG module names in the
         <xref target="RFC8342">YANG Module Names registry</xref> with the
         following suggestions:</t>
-
-        <t><figure>
-            <artwork align="left"><![CDATA[
-name: ietf-udp-client
-namespace: urn:ietf:params:xml:ns:yang:ietf-udp-client
-prefix: udpc
-reference: RFC-to-be]]></artwork>
-          </figure></t>
 
         <t><figure>
             <artwork align="left"><![CDATA[
@@ -1395,6 +1221,8 @@ reference: RFC-to-be]]></artwork>
       <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-distributed-notif.xml"?>
+      TODO: Alex uncomment reference before submit
+      <!-- <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-udp-client-server.xml"?> -->
     </references>
 
     <references title="Informative References">
