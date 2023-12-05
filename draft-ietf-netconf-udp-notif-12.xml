@@ -514,7 +514,7 @@
 
             <t>Segment Number: 15-bit value indicating the sequence number of
             the current segment. The first segment of a segmented message has
-            a Segment Number value of 0.</t>
+            a Segment Number value of 0. The Segment Number cannot wrap around.</t>
 
             <t>L: is a flag to indicate whether the current segment is the
             last one of the message. When 0 is set, the current segment is not
@@ -533,6 +533,15 @@
         described mechanism, all the options MUST be present on the first
         segment ordered by the options Type. The rest of segmented messages
         MAY include all the options ordered by options type.</t>
+
+        <t>The receiver SHOULD support the reception of unordered segments.
+        When the receiver gets the last segment, set by the flag L, all segments
+        MUST be received before this last segment for reassembly. If one of the
+        segments is not present, the message MUST be dropped. TODO: Alex, check 
+        with Pfr and implementation?</t>
+
+        <t>The receiver SHOULD provide means to discard the received segments if
+        after some time one of the segments is still missing.</t>
       </section>
 
       <section anchor="sec_enc_opt" title="Private Encoding Option">
