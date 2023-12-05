@@ -366,7 +366,9 @@
             <t>S represents the space of media type specified in the MT field.
             When S is unset, MT represents the standard media types as defined
             in this document. When S is set, MT represents a private space to
-            be freely used for non standard encodings.</t>
+            be freely used for non standard encodings. When S is set, the 
+            Private Encoding Option defined in <xref target="sec_enc_opt"/>
+            SHOULD be present in the UDP-notif message header.</t>
 
             <t>MT is a 4 bit identifier to indicate the media type used for
             the Notification Message. 16 types of encoding can be expressed.
@@ -415,8 +417,10 @@
             successive message originated with the same Message Publisher ID,
             so that message loss can be detected. Furthermore, incrementing
             the Message ID by one allows for a large amount of time to happen
-            before the Message ID's are reused due to wrapping around.
-            Different subscribers MAY share the same Message ID sequence.</t>
+            before the Message ID's are reused due to wrapping around. When 
+            the last value of Message ID has been generated, the Message ID
+            wraps around and restarts at 0. Different subscribers MAY share
+            the same Message ID sequence.</t>
 
             <t>Options is a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the

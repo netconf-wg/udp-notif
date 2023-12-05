@@ -81,19 +81,19 @@ Table of Contents
    3.  UDP-Based Transport . . . . . . . . . . . . . . . . . . . . .   5
      3.1.  Design Overview . . . . . . . . . . . . . . . . . . . . .   5
      3.2.  Format of the UDP-Notif Message Header  . . . . . . . . .   5
-     3.3.  Data Encoding . . . . . . . . . . . . . . . . . . . . . .   7
+     3.3.  Data Encoding . . . . . . . . . . . . . . . . . . . . . .   8
    4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   8
+     4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   9
      4.2.  Private Encoding Option . . . . . . . . . . . . . . . . .  10
-   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  10
+   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  11
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  11
-     5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  11
+     5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  12
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  12
    6.  Secured layer for UDP-notif . . . . . . . . . . . . . . . . .  12
      6.1.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  12
-       6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  12
+       6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  13
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  13
-       6.1.3.  Session termination . . . . . . . . . . . . . . . . .  13
+       6.1.3.  Session termination . . . . . . . . . . . . . . . . .  14
    7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  14
      7.1.  YANG to configure UDP-notif . . . . . . . . . . . . . . .  14
      7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  16
@@ -306,7 +306,9 @@ Internet-Draft               unyte-udp-notif               December 2023
    *  S represents the space of media type specified in the MT field.
       When S is unset, MT represents the standard media types as defined
       in this document.  When S is set, MT represents a private space to
-      be freely used for non standard encodings.
+      be freely used for non standard encodings.  When S is set, the
+      Private Encoding Option defined in Section 4.2 SHOULD be present
+      in the UDP-notif message header.
 
    *  MT is a 4 bit identifier to indicate the media type used for the
       Notification Message. 16 types of encoding can be expressed.  When
@@ -323,12 +325,10 @@ Internet-Draft               unyte-udp-notif               December 2023
    *  Header Len is the length of the message header in octets,
       including both the fixed header and the options.
 
-   *  Message Length is the total length of the UDP-notif message within
-      one UDP datagram, measured in octets, including the message
-      header.  When the Notification Message is segmented using the
-      Segmentation Options defined in Section 4.1 the Message Length is
-      the total length of the current, segmented UDP-notif message, not
-      the length of the entire Notification message.
+
+
+
+
 
 
 
@@ -337,6 +337,13 @@ Zheng, et al.              Expires 6 June 2024                  [Page 6]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
+
+   *  Message Length is the total length of the UDP-notif message within
+      one UDP datagram, measured in octets, including the message
+      header.  When the Notification Message is segmented using the
+      Segmentation Options defined in Section 4.1 the Message Length is
+      the total length of the current, segmented UDP-notif message, not
+      the length of the entire Notification message.
 
    *  Message Publisher ID is a 32-bit identifier defined in
       [I-D.ietf-netconf-distributed-notif].  This identifier is unique
@@ -361,14 +368,30 @@ Internet-Draft               unyte-udp-notif               December 2023
       originated with the same Message Publisher ID, so that message
       loss can be detected.  Furthermore, incrementing the Message ID by
       one allows for a large amount of time to happen before the Message
-      ID's are reused due to wrapping around.  Different subscribers MAY
-      share the same Message ID sequence.
+      ID's are reused due to wrapping around.  When the last value of
+      Message ID has been generated, the Message ID wraps around and
+      restarts at 0.  Different subscribers MAY share the same Message
+      ID sequence.
 
    *  Options is a variable-length field in the TLV format.  When the
       Header Length is larger than 12 octets, which is the length of the
       fixed header, Options TLVs follow directly after the fixed message
       header (i.e., Message ID).  The details of the options are
       described in Section 4.
+
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                  [Page 7]
+
+Internet-Draft               unyte-udp-notif               December 2023
 
 
 3.3.  Data Encoding
@@ -384,15 +407,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    agreed upon by the users of the private encoding.  An option is
    defined in Section 4.2 for more verbose encoding descriptions than
    what can be described with the MT field.
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                  [Page 7]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
    Implementation MAY support multiple encoding methods per
    subscription.  When bundled notifications are supported between the
@@ -423,6 +437,19 @@ Internet-Draft               unyte-udp-notif               December 2023
    MUST be ordered by the Type value.  Messages with unordered options
    MAY be dropped by the Receiver.
 
+
+
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                  [Page 8]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
 4.1.  Segmentation Option
 
    The UDP payload length is limited to 65535.  Application level
@@ -437,18 +464,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    Consequently, implementations of the mechanism SHOULD provide a
    configurable max-segment-size option to control the maximum size of a
    payload.
-
-
-
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                  [Page 8]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -480,6 +495,17 @@ Internet-Draft               unyte-udp-notif               December 2023
       meaning that the total number of segments used to transport this
       message is the value of the current Segment Number + 1.
 
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                  [Page 9]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
    An implementation of this specification SHOULD NOT rely on IP
    fragmentation by default to carry large messages.  An implementation
    of this specification SHOULD either restrict the size of individual
@@ -496,15 +522,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    segments MUST be received before this last segment for reassembly.
    If one of the segments is not present, the message MUST be dropped.
    TODO: Alex, check with Pfr and implementation?
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                  [Page 9]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
    The receiver SHOULD provide means to discard the received segments if
    after some time one of the segments is still missing.
@@ -538,6 +555,13 @@ Internet-Draft               unyte-udp-notif               December 2023
    as providing a private encoding description for standard encodings is
    meaningless.
 
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 10]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
 5.  Applicability
 
    In this section, we provide an applicability statement for the
@@ -552,15 +576,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    following, we discuss recommendations on congestion control, message
    size guidelines, reliability considerations and security
    considerations.
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 10]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
    The main use case of the proposed mechanism is the collection of
    statistical metrics for accounting purposes, where potential loss is
@@ -595,6 +610,14 @@ Internet-Draft               unyte-udp-notif               December 2023
    Applications SHOULD monitor packet losses and provide means to the
    user for retrieving information on such losses.  The UDP-Notif
    Message ID can be used to deduce congestion based on packet loss
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 11]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
    detection.  Hence the receiver can notify the Publisher to use a
    lower streaming rate.  The interaction to control the streaming rate
    on the Publisher is out of the scope of this document.
@@ -607,16 +630,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    segmentation of the UDP Notif message content without relying on IP
    fragmentation.  Implementation of the current specification SHOULD
    allow for the configuration of the MTU.
-
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 11]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
 5.3.  Reliability
 
@@ -649,6 +662,18 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 6.1.  Session lifecycle
 
+
+
+
+
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 12]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
 6.1.1.  DTLS Session Initiation
 
    The Publisher initiates a DTLS connection by sending a DTLS
@@ -664,15 +689,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    messages before the DTLS handshake has successfully completed.  Early
    data mechanism (also known as 0-RTT data) as defined in [RFC9147]
    MUST NOT be used.
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 12]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
    Implementations of this security layer MUST support DTLS 1.3
    [RFC9147] and MUST support the mandatory to implement cipher suite
@@ -706,6 +722,14 @@ Internet-Draft               unyte-udp-notif               December 2023
 
    DIGIT = %d48 / NONZERO-DIGIT
 
+
+
+
+Zheng, et al.              Expires 6 June 2024                 [Page 13]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
+
    UDP-NOTIF-MSG is defined in Section 3.
 
    The Publisher SHOULD attempt to avoid IP fragmentation by using the
@@ -720,15 +744,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    close_notify alert and simply close the DTLS connection.  Once the
    Receiver gets a close_notify from the Publisher, it MUST reply with a
    close_notify.
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 13]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
 
    When no data is received from a DTLS connection for a long time, the
    Receiver MAY close the connection.  Implementations SHOULD set the
@@ -751,21 +766,6 @@ Internet-Draft               unyte-udp-notif               December 2023
    instance for UDP-notif transport.  When this transport is used, four
    new leaves and a dtls container allow configuring UDP-notif receiver
    parameters.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
