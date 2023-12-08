@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="4" month="December" year="2023"/>
+    <date day="8" month="December" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -411,16 +411,14 @@
             UDP-Notif messages. A publisher MUST use different Message ID
             values for different messages generated with the same Message
             Publisher ID. Note that the main purpose of the Message ID is to
-            reconstruct messages which were segmented using the segmentation
+            reconstruct messages which are segmented using the segmentation
             option described in section <xref target="sec_fragmentation"/>.
             The Message ID values SHOULD be incremented by one for each
             successive message originated with the same Message Publisher ID,
-            so that message loss can be detected. Furthermore, incrementing
-            the Message ID by one allows for a large amount of time to happen
-            before the Message ID's are reused due to wrapping around. When 
-            the last value of Message ID has been generated, the Message ID
-            wraps around and restarts at 0. Different subscribers MAY share
-            the same Message ID sequence.</t>
+            so that message loss can be detected. When the last value (2^32-1)
+            of Message ID has been generated, the Message ID wraps around and
+            restarts at 0. Different subscribers MAY share the same Message ID
+            sequence.</t>
 
             <t>Options is a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
@@ -428,6 +426,9 @@
             header (i.e., Message ID). The details of the options are
             described in <xref target="sec_options"/>.</t>
           </list></t>
+
+          <t>All the binary fields MUST be encoded in network byte order (big
+          endian).</t>
 
         <t/>
       </section>
@@ -539,13 +540,8 @@
         MAY include all the options ordered by options type.</t>
 
         <t>The receiver SHOULD support the reception of unordered segments.
-        When the receiver gets the last segment, set by the flag L, all segments
-        MUST be received before this last segment for reassembly. If one of the
-        segments is not present, the message MUST be dropped. TODO: Alex, check 
-        with Pfr and implementation?</t>
-
-        <t>The receiver SHOULD provide means to discard the received segments if
-        after some time one of the segments is still missing.</t>
+        The receiver SHOULD discard the received segments if,
+        after some time, one of the segments is still missing.</t>
       </section>
 
       <section anchor="sec_enc_opt" title="Private Encoding Option">
@@ -642,6 +638,13 @@
         segmentation of the UDP Notif message content without relying on IP
         fragmentation. Implementation of the current specification SHOULD
         allow for the configuration of the MTU.</t>
+
+        <t>It is RECOMMENDED that the size of a Notification Message is 
+        small and segmentation does not result in segmenting the message into too
+        much segments to avoid dropping the entire message when there is a lost
+        segment. When a Notification Message is large, it is RECOMMENDED to use a
+        reliable transport such as HTTPS-notif
+        <xref target="I-D.ietf-netconf-https-notif"/>.</t>
       </section>
 
       <section anchor="sec_reliability" title="Reliability">
@@ -1225,8 +1228,8 @@ reference: RFC-to-be]]></artwork>
       <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-distributed-notif.xml"?>
-      TODO: Alex uncomment reference before submit
-      <!-- <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-udp-client-server.xml"?> -->
+
+      <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-udp-client-server.xml"?>
     </references>
 
     <references title="Informative References">

@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 6 June 2024                                             T. Graf
+Expires: 10 June 2024                                            T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                         4 December 2023
+                                                         8 December 2023
 
 
             UDP-based Transport for Configured Subscriptions
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 1]
+Zheng, et al.             Expires 10 June 2024                  [Page 1]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
 
-   This Internet-Draft will expire on 6 June 2024.
+   This Internet-Draft will expire on 10 June 2024.
 
 Copyright Notice
 
@@ -85,12 +85,12 @@ Table of Contents
    4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
      4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   9
      4.2.  Private Encoding Option . . . . . . . . . . . . . . . . .  10
-   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  11
+   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  11
      5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  12
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  12
    6.  Secured layer for UDP-notif . . . . . . . . . . . . . . . . .  12
-     6.1.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  12
+     6.1.  Session lifecycle . . . . . . . . . . . . . . . . . . . .  13
        6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  13
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  13
        6.1.3.  Session termination . . . . . . . . . . . . . . . . .  14
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 2]
+Zheng, et al.             Expires 10 June 2024                  [Page 2]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -165,7 +165,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 3]
+Zheng, et al.             Expires 10 June 2024                  [Page 3]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -221,7 +221,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 4]
+Zheng, et al.             Expires 10 June 2024                  [Page 4]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -277,7 +277,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 5]
+Zheng, et al.             Expires 10 June 2024                  [Page 5]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -333,7 +333,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 6]
+Zheng, et al.             Expires 10 June 2024                  [Page 6]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -362,16 +362,13 @@ Internet-Draft               unyte-udp-notif               December 2023
       Notif messages.  A publisher MUST use different Message ID values
       for different messages generated with the same Message Publisher
       ID.  Note that the main purpose of the Message ID is to
-      reconstruct messages which were segmented using the segmentation
+      reconstruct messages which are segmented using the segmentation
       option described in section Section 4.1.  The Message ID values
       SHOULD be incremented by one for each successive message
       originated with the same Message Publisher ID, so that message
-      loss can be detected.  Furthermore, incrementing the Message ID by
-      one allows for a large amount of time to happen before the Message
-      ID's are reused due to wrapping around.  When the last value of
-      Message ID has been generated, the Message ID wraps around and
-      restarts at 0.  Different subscribers MAY share the same Message
-      ID sequence.
+      loss can be detected.  When the last value (2^32-1) of Message ID
+      has been generated, the Message ID wraps around and restarts at 0.
+      Different subscribers MAY share the same Message ID sequence.
 
    *  Options is a variable-length field in the TLV format.  When the
       Header Length is larger than 12 octets, which is the length of the
@@ -379,6 +376,8 @@ Internet-Draft               unyte-udp-notif               December 2023
       header (i.e., Message ID).  The details of the options are
       described in Section 4.
 
+   All the binary fields MUST be encoded in network byte order (big
+   endian).
 
 
 
@@ -389,7 +388,8 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 7]
+
+Zheng, et al.             Expires 10 June 2024                  [Page 7]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -445,7 +445,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 8]
+Zheng, et al.             Expires 10 June 2024                  [Page 8]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -501,7 +501,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                  [Page 9]
+Zheng, et al.             Expires 10 June 2024                  [Page 9]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -517,14 +517,9 @@ Internet-Draft               unyte-udp-notif               December 2023
    segment ordered by the options Type.  The rest of segmented messages
    MAY include all the options ordered by options type.
 
-   The receiver SHOULD support the reception of unordered segments.
-   When the receiver gets the last segment, set by the flag L, all
-   segments MUST be received before this last segment for reassembly.
-   If one of the segments is not present, the message MUST be dropped.
-   TODO: Alex, check with Pfr and implementation?
-
-   The receiver SHOULD provide means to discard the received segments if
-   after some time one of the segments is still missing.
+   The receiver SHOULD support the reception of unordered segments.  The
+   receiver SHOULD discard the received segments if, after some time,
+   one of the segments is still missing.
 
 4.2.  Private Encoding Option
 
@@ -555,17 +550,17 @@ Internet-Draft               unyte-udp-notif               December 2023
    as providing a private encoding description for standard encodings is
    meaningless.
 
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 10]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
 5.  Applicability
 
    In this section, we provide an applicability statement for the
    proposed mechanism, following the recommendations of [RFC8085].
+
+
+
+Zheng, et al.             Expires 10 June 2024                 [Page 10]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
    The proposed mechanism falls in the category of UDP applications
    "designed for use within the network of a single network operator or
@@ -610,17 +605,18 @@ Internet-Draft               unyte-udp-notif               December 2023
    Applications SHOULD monitor packet losses and provide means to the
    user for retrieving information on such losses.  The UDP-Notif
    Message ID can be used to deduce congestion based on packet loss
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 11]
-
-Internet-Draft               unyte-udp-notif               December 2023
-
-
    detection.  Hence the receiver can notify the Publisher to use a
    lower streaming rate.  The interaction to control the streaming rate
    on the Publisher is out of the scope of this document.
+
+
+
+
+
+Zheng, et al.             Expires 10 June 2024                 [Page 11]
+
+Internet-Draft               unyte-udp-notif               December 2023
+
 
 5.2.  Message Size
 
@@ -630,6 +626,13 @@ Internet-Draft               unyte-udp-notif               December 2023
    segmentation of the UDP Notif message content without relying on IP
    fragmentation.  Implementation of the current specification SHOULD
    allow for the configuration of the MTU.
+
+   It is RECOMMENDED that the size of a Notification Message is small
+   and segmentation does not result in segmenting the message into too
+   much segments to avoid dropping the entire message when there is a
+   lost segment.  When a Notification Message is large, it is
+   RECOMMENDED to use a reliable transport such as HTTPS-notif
+   [I-D.ietf-netconf-https-notif].
 
 5.3.  Reliability
 
@@ -660,19 +663,18 @@ Internet-Draft               unyte-udp-notif               December 2023
    but MAY be configurable to send messages to a different port.  The
    Publisher MAY use any source UDP port for transmitting messages.
 
-6.1.  Session lifecycle
 
 
 
 
 
 
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 12]
+Zheng, et al.             Expires 10 June 2024                 [Page 12]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
+
+6.1.  Session lifecycle
 
 6.1.1.  DTLS Session Initiation
 
@@ -720,15 +722,15 @@ Internet-Draft               unyte-udp-notif               December 2023
 
    NONZERO-DIGIT = %d49-57
 
-   DIGIT = %d48 / NONZERO-DIGIT
 
 
 
-
-Zheng, et al.              Expires 6 June 2024                 [Page 13]
+Zheng, et al.             Expires 10 June 2024                 [Page 13]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
+
+   DIGIT = %d48 / NONZERO-DIGIT
 
    UDP-NOTIF-MSG is defined in Section 3.
 
@@ -779,9 +781,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 14]
+Zheng, et al.             Expires 10 June 2024                 [Page 14]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -837,7 +837,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 15]
+Zheng, et al.             Expires 10 June 2024                 [Page 15]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -893,7 +893,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 16]
+Zheng, et al.             Expires 10 June 2024                 [Page 16]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -949,7 +949,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 17]
+Zheng, et al.             Expires 10 June 2024                 [Page 17]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1005,7 +1005,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 18]
+Zheng, et al.             Expires 10 June 2024                 [Page 18]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 19]
+Zheng, et al.             Expires 10 June 2024                 [Page 19]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 20]
+Zheng, et al.             Expires 10 June 2024                 [Page 20]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1173,7 +1173,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 21]
+Zheng, et al.             Expires 10 June 2024                 [Page 21]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1220,16 +1220,16 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 12.1.  Normative References
 
+   [I-D.ahuang-netconf-udp-client-server]
+              Feng, A. H., Francois, P., and K. Watsen, "YANG Grouping
+              for UDP Clients and UDP Servers", Work in Progress,
+              Internet-Draft, draft-ahuang-netconf-udp-client-server-00,
+              23 October 2023, <https://datatracker.ietf.org/doc/html/
+              draft-ahuang-netconf-udp-client-server-00>.
 
 
 
-
-
-
-
-
-
-Zheng, et al.              Expires 6 June 2024                 [Page 22]
+Zheng, et al.             Expires 10 June 2024                 [Page 22]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1285,7 +1285,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 23]
+Zheng, et al.             Expires 10 June 2024                 [Page 23]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1341,7 +1341,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 24]
+Zheng, et al.             Expires 10 June 2024                 [Page 24]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1397,7 +1397,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 25]
+Zheng, et al.             Expires 10 June 2024                 [Page 25]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1453,7 +1453,7 @@ A.1.  Configuration for UDP-notif transport with DTLS disabled
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 26]
+Zheng, et al.             Expires 10 June 2024                 [Page 26]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1509,7 +1509,7 @@ A.2.  Configuration for UDP-notif transport with DTLS enabled
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 27]
+Zheng, et al.             Expires 10 June 2024                 [Page 27]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1565,7 +1565,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 28]
+Zheng, et al.             Expires 10 June 2024                 [Page 28]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1621,7 +1621,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 29]
+Zheng, et al.             Expires 10 June 2024                 [Page 29]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1677,7 +1677,7 @@ A.3.  YANG Push message with UDP-notif transport protocol
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 30]
+Zheng, et al.             Expires 10 June 2024                 [Page 30]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1733,7 +1733,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 31]
+Zheng, et al.             Expires 10 June 2024                 [Page 31]
 
 Internet-Draft               unyte-udp-notif               December 2023
 
@@ -1789,4 +1789,4 @@ Internet-Draft               unyte-udp-notif               December 2023
 
 
 
-Zheng, et al.              Expires 6 June 2024                 [Page 32]
+Zheng, et al.             Expires 10 June 2024                 [Page 32]
