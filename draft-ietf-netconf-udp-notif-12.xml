@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="8" month="December" year="2023"/>
+    <date day="12" month="December" year="2023"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -481,18 +481,19 @@
       be dropped by the Receiver.</t>
 
       <section anchor="sec_fragmentation" title="Segmentation Option">
-        <t>The UDP payload length is limited to 65535. Application level
-        headers will make the actual payload shorter. Even though binary
-        encodings such as CBOR may not require more space than what is left,
-        more voluminous encodings such as JSON and XML may suffer from this
-        size limitation. Although IPv4 and IPv6 publishers can fragment
+        <t>The UDP payload length is limited to 65527 bytes (65535 - 8 bytes).
+        Application level headers will make the actual payload shorter. Even
+        though binary encodings such as CBOR may not require more space than what
+        is left, more voluminous encodings such as JSON and XML may suffer from
+        this size limitation. Although IPv4 and IPv6 publishers can fragment
         outgoing packets exceeding their Maximum Transmission Unit (MTU),
         fragmented IP packets may not be desired for operational and
         performance reasons.</t>
 
         <t>Consequently, implementations of the mechanism SHOULD provide a
         configurable max-segment-size option to control the maximum size of a
-        payload.</t>
+        payload. The implementor or user SHOULD take into account the IP layer
+        header size when setting the publisher parameters.</t>
 
         <figure anchor="fig_frag_option" title="Segmentation Option Format">
           <artwork align="center"><![CDATA[
