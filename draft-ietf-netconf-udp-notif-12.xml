@@ -492,8 +492,7 @@
 
         <t>Consequently, implementations of the mechanism SHOULD provide a
         configurable max-segment-size option to control the maximum size of a
-        payload. The implementor or user SHOULD take into account the IP layer
-        header size when setting the publisher parameters.</t>
+        payload.</t>
 
         <figure anchor="fig_frag_option" title="Segmentation Option Format">
           <artwork align="center"><![CDATA[
@@ -533,7 +532,9 @@
         fragmentation by default to carry large messages. An implementation of
         this specification SHOULD either restrict the size of individual
         messages carried over this protocol, or support the segmentation
-        option.</t>
+        option. The implementor or user SHOULD take into account the IP layer
+        header size when setting the max-segment-size parameter to avoid
+        fragmentation at IP layer.</t>
 
         <t>When a message has multiple options and is segmented using the
         described mechanism, all the options MUST be present on the first
@@ -541,8 +542,9 @@
         MAY include all the options ordered by options type.</t>
 
         <t>The receiver SHOULD support the reception of unordered segments.
-        The receiver SHOULD discard the received segments if,
-        after some time, one of the segments is still missing.</t>
+        The implementation of the receiver SHOULD provide an option to discard
+        the received segments if, after some time, one of the segments is still
+        missing and the reassembly of the message is not possible.</t>
       </section>
 
       <section anchor="sec_enc_opt" title="Private Encoding Option">

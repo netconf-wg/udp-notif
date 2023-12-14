@@ -463,8 +463,7 @@ Internet-Draft               unyte-udp-notif               December 2023
 
    Consequently, implementations of the mechanism SHOULD provide a
    configurable max-segment-size option to control the maximum size of a
-   payload.  The implementor or user SHOULD take into account the IP
-   layer header size when setting the publisher parameters.
+   payload.
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -496,8 +495,9 @@ Internet-Draft               unyte-udp-notif               December 2023
       meaning that the total number of segments used to transport this
       message is the value of the current Segment Number + 1.
 
-
-
+   An implementation of this specification SHOULD NOT rely on IP
+   fragmentation by default to carry large messages.  An implementation
+   of this specification SHOULD either restrict the size of individual
 
 
 
@@ -506,11 +506,10 @@ Zheng, et al.             Expires 14 June 2024                  [Page 9]
 Internet-Draft               unyte-udp-notif               December 2023
 
 
-   An implementation of this specification SHOULD NOT rely on IP
-   fragmentation by default to carry large messages.  An implementation
-   of this specification SHOULD either restrict the size of individual
    messages carried over this protocol, or support the segmentation
-   option.
+   option.  The implementor or user SHOULD take into account the IP
+   layer header size when setting the max-segment-size parameter to
+   avoid fragmentation at IP layer.
 
    When a message has multiple options and is segmented using the
    described mechanism, all the options MUST be present on the first
@@ -518,8 +517,9 @@ Internet-Draft               unyte-udp-notif               December 2023
    MAY include all the options ordered by options type.
 
    The receiver SHOULD support the reception of unordered segments.  The
-   receiver SHOULD discard the received segments if, after some time,
-   one of the segments is still missing.
+   implementation of the receiver SHOULD provide an option to discard
+   the received segments if, after some time, one of the segments is
+   still missing and the reassembly of the message is not possible.
 
 4.2.  Private Encoding Option
 
