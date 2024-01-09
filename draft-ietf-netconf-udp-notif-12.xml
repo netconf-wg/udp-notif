@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="12" month="December" year="2023"/>
+    <date day="9" month="January" year="2024"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -534,7 +534,7 @@
         messages carried over this protocol, or support the segmentation
         option. The implementor or user SHOULD take into account the IP layer
         header size when setting the max-segment-size parameter to avoid
-        fragmentation at IP layer.</t>
+        fragmentation at the IP layer.</t>
 
         <t>When a message has multiple options and is segmented using the
         described mechanism, all the options MUST be present on the first
