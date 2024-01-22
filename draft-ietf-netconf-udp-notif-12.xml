@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="9" month="January" year="2024"/>
+    <date day="22" month="January" year="2024"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -823,12 +823,13 @@ module: ietf-udp-notif-transport
         transport receiver. The grouping "udp-notif-receiver-grouping" defines
         the necessary parameters to configure the transport defined in this
         document using the generic "udp-client-grouping" grouping from the 
-        "ietf-udp-client" module and the "tls-client-grouping" defined 
-        in the "ietf-tls-client" module.</t>
+        "ietf-udp-client" module <xref target="I-D.ahuang-netconf-udp-client-server"/>
+        and the "tls-client-grouping" defined in the "ietf-tls-client" module
+        <xref target="I-D.ietf-netconf-tls-client-server"/>.</t>
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2023-12-05.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2024-01-22.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -890,7 +891,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2023-12-05 {
+  revision 2024-01-22 {
     description
       "Initial revision";
     reference
@@ -1226,9 +1227,9 @@ reference: RFC-to-be]]></artwork>
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
 
-      <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.draft-ietf-netconf-tls-client-server-29.xml"?>
+      <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-tls-client-server.xml"?>
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-distributed-notif.xml"?>
 

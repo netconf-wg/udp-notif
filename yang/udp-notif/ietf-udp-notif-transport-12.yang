@@ -59,7 +59,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2023-12-05 {
+  revision 2024-01-22 {
     description
       "Initial revision";
     reference

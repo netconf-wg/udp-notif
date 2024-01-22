@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 12 July 2024                                            T. Graf
+Expires: 25 July 2024                                            T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                          9 January 2024
+                                                         22 January 2024
 
 
             UDP-based Transport for Configured Subscriptions
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 1]
+Zheng, et al.             Expires 25 July 2024                  [Page 1]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
 
-   This Internet-Draft will expire on 12 July 2024.
+   This Internet-Draft will expire on 25 July 2024.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 2]
+Zheng, et al.             Expires 25 July 2024                  [Page 2]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -118,7 +118,7 @@ Internet-Draft               unyte-udp-notif                January 2024
    11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  22
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  22
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  22
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  24
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  25
    Appendix A.  UDP-notif Examples . . . . . . . . . . . . . . . . .  26
      A.1.  Configuration for UDP-notif transport with DTLS
            disabled  . . . . . . . . . . . . . . . . . . . . . . . .  26
@@ -165,7 +165,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 3]
+Zheng, et al.             Expires 25 July 2024                  [Page 3]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -221,7 +221,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 4]
+Zheng, et al.             Expires 25 July 2024                  [Page 4]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -277,7 +277,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 5]
+Zheng, et al.             Expires 25 July 2024                  [Page 5]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -333,7 +333,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 6]
+Zheng, et al.             Expires 25 July 2024                  [Page 6]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -389,7 +389,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 7]
+Zheng, et al.             Expires 25 July 2024                  [Page 7]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -445,7 +445,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 8]
+Zheng, et al.             Expires 25 July 2024                  [Page 8]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -501,7 +501,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                  [Page 9]
+Zheng, et al.             Expires 25 July 2024                  [Page 9]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -557,7 +557,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 10]
+Zheng, et al.             Expires 25 July 2024                 [Page 10]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -613,7 +613,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 11]
+Zheng, et al.             Expires 25 July 2024                 [Page 11]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -669,7 +669,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 12]
+Zheng, et al.             Expires 25 July 2024                 [Page 12]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -725,7 +725,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 13]
+Zheng, et al.             Expires 25 July 2024                 [Page 13]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -781,7 +781,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 14]
+Zheng, et al.             Expires 25 July 2024                 [Page 14]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -837,7 +837,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 15]
+Zheng, et al.             Expires 25 July 2024                 [Page 15]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -850,10 +850,12 @@ Internet-Draft               unyte-udp-notif                January 2024
    transport receiver.  The grouping "udp-notif-receiver-grouping"
    defines the necessary parameters to configure the transport defined
    in this document using the generic "udp-client-grouping" grouping
-   from the "ietf-udp-client" module and the "tls-client-grouping"
-   defined in the "ietf-tls-client" module.
+   from the "ietf-udp-client" module
+   [I-D.ahuang-netconf-udp-client-server] and the "tls-client-grouping"
+   defined in the "ietf-tls-client" module
+   [I-D.ietf-netconf-tls-client-server].
 
-   <CODE BEGINS> file "ietf-udp-notif-transport@2023-12-05.yang"
+   <CODE BEGINS> file "ietf-udp-notif-transport@2024-01-22.yang"
    module ietf-udp-notif-transport {
      yang-version 1.1;
      namespace
@@ -888,16 +890,16 @@ Internet-Draft               unyte-udp-notif                January 2024
 
         Authors:  Guangying Zheng
                   <mailto:zhengguangying@huawei.com>
-                  Tianran Zhou
-                  <mailto:zhoutianran@huawei.com>
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 16]
+Zheng, et al.             Expires 25 July 2024                 [Page 16]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
 
+                  Tianran Zhou
+                  <mailto:zhoutianran@huawei.com>
                   Thomas Graf
                   <mailto:thomas.graf@swisscom.com>
                   Pierre Francois
@@ -923,7 +925,7 @@ Internet-Draft               unyte-udp-notif                January 2024
        This version of this YANG module is part of RFC-to-be; see the RFC
        itself for full legal notices.";
 
-     revision 2023-12-05 {
+     revision 2024-01-22 {
        description
          "Initial revision";
        reference
@@ -944,16 +946,16 @@ Internet-Draft               unyte-udp-notif                January 2024
           packets is supported.";
      }
      feature segmentation {
-       description
-         "This feature indicates segmentation of notification messages
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 17]
+Zheng, et al.             Expires 25 July 2024                 [Page 17]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
 
+       description
+         "This feature indicates segmentation of notification messages
          is supported.";
      }
 
@@ -1001,15 +1003,14 @@ Internet-Draft               unyte-udp-notif                January 2024
            "Container for configuring DTLS 1.3 parameters.";
        }
 
-       leaf enable-segmentation {
 
 
-
-Zheng, et al.             Expires 12 July 2024                 [Page 18]
+Zheng, et al.             Expires 25 July 2024                 [Page 18]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
 
+       leaf enable-segmentation {
          if-feature segmentation;
          type boolean;
          default false;
@@ -1057,14 +1058,15 @@ Internet-Draft               unyte-udp-notif                January 2024
    under the new group "UDP-notif protocol".  The registration procedure
    is made using the Standards Action process defined in [RFC8126].
 
-   The first requested registry is the following:
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 19]
+Zheng, et al.             Expires 25 July 2024                 [Page 19]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
+
+   The first requested registry is the following:
 
      Registry Name: UDP-notif media types
      Registry Category: UDP-notif protocol.
@@ -1115,9 +1117,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-
-
-Zheng, et al.             Expires 12 July 2024                 [Page 20]
+Zheng, et al.             Expires 25 July 2024                 [Page 20]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 21]
+Zheng, et al.             Expires 25 July 2024                 [Page 21]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1220,19 +1220,27 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 12.1.  Normative References
 
-   [I-D.ahuang-netconf-udp-client-server]
-              Feng, A. H., Francois, P., and K. Watsen, "YANG Grouping
-              for UDP Clients and UDP Servers", Work in Progress,
-              Internet-Draft, draft-ahuang-netconf-udp-client-server-00,
-              23 October 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ahuang-netconf-udp-client-server-00>.
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 22]
+
+
+
+
+
+
+Zheng, et al.             Expires 25 July 2024                 [Page 22]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
+
+   [I-D.ahuang-netconf-udp-client-server]
+              Feng, A. H., Francois, P., and K. Watsen, "YANG Grouping
+              for UDP Clients and UDP Servers", Work in Progress,
+              Internet-Draft, draft-ahuang-netconf-udp-client-server-01,
+              22 January 2024,
+              <https://datatracker.ietf.org/api/v1/doc/document/draft-
+              ahuang-netconf-udp-client-server/>.
 
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
@@ -1245,16 +1253,16 @@ Internet-Draft               unyte-udp-notif                January 2024
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
               for YANG Notifications", Work in Progress, Internet-Draft,
-              draft-ietf-netconf-https-notif-13, 4 November 2022,
+              draft-ietf-netconf-https-notif-14, 18 January 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
-              https-notif-13>.
+              https-notif-14>.
 
    [I-D.ietf-netconf-tls-client-server]
               Watsen, K., "YANG Groupings for TLS Clients and TLS
               Servers", Work in Progress, Internet-Draft, draft-ietf-
-              netconf-tls-client-server-29, 18 July 2022,
+              netconf-tls-client-server-34, 28 December 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
-              tls-client-server-29>.
+              tls-client-server-34>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1274,6 +1282,14 @@ Internet-Draft               unyte-udp-notif                January 2024
               RFC 6991, DOI 10.17487/RFC6991, July 2013,
               <https://www.rfc-editor.org/info/rfc6991>.
 
+
+
+
+Zheng, et al.             Expires 25 July 2024                 [Page 23]
+
+Internet-Draft               unyte-udp-notif                January 2024
+
+
    [RFC8085]  Eggert, L., Fairhurst, G., and G. Shepherd, "UDP Usage
               Guidelines", BCP 145, RFC 8085, DOI 10.17487/RFC8085,
               March 2017, <https://www.rfc-editor.org/info/rfc8085>.
@@ -1282,13 +1298,6 @@ Internet-Draft               unyte-udp-notif                January 2024
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
               <https://www.rfc-editor.org/info/rfc8126>.
-
-
-
-Zheng, et al.             Expires 12 July 2024                 [Page 23]
-
-Internet-Draft               unyte-udp-notif                January 2024
-
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -1330,6 +1339,13 @@ Internet-Draft               unyte-udp-notif                January 2024
               RFC 9254, DOI 10.17487/RFC9254, July 2022,
               <https://www.rfc-editor.org/info/rfc9254>.
 
+
+
+Zheng, et al.             Expires 25 July 2024                 [Page 24]
+
+Internet-Draft               unyte-udp-notif                January 2024
+
+
 12.2.  Informative References
 
    [I-D.ahuang-netconf-notif-yang]
@@ -1338,13 +1354,6 @@ Internet-Draft               unyte-udp-notif                January 2024
               Internet-Draft, draft-ahuang-netconf-notif-yang-03, 20
               October 2023, <https://datatracker.ietf.org/doc/html/
               draft-ahuang-netconf-notif-yang-03>.
-
-
-
-Zheng, et al.             Expires 12 July 2024                 [Page 24]
-
-Internet-Draft               unyte-udp-notif                January 2024
-
 
    [I-D.ietf-netconf-notification-messages]
               Voit, E., Jenkins, T., Birkholz, H., Bierman, A., and A.
@@ -1383,6 +1392,16 @@ Internet-Draft               unyte-udp-notif                January 2024
               DOI 10.17487/RFC7923, June 2016,
               <https://www.rfc-editor.org/info/rfc7923>.
 
+
+
+
+
+
+Zheng, et al.             Expires 25 July 2024                 [Page 25]
+
+Internet-Draft               unyte-udp-notif                January 2024
+
+
    [RFC7951]  Lhotka, L., "JSON Encoding of Data Modeled with YANG",
               RFC 7951, DOI 10.17487/RFC7951, August 2016,
               <https://www.rfc-editor.org/info/rfc7951>.
@@ -1394,13 +1413,6 @@ Internet-Draft               unyte-udp-notif                January 2024
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
-
-
-
-Zheng, et al.             Expires 12 July 2024                 [Page 25]
-
-Internet-Draft               unyte-udp-notif                January 2024
-
 
    [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
               for Datastore Updates", RFC 8641, DOI 10.17487/RFC8641,
@@ -1441,19 +1453,7 @@ A.1.  Configuration for UDP-notif transport with DTLS disabled
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Zheng, et al.             Expires 12 July 2024                 [Page 26]
+Zheng, et al.             Expires 25 July 2024                 [Page 26]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1509,7 +1509,7 @@ A.2.  Configuration for UDP-notif transport with DTLS enabled
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 27]
+Zheng, et al.             Expires 25 July 2024                 [Page 27]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 28]
+Zheng, et al.             Expires 25 July 2024                 [Page 28]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 29]
+Zheng, et al.             Expires 25 July 2024                 [Page 29]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1677,7 +1677,7 @@ A.3.  YANG Push message with UDP-notif transport protocol
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 30]
+Zheng, et al.             Expires 25 July 2024                 [Page 30]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1733,7 +1733,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 31]
+Zheng, et al.             Expires 25 July 2024                 [Page 31]
 
 Internet-Draft               unyte-udp-notif                January 2024
 
@@ -1789,4 +1789,4 @@ Internet-Draft               unyte-udp-notif                January 2024
 
 
 
-Zheng, et al.             Expires 12 July 2024                 [Page 32]
+Zheng, et al.             Expires 25 July 2024                 [Page 32]
