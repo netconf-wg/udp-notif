@@ -208,10 +208,10 @@ Internet-Draft               unyte-udp-notif                January 2024
    This section describes how the proposed mechanism can be controlled
    using subscription channels based on NETCONF or RESTCONF.
 
-   As specified in Sub-Notif, configured subscriptions contain the
-   location information of all the receivers, including the IP address
-   and the port number, so that the publisher can actively send UDP-
-   Notif messages to the corresponding receivers.
+   As specified in Subscribed Notifications [RFC8639], configured
+   subscriptions contain the location information of all the receivers,
+   including the IP address and the port number, so that the publisher
+   can actively send UDP-Notif messages to the corresponding receivers.
 
    Note that receivers MAY NOT be already up and running when the
    configuration of the subscription takes effect on the monitored
@@ -229,6 +229,10 @@ Internet-Draft               unyte-udp-notif                January 2024
    without delay.  All the subscription state notifications, as defined
    in Section 2.7 of [RFC8639], MUST be encapsulated in separate
    notification messages.
+
+   Note also that the receiver nodes can be different from the nodes
+   managing the subscription.  Therefore, publishers MAY NOT be aware of
+   the capabilities supported by the receivers.
 
 3.  UDP-Based Transport
 
@@ -270,10 +274,6 @@ Internet-Draft               unyte-udp-notif                January 2024
    The UDP-Notif Message Header contains information that facilitate the
    message transmission before deserializing the notification message.
    The data format is shown in Figure 2.
-
-
-
-
 
 
 

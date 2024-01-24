@@ -270,10 +270,11 @@
       <t>This section describes how the proposed mechanism can be controlled
       using subscription channels based on NETCONF or RESTCONF.</t>
 
-      <t>As specified in Sub-Notif, configured subscriptions contain the
-      location information of all the receivers, including the IP address and
-      the port number, so that the publisher can actively send UDP-Notif
-      messages to the corresponding receivers.</t>
+      <t>As specified in Subscribed Notifications <xref target="RFC8639"/>,
+      configured subscriptions contain the location information of all the
+      receivers, including the IP address and the port number, so that the
+      publisher can actively send UDP-Notif messages to the corresponding
+      receivers.</t>
 
       <t>Note that receivers MAY NOT be already up and running when the
       configuration of the subscription takes effect on the monitored network
@@ -283,6 +284,11 @@
       All the subscription state notifications, as defined in Section 2.7 of
       <xref target="RFC8639"/>, MUST be encapsulated in separate notification
       messages.</t>
+
+      <t>Note also that the receiver nodes can be different from the nodes
+      managing the subscription. Therefore, publishers MAY NOT be aware of
+      the capabilities supported by the receivers.</t>
+
     </section>
 
     <section anchor="sec_ups_transport" title="UDP-Based Transport">
