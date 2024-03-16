@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 31 August 2024                                          T. Graf
+Expires: 17 September 2024                                       T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                        28 February 2024
+                                                           16 March 2024
 
 
             UDP-based Transport for Configured Subscriptions
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 1]
+Zheng, et al.           Expires 17 September 2024               [Page 1]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
-   This Internet-Draft will expire on 31 August 2024.
+   This Internet-Draft will expire on 17 September 2024.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 2]
+Zheng, et al.           Expires 17 September 2024               [Page 2]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  22
@@ -165,9 +165,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 3]
+Zheng, et al.           Expires 17 September 2024               [Page 3]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    What is needed is a mechanism that allows for directly publishing
@@ -221,9 +221,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 4]
+Zheng, et al.           Expires 17 September 2024               [Page 4]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    without delay.  All the subscription state notifications, as defined
@@ -277,9 +277,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 5]
+Zheng, et al.           Expires 17 September 2024               [Page 5]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
       0                   1                   2                   3
@@ -333,9 +333,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 6]
+Zheng, et al.           Expires 17 September 2024               [Page 6]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    *  Message Length is the total length of the UDP-notif message within
@@ -389,9 +389,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 7]
+Zheng, et al.           Expires 17 September 2024               [Page 7]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
 3.3.  Data Encoding
@@ -445,9 +445,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 8]
+Zheng, et al.           Expires 17 September 2024               [Page 8]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
 4.1.  Segmentation Option
@@ -482,8 +482,8 @@ Internet-Draft                  UDP-Notif                  February 2024
       The Type value is to be assigned TBD1.
 
    *  Length: Generic option field which indicates the length of this
-      option.  It is a fixed value of 4 octets for the Segmentation
-      Option.
+      option in octets.  It is a fixed value of 4 octets for the
+      Segmentation Option.
 
    *  Segment Number: 15-bit value indicating the sequence number of the
       current segment.  The first segment of a segmented message has a
@@ -501,9 +501,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                 [Page 9]
+Zheng, et al.           Expires 17 September 2024               [Page 9]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    messages carried over this protocol, or support the segmentation
@@ -540,7 +540,7 @@ Internet-Draft                  UDP-Notif                  February 2024
       Option.  The Type value is to be assigned TBD2.
 
    *  Length: Generic option field which indicates the length of this
-      option.  It is a variable value.
+      option in octets.  It is a variable value.
 
    *  Enc. Descr: The description of the private encoding used for this
       message.  The values to be used for such private encodings is left
@@ -557,9 +557,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 10]
+Zheng, et al.           Expires 17 September 2024              [Page 10]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    The proposed mechanism falls in the category of UDP applications
@@ -613,9 +613,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 11]
+Zheng, et al.           Expires 17 September 2024              [Page 11]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
 5.2.  Message Size
@@ -669,12 +669,15 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 12]
+Zheng, et al.           Expires 17 September 2024              [Page 12]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
 6.1.  Session lifecycle
+
+   This section describes the lifecycle of UDP-notif messages when they
+   are excrypted using DTLS.
 
 6.1.1.  DTLS Session Initiation
 
@@ -720,15 +723,14 @@ Internet-Draft                  UDP-Notif                  February 2024
 
    SP = %d32
 
-   NONZERO-DIGIT = %d49-57
 
 
-
-
-Zheng, et al.            Expires 31 August 2024                [Page 13]
+Zheng, et al.           Expires 17 September 2024              [Page 13]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
+
+   NONZERO-DIGIT = %d49-57
 
    DIGIT = %d48 / NONZERO-DIGIT
 
@@ -779,11 +781,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-
-
-Zheng, et al.            Expires 31 August 2024                [Page 14]
+Zheng, et al.           Expires 17 September 2024              [Page 14]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
   module: ietf-udp-notif-transport
@@ -837,9 +837,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 15]
+Zheng, et al.           Expires 17 September 2024              [Page 15]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
 7.2.  YANG Module
@@ -855,7 +855,7 @@ Internet-Draft                  UDP-Notif                  February 2024
    defined in the "ietf-tls-client" module
    [I-D.ietf-netconf-tls-client-server].
 
-   <CODE BEGINS> file "ietf-udp-notif-transport@2024-01-22.yang"
+   <CODE BEGINS> file "ietf-udp-notif-transport@2024-03-16.yang"
    module ietf-udp-notif-transport {
      yang-version 1.1;
      namespace
@@ -893,9 +893,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 16]
+Zheng, et al.           Expires 17 September 2024              [Page 16]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
                   Tianran Zhou
@@ -913,7 +913,7 @@ Internet-Draft                  UDP-Notif                  February 2024
        "Defines UDP-Notif as a supported transport for subscribed
        event notifications.
 
-       Copyright (c) 2023 IETF Trust and the persons identified as
+       Copyright (c) 2024 IETF Trust and the persons identified as
        authors of the code.  All rights reserved.
 
        Redistribution and use in source and binary forms, with or without
@@ -925,7 +925,7 @@ Internet-Draft                  UDP-Notif                  February 2024
        This version of this YANG module is part of RFC-to-be; see the RFC
        itself for full legal notices.";
 
-     revision 2024-01-22 {
+     revision 2024-03-16 {
        description
          "Initial revision";
        reference
@@ -949,9 +949,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 17]
+Zheng, et al.           Expires 17 September 2024              [Page 17]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
        description
@@ -1005,9 +1005,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 18]
+Zheng, et al.           Expires 17 September 2024              [Page 18]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
        leaf enable-segmentation {
@@ -1061,9 +1061,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 19]
+Zheng, et al.           Expires 17 September 2024              [Page 19]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    The first requested registry is the following:
@@ -1117,9 +1117,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 20]
+Zheng, et al.           Expires 17 September 2024              [Page 20]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
      Registry Name: UDP-notif header version
@@ -1151,7 +1151,7 @@ Internet-Draft                  UDP-Notif                  February 2024
    This document also requests a two new YANG module names in the YANG
    Module Names registry [RFC8342] with the following suggestions:
 
-   name: ietf-udp-notif
+   name: ietf-udp-notif-transport
    namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
    prefix: unt
    reference: RFC-to-be
@@ -1173,9 +1173,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 21]
+Zheng, et al.           Expires 17 September 2024              [Page 21]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
 9.2.  Open Source Receiver Library
@@ -1229,9 +1229,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 22]
+Zheng, et al.           Expires 17 September 2024              [Page 22]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    [I-D.ietf-netconf-distributed-notif]
@@ -1252,9 +1252,9 @@ Internet-Draft                  UDP-Notif                  February 2024
    [I-D.ietf-netconf-tls-client-server]
               Watsen, K., "YANG Groupings for TLS Clients and TLS
               Servers", Work in Progress, Internet-Draft, draft-ietf-
-              netconf-tls-client-server-39, 22 February 2024,
+              netconf-tls-client-server-40, 1 March 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
-              tls-client-server-39>.
+              tls-client-server-40>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1285,9 +1285,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 23]
+Zheng, et al.           Expires 17 September 2024              [Page 23]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
@@ -1341,9 +1341,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 24]
+Zheng, et al.           Expires 17 September 2024              [Page 24]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    [I-D.ietf-netconf-notification-messages]
@@ -1397,9 +1397,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 25]
+Zheng, et al.           Expires 17 September 2024              [Page 25]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    [RFC8641]  Clemm, A. and E. Voit, "Subscription to YANG Notifications
@@ -1453,9 +1453,9 @@ A.1.  Configuration for UDP-notif transport with DTLS disabled
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 26]
+Zheng, et al.           Expires 17 September 2024              [Page 26]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -1509,9 +1509,9 @@ A.2.  Configuration for UDP-notif transport with DTLS enabled
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 27]
+Zheng, et al.           Expires 17 September 2024              [Page 27]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -1565,9 +1565,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 28]
+Zheng, et al.           Expires 17 September 2024              [Page 28]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
                    <target-kdf>12345</target-kdf>
@@ -1621,9 +1621,9 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 29]
+Zheng, et al.           Expires 17 September 2024              [Page 29]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
                    <max-wait>30</max-wait>
@@ -1649,7 +1649,7 @@ A.3.  YANG Push message with UDP-notif transport protocol
 
               {
                   "ietf-notification:notification": {
-                      "eventTime": "2023-02-10T08:00:11.22Z",
+                      "eventTime": "2024-02-10T08:00:11.22Z",
                       "ietf-yang-push:push-update": {
                           "id": 1011,
                           "datastore-contents": {
@@ -1677,9 +1677,9 @@ A.3.  YANG Push message with UDP-notif transport protocol
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 30]
+Zheng, et al.           Expires 17 September 2024              [Page 30]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
       0                   1                   2                   3
@@ -1692,7 +1692,7 @@ Internet-Draft                  UDP-Notif                  February 2024
      |                      Message ID=1563                          |
      +---------------------------------------------------------------+
      |              YANG Push JSON payload (Len=218 octets)          |
-     |{"ietf-notification:notification":{"eventTime":"2023-02-10T08:0|
+     |{"ietf-notification:notification":{"eventTime":"2024-02-10T08:0|
      |0:11.22Z","ietf-yang-push:push-update":{"id":1011,"datastore-co|
      |ntents":{"ietf-interfaces:interfaces":[{"interface":{"name":"et|
      |h0","oper-status":"up"}}]}}}}                                  |
@@ -1733,9 +1733,9 @@ Authors' Addresses
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 31]
+Zheng, et al.           Expires 17 September 2024              [Page 31]
 
-Internet-Draft                  UDP-Notif                  February 2024
+Internet-Draft                  UDP-Notif                     March 2024
 
 
    Pierre Francois
@@ -1789,4 +1789,4 @@ Internet-Draft                  UDP-Notif                  February 2024
 
 
 
-Zheng, et al.            Expires 31 August 2024                [Page 32]
+Zheng, et al.           Expires 17 September 2024              [Page 32]

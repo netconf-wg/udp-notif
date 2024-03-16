@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="28" month="February" year="2024"/>
+    <date day="16" month="March" year="2024"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -520,7 +520,7 @@
             Option. The Type value is to be assigned TBD1.</t>
 
             <t>Length: Generic option field which indicates the length of this
-            option. It is a fixed value of 4 octets for the Segmentation
+            option in octets. It is a fixed value of 4 octets for the Segmentation
             Option.</t>
 
             <t>Segment Number: 15-bit value indicating the sequence number of
@@ -574,7 +574,7 @@
             Option. The Type value is to be assigned TBD2.</t>
 
             <t>Length: Generic option field which indicates the length of this
-            option. It is a variable value.</t>
+            option in octets. It is a variable value.</t>
 
             <t>Enc. Descr: The description of the private encoding used for
             this message. The values to be used for such private encodings is
@@ -686,6 +686,9 @@
       any source UDP port for transmitting messages.</t>
 
       <section anchor="sec_session_lifecycle" title="Session lifecycle">
+        <t>This section describes the lifecycle of UDP-notif messages when
+        they are excrypted using DTLS.</t>
+
         <section title="DTLS Session Initiation">
           <t>The Publisher initiates a DTLS connection by sending a DTLS
           ClientHello to the Receiver. Implementations MAY support the denial
@@ -835,7 +838,7 @@ module: ietf-udp-notif-transport
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2024-01-22.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2024-03-16.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -885,7 +888,7 @@ module ietf-udp-notif-transport {
     "Defines UDP-Notif as a supported transport for subscribed
     event notifications.
 
-    Copyright (c) 2023 IETF Trust and the persons identified as
+    Copyright (c) 2024 IETF Trust and the persons identified as
     authors of the code.  All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -897,7 +900,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2024-01-22 {
+  revision 2024-03-16 {
     description
       "Initial revision";
     reference
@@ -1140,7 +1143,7 @@ XML: N/A; the requested URI is an XML namespace.]]></artwork>
 
         <t><figure>
             <artwork align="left"><![CDATA[
-name: ietf-udp-notif
+name: ietf-udp-notif-transport
 namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
 prefix: unt
 reference: RFC-to-be]]></artwork>
@@ -1490,7 +1493,7 @@ rmat</public-key-format>
             <artwork align="center"><![CDATA[
 {
     "ietf-notification:notification": {
-        "eventTime": "2023-02-10T08:00:11.22Z",
+        "eventTime": "2024-02-10T08:00:11.22Z",
         "ietf-yang-push:push-update": {
             "id": 1011,
             "datastore-contents": {
@@ -1522,7 +1525,7 @@ rmat</public-key-format>
  |                      Message ID=1563                          |
  +---------------------------------------------------------------+
  |              YANG Push JSON payload (Len=218 octets)          |
- |{"ietf-notification:notification":{"eventTime":"2023-02-10T08:0|
+ |{"ietf-notification:notification":{"eventTime":"2024-02-10T08:0|
  |0:11.22Z","ietf-yang-push:push-update":{"id":1011,"datastore-co|
  |ntents":{"ietf-interfaces:interfaces":[{"interface":{"name":"et|
  |h0","oper-status":"up"}}]}}}}                                  |
