@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="16" month="March" year="2024"/>
+    <date day="27" month="May" year="2024"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -550,7 +550,9 @@
         <t>The receiver SHOULD support the reception of unordered segments.
         The implementation of the receiver SHOULD provide an option to discard
         the received segments if, after some time, one of the segments is still
-        missing and the reassembly of the message is not possible.</t>
+        missing and the reassembly of the message is not possible. If the receiver
+        collects a segment more than once, the implementation SHOULD drop the
+        duplicate segment.</t>
       </section>
 
       <section anchor="sec_enc_opt" title="Private Encoding Option">
@@ -786,14 +788,19 @@ module: ietf-udp-notif-transport
             /snr:receiver-instance/snr:transport-type:
     +--:(udp-notif)
        +--rw udp-notif-receiver
-          +--rw remote-address         inet:ip-address-no-zone
-          +--rw remote-port            inet:port-number
+          +--rw remote-address         inet:host
+          +--rw remote-port?           inet:port-number
+          +--rw local-address?         inet:ip-address
+          |       {local-binding-supported}?
+          +--rw local-port?            inet:port-number
+          |       {local-binding-supported}?
           +--rw dtls! {dtls13}?
           |  +--rw client-identity!
           |  |  +--rw (auth-type)
           |  |     +--:(certificate) {client-ident-x509-cert}?
           |  |     |     ...
-          |  |     +--:(raw-public-key) {client-ident-raw-public-key}?
+          |  |     +--:(raw-public-key)
+          |  |     |        {client-ident-raw-public-key}?
           |  |     |     ...
           |  |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
           |  |           ...
@@ -838,7 +845,7 @@ module: ietf-udp-notif-transport
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2024-03-16.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2024-05-27.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -900,7 +907,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2024-03-16 {
+  revision 2024-05-27 {
     description
       "Initial revision";
     reference
@@ -996,7 +1003,11 @@ module ietf-udp-notif-transport {
       container udp-notif-receiver {
         description
           "The UDP-notif receiver to send notifications to.";
-        uses udp-notif-receiver-grouping;
+        uses udp-notif-receiver-grouping {
+          refine remote-port {
+            mandatory true;
+          }
+        }
       }
     }
     description
@@ -1198,8 +1209,8 @@ reference: RFC-to-be]]></artwork>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
-      <t>The authors of this documents would like to thank Alexander Clemm,
-      Benoit Claise, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh
+      <t>The authors of this documents would like to thank Lucas Aubard, Alexander
+      Clemm, Benoit Claise, Ebben Aries, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh
       Jethanandani, Marco Tollini, Hannes Tschofenig, Michael Tuxen, Rob Wilton,
       Sean Turner, Stephane Frenot, Timothy Carey, Tim Jenkins, Tom Petch and
       Yunan Gu for their constructive suggestions for improving this document.</t>

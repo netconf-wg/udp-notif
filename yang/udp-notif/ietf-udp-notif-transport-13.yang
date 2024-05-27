@@ -59,7 +59,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2024-03-16 {
+  revision 2024-05-27 {
     description
       "Initial revision";
     reference
@@ -155,7 +155,11 @@ module ietf-udp-notif-transport {
       container udp-notif-receiver {
         description
           "The UDP-notif receiver to send notifications to.";
-        uses udp-notif-receiver-grouping;
+        uses udp-notif-receiver-grouping {
+          refine remote-port {
+            mandatory true;
+          }
+        }
       }
     }
     description

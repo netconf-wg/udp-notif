@@ -8,6 +8,11 @@ module ietf-udp-client {
     reference
       "RFC 6991: Common YANG Data Types";
   }
+  import ietf-tls-client {
+    prefix tlsc;
+    reference
+      "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
+  }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
   contact
@@ -17,7 +22,15 @@ module ietf-udp-client {
      Authors:  Alex Huang Feng
                <mailto:alex.huang-feng@insa-lyon.fr>
                Pierre Francois
-               <mailto:pierre.francois@insa-lyon.fr>";
+               <mailto:pierre.francois@insa-lyon.fr>
+               Guangying Zheng
+               <mailto:zhengguangying@huawei.com>
+               Tianran Zhou
+               <mailto:zhoutianran@huawei.com>
+               Thomas Graf
+               <mailto:thomas.graf@swisscom.com>
+               Paolo Lucente
+               <mailto:paolo@ntt.net>";
 
   description
     "Defines a generic grouping for UDP-based client applications.
@@ -34,11 +47,20 @@ module ietf-udp-client {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2023-12-04 {
+  revision 2023-05-08 {
     description
       "Initial revision";
     reference
-      "RFC-to-be: YANG Grouping for UDP Clients and UDP Servers";
+      "RFC-to-be: UDP-based Transport for Configured Subscriptions";
+  }
+
+ /*
+  * FEATURES
+  */
+  feature dtls13 {
+    description
+      "This feature indicates that DTLS 1.3 encryption of UDP
+       packets is supported.";
   }
 
   grouping udp-client-grouping {
@@ -58,6 +80,25 @@ module ietf-udp-client {
       mandatory true;
       description
         "Port number of the UDP client.";
+    }
+
+    container dtls {
+      if-feature dtls13;
+      presence dtls;
+      uses tlsc:tls-client-grouping {
+        // Using tls-client-grouping without TLS1.2 parameters
+        // allowing only DTLS 1.3
+        refine "client-identity/auth-type/tls12-psk" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:client-ident-tls12-psk";
+        }
+        refine "server-authentication/tls12-psks" {
+          // create the logical impossibility of enabling TLS1.2
+          if-feature "not tlsc:server-auth-tls12-psk";
+        }
+      }
+      description 
+        "Container for configuring DTLS 1.3 parameters.";
     }
   }
 }
