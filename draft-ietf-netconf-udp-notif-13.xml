@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<!DOCTYPE rfc>
 <?rfc toc="yes"?>
 <?rfc tocompact="yes"?>
 <?rfc tocdepth="3"?>
@@ -11,7 +11,7 @@
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
 <rfc category="std" docName="draft-ietf-netconf-udp-notif-13"
-     ipr="trust200902">
+     ipr="trust200902" consensus="true" submissionType="IETF">
   <front>
     <title abbrev="UDP-Notif">UDP-based Transport for Configured
     Subscriptions</title>
@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="27" month="May" year="2024"/>
+    <date day="17" month="June" year="2024"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -270,10 +270,9 @@
       <t>This section describes how the proposed mechanism can be controlled
       using subscription channels based on NETCONF or RESTCONF.</t>
 
-      <t>As specified in Subscribed Notifications <xref target="RFC8639"/>,
-      configured subscriptions contain the location information of all the
-      receivers, including the IP address and the port number, so that the
-      publisher can actively send UDP-Notif messages to the corresponding
+      <t>As specified in Sub-Notif, configured subscriptions contain the location
+      information of all the receivers, including the IP address and the port number,
+      so that the publisher can actively send UDP-Notif messages to the corresponding
       receivers.</t>
 
       <t>Note that receivers MAY NOT be already up and running when the
@@ -365,8 +364,8 @@
         <t>The Message Header contains the following field:</t>
 
         <t><list style="symbols">
-            <t>Ver indicates the UDP-notif protocol header version. The values
-            are allocated by the IANA registry "UDP-notif header version". The
+            <t>Ver indicates the UDP-Notif protocol header version. The values
+            are allocated by the IANA registry "UDP-Notif header version". The
             current header version number is 1.</t>
 
             <t>S represents the space of media type specified in the MT field.
@@ -374,7 +373,7 @@
             in this document. When S is set, MT represents a private space to
             be freely used for non standard encodings. When S is set, the 
             Private Encoding Option defined in <xref target="sec_enc_opt"/>
-            SHOULD be present in the UDP-notif message header.</t>
+            SHOULD be present in the UDP-Notif message header.</t>
 
             <t>MT is a 4 bit identifier to indicate the media type used for
             the Notification Message. 16 types of encoding can be expressed.
@@ -392,12 +391,12 @@
             <t>Header Len is the length of the message header in octets,
             including both the fixed header and the options.</t>
 
-            <t>Message Length is the total length of the UDP-notif message
+            <t>Message Length is the total length of the UDP-Notif message
             within one UDP datagram, measured in octets, including the message
             header. When the Notification Message is segmented using the
             Segmentation Options defined in <xref target="sec_fragmentation"/>
             the Message Length is the total length of the current, segmented 
-            UDP-notif message, not the length of the entire Notification 
+            UDP-Notif message, not the length of the entire Notification 
             message.</t>
 
             <t>Message Publisher ID is a 32-bit identifier defined in <xref
@@ -482,7 +481,7 @@
           <t>Variable-length data: 0 or more octets of TLV Value.</t>
         </list></t>
 
-      <t>When more than one option is used in the UDP-notif header, options
+      <t>When more than one option is used in the UDP-Notif header, options
       MUST be ordered by the Type value. Messages with unordered options MAY
       be dropped by the Receiver.</t>
 
@@ -667,28 +666,28 @@
       </section>
     </section>
 
-    <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-notif">
-      <t>In unsecured networks, UDP-notif messages MUST be secured or
+    <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-Notif">
+      <t>In unsecured networks, UDP-Notif messages MUST be secured or
       encrypted. In this section, a mechanism using DTLS 1.3 to secure
-      UDP-notif protocol is presented. The following sections defines the
+      UDP-Notif protocol is presented. The following sections defines the
       requirements for the implementation of the secured layer of DTLS for
-      UDP-notif. No DTLS 1.3 extensions are defined in this document.</t>
+      UDP-Notif. No DTLS 1.3 extensions are defined in this document.</t>
 
       <t>The DTLS 1.3 protocol <xref target="RFC9147"/> is designed to meet
       the requirements of applications that need to secure datagram transport.
-      Implementations using DTLS to secure UDP-notif messages MUST use DTLS
+      Implementations using DTLS to secure UDP-Notif messages MUST use DTLS
       1.3 protocol as defined in <xref target="RFC9147"/>.</t>
 
       <t>When this security layer is used, the Publisher MUST always be a DTLS
       client, and the Receiver MUST always be a DTLS server. The Receivers
-      MUST support accepting UDP-notif Messages on the specified UDP port, but
+      MUST support accepting UDP-Notif Messages on the specified UDP port, but
       MAY be configurable to listen on a different port. The Publisher MUST
-      support sending UDP-notif messages to the specified UDP port, but MAY be
+      support sending UDP-Notif messages to the specified UDP port, but MAY be
       configurable to send messages to a different port. The Publisher MAY use
       any source UDP port for transmitting messages.</t>
 
       <section anchor="sec_session_lifecycle" title="Session lifecycle">
-        <t>This section describes the lifecycle of UDP-notif messages when
+        <t>This section describes the lifecycle of UDP-Notif messages when
         they are excrypted using DTLS.</t>
 
         <section title="DTLS Session Initiation">
@@ -702,7 +701,7 @@
           Details can be found in Section 5.1 of <xref target="RFC9147"/>.</t>
 
           <t>When DTLS is implemented, the Publisher MUST NOT send any
-          UDP-notif messages before the DTLS handshake has successfully
+          UDP-Notif messages before the DTLS handshake has successfully
           completed. Early data mechanism (also known as 0-RTT data) as
           defined in <xref target="RFC9147"/> MUST NOT be used.</t>
 
@@ -721,8 +720,8 @@
         </section>
 
         <section title="Publish Data">
-          <t>When DTLS is used, all UDP-notif messages MUST be published as
-          DTLS "application_data". It is possible that multiple UDP-notif
+          <t>When DTLS is used, all UDP-Notif messages MUST be published as
+          DTLS "application_data". It is possible that multiple UDP-Notif
           messages are contained in one DTLS record, or that a publication
           message is transferred in multiple DTLS records. The application
           data is defined with the following ABNF <xref target="RFC5234"/>
@@ -744,12 +743,12 @@
           target="sec_ups_transport"/>.</t>
 
           <t>The Publisher SHOULD attempt to avoid IP fragmentation by using
-          the Segmentation Option in the UDP-notif message.</t>
+          the Segmentation Option in the UDP-Notif message.</t>
         </section>
 
         <section title="Session termination">
           <t>A Publisher MUST close the associated DTLS connection if the
-          connection is not expected to deliver any UDP-notif Messages later.
+          connection is not expected to deliver any UDP-Notif Messages later.
           It MUST send a DTLS close_notify alert before closing the
           connection. A Publisher (DTLS client) MAY choose to not wait for the
           Receiver's close_notify alert and simply close the DTLS connection.
@@ -774,11 +773,19 @@
 
     <section title="A YANG Data Model for Management of UDP-Notif">
 
-      <section title="YANG to configure UDP-notif">
+      <section title="YANG to configure UDP-Notif">
         <t>The YANG model described in <xref target="sec_yang_model"/> defines
-        a new receiver instance for UDP-notif transport. When this transport
+        a new receiver instance for UDP-Notif transport. When this transport
         is used, four new leaves and a dtls container allow configuring
-        UDP-notif receiver parameters.</t>
+        UDP-Notif receiver parameters.</t>
+
+        <t>The source address of the UDP-Notif packet can be configured using the
+        "source-address" leaf at the subscription level as defined in
+        <xref target="RFC8639" section="2.5" sectionFormat="of"/> or by setting 
+        the leaf "local-address" using the YANG model proposed in this document.
+        When both are configured, the UDP-Notif message MUST use the address configured
+        in the "local-address" leaf defined in the YANG proposed in this document.
+        </t>
 
         <t><figure>
             <artwork><![CDATA[
@@ -835,7 +842,7 @@ module: ietf-udp-notif-transport
       <section anchor="sec_yang_model" title="YANG Module">
         <t>This YANG module is used to configure, on a publisher, a receiver
         willing to consume notification messages. This module augments the
-        "ietf-subscribed-notif-receivers" module to define a UDP-notif
+        "ietf-subscribed-notif-receivers" module to define a UDP-Notif
         transport receiver. The grouping "udp-notif-receiver-grouping" defines
         the necessary parameters to configure the transport defined in this
         document using the generic "udp-client-grouping" grouping from the 
@@ -1002,7 +1009,7 @@ module ietf-udp-notif-transport {
     case udp-notif {
       container udp-notif-receiver {
         description
-          "The UDP-notif receiver to send notifications to.";
+          "The UDP-Notif receiver to send notifications to.";
         uses udp-notif-receiver-grouping {
           refine remote-port {
             mandatory true;
@@ -1025,9 +1032,9 @@ module ietf-udp-notif-transport {
       XML Registry and the registration of a two new YANG module names.</t>
 
       <section title="IANA registries">
-        <t>This document is creating 3 registries called "UDP-notif media
-        types", "UDP-notif option types", and "UDP-notif header version" under
-        the new group "UDP-notif protocol". The registration procedure is made
+        <t>This document is creating 3 registries called "UDP-Notif media
+        types", "UDP-Notif option types", and "UDP-Notif header version" under
+        the new group "UDP-Notif protocol". The registration procedure is made
         using the Standards Action process defined in <xref
         target="RFC8126"/>.</t>
 
@@ -1035,13 +1042,13 @@ module ietf-udp-notif-transport {
 
         <t><figure>
             <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif media types
-  Registry Category: UDP-notif protocol.
+  Registry Name: UDP-Notif media types
+  Registry Category: UDP-Notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 15]]></artwork>
           </figure></t>
 
-        <t>These are the initial registrations for "UDP-notif media
+        <t>These are the initial registrations for "UDP-Notif media
         types":</t>
 
         <t><figure>
@@ -1076,13 +1083,13 @@ module ietf-udp-notif-transport {
 
         <t><figure>
             <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif option types
-  Registry Category: UDP-notif protocol.
+  Registry Name: UDP-Notif option types
+  Registry Category: UDP-Notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 255]]></artwork>
           </figure></t>
 
-        <t>These are the initial registrations for "UDP-notif options
+        <t>These are the initial registrations for "UDP-Notif options
         types":</t>
 
         <t><figure>
@@ -1110,13 +1117,13 @@ module ietf-udp-notif-transport {
 
         <t><figure>
             <artwork align="left"><![CDATA[
-  Registry Name: UDP-notif header version
-  Registry Category: UDP-notif protocol.
+  Registry Name: UDP-Notif header version
+  Registry Category: UDP-Notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 7]]></artwork>
           </figure></t>
 
-        <t>These are the initial registrations for "UDP-notif header
+        <t>These are the initial registrations for "UDP-Notif header
         version":</t>
 
         <t><figure>
@@ -1312,16 +1319,16 @@ reference: RFC-to-be]]></artwork>
       </reference>
     </references>
 
-    <section anchor="example" title="UDP-notif Examples">
+    <section anchor="example" title="UDP-Notif Examples">
       <t>This non-normative section shows two examples of how the the
       "ietf-udp-notif-transport" YANG module can be used to configure a <xref
       target="RFC8639"/> based publisher to send notifications to a receiver
-      and an example of a YANG Push notification message using UDP-notif
+      and an example of a YANG Push notification message using UDP-Notif
       transport protocol.</t>
 
       <section anchor="example_no_dtls"
-               title="Configuration for UDP-notif transport with DTLS disabled">
-        <t>This example shows how UDP-notif can be configured without DTLS
+               title="Configuration for UDP-Notif transport with DTLS disabled">
+        <t>This example shows how UDP-Notif can be configured without DTLS
         encryption.</t>
 
         <t><figure>
@@ -1372,8 +1379,8 @@ udp-notif-transport">
       </section>
 
       <section anchor="example_dtls"
-               title="Configuration for UDP-notif transport with DTLS enabled">
-        <t>This example shows how UDP-notif can be configured with DTLS
+               title="Configuration for UDP-Notif transport with DTLS enabled">
+        <t>This example shows how UDP-Notif can be configured with DTLS
         encryption.</t>
 
         <t><figure>
@@ -1489,14 +1496,14 @@ rmat</public-key-format>
       </section>
 
       <section anchor="example_yp_message"
-               title="YANG Push message with UDP-notif transport protocol">
-        <t>This example shows how UDP-notif is used as a transport protocol to
+               title="YANG Push message with UDP-Notif transport protocol">
+        <t>This example shows how UDP-Notif is used as a transport protocol to
         send a "push-update" notification <xref target="RFC8641"/> encoded in
         JSON <xref target="RFC7951"/>.</t>
 
         <t>Assuming the publisher needs to send the JSON payload showed in
-        <xref target="fig_ex_json_payload"/>, the UDP-notif transport is
-        encoded following the <xref target="fig_udp_notif_ex"/>. The UDP-notif
+        <xref target="fig_ex_json_payload"/>, the UDP-Notif transport is
+        encoded following the <xref target="fig_udp_notif_ex"/>. The UDP-Notif
         message is then encapsulated in a UDP frame.</t>
 
         <t><figure anchor="fig_ex_json_payload"
@@ -1524,7 +1531,7 @@ rmat</public-key-format>
           </figure></t>
 
         <t><figure anchor="fig_udp_notif_ex"
-            title="UDP-notif transport message">
+            title="UDP-Notif transport message">
             <artwork align="center"><![CDATA[
   0                   1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
