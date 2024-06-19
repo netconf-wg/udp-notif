@@ -779,7 +779,7 @@
         is used, four new leaves and a dtls container allow configuring
         UDP-Notif receiver parameters.</t>
 
-        <t>The source address of the UDP-Notif packet can be configured using the
+        <t>The source address of the UDP-Notif message can be configured using the
         "source-address" leaf at the subscription level as defined in
         <xref target="RFC8639" section="2.5" sectionFormat="of"/> or by setting 
         the leaf "local-address" using the YANG model proposed in this document.
@@ -852,7 +852,7 @@ module: ietf-udp-notif-transport
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2024-05-27.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2024-06-19.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -914,7 +914,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2024-05-27 {
+  revision 2024-06-19 {
     description
       "Initial revision";
     reference
@@ -963,7 +963,11 @@ module ietf-udp-notif-transport {
       "Provides a reusable description of a UDP-Notif target
       receiver.";
 
-    uses udpc:udp-client-grouping;
+    uses udpc:udp-client-grouping {
+      refine remote-port {
+        default 10000;
+      }
+    }
 
     container dtls {
       if-feature dtls13;
@@ -1009,12 +1013,8 @@ module ietf-udp-notif-transport {
     case udp-notif {
       container udp-notif-receiver {
         description
-          "The UDP-Notif receiver to send notifications to.";
-        uses udp-notif-receiver-grouping {
-          refine remote-port {
-            mandatory true;
-          }
-        }
+          "The UDP-notif receiver to send notifications to.";
+        uses udp-notif-receiver-grouping;
       }
     }
     description
@@ -1029,7 +1029,8 @@ module ietf-udp-notif-transport {
 
     <section anchor="IANA" title="IANA Considerations">
       <t>This document describes several new registries, the URIs from IETF
-      XML Registry and the registration of a two new YANG module names.</t>
+      XML Registry, the registration of a new YANG module names and the registration
+      of a UDP port number.</t>
 
       <section title="IANA registries">
         <t>This document is creating 3 registries called "UDP-Notif media
@@ -1040,105 +1041,105 @@ module ietf-udp-notif-transport {
 
         <t>The first requested registry is the following:</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Registry Name: UDP-Notif media types
   Registry Category: UDP-Notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 15]]></artwork>
-          </figure></t>
+          </figure>
 
         <t>These are the initial registrations for "UDP-Notif media
         types":</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: 0
   Description: Reserved
   Reference: RFC-to-be]]></artwork>
-          </figure></t>
+          </figure>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: 1
   Description: media type application/yang-data+json
   Reference: <xref target="RFC8040"/>]]></artwork>
-          </figure></t>
+          </figure>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: 2
   Description: media type application/yang-data+xml
   Reference: <xref target="RFC8040"/>]]></artwork>
-          </figure></t>
+          </figure>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: 3
   Description: media type application/yang-data+cbor
   Reference: <xref target="RFC9254"/>]]></artwork>
-          </figure></t>
+          </figure>
 
         <t>The second requested registry is the following:</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Registry Name: UDP-Notif option types
   Registry Category: UDP-Notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 255]]></artwork>
-          </figure></t>
+          </figure>
 
         <t>These are the initial registrations for "UDP-Notif options
         types":</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: 0
   Description: Reserved
   Reference: RFC-to-be]]></artwork>
-          </figure></t>
+          </figure>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: TBD1 (suggested value: 1)
   Description: Segmentation Option
   Reference: RFC-to-be]]></artwork>
-          </figure></t>
+          </figure>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: TBD2 (suggested value: 2)
   Description: Private Encoding Option
   Reference: RFC-to-be]]></artwork>
-          </figure></t>
+          </figure>
 
         <t>The third requested registry is the following:</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Registry Name: UDP-Notif header version
   Registry Category: UDP-Notif protocol.
   Registration Procedure: Standard Action as defined in RFC8126
   Maximum value: 7]]></artwork>
-          </figure></t>
+          </figure>
 
         <t>These are the initial registrations for "UDP-Notif header
         version":</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: 0
   Description: UDP based Publication Channel for Streaming Telemetry
   Reference: draft-ietf-netconf-udp-pub-channel-05]]></artwork>
-          </figure></t>
+          </figure>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
   Value: 1
   Description: UDP-based Transport for Configured Subscriptions.
   Reference: RFC-to-be]]></artwork>
-          </figure></t>
+          </figure>
       </section>
 
       <section title="URI">
@@ -1146,26 +1147,47 @@ module ietf-udp-notif-transport {
         target="RFC3688">IETF XML Registry</xref>. The following two URIs are
         suggested:</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
-URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
-Registrant Contact: The IESG.
-XML: N/A; the requested URI is an XML namespace.]]></artwork>
-          </figure></t>
+  URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
+  Registrant Contact: The IESG.
+  XML: N/A; the requested URI is an XML namespace.]]></artwork>
+          </figure>
       </section>
 
       <section title="YANG module name">
-        <t>This document also requests a two new YANG module names in the
+        <t>This document also requests a new YANG module names in the
         <xref target="RFC8342">YANG Module Names registry</xref> with the
         following suggestions:</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
-name: ietf-udp-notif-transport
-namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
-prefix: unt
-reference: RFC-to-be]]></artwork>
-          </figure></t>
+  name: ietf-udp-notif-transport
+  namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
+  prefix: unt
+  reference: RFC-to-be]]></artwork>
+        </figure>
+      </section>
+
+      <section title="Default Port number">
+
+        <t>This document also requests that IANA assigns one UDP port number in the
+        "Registered Port Numbers" range with the service name "UDP-Notif". This
+        port will be the default port for the UDP-based Transport for Configured
+        Subscriptions (UDP-Notif). Below is the
+        registration template following the rules of <xref
+        target="RFC6335"/>.</t>
+
+        <figure>
+            <artwork align="left"><![CDATA[
+  Service Name: UDP-Notif
+  Transport Protocol(s): UDP
+  Assignee: IESG &lt;iesg@ietf.org&gt;
+  Contact: IETF Chair &lt;chair@ietf.org&gt;
+  Description: UDP-based Transport for Configured Subscriptions
+  Reference: RFC-to-be
+  Port Number: TBD3]]></artwork>
+        </figure>
       </section>
     </section>
 
@@ -1226,33 +1248,35 @@ reference: RFC-to-be]]></artwork>
 
   <back>
     <references title="Normative References">
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
+      <?rfc include='https://xml.resource.org/public/rfc/bibxml/reference.RFC.3688.xml'?>
 
-      <?rfc include='http://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
+      <?rfc include='https://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6335.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8085.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8126.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8639.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8640.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8639.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8650.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8640.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8650.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9254.xml"?>
+
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9147.xml"?>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-tls-client-server.xml"?>
 
