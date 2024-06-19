@@ -1144,7 +1144,7 @@ module ietf-udp-notif-transport {
 
       <section title="URI">
         <t>IANA is also requested to assign a two new URI from the <xref
-        target="RFC3688">IETF XML Registry</xref>. The following two URIs are
+        target="RFC3688">IETF XML Registry</xref>. The following URI is
         suggested:</t>
 
         <figure>
@@ -1182,8 +1182,8 @@ module ietf-udp-notif-transport {
             <artwork align="left"><![CDATA[
   Service Name: UDP-Notif
   Transport Protocol(s): UDP
-  Assignee: IESG &lt;iesg@ietf.org&gt;
-  Contact: IETF Chair &lt;chair@ietf.org&gt;
+  Assignee: IESG <iesg@ietf.org>;
+  Contact: IETF Chair <chair@ietf.org>;
   Description: UDP-based Transport for Configured Subscriptions
   Reference: RFC-to-be
   Port Number: TBD3]]></artwork>

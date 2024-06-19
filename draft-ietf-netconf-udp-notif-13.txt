@@ -1146,7 +1146,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 8.2.  URI
 
    IANA is also requested to assign a two new URI from the IETF XML
-   Registry [RFC3688].  The following two URIs are suggested:
+   Registry [RFC3688].  The following URI is suggested:
 
      URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
      Registrant Contact: The IESG.
@@ -1180,8 +1180,8 @@ Internet-Draft                  UDP-Notif                      June 2024
 
      Service Name: UDP-Notif
      Transport Protocol(s): UDP
-     Assignee: IESG &lt;iesg@ietf.org&gt;
-     Contact: IETF Chair &lt;chair@ietf.org&gt;
+     Assignee: IESG <iesg@ietf.org>;
+     Contact: IETF Chair <chair@ietf.org>;
      Description: UDP-based Transport for Configured Subscriptions
      Reference: RFC-to-be
      Port Number: TBD3
