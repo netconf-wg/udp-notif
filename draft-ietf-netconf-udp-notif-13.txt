@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 19 December 2024                                        T. Graf
+Expires: 29 December 2024                                        T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                            17 June 2024
+                                                            27 June 2024
 
 
             UDP-based Transport for Configured Subscriptions
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 1]
+Zheng, et al.           Expires 29 December 2024                [Page 1]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
 
-   This Internet-Draft will expire on 19 December 2024.
+   This Internet-Draft will expire on 29 December 2024.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 2]
+Zheng, et al.           Expires 29 December 2024                [Page 2]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -165,7 +165,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 3]
+Zheng, et al.           Expires 29 December 2024                [Page 3]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -221,7 +221,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 4]
+Zheng, et al.           Expires 29 December 2024                [Page 4]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -277,7 +277,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 5]
+Zheng, et al.           Expires 29 December 2024                [Page 5]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -333,7 +333,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 6]
+Zheng, et al.           Expires 29 December 2024                [Page 6]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -389,7 +389,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 7]
+Zheng, et al.           Expires 29 December 2024                [Page 7]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -445,7 +445,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 8]
+Zheng, et al.           Expires 29 December 2024                [Page 8]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -501,7 +501,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024                [Page 9]
+Zheng, et al.           Expires 29 December 2024                [Page 9]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -557,7 +557,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 10]
+Zheng, et al.           Expires 29 December 2024               [Page 10]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -613,7 +613,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 11]
+Zheng, et al.           Expires 29 December 2024               [Page 11]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -669,7 +669,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 12]
+Zheng, et al.           Expires 29 December 2024               [Page 12]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -725,7 +725,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 13]
+Zheng, et al.           Expires 29 December 2024               [Page 13]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -781,7 +781,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 14]
+Zheng, et al.           Expires 29 December 2024               [Page 14]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -837,7 +837,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 15]
+Zheng, et al.           Expires 29 December 2024               [Page 15]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -893,7 +893,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 16]
+Zheng, et al.           Expires 29 December 2024               [Page 16]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -949,7 +949,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 17]
+Zheng, et al.           Expires 29 December 2024               [Page 17]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 18]
+Zheng, et al.           Expires 29 December 2024               [Page 18]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 19]
+Zheng, et al.           Expires 29 December 2024               [Page 19]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 20]
+Zheng, et al.           Expires 29 December 2024               [Page 20]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 21]
+Zheng, et al.           Expires 29 December 2024               [Page 21]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 22]
+Zheng, et al.           Expires 29 December 2024               [Page 22]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 23]
+Zheng, et al.           Expires 29 December 2024               [Page 23]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 24]
+Zheng, et al.           Expires 29 December 2024               [Page 24]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 25]
+Zheng, et al.           Expires 29 December 2024               [Page 25]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1453,7 +1453,7 @@ Appendix A.  UDP-Notif Examples
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 26]
+Zheng, et al.           Expires 29 December 2024               [Page 26]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1509,7 +1509,7 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 27]
+Zheng, et al.           Expires 29 December 2024               [Page 27]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1565,7 +1565,7 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 28]
+Zheng, et al.           Expires 29 December 2024               [Page 28]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 29]
+Zheng, et al.           Expires 29 December 2024               [Page 29]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1677,7 +1677,7 @@ A.3.  YANG Push message with UDP-Notif transport protocol
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 30]
+Zheng, et al.           Expires 29 December 2024               [Page 30]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1733,7 +1733,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 31]
+Zheng, et al.           Expires 29 December 2024               [Page 31]
 
 Internet-Draft                  UDP-Notif                      June 2024
 
@@ -1789,4 +1789,4 @@ Internet-Draft                  UDP-Notif                      June 2024
 
 
 
-Zheng, et al.           Expires 19 December 2024               [Page 32]
+Zheng, et al.           Expires 29 December 2024               [Page 32]
