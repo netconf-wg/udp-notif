@@ -28,14 +28,14 @@ module ietf-tls-common {
     "WG List:  NETCONF WG list <mailto:netconf@ietf.org>
      WG Web:   https://datatracker.ietf.org/wg/netconf
      Author:   Kent Watsen <mailto:kent+ietf@watsen.net>
-     Author:   Jeff Hartley <mailto:jeff.hartley@commscope.com>
+     Author:   Jeff Hartley <mailto:intensifysecurity@gmail.com>
      Author:   Gary Wu <mailto:garywu@cisco.com>";
 
    description
     "This module defines a common features and groupings for
      Transport Layer Security (TLS).
 
-     Copyright (c) 2022 IETF Trust and the persons identified
+     Copyright (c) 2024 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
@@ -56,7 +56,7 @@ module ietf-tls-common {
      (RFC 8174) when, and only when, they appear in all
      capitals, as shown here.";
 
-  revision 2022-07-18 {
+  revision 2024-03-16 {
     description
       "Initial version";
     reference
@@ -65,29 +65,9 @@ module ietf-tls-common {
 
   // Features
 
-  feature tls10 {
-    status "obsolete";
-    description
-      "TLS Protocol Version 1.0 is supported.  TLS 1.0 is obsolete
-       and thus it is NOT RECOMMENDED to enable this feature.";
-    reference
-      "RFC 2246: The TLS Protocol Version 1.0";
-  }
-
-  feature tls11 {
-    status "obsolete";
-    description
-      "TLS Protocol Version 1.1 is supported.  TLS 1.1 is obsolete
-       and thus it is NOT RECOMMENDED to enable this feature.";
-    reference
-      "RFC 4346: The Transport Layer Security (TLS) Protocol
-                 Version 1.1";
-  }
-
   feature tls12 {
-    status "deprecated";
     description
-      "TLS Protocol Version 1.2 is supported  TLS 1.2 is obsolete
+      "TLS Protocol Version 1.2 is supported. TLS 1.2 is obsolete
        and thus it is NOT RECOMMENDED to enable this feature.";
     reference
       "RFC 5246: The Transport Layer Security (TLS) Protocol
@@ -107,10 +87,16 @@ module ietf-tls-common {
       "TLS hello message parameters are configurable.";
   }
 
-  feature public-key-generation {
+  feature algorithm-discovery {
     description
       "Indicates that the server implements the
-       'generate-public-key' RPC.";
+       'supported-algorithms' container.";
+  }
+
+  feature asymmetric-key-pair-generation {
+    description
+      "Indicates that the server implements the
+       'generate-asymmetric-key-pair' RPC.";
   }
 
   // Identities
@@ -120,31 +106,9 @@ module ietf-tls-common {
       "Base identity used to identify TLS protocol versions.";
   }
 
-  identity tls10 {
-    if-feature "tls10";
-    base tls-version-base;
-    status "obsolete";
-    description
-      "TLS Protocol Version 1.0.";
-    reference
-      "RFC 2246: The TLS Protocol Version 1.0";
-  }
-
-  identity tls11 {
-    if-feature "tls11";
-    base tls-version-base;
-    status "obsolete";
-    description
-      "TLS Protocol Version 1.1.";
-    reference
-      "RFC 4346: The Transport Layer Security (TLS) Protocol
-                 Version 1.1";
-  }
-
   identity tls12 {
     if-feature "tls12";
     base tls-version-base;
-    status "deprecated";
     description
       "TLS Protocol Version 1.2.";
     reference
@@ -161,6 +125,8 @@ module ietf-tls-common {
       "RFC 8446: The Transport Layer Security (TLS)
                  Protocol Version 1.3";
   }
+
+  // Typedefs
 
   typedef epsk-supported-hash {
     type enumeration {
@@ -179,11 +145,7 @@ module ietf-tls-common {
        Key (EPSK).";
     reference
       "RFC 8446: The Transport Layer Security (TLS)
-                 Protocol Version 1.3
-       I-D.ietf-tls-external-psk-importer: Importing
-                 External PSKs for TLS
-       I-D.ietf-tls-external-psk-guidance: Guidance
-                 for External PSK Usage in TLS";
+                 Protocol Version 1.3";
   }
 
   // Groupings
@@ -198,26 +160,31 @@ module ietf-tls-common {
                  Version 1.3";
     container tls-versions {
       description
-        "Parameters regarding TLS versions.";
-      leaf-list tls-version {
+        "Parameters limiting which TLS versions, amongst
+         those enabled by 'features', are presented during
+         the TLS handshake.";
+      leaf min {
         type identityref {
           base tls-version-base;
         }
         description
-          "Acceptable TLS protocol versions.
-
-           If this leaf-list is not configured (has zero elements)
-           the acceptable TLS protocol versions are implementation-
-           defined.";
+          "If not specified, then there is no configured
+           minimum version.";
+      }
+      leaf max {
+        type identityref {
+          base tls-version-base;
+        }
+        description
+          "If not specified, then there is no configured
+           maximum version.";
       }
     }
     container cipher-suites {
       description
         "Parameters regarding cipher suites.";
       leaf-list cipher-suite {
-        type identityref {
-          base tlscsa:cipher-suite-alg-base;
-        }
+        type tlscsa:tls-cipher-suite-algorithm;
         ordered-by user;
         description
           "Acceptable cipher suites in order of descending
@@ -235,14 +202,29 @@ module ietf-tls-common {
     }
   } // hello-params-grouping
 
-  rpc generate-public-key {
-    if-feature "public-key-generation";
+  // Protocol-accessible Nodes
+
+  container supported-algorithms {
+    if-feature "algorithm-discovery";
+    config false;
     description
-      "Requests the device to generate an public key using
-       the specified key algorithm.";
+      "A container for a list of cipher suite algorithms supported
+       by the server.";
+    leaf-list supported-algorithm {
+      type tlscsa:tls-cipher-suite-algorithm;
+      description
+        "A cipher suite algorithm supported by the server.";
+    }
+  }
+
+  rpc generate-asymmetric-key-pair {
+    if-feature "asymmetric-key-pair-generation";
+    description
+      "Requests the device to generate an asymmetric-key-pair
+       key using the specified key algorithm.";
     input {
       leaf algorithm {
-        type tlscsa:cipher-suite-algorithm-ref;
+        type tlscsa:tls-cipher-suite-algorithm;
         mandatory true;
         description
           "The cipher suite algorithm that the generated key is
@@ -251,7 +233,7 @@ module ietf-tls-common {
            cipher suite 'tls-rsa-with-aes-256-cbc-sha256' maps
            to the RSA public key.";
       }
-      leaf bits {
+      leaf num-bits {
         type uint16;
         description
           "Specifies the number of bits in the key to create.
@@ -259,53 +241,73 @@ module ietf-tls-common {
            the default is 3072 bits. Generally, 3072 bits is
            considered sufficient. DSA keys must be exactly 1024
            bits as specified by FIPS 186-2.  For elliptical
-           keys, the 'bits' value determines the key length
+           keys, the 'num-bits' value determines the key length
            of the curve (e.g., 256, 384 or 521), where valid
            values supported by the server are conveyed via an
            unspecified mechanism.  For some public algorithms,
-           the keys have a fixed length and the 'bits' value,
-           if specified, will be ignored.";
+           the keys have a fixed length and thus the 'num-bits'
+           value is not specified.";
       }
-      choice private-key-encoding {
-        default cleartext;
+      container private-key-encoding {
         description
-          "A choice amongst optional private key handling.";
-        case cleartext {
-          leaf cleartext {
-            type empty;
-            description
-              "Indicates that the private key is to be returned
-               as a cleartext value.";
+          "Indicates how the private key is to be encoded.";
+        choice private-key-encoding {
+          mandatory true;
+          description
+            "A choice amongst optional private key handling.";
+          case cleartext {
+            if-feature "ct:cleartext-private-keys";
+            leaf cleartext {
+              type empty;
+              description
+                "Indicates that the private key is to be returned
+                 as a cleartext value.";
+            }
           }
-        }
-        case encrypt {
-          if-feature "ct:private-key-encryption";
-          container encrypt-with {
-            description
-               "Indicates that the key is to be encrypted using
-                the specified symmetric or asymmetric key.";
-            uses ks:encrypted-by-choice-grouping;
+          case encrypted {
+            if-feature "ct:encrypted-private-keys";
+            container encrypted {
+              description
+                 "Indicates that the key is to be encrypted using
+                  the specified symmetric or asymmetric key.";
+              uses ks:encrypted-by-grouping;
+            }
           }
-        }
-        case hide {
-          if-feature "ct:hidden-keys";
-          leaf hide {
-            type empty;
-            description
-              "Indicates that the private key is to be hidden.
+          case hidden {
+            if-feature "ct:hidden-private-keys";
+            leaf hidden {
+              type empty;
+              description
+                "Indicates that the private key is to be hidden.
 
-               Unlike the 'cleartext' and 'encrypt' options, the
-               key returned is a placeholder for an internally
-               stored key.  See the 'Support for Built-in Keys'
-               section in RFC CCCC for information about hidden
-               keys.";
+                 Unlike the 'cleartext' and 'encrypt' options, the
+                 key returned is a placeholder for an internally
+                 stored key.  See the 'Support for Built-in Keys'
+                 section in RFC CCCC for information about hidden
+                 keys.";
+            }
           }
         }
       }
     }
     output {
-      uses ct:asymmetric-key-pair-grouping;
+      choice key-or-hidden {
+        case key {
+          uses ct:asymmetric-key-pair-grouping;
+        }
+        case hidden {
+          leaf location {
+            type instance-identifier;
+            description
+              "The location to where a hidden key was created.";
+          }
+        }
+        description
+          "The output can be either a key (for cleartext and
+           encrypted keys) or the location to where the key
+           was created (for hidden keys).";
+      }
     }
-  } // end generate-public-key
+  } // end generate-asymmetric-key-pair
 
 }

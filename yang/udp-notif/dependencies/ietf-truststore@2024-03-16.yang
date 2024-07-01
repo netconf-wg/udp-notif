@@ -22,11 +22,12 @@ module ietf-truststore {
     "WG Web  : https://datatracker.ietf.org/wg/netconf
      WG List : NETCONF WG list <mailto:netconf@ietf.org>
      Author  : Kent Watsen <kent+ietf@watsen.net>";
+
   description
     "This module defines a 'truststore' to centralize management
      of trust anchors including certificates and public keys.
 
-     Copyright (c) 2021 IETF Trust and the persons identified
+     Copyright (c) 2024 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
@@ -47,7 +48,7 @@ module ietf-truststore {
      (RFC 8174) when, and only when, they appear in all
      capitals, as shown here.";
 
-  revision 2022-05-24 {
+  revision 2024-03-16 {
     description
       "Initial version";
     reference
@@ -65,11 +66,12 @@ module ietf-truststore {
        'ietf-truststore' module).";
   }
 
-  feature local-definitions-supported {
+  feature inline-definitions-supported {
     description
-      "The 'local-definitions-supported' feature indicates that
+      "The 'inline-definitions-supported' feature indicates that
        the server supports locally-defined trust anchors.";
   }
+
   feature certificates {
     description
       "The 'certificates' feature indicates that the server
@@ -86,77 +88,129 @@ module ietf-truststore {
   /*   Typedefs   */
   /****************/
 
-  typedef certificate-bag-ref {
+  typedef central-certificate-bag-ref {
     type leafref {
       path "/ts:truststore/ts:certificate-bags/"
          + "ts:certificate-bag/ts:name";
     }
     description
       "This typedef defines a reference to a certificate bag
-       in the truststore, when this module is implemented.";
+       in the central truststore.";
   }
 
-  typedef certificate-ref {
+  typedef central-certificate-ref {
     type leafref {
       path "/ts:truststore/ts:certificate-bags/ts:certificate-bag"
-         + "[ts:name = current()/../ts:certificate-bag]/"
+         + "[ts:name = current()/../certificate-bag]/"
          + "ts:certificate/ts:name";
     }
     description
       "This typedef defines a reference to a specific certificate
-       in a certificate bag in the truststore, when this module
-       is implemented.  This typedef requires that there exist a
-       sibling 'leaf' node called 'certificate-bag' that SHOULD
-       have the typedef 'certificate-bag-ref'.";
+       in a certificate bag in the central truststore. This typedef
+       requires that there exist a sibling 'leaf' node called
+       'certificate-bag' that SHOULD have the typedef
+       'central-certificate-bag-ref'.";
   }
 
-  typedef public-key-bag-ref {
+  typedef central-public-key-bag-ref {
     type leafref {
       path "/ts:truststore/ts:public-key-bags/"
          + "ts:public-key-bag/ts:name";
     }
     description
       "This typedef defines a reference to a public key bag
-       in the truststore, when this module is implemented.";
+       in the central truststore.";
   }
 
-  typedef public-key-ref {
+  typedef central-public-key-ref {
     type leafref {
       path "/ts:truststore/ts:public-key-bags/ts:public-key-bag"
-         + "[ts:name = current()/../ts:public-key-bag]/"
+         + "[ts:name = current()/../public-key-bag]/"
          + "ts:public-key/ts:name";
     }
     description
       "This typedef defines a reference to a specific public key
-       in a public key bag in the truststore, when this module is
-       implemented.  This typedef requires that there exist a
-       sibling 'leaf' node called 'public-key-bag' that SHOULD
-       have the typedef 'public-key-bag-ref'.";
+       in a public key bag in the truststore.  This typedef
+       requires that there exist a sibling 'leaf' node called
+       'public-key-bag' that SHOULD have the typedef
+       'central-public-key-bag-ref'.";
   }
 
   /*****************/
   /*   Groupings   */
   /*****************/
 
-  grouping local-or-truststore-certs-grouping {
-    description
-      "A grouping that allows the certificates to be either
-       configured locally, within the using data model, or be a
-       reference to a certificate bag stored in the truststore.
+  // *-ref groupings
 
-       Servers that do not 'implement' this module, and hence
-       'central-truststore-supported' is not defined, SHOULD
-       augment in custom 'case' statements enabling references
-       to the alternate truststore locations.";
-    choice local-or-truststore {
+  grouping central-certificate-ref-grouping {
+    description
+      "Grouping for the reference to a certificate in a
+       certificate-bag in the central truststore.";
+    leaf certificate-bag {
+      nacm:default-deny-write;
+      if-feature "central-truststore-supported";
+      if-feature "certificates";
+      type ts:central-certificate-bag-ref;
+      must "../certificate";
+      description
+        "Reference to a certificate-bag in the truststore.";
+    }
+    leaf certificate {
+      nacm:default-deny-write;
+      if-feature "central-truststore-supported";
+      if-feature "certificates";
+      type ts:central-certificate-ref;
+      must "../certificate-bag";
+      description
+        "Reference to a specific certificate in the
+         referenced certificate-bag.";
+    }
+  }
+
+  grouping central-public-key-ref-grouping {
+    description
+      "Grouping for the reference to a public key in a
+       public-key-bag in the central truststore.";
+    leaf public-key-bag {
+      nacm:default-deny-write;
+      if-feature "central-truststore-supported";
+      if-feature "public-keys";
+      type ts:central-public-key-bag-ref;
+      description
+        "Reference of a public key bag in the truststore including
+         the certificate to authenticate the TLS client.";
+    }
+    leaf public-key {
+      nacm:default-deny-write;
+      if-feature "central-truststore-supported";
+      if-feature "public-keys";
+      type ts:central-public-key-ref;
+      description
+        "Reference to a specific public key in the
+         referenced public-key-bag.";
+    }
+  }
+
+  // inline-or-truststore-* groupings
+
+  grouping inline-or-truststore-certs-grouping {
+    description
+      "A grouping for the configuration of a list of certificates.
+       The list of certificate may be defined inline or as a
+       reference to a certificate bag in the central truststore.
+
+       Servers that wish to define alternate truststore locations
+       MUST augment in custom 'case' statements enabling
+       references to those alternate truststore locations.";
+    choice inline-or-truststore {
       nacm:default-deny-write;
       mandatory true;
       description
         "A choice between an inlined definition and a definition
          that exists in the truststore.";
-      case local {
-        if-feature "local-definitions-supported";
-        container local-definition {
+      case inline {
+        if-feature "inline-definitions-supported";
+        container inline-definition {
           description
             "A container for locally configured trust anchor
              certificates.";
@@ -164,7 +218,7 @@ module ietf-truststore {
             key "name";
             min-elements 1;
             description
-              "A trust anchor certificate.";
+              "A trust anchor certificate or chain of certificates.";
             leaf name {
               type string;
               description
@@ -178,38 +232,37 @@ module ietf-truststore {
           }
         }
       }
-      case truststore {
+      case central-truststore {
         if-feature "central-truststore-supported";
         if-feature "certificates";
-        leaf truststore-reference {
-          type ts:certificate-bag-ref;
+        leaf central-truststore-reference {
+          type ts:central-certificate-bag-ref;
           description
             "A reference to a certificate bag that exists in the
-             truststore, when this module is implemented.";
+             central truststore.";
         }
       }
     }
   }
 
-  grouping local-or-truststore-public-keys-grouping {
+  grouping inline-or-truststore-public-keys-grouping {
     description
       "A grouping that allows the public keys to be either
        configured locally, within the using data model, or be a
        reference to a public key bag stored in the truststore.
 
-       Servers that do not 'implement' this module, and hence
-       'central-truststore-supported' is not defined, SHOULD
-       augment in custom 'case' statements enabling references
-       to the alternate truststore locations.";
-    choice local-or-truststore {
+       Servers that wish to define alternate truststore locations
+       SHOULD augment in custom 'case' statements enabling
+       references to those alternate truststore locations.";
+    choice inline-or-truststore {
       nacm:default-deny-write;
       mandatory true;
       description
         "A choice between an inlined definition and a definition
          that exists in the truststore.";
-      case local {
-        if-feature "local-definitions-supported";
-        container local-definition {
+      case inline {
+        if-feature "inline-definitions-supported";
+        container inline-definition {
           description
             "A container to hold local public key definitions.";
           list public-key {
@@ -225,24 +278,26 @@ module ietf-truststore {
           }
         }
       }
-      case truststore {
+      case central-truststore {
         if-feature "central-truststore-supported";
         if-feature "public-keys";
-        leaf truststore-reference {
-          type ts:public-key-bag-ref;
+        leaf central-truststore-reference {
+          type ts:central-public-key-bag-ref;
           description
             "A reference to a bag of public keys that exists
-             in the truststore, when this module is implemented.";
+             in the central truststore.";
         }
       }
     }
   }
 
+  // the truststore grouping
+
   grouping truststore-grouping {
     description
       "A grouping definition that enables use in other contexts.
        Where used, implementations MUST augment new 'case'
-       statements into the various local-or-truststore 'choice'
+       statements into the various inline-or-truststore 'choice'
        statements to supply leafrefs to the model-specific
        location(s).";
     container certificate-bags {
@@ -253,7 +308,7 @@ module ietf-truststore {
       list certificate-bag {
         key "name";
         description
-          "A bag of certificates.  Each bag of certificates SHOULD
+          "A bag of certificates.  Each bag of certificates should
            be for a specific purpose.  For instance, one bag could
            be used to authenticate a specific set of servers, while
            another could be used to authenticate a specific set of
@@ -272,7 +327,7 @@ module ietf-truststore {
         list certificate {
           key "name";
           description
-            "A trust anchor certificate.";
+            "A trust anchor certificate or chain of certificates.";
           leaf name {
             type string;
             description
@@ -307,7 +362,7 @@ module ietf-truststore {
           type string;
           description
             "A description for this bag public keys.  The
-             intended purpose for the bag SHOULD be described.";
+             intended purpose for the bag MUST be described.";
         }
         list public-key {
           key "name";
