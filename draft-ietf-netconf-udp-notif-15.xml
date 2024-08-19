@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="4" month="July" year="2024"/>
+    <date day="19" month="August" year="2024"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -854,7 +854,7 @@ module: ietf-udp-notif-transport
 
         <t><figure>
             <artwork><![CDATA[
-<CODE BEGINS> file "ietf-udp-notif-transport@2024-07-18.yang"
+<CODE BEGINS> file "ietf-udp-notif-transport@2024-08-19.yang"
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -921,7 +921,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC-to-be; see the RFC
     itself for full legal notices.";
 
-  revision 2024-07-18 {
+  revision 2024-08-19 {
     description
       "Initial revision";
     reference
@@ -952,6 +952,7 @@ module ietf-udp-notif-transport {
   */  
   identity udp-notif {
     base sn:transport;
+    base sn:configurable-encoding;
     description
       "UDP-Notif is used as transport for notification messages
         and state change notifications.";
