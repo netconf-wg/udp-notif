@@ -1050,8 +1050,7 @@ module ietf-udp-notif-transport {
 
     <section anchor="IANA" title="IANA Considerations">
       <t>This document describes several new registries, the URIs from IETF
-      XML Registry, the registration of a new YANG module names and the registration
-      of a UDP port number.</t>
+      XML Registry and the registration of a new YANG module name.</t>
 
       <section title="IANA registries">
         <t>This document is creating 3 registries called "UDP-Notif media
