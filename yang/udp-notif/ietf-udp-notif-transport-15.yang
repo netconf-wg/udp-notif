@@ -29,18 +29,6 @@ module ietf-udp-notif-transport {
     reference
       "RFC TTTT: YANG Groupings for TLS Clients and TLS Servers";
   }
-  import ietf-system-capabilities {
-    prefix sysc;
-    reference 
-      "RFC 9196: YANG Modules Describing Capabilities for
-      Systems and Datastore Update Notifications";
-  }
-  import ietf-notification-capabilities {
-    prefix notc;
-    reference 
-      "RFC 9196: YANG Modules Describing Capabilities for
-      Systems and Datastore Update Notifications";
-  }
 
   organization "IETF NETCONF (Network Configuration) Working Group";
   contact
@@ -61,11 +49,8 @@ module ietf-udp-notif-transport {
                <mailto:paolo@ntt.net>";
 
   description
-    "Defines model for configuring UDP-Notif as a transport
+    "Defines a model for configuring UDP-Notif as a transport
     for Configured Subscriptions.
-    The model supports the configuration of the client receiving 
-    the YANG notifications and adds the transport capabilities to
-    the 'ietf-system-capabilities' model.
 
     Copyright (c) 2024 IETF Trust and the persons identified as
     authors of the code.  All rights reserved.
@@ -79,7 +64,7 @@ module ietf-udp-notif-transport {
     This version of this YANG module is part of RFC XXXX; see the RFC
     itself for full legal notices.";
 
-  revision 2024-10-04 {
+  revision 2024-10-17 {
     description
       "Initial revision";
     reference
@@ -122,20 +107,6 @@ module ietf-udp-notif-transport {
       "Encode data using CBOR as described in RFC 9254.";
     reference
       "RFC 9254: CBOR Encoding of Data Modeled with YANG";
-  }
-
- /*
-  * IDENTITIES for transport capabilities
-  */  
-  identity security-protocol {
-    description
-      "Base identity for security protocol type.";
-  }
-
-  identity dtls13 {
-    base security-protocol;
-    description
-      "Identity for dtls security protocol.";
   }
 
   grouping udp-notif-receiver-grouping {
@@ -214,41 +185,5 @@ module ietf-udp-notif-transport {
     description
       "Augment the transport-type choice to include the 'udp-notif'
        transport.";
-  }
-
-  // Add UDP-Notif transport capabilities 
-  augment "/sysc:system-capabilities/notc:subscription-capabilities" {
-    description
-      "Add transport capabilities in for YANG-Push subscriptions.
-      This list can be extended by other transport protocols, defining
-      the appropriate identities.";
-    list transports-capabilities {
-      key "transport-protocol";
-      description 
-        "Capabilities related to the transport protocol for YANG-Push
-        notifications.";
-      leaf transport-protocol {
-        type identityref {
-          base sn:transport;
-        }
-        description
-          "Supported transport for YANG-Push.";
-      }
-      leaf-list supported-encoding {
-        type identityref {
-          base sn:encoding;
-        }
-        description
-          "List of supported encodings for transport protocol defined
-          by the node transport-protocol.";
-      }
-      leaf security-protocol {
-        type identityref {
-          base security-protocol;
-        }
-        description
-          "Supported security protocol for the transport.";
-      }
-    }
   }
 }
