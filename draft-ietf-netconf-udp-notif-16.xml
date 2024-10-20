@@ -217,7 +217,7 @@
 	  available transports are TCP based where connection, states and
 	  retransmission need to be maintained which are not applicable when
 	  continuously notifications are published at high frequency directly from
-	  network processors on line cards in a distributed architecture.</t>
+	  network processors on line cards.</t>
 
       <t>This document specifies a transport option for Sub-Notif that
       leverages UDP. Specifically, it facilitates the distributed data
