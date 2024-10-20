@@ -16,7 +16,7 @@ Expires: 23 April 2025                                           T. Graf
 
 
             UDP-based Transport for Configured Subscriptions
-                    draft-ietf-netconf-udp-notif-15
+                    draft-ietf-netconf-udp-notif-16
 
 Abstract
 
@@ -143,13 +143,13 @@ Internet-Draft                  UDP-Notif                   October 2024
 
    While powerful in their features and general in their architecture,
    the currently available transport mechanisms need to be complemented
-   to support data publications at high frequency with low overhead from
-   network nodes that feature a distributed architecture with sparse
-   resources on components specialized for packet forwarding.  The
-   currently available transports are TCP based where connection, states
-   and retransmission need to be maintained which are not applicable
-   when continuously notifications are published at high frequency
-   directly from network processors on line cards.
+   to support data publications at high frequency with low overhead.
+   This is important for network nodes that feature a distributed
+   architecture with sparse resources on components specialized for
+   packet forwarding.  The currently available transports are TCP-based
+   requiring the maintenance of connections, states and retransmissions,
+   which is innefficient for high-frequency continuous notifications
+   published directly from network processors on line cards.
 
    This document specifies a transport option for Sub-Notif that
    leverages UDP.  Specifically, it facilitates the distributed data
@@ -1247,9 +1247,10 @@ Internet-Draft                  UDP-Notif                   October 2024
    protocols".  As mentioned above, the proposed mechanism is designed
    to be used in controlled environments, as defined in [RFC8085] also
    known as "limited domains", as defined in [RFC8799].  Thus, a
-   security layer is not necessary required.  Nevertheless, a DTLS layer
-   MUST be implemented in unsecured networks.  A specification of udp-
-   notif using DTLS is presented in Section 6.
+   security layer is not necessary required.  Nevertheless, an
+   encryption layer MUST be implemented in unsecured networks.  A
+   specification of UDP-notif using DTLS 1.3 as its encryption layer is
+   presented in Section 6.
 
 11.  Acknowledgements
 
@@ -1275,13 +1276,12 @@ Internet-Draft                  UDP-Notif                   October 2024
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
               "Subscription to Distributed Notifications", Work in
               Progress, Internet-Draft, draft-ietf-netconf-distributed-
-              notif-10, 18 October 2024,
-              <https://datatracker.ietf.org/api/v1/doc/document/draft-
-              ietf-netconf-distributed-notif/>.
+              notif-09, 28 April 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
+              distributed-notif-09>.
 
-   [I-D.ietf-netconf-https-notif]
-              Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
-              for YANG Notifications", Work in Progress, Internet-Draft,
+
+
 
 
 
@@ -1290,6 +1290,9 @@ Zheng, et al.             Expires 23 April 2025                [Page 23]
 Internet-Draft                  UDP-Notif                   October 2024
 
 
+   [I-D.ietf-netconf-https-notif]
+              Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
+              for YANG Notifications", Work in Progress, Internet-Draft,
               draft-ietf-netconf-https-notif-15, 1 February 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
               https-notif-15>.
@@ -1335,9 +1338,6 @@ Internet-Draft                  UDP-Notif                   October 2024
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
               <https://www.rfc-editor.org/info/rfc8126>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 
 
@@ -1345,6 +1345,10 @@ Zheng, et al.             Expires 23 April 2025                [Page 24]
 
 Internet-Draft                  UDP-Notif                   October 2024
 
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
    [RFC8342]  Bjorklund, M., Schoenwaelder, J., Shafer, P., Watsen, K.,
               and R. Wilton, "Network Management Datastore Architecture
@@ -1391,10 +1395,6 @@ Internet-Draft                  UDP-Notif                   October 2024
               June 2024, <https://datatracker.ietf.org/doc/html/draft-
               ahuang-netconf-notif-yang-05>.
 
-   [I-D.ietf-netconf-notification-messages]
-              Voit, E., Jenkins, T., Birkholz, H., Bierman, A., and A.
-              Clemm, "Notification Message Headers and Bundles", Work in
-
 
 
 Zheng, et al.             Expires 23 April 2025                [Page 25]
@@ -1402,6 +1402,9 @@ Zheng, et al.             Expires 23 April 2025                [Page 25]
 Internet-Draft                  UDP-Notif                   October 2024
 
 
+   [I-D.ietf-netconf-notification-messages]
+              Voit, E., Jenkins, T., Birkholz, H., Bierman, A., and A.
+              Clemm, "Notification Message Headers and Bundles", Work in
               Progress, Internet-Draft, draft-ietf-netconf-notification-
               messages-08, 17 November 2019,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
@@ -1447,9 +1450,6 @@ Internet-Draft                  UDP-Notif                   October 2024
    [RFC8340]  Bjorklund, M. and L. Berger, Ed., "YANG Tree Diagrams",
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/info/rfc8340>.
-
-
-
 
 
 
