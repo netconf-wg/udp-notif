@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="5" month="January" year="2025"/>
+    <date day="08" month="January" year="2025"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -497,7 +497,7 @@
         fragmented IP packets may not be desired for operational and
         performance reasons.</t>
 
-        <t>Consequently, implementations of the mechanism SHOULD provide a
+        <t>Consequently, implementations of the mechanism MUST provide a
         configurable max-segment-size option to control the maximum size of a
         UDP-Notif segment.</t>
 
@@ -535,9 +535,9 @@
             message is the value of the current Segment Number + 1.</t>
           </list></t>
 
-        <t>An implementation of this specification SHOULD NOT rely on IP
+        <t>An implementation of this specification MUST NOT rely on IP
         fragmentation by default to carry large messages. An implementation of
-        this specification SHOULD either restrict the size of individual
+        this specification MUST either restrict the size of individual
         messages carried over this protocol, or support the segmentation
         option. The implementor or user SHOULD configure the max-segment-size
         so that the size of a UDP-Notif segment and the size of the IP layer
