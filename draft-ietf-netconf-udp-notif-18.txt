@@ -16,7 +16,7 @@ Expires: 12 July 2025                                            T. Graf
 
 
             UDP-based Transport for Configured Subscriptions
-                    draft-ietf-netconf-udp-notif-17
+                    draft-ietf-netconf-udp-notif-18
 
 Abstract
 

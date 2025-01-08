@@ -10,7 +10,7 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-netconf-udp-notif-17"
+<rfc category="std" docName="draft-ietf-netconf-udp-notif-18"
      ipr="trust200902" consensus="true" submissionType="IETF">
   <front>
     <title abbrev="UDP-Notif">UDP-based Transport for Configured
