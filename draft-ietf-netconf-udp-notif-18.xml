@@ -1255,8 +1255,8 @@ module ietf-udp-notif-transport {
       Clemm, Benoit Claise, Ebben Aries, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh
       Jethanandani, Marco Tollini, Hannes Tschofenig, Michael Tuxen, Rob Wilton, Sean
       Turner, Stephane Frenot, Timothy Carey, Tim Jenkins, Tom Petch, Yunan Gu,
-      Joseph Touch and Andy Bierman for their constructive suggestions for improving
-	  this document.</t>
+      Joseph Touch, Andy Bierman and Carsten Bormann for their constructive
+	  suggestions for improving this document.</t>
     </section>
   </middle>
 
