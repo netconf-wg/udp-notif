@@ -1304,20 +1304,22 @@ Internet-Draft                  UDP-Notif                  February 2025
    effect on network operations.  These are the subtrees and data nodes
    and their sensitivity/vulnerability:
 
-   TBD
+   *  The data nodes "remote-address", "remote-port", "local-address",
+      and "local-port" in the "ietf-udp-notif-transport" module specify
+      transport parameters for the recipient of UDP-Notif messages.
+      Unauthorized modification of these transport parameters could
+      redirect notifications to unintended recipients.
 
    Some of the readable data nodes in this YANG module may be considered
    sensitive or vulnerable in some network environments.  It is thus
    important to control read access (e.g., via get, get-config, or
-   notification) to these data nodes.  These are the subtrees and data
-   nodes and their sensitivity/vulnerability:
-
-   TBD
+   notification) to these data nodes.  The "ietf-udp-notif-transport"
+   module does not define any readable node.
 
    Some of the RPC operations in this YANG module may be considered
    sensitive or vulnerable in some network environments.  It is thus
    important to control access to these operations.  The YANG module
-   defined in this document does not define any RPC operations
+   defined in this document does not define any RPC operations.
 
 12.  Acknowledgements
 
@@ -1335,8 +1337,6 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    [BCP195]   Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
               1.1", BCP 195, RFC 8996, March 2021.
-
-
 
 
 

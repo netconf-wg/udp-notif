@@ -1285,19 +1285,22 @@ module ietf-udp-notif-transport {
       a negative effect on network operations. These are the subtrees and data nodes and
       their sensitivity/vulnerability:</t>
 
-      <t>TBD</t>
+      <ul>
+        <li>The data nodes "remote-address", "remote-port", "local-address",
+        and "local-port" in the "ietf-udp-notif-transport" module specify transport parameters
+        for the recipient of UDP-Notif messages. Unauthorized modification of these transport
+        parameters could redirect notifications to unintended recipients.</li>
+      </ul>
 
       <t>Some of the readable data nodes in this YANG module may be considered
       sensitive or vulnerable in some network environments. It is thus important
       to control read access (e.g., via get, get-config, or notification) to these data
-      nodes. These are the subtrees and data nodes and their sensitivity/vulnerability:</t>
-
-      <t>TBD</t>
+      nodes. The "ietf-udp-notif-transport" module does not define any readable node.</t>
 
       <t>Some of the RPC operations in this YANG module may be considered sensitive or
       vulnerable in some network environments. It is thus important to control access
       to these operations. The YANG module defined in this document does not define any RPC
-      operations</t>
+      operations.</t>
 
     </section>
 
