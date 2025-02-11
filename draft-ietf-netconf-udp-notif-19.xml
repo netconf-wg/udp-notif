@@ -384,7 +384,7 @@
             types"</xref>. When S-flag is set, MT represents a private space to
             be freely used for non-standard encodings. When S is set, the 
             Private Encoding Option defined in <xref target="sec_enc_opt"/>
-            SHOULD be present in the UDP-Notif message header.
+            can be used in conjunction with MT to define more verbose encoding descriptions.
             </t>
 
             <t>MT is a 4-bit identifier that indicates the media type used for
@@ -455,11 +455,12 @@
         model with additional identity statements used to refer to requested
         encodings.</t>
 
-        <t>Private encodings can be using the S-flag of the header. When the S-flag
+        <t>Private encodings can be used by enabling the S-flag of the header. When the S-flag
         is set, the value of the MT field is left to be defined and agreed
         upon by the users of the private encoding. An option is defined in
-        <xref target="sec_enc_opt"/> for more verbose encoding descriptions
-        than what can be described with the MT field.</t>
+        <xref target="sec_enc_opt"/> for more verbose encoding descriptions.
+        Users defining a private encoding MAY use any combination of MT and private encoding
+        fitting their needs.</t>
 
         <t>It is RECOMMENDED that the publisher is configured to generate notification
         messages using only one encoding method per subscription.</t>

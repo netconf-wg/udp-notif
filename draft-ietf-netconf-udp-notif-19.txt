@@ -343,8 +343,8 @@ Internet-Draft                  UDP-Notif                  February 2025
       types as defined in the IANA registry "UDP-Notif media types"
       (Section 9.1).  When S-flag is set, MT represents a private space
       to be freely used for non-standard encodings.  When S is set, the
-      Private Encoding Option defined in Section 5.2 SHOULD be present
-      in the UDP-Notif message header.
+      Private Encoding Option defined in Section 5.2 can be used in
+      conjunction with MT to define more verbose encoding descriptions.
 
    *  MT is a 4-bit identifier that indicates the media type used for
       the notification message.  When the S bit is not set, the
@@ -417,11 +417,12 @@ Internet-Draft                  UDP-Notif                  February 2025
    accomplished by augmenting the subscription data model with
    additional identity statements used to refer to requested encodings.
 
-   Private encodings can be using the S-flag of the header.  When the
-   S-flag is set, the value of the MT field is left to be defined and
-   agreed upon by the users of the private encoding.  An option is
-   defined in Section 5.2 for more verbose encoding descriptions than
-   what can be described with the MT field.
+   Private encodings can be used by enabling the S-flag of the header.
+   When the S-flag is set, the value of the MT field is left to be
+   defined and agreed upon by the users of the private encoding.  An
+   option is defined in Section 5.2 for more verbose encoding
+   descriptions.  Users defining a private encoding MAY use any
+   combination of MT and private encoding fitting their needs.
 
    It is RECOMMENDED that the publisher is configured to generate
    notification messages using only one encoding method per
@@ -439,9 +440,8 @@ Internet-Draft                  UDP-Notif                  February 2025
 
                       Figure 3: Generic Option Format
 
-   *  Type: 1-octet describing the option type.  The values of the Type
-      field are allocated by the IANA regsitry "UDP-Notif options types"
-      (Section 9.1).
+
+
 
 
 
@@ -449,6 +449,10 @@ Zheng, et al.             Expires 8 August 2025                 [Page 8]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
+
+   *  Type: 1-octet describing the option type.  The values of the Type
+      field are allocated by the IANA regsitry "UDP-Notif options types"
+      (Section 9.1).
 
    *  Length: 1-octet representing the total number of octets in the
       TLV, including the Type and Length fields.
@@ -493,10 +497,6 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    *  Type: indicates a Segmentation Option.  The value is TBD1.
 
-   *  Length: indicates the length of this option, in octets.  It MUST
-      be set to 4 octets.
-
-
 
 
 
@@ -505,6 +505,9 @@ Zheng, et al.             Expires 8 August 2025                 [Page 9]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
+
+   *  Length: indicates the length of this option, in octets.  It MUST
+      be set to 4 octets.
 
    *  Segment Number: 15-bit value indicating the sequence number of the
       current segment.  The first segment of a segmented message has a
@@ -550,9 +553,6 @@ Internet-Draft                  UDP-Notif                  February 2025
    The new concatenated notification message becomes the notification
    message of the newly created UDP-Notif message.  The Header Length
    and Message Length are then updated accordingly.
-
-
-
 
 
 
