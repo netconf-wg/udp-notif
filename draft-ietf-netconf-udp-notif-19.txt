@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 8 August 2025                                           T. Graf
+Expires: 15 August 2025                                          T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                         4 February 2025
+                                                        11 February 2025
 
 
             UDP-based Transport for Configured Subscriptions
@@ -26,7 +26,8 @@ Abstract
    network processor of line cards to receivers.  Such a design enables
    higher frequency and less performance impact on publisher and
    receiver processes compared to already established notification
-   mechanisms.
+   mechanisms.  A YANG data model is also defined for management of the
+   described UDP-based transport.
 
 Status of This Memo
 
@@ -43,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 August 2025.
+   This Internet-Draft will expire on 15 August 2025.
 
 Copyright Notice
 
@@ -52,8 +53,7 @@ Copyright Notice
 
 
 
-
-Zheng, et al.             Expires 8 August 2025                 [Page 1]
+Zheng, et al.            Expires 15 August 2025                 [Page 1]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -78,12 +78,12 @@ Table of Contents
    4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
      4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   9
      4.2.  Private Encoding Option . . . . . . . . . . . . . . . . .  11
-   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  11
+   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  12
      5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  12
-     5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  12
+     5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  13
      5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  13
    6.  Secured layer for UDP-Notif . . . . . . . . . . . . . . . . .  13
-     6.1.  Session Lifecycle . . . . . . . . . . . . . . . . . . . .  13
+     6.1.  Session Lifecycle . . . . . . . . . . . . . . . . . . . .  14
        6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  14
        6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  14
        6.1.3.  Session Termination . . . . . . . . . . . . . . . . .  15
@@ -99,7 +99,7 @@ Table of Contents
      9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  23
      9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  23
      9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  23
-     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  23
+     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  24
      9.5.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  24
      9.6.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  24
    10. Security Considerations . . . . . . . . . . . . . . . . . . .  24
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.             Expires 8 August 2025                 [Page 2]
+Zheng, et al.            Expires 15 August 2025                 [Page 2]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -165,7 +165,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                 [Page 3]
+Zheng, et al.            Expires 15 August 2025                 [Page 3]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -198,13 +198,15 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    This document describes the notification mechanism.  It is intended
    to be used in conjunction with [RFC8639], extended by
-   [I-D.ietf-netconf-distributed-notif].
+   [I-D.ietf-netconf-distributed-notif].  Additionally, this document
+   defines a YANG data model for management of the UDP-based transport.
 
    Section 3 details the notification mechanism and message format.
    Section 4 describes the use of options in the notification message
    header.  Section 5 covers the applicability of the mechanism.
    Section 6 describes a mechanism to secure the protocol in open
-   networks.
+   networks.  Finally, Section 7 defines a YANG data model for
+   management of the mechanism described in this document.
 
 2.  Terminology
 
@@ -217,14 +219,14 @@ Internet-Draft                  UDP-Notif                  February 2025
    The following terms are used as defined in Subscribed Notifications
    [RFC8639]:
 
-   *  Notification message
 
 
-
-Zheng, et al.             Expires 8 August 2025                 [Page 4]
+Zheng, et al.            Expires 15 August 2025                 [Page 4]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
+
+   *  Notification message
 
    *  Subscription
 
@@ -270,17 +272,20 @@ Internet-Draft                  UDP-Notif                  February 2025
       notification message is defined in Section 2.6 of Subscribed
       Notifications [RFC8639].
 
+
+
+
+
+
+Zheng, et al.            Expires 15 August 2025                 [Page 5]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
                +-------+  +--------------+  +--------------+
                |  UDP  |  |   Message    |  | Notification |
                |       |  |   Header     |  | Message      |
                +-------+  +--------------+  +--------------+
-
-
-
-Zheng, et al.             Expires 8 August 2025                 [Page 5]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
                     Figure 1: UDP-Notif Message Overview
 
@@ -328,12 +333,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                 [Page 6]
+Zheng, et al.            Expires 15 August 2025                 [Page 6]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -382,19 +382,20 @@ Internet-Draft                  UDP-Notif                  February 2025
       the collection domain.
 
    *  The Message ID is increased monotonically by the publisher of UDP-
-      Notif messages.  A publisher MUST use different Message IDs for
-      different messages generated with the same Message Publisher ID.
-      Note that the main purpose of the Message ID is to reconstruct
-      messages which are segmented using the segmentation option
+      Notif messages.  It is RECOMMENDED that the Message ID starts at 1
+      with the first message.  A publisher MUST use different Message
+      IDs for different messages generated with the same Message
+      Publisher ID.  Note that the main purpose of the Message ID is to
 
 
 
-Zheng, et al.             Expires 8 August 2025                 [Page 7]
+Zheng, et al.            Expires 15 August 2025                 [Page 7]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-      described in Section 4.1.  The Message ID values SHOULD be
+      reconstruct messages which are segmented using the segmentation
+      option described in Section 4.1.  The Message ID values SHOULD be
       incremented by one for successive messages originated with the
       same Message Publisher ID, so that message loss can be detected at
       data collection.  When the last value (2^32-1) of Message ID has
@@ -444,8 +445,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-
-Zheng, et al.             Expires 8 August 2025                 [Page 8]
+Zheng, et al.            Expires 15 August 2025                 [Page 8]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -501,7 +501,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                 [Page 9]
+Zheng, et al.            Expires 15 August 2025                 [Page 9]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -522,9 +522,10 @@ Internet-Draft                  UDP-Notif                  February 2025
    Implementations MUST NOT rely on IP fragmentation by default to carry
    large messages.  Implementations MUST either restrict the size of
    individual messages carried over this protocol, or support the
-   segmentation option.  The parameter "max-segment-size" SHOULD be set
-   so that the size of a UDP-Notif segment and the size of the IP layer
-   together do not exceed the MTU of the egress interface.
+   segmentation option.  In the latter case, the parameter "max-segment-
+   size" SHOULD be set so that the size of a UDP-Notif segment and the
+   size of the IP layer together do not exceed the MTU of the egress
+   interface.
 
    When a message has multiple options and is segmented, all the options
    MUST be present on the first segment, with the segmentation option
@@ -538,6 +539,28 @@ Internet-Draft                  UDP-Notif                  February 2025
    retransmission of lost segments are expected from the publisher.  If
    the receiver collects a segment more than once, the implementation
    SHOULD drop the duplicate segment.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 10]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
    To reassemble segmented UDP-Notif messages, the receiver should first
    identify UDP-Notif segments belonging to the same message by using
@@ -554,13 +577,6 @@ Internet-Draft                  UDP-Notif                  February 2025
    The new concatenated notification message becomes the notification
    message of the newly created UDP-Notif message.  The Header Length
    and Message Length are then updated accordingly.
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 10]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
 4.2.  Private Encoding Option
 
@@ -583,13 +599,24 @@ Internet-Draft                  UDP-Notif                  February 2025
    *  Length: Generic option field which indicates the length of this
       option in octets.  It is a variable value.
 
-   *  Enc. Descr: The description of the private encoding used for this
-      message.  The values to be used for such private encodings is left
-      to be defined by the users of private encodings.
+   *  Variable length Enc. Descr: The description of the private
+      encoding used for this message.  The values to be used for such
+      private encodings is left to be defined by the users of private
+      encodings.
 
    This option SHOULD only be used when the S bit of the header is set,
    as providing a private encoding description for standard encodings is
    meaningless.
+
+
+
+
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 11]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
 5.  Applicability
 
@@ -604,19 +631,6 @@ Internet-Draft                  UDP-Notif                  February 2025
    applications.  We discuss recommendations on congestion control in
    Section 5.1, message size guidelines in Section 5.2 and reliability
    considerations in Section 5.3.
-
-
-
-
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 11]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
    The main use case of the UDP-Notif mechanism is the collection of
    statistical metrics for accounting purposes, where potential loss is
@@ -652,6 +666,14 @@ Internet-Draft                  UDP-Notif                  February 2025
    Applications SHOULD monitor packet losses and provide means to the
    user for retrieving information on such losses.  The UDP-Notif
    Message ID can be used to deduce congestion based on packet loss
+
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 12]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
    detection.  Hence the receiver can notify the publisher to use a
    lower streaming rate.  The interaction to control the streaming rate
    on the publisher is out of the scope of this document.
@@ -664,15 +686,6 @@ Internet-Draft                  UDP-Notif                  February 2025
    segmentation of the UDP-Notif message content without relying on IP
    fragmentation.  Implementations SHOULD allow for the configuration of
    the MTU.
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 12]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
    It is RECOMMENDED that the size of a Notification Message is small
    and segmentation does not result in segmenting the message into too
@@ -710,25 +723,17 @@ Internet-Draft                  UDP-Notif                  February 2025
    number, but MAY be configurable to send messages to a different port.
    The publisher MAY use any source UDP port for transmitting messages.
 
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 13]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
 6.1.  Session Lifecycle
 
    This section describes the lifecycle of UDP-Notif messages when they
    are encrypted using DTLS.
-
-
-
-
-
-
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 13]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
 6.1.1.  DTLS Session Initiation
 
@@ -774,17 +779,16 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    NONZERO-DIGIT = %d49-57
 
-   DIGIT = %d48 / NONZERO-DIGIT
-
-   UDP-NOTIF-MSG is defined in Section 3.
 
 
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 14]
+Zheng, et al.            Expires 15 August 2025                [Page 14]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
+
+   DIGIT = %d48 / NONZERO-DIGIT
+
+   UDP-NOTIF-MSG is defined in Section 3.
 
    The publisher SHOULD attempt to avoid IP fragmentation by using the
    Segmentation Option in the UDP-Notif message.
@@ -833,11 +837,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 15]
+Zheng, et al.            Expires 15 August 2025                [Page 15]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -893,7 +893,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 16]
+Zheng, et al.            Expires 15 August 2025                [Page 16]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -949,7 +949,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 17]
+Zheng, et al.            Expires 15 August 2025                [Page 17]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 18]
+Zheng, et al.            Expires 15 August 2025                [Page 18]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 19]
+Zheng, et al.            Expires 15 August 2025                [Page 19]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 20]
+Zheng, et al.            Expires 15 August 2025                [Page 20]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 21]
+Zheng, et al.            Expires 15 August 2025                [Page 21]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1214,25 +1214,29 @@ Internet-Draft                  UDP-Notif                  February 2025
      Registry Name: UDP-Notif header version
      Maximum value: 7
 
-   These are the initial registrations for "UDP-Notif header version":
+   There is an older specification of this transport protocol defined in
+   [I-D.ietf-netconf-udp-pub-channel] that was deployed in some
+   networks.  To enable differentiating both protocols, different
+   version numbers are used.  The current specification replaces
+   [I-D.ietf-netconf-udp-pub-channel] and uses 1 as its version while
+   the header defined in [I-D.ietf-netconf-udp-pub-channel] uses 0.
+   These are the initial registrations for "UDP-Notif header version"
+   registry:
 
      Value: 0
      Description: UDP based Publication Channel for Streaming Telemetry
      Reference: draft-ietf-netconf-udp-pub-channel-05
 
-     Value: 1
-     Description: UDP-based Transport for Configured Subscriptions.
-     Reference: RFC-to-be
 
 
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 22]
+Zheng, et al.            Expires 15 August 2025                [Page 22]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
+
+     Value: 1
+     Description: UDP-based Transport for Configured Subscriptions.
+     Reference: RFC-to-be
 
 8.2.  URI
 
@@ -1277,18 +1281,19 @@ Internet-Draft                  UDP-Notif                  February 2025
    The open source YANG push receiver library has been integrated into
    the Pmacct open source Network Telemetry data collection.
 
+
+
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 23]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
 9.4.  Huawei VRP
 
    Huawei implemented this document for a YANG Push publisher in their
    VRP platform.
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 23]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
 9.5.  6WIND VSR
 
@@ -1329,6 +1334,18 @@ Internet-Draft                  UDP-Notif                  February 2025
    RESTCONF users to a preconfigured subset of all available NETCONF or
    RESTCONF protocol operations and content.
 
+
+
+
+
+
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 24]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
    The YANG modules defined in this document make use of groupings that
    are defined in [I-D.ietf-netconf-udp-client-server] and [RFC9645].
    Please see Security Considerations sections of those documents for
@@ -1338,14 +1355,6 @@ Internet-Draft                  UDP-Notif                  February 2025
    There are a number of data nodes defined in this YANG module that are
    writable/creatable/deletable (i.e., config true, which is the
    default).  These data nodes may be considered sensitive or vulnerable
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 24]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
    in some network environments.  Write operations (e.g., edit-config)
    to these data nodes without proper protection can have a negative
    effect on network operations.  These are the subtrees and data nodes
@@ -1386,21 +1395,19 @@ Internet-Draft                  UDP-Notif                  February 2025
    [BCP195]   Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
               1.1", BCP 195, RFC 8996, March 2021.
 
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 25]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
               Sheffer, Y., Saint-Andre, P., and T. Fossati,
               "Recommendations for Secure Use of Transport Layer
               Security (TLS) and Datagram Transport Layer Security
               (DTLS)", BCP 195, RFC 9325, November 2022.
 
               <https://www.rfc-editor.org/info/bcp195>
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 25]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
    [BCP230]   Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
               and F. Gont, "IP Fragmentation Considered Fragile",
@@ -1443,20 +1450,17 @@ Internet-Draft                  UDP-Notif                  February 2025
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-   [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
-              DOI 10.17487/RFC3688, January 2004,
-              <https://www.rfc-editor.org/info/rfc3688>.
 
 
 
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 26]
+Zheng, et al.            Expires 15 August 2025                [Page 26]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
+
+   [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
+              DOI 10.17487/RFC3688, January 2004,
+              <https://www.rfc-editor.org/info/rfc3688>.
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
@@ -1505,11 +1509,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 27]
+Zheng, et al.            Expires 15 August 2025                [Page 27]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1542,6 +1542,13 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 12.2.  Informative References
 
+   [I-D.ietf-netconf-udp-pub-channel]
+              Zheng, G., Zhou, T., and A. Clemm, "UDP based Publication
+              Channel for Streaming Telemetry", Work in Progress,
+              Internet-Draft, draft-ietf-netconf-udp-pub-channel-05, 11
+              March 2019, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-netconf-udp-pub-channel-05>.
+
    [INSA-Lyon-Publisher]
               "INSA Lyon, YANG Push publisher example implementation",
               <https://github.com/network-analytics/udp-notif-scapy>.
@@ -1555,20 +1562,18 @@ Internet-Draft                  UDP-Notif                  February 2025
               "Paolo Lucente, Pmacct open source Network Telemetry Data
               Collection", <https://github.com/pmacct/pmacct>.
 
+
+
+
+Zheng, et al.            Expires 15 August 2025                [Page 28]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
-
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 28]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
    [RFC7011]  Claise, B., Ed., Trammell, B., Ed., and P. Aitken,
               "Specification of the IP Flow Information Export (IPFIX)
@@ -1616,12 +1621,7 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
 
 
 
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 29]
+Zheng, et al.            Expires 15 August 2025                [Page 29]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1677,7 +1677,7 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 30]
+Zheng, et al.            Expires 15 August 2025                [Page 30]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1733,7 +1733,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 31]
+Zheng, et al.            Expires 15 August 2025                [Page 31]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1789,7 +1789,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 32]
+Zheng, et al.            Expires 15 August 2025                [Page 32]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1845,7 +1845,7 @@ A.3.  YANG Push message with UDP-Notif transport protocol
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 33]
+Zheng, et al.            Expires 15 August 2025                [Page 33]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1901,7 +1901,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 34]
+Zheng, et al.            Expires 15 August 2025                [Page 34]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
@@ -1957,4 +1957,4 @@ Internet-Draft                  UDP-Notif                  February 2025
 
 
 
-Zheng, et al.             Expires 8 August 2025                [Page 35]
+Zheng, et al.            Expires 15 August 2025                [Page 35]

@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="04" month="February" year="2025"/>
+    <date day="11" month="February" year="2025"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -180,7 +180,8 @@
       facilitate the data streaming directly from the publishing process on
       network processor of line cards to receivers. Such a design enables higher
       frequency and less performance impact on publisher and receiver processes compared to
-      already established notification mechanisms.</t>
+      already established notification mechanisms. A YANG data model is also defined 
+      for management of the described UDP-based transport.</t>
     </abstract>
   </front>
 
@@ -250,14 +251,16 @@
 
       <t>This document describes the notification mechanism. It is intended to
       be used in conjunction with <xref target="RFC8639"/>, extended by <xref
-      target="I-D.ietf-netconf-distributed-notif"/>.</t>
+      target="I-D.ietf-netconf-distributed-notif"/>. Additionally, 
+      this document defines a YANG data model for management of the UDP-based transport.</t>
 
       <t><xref target="sec_ups_transport"/> details the
       notification mechanism and message format. <xref target="sec_options"/>
       describes the use of options in the notification message header. <xref
       target="sec_applicability"/> covers the applicability of the
       mechanism. <xref target="sec_dtls_udp_notif"/> describes a mechanism to
-      secure the protocol in open networks.</t>
+      secure the protocol in open networks. Finally, <xref target="yang-model-general"/>
+      defines a YANG data model for management of the mechanism described in this document.</t>
 
     </section>
 
@@ -449,7 +452,8 @@
             domain.</t>
 
             <t>The Message ID is increased monotonically by the publisher of
-            UDP-Notif messages. A publisher MUST use different Message IDs
+            UDP-Notif messages. It is RECOMMENDED that the Message ID starts at 1 with
+            the first message. A publisher MUST use different Message IDs
             for different messages generated with the same Message
             Publisher ID. Note that the main purpose of the Message ID is to
             reconstruct messages which are segmented using the segmentation
@@ -581,7 +585,7 @@
         fragmentation by default to carry large messages. Implementations
         MUST either restrict the size of individual
         messages carried over this protocol, or support the segmentation
-        option. The parameter "max-segment-size" SHOULD be set
+        option. In the latter case, the parameter "max-segment-size" SHOULD be set
         so that the size of a UDP-Notif segment and the size of the IP layer
         together do not exceed the MTU of the egress interface.</t>
 
@@ -635,7 +639,7 @@
             <t>Length: Generic option field which indicates the length of this
             option in octets. It is a variable value.</t>
 
-            <t>Enc. Descr: The description of the private encoding used for
+            <t>Variable length Enc. Descr: The description of the private encoding used for
             this message. The values to be used for such private encodings is
             left to be defined by the users of private encodings.</t>
           </list></t>
@@ -840,7 +844,7 @@
       </section>
     </section>
 
-    <section title="A YANG Data Model for Management of UDP-Notif">
+    <section anchor="yang-model-general" title="A YANG Data Model for Management of UDP-Notif">
 
       <section title="YANG Module for configuring UDP-Notif" anchor="yang_module">
         <t>The YANG model described in <xref target="sec_yang_model"/> defines
@@ -1206,8 +1210,14 @@ module ietf-udp-notif-transport {
   Maximum value: 7]]></artwork>
           </figure>
 
-        <t>These are the initial registrations for "UDP-Notif header
-        version":</t>
+        <t>There is an older specification of this transport protocol defined in 
+        <xref target="I-D.ietf-netconf-udp-pub-channel"/> that was deployed
+        in some networks. To enable differentiating both protocols, different version numbers
+        are used. The current specification replaces <xref
+        target="I-D.ietf-netconf-udp-pub-channel"/> and uses 1 as its
+        version while the header defined in <xref
+        target="I-D.ietf-netconf-udp-pub-channel"/> uses 0. These are the initial registrations for
+        "UDP-Notif header version" registry:</t>
 
         <figure>
             <artwork align="left"><![CDATA[
@@ -1416,6 +1426,8 @@ module ietf-udp-notif-transport {
       <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?> -->
 
       <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?> -->
+      <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-udp-pub-channel.xml"?>
+
 
       <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
 
