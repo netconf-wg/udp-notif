@@ -503,8 +503,8 @@
       <t>When more than one option are used in a UDP-Notif header, the segmentation option
       defined in <xref target="sec_fragmentation"/> MUST be placed first. Placing the segmentation
       option first can simplify some implementations for both the publisher and the
-      receiver, notably those using hardware acceleration that assume a fixed
-      location for the segmentation option. Segmented messages without the segmentation option 
+      receiver, notably those assuming a fixed location for the segmentation option. Segmented
+      messages without the segmentation option 
       located as the first option, MAY be dropped by the receiver.</t>
 
       <section anchor="sec_fragmentation" title="Segmentation Option">

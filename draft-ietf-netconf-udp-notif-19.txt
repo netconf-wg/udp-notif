@@ -463,9 +463,9 @@ Internet-Draft                  UDP-Notif                  February 2025
    segmentation option defined in Section 5.1 MUST be placed first.
    Placing the segmentation option first can simplify some
    implementations for both the publisher and the receiver, notably
-   those using hardware acceleration that assume a fixed location for
-   the segmentation option.  Segmented messages without the segmentation
-   option located as the first option, MAY be dropped by the receiver.
+   those assuming a fixed location for the segmentation option.
+   Segmented messages without the segmentation option located as the
+   first option, MAY be dropped by the receiver.
 
 5.1.  Segmentation Option
 
