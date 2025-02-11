@@ -682,12 +682,17 @@
 
         <t>It is RECOMMENDED that the size of a Notification Message is 
         small and segmentation does not result in segmenting the message into too
-        much segments to avoid dropping the entire message when there is a lost
+        many segments to avoid dropping the entire message when there is a lost
         segment. 
         <!-- UDP-Notif messages SHOULD NOT be segmented into more than 100 segments. -->
         When a Notification Message is large, it is RECOMMENDED to use a
         reliable transport such as HTTPS-notif
         <xref target="I-D.ietf-netconf-https-notif"/>.</t>
+        
+        <t>A receiver collecting segmented UDP-Notif 
+        messages SHOULD have a configurable parameter to discard segments when they exceed a
+        certain amount of segments. The generation of too many segments by a publisher can be used as an
+        abuse to require computation resources for reassembling large messages at the receiver.</t>
       </section>
 
       <section anchor="sec_reliability" title="Reliability">
@@ -811,7 +816,7 @@
 
     <section title="A YANG Data Model for Management of UDP-Notif">
 
-      <section title="YANG to configure UDP-Notif" anchor="yang_module">
+      <section title="YANG Module for configuring UDP-Notif" anchor="yang_module">
         <t>The YANG model described in <xref target="sec_yang_model"/> defines
         a new receiver instance for UDP-Notif transport. When this transport
         is used, four new leaves and a dtls container allow configuring
