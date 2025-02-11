@@ -71,41 +71,41 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
-   3.  Configured Subscription to UDP-Notif  . . . . . . . . . . . .   5
-   4.  UDP-Based Transport . . . . . . . . . . . . . . . . . . . . .   5
-     4.1.  Design Overview . . . . . . . . . . . . . . . . . . . . .   5
-     4.2.  Format of the UDP-Notif Message Header  . . . . . . . . .   6
-     4.3.  Data Encoding . . . . . . . . . . . . . . . . . . . . . .   8
-   5.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     5.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   9
-     5.2.  Private Encoding Option . . . . . . . . . . . . . . . . .  11
-   6.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  11
-     6.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  12
-     6.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  12
-     6.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  13
-   7.  Secured layer for UDP-Notif . . . . . . . . . . . . . . . . .  13
-     7.1.  Session Lifecycle . . . . . . . . . . . . . . . . . . . .  13
-       7.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  14
-       7.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  14
-       7.1.3.  Session Termination . . . . . . . . . . . . . . . . .  15
-       7.1.4.  DTLS Fragmentation  . . . . . . . . . . . . . . . . .  15
-   8.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  15
-     8.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  15
-     8.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  17
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  21
-     9.1.  IANA Registries . . . . . . . . . . . . . . . . . . . . .  21
-     9.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  23
-     9.3.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  23
-   10. Implementation Status . . . . . . . . . . . . . . . . . . . .  23
-     10.1.  Open Source Publisher  . . . . . . . . . . . . . . . . .  23
-     10.2.  Open Source Receiver Library . . . . . . . . . . . . . .  23
-     10.3.  Pmacct Data Collection . . . . . . . . . . . . . . . . .  23
-     10.4.  Huawei VRP . . . . . . . . . . . . . . . . . . . . . . .  23
-     10.5.  6WIND VSR  . . . . . . . . . . . . . . . . . . . . . . .  24
-     10.6.  Cisco IOS XR . . . . . . . . . . . . . . . . . . . . . .  24
-   11. Security Considerations . . . . . . . . . . . . . . . . . . .  24
-   12. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  25
-   13. References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
+   3.  UDP-Based Transport . . . . . . . . . . . . . . . . . . . . .   5
+     3.1.  Design Overview . . . . . . . . . . . . . . . . . . . . .   5
+     3.2.  Format of the UDP-Notif Message Header  . . . . . . . . .   6
+     3.3.  Data Encoding . . . . . . . . . . . . . . . . . . . . . .   8
+   4.  Options . . . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     4.1.  Segmentation Option . . . . . . . . . . . . . . . . . . .   9
+     4.2.  Private Encoding Option . . . . . . . . . . . . . . . . .  10
+   5.  Applicability . . . . . . . . . . . . . . . . . . . . . . . .  11
+     5.1.  Congestion Control  . . . . . . . . . . . . . . . . . . .  12
+     5.2.  Message Size  . . . . . . . . . . . . . . . . . . . . . .  12
+     5.3.  Reliability . . . . . . . . . . . . . . . . . . . . . . .  13
+   6.  Secured layer for UDP-Notif . . . . . . . . . . . . . . . . .  13
+     6.1.  Session Lifecycle . . . . . . . . . . . . . . . . . . . .  13
+       6.1.1.  DTLS Session Initiation . . . . . . . . . . . . . . .  13
+       6.1.2.  Publish Data  . . . . . . . . . . . . . . . . . . . .  14
+       6.1.3.  Session Termination . . . . . . . . . . . . . . . . .  14
+       6.1.4.  DTLS Fragmentation  . . . . . . . . . . . . . . . . .  15
+   7.  A YANG Data Model for Management of UDP-Notif . . . . . . . .  15
+     7.1.  YANG Module for configuring UDP-Notif . . . . . . . . . .  15
+     7.2.  YANG Module . . . . . . . . . . . . . . . . . . . . . . .  17
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  21
+     8.1.  IANA Registries . . . . . . . . . . . . . . . . . . . . .  21
+     8.2.  URI . . . . . . . . . . . . . . . . . . . . . . . . . . .  22
+     8.3.  YANG Module Name  . . . . . . . . . . . . . . . . . . . .  22
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .  23
+     9.1.  Open Source Publisher . . . . . . . . . . . . . . . . . .  23
+     9.2.  Open Source Receiver Library  . . . . . . . . . . . . . .  23
+     9.3.  Pmacct Data Collection  . . . . . . . . . . . . . . . . .  23
+     9.4.  Huawei VRP  . . . . . . . . . . . . . . . . . . . . . . .  23
+     9.5.  6WIND VSR . . . . . . . . . . . . . . . . . . . . . . . .  23
+     9.6.  Cisco IOS XR  . . . . . . . . . . . . . . . . . . . . . .  23
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  24
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  25
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  25
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  25
 
 
 
@@ -114,8 +114,7 @@ Zheng, et al.             Expires 8 August 2025                 [Page 2]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-     13.1.  Normative References . . . . . . . . . . . . . . . . . .  25
-     13.2.  Informative References . . . . . . . . . . . . . . . . .  28
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  28
    Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  29
      A.1.  Configuration for UDP-Notif transport with DTLS
            disabled  . . . . . . . . . . . . . . . . . . . . . . . .  29
@@ -150,17 +149,18 @@ Internet-Draft                  UDP-Notif                  February 2025
    content, typically published directly from network processors on line
    cards.
 
-   This document specifies a transport option for Subscribed
-   Notifications [RFC8639] that leverages UDP.  Specifically, it
-   facilitates the distributed data collection mechanism described in
-   [I-D.ietf-netconf-distributed-notif].  In the case of publishing from
-   multiple network processors on multiple line cards, centralized
-   designs require data to be internally forwarded from those network
-   processors to the push server, presumably on a route processor, which
-   then combines the individual data items into a single consolidated
-   stream.  The centralized data collection mechanism can result in a
-   performance bottleneck, especially when large amounts of data are
-   involved.
+   This document specifies a transport option for Configured
+   Subscriptions as defined in Section 2.5 of [RFC8639] that leverages
+   UDP.  Specifically, it facilitates the distributed data collection
+   mechanism described in [I-D.ietf-netconf-distributed-notif].  In the
+   case of publishing from multiple network processors on multiple line
+   cards, centralized designs require data to be internally forwarded
+   from those network processors to the push server, presumably on a
+   route processor, which then combines the individual data items into a
+   single consolidated stream.  The centralized data collection
+   mechanism can result in a performance bottleneck, especially when
+   large amounts of data are involved.
+
 
 
 
@@ -190,17 +190,20 @@ Internet-Draft                  UDP-Notif                  February 2025
       streamed to the receiver.
 
    The transport described in this document can be used for transmitting
-   notification messages over both IPv4 and IPv6.
+   notification messages over both IPv4 and IPv6.  It is designed to be
+   used in cases where packet loss is not a concern, such as the
+   collection of statistical metrics that are exported periodically.
+   This transport can be configured via NETCONF [RFC6241] or RESTCONF
+   [RFC8040].
 
    This document describes the notification mechanism.  It is intended
    to be used in conjunction with [RFC8639], extended by
    [I-D.ietf-netconf-distributed-notif].
 
-   Section 3 describes the control of the proposed transport mechanism.
-   Section 4 details the notification mechanism and message format.
-   Section 5 describes the use of options in the notification message
-   header.  Section 6 covers the applicability of the mechanism.
-   Section 7 describes a mechanism to secure the protocol in open
+   Section 3 details the notification mechanism and message format.
+   Section 4 describes the use of options in the notification message
+   header.  Section 5 covers the applicability of the mechanism.
+   Section 6 describes a mechanism to secure the protocol in open
    networks.
 
 2.  Terminology
@@ -216,15 +219,14 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    *  Notification message
 
-   *  Subscription
-
-
 
 
 Zheng, et al.             Expires 8 August 2025                 [Page 4]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
+
+   *  Subscription
 
    *  Configured Subscription
 
@@ -234,37 +236,22 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    *  Receiver
 
-3.  Configured Subscription to UDP-Notif
+   The term Message Publisher ID is used as defined in
+   [I-D.ietf-netconf-distributed-notif].
 
-   This section describes how the proposed mechanism can be controlled
-   using subscription channels based on NETCONF or RESTCONF.
+   This document defines the following terms:
 
-   Configured subscriptions, as defined in Section 2.5 of Subscribed
-   Notifications [RFC8639], contain the transport configuration of all
-   the receivers.  This document introduces a receiver instance
-   dedicated to UDP-Notif, specifying the IP address and port number
-   used for sending UDP-Notif messages to the designated receivers.
+   *  Message ID: identifier of a message transported by the UDP-Notif
+      protocol.  More details are presented in Section 3.2.
 
-   Note that receivers may not be already up and running when the
-   configuration of the subscription takes effect on a monitored network
-   node.  The first message generated by the publisher MUST be a
-   separate "subscription-started" notification to indicate to the
-   receiver that the stream has started flowing.  Then, the
-   notifications can be sent immediately without delay.  Subscription
-   state notifications, defined in Section 2.7 of [RFC8639], MUST be
-   encapsulated in separate notification messages.
+3.  UDP-Based Transport
 
-   Note also that publishers MAY NOT be aware of the capabilities
-   supported by the receivers.
-
-4.  UDP-Based Transport
-
-   This section specifies the UDP-Notif transport behavior.  Section 4.1
-   describes the general design of the solution.  Section 4.2 specifies
-   the UDP-Notif message format and Section 4.3 describes the encoding
+   This section specifies the UDP-Notif transport behavior.  Section 3.1
+   describes the general design of the solution.  Section 3.2 specifies
+   the UDP-Notif message format and Section 3.3 describes the encoding
    of the message payload.
 
-4.1.  Design Overview
+3.1.  Design Overview
 
    As specified in Section 2.6 of Subscribed Notifications [RFC8639],
    the YANG data is encapsulated in a NETCONF/RESTCONF notification
@@ -275,16 +262,9 @@ Internet-Draft                  UDP-Notif                  February 2025
       message transmission before deserializing the notification
       message.
 
-
-
-Zheng, et al.             Expires 8 August 2025                 [Page 5]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
    *  The Notification Message is the encoded content that is
       transported by the publication stream.  The common encoding
-      methods are listed in Section 4.2.  The structure of the
+      methods are listed in Section 3.2.  The structure of the
       notification message is defined in Section 2.6 of Subscribed
       Notifications [RFC8639].
 
@@ -296,7 +276,25 @@ Internet-Draft                  UDP-Notif                  February 2025
                     Figure 1: UDP-Notif Message Overview
 
 
-4.2.  Format of the UDP-Notif Message Header
+
+Zheng, et al.             Expires 8 August 2025                 [Page 5]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
+   Note that receivers collecting UDP-Notif messages may not be already
+   up and running when the configuration of the subscription takes
+   effect on a monitored network node.  The first message generated by
+   the publisher MUST be a separate "subscription-started" notification
+   to indicate to the receiver that the stream has started flowing.
+   Then, the notifications can be sent immediately without delay.
+   Subscription state notifications, defined in Section 2.7 of
+   [RFC8639], MUST be encapsulated in separate notification messages.
+
+   Note also that publishers MAY NOT be aware of the capabilities
+   supported by the receivers.
+
+3.2.  Format of the UDP-Notif Message Header
 
    The UDP-Notif message header contains information that facilitates
    the message transmission between the publisher and the receiver
@@ -322,13 +320,15 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    *  Ver indicates the UDP-Notif protocol header version.  The values
       are allocated by the IANA registry "UDP-Notif header version"
-      (Section 9.1).  The current header version number is 1.
+      (Section 8.1).  The current header version number is 1.
 
-
-
-
-
-
+   *  S-flag represents the space of media type specified in the MT
+      field.  When S-flag is not set, MT represents the standard media
+      types as defined in the IANA registry "UDP-Notif media types"
+      (Section 8.1).  When S-flag is set, MT represents a private space
+      to be freely used for non-standard encodings.  When S is set, the
+      Private Encoding Option defined in Section 4.2 can be used in
+      conjunction with MT to define more verbose encoding descriptions.
 
 
 
@@ -337,14 +337,6 @@ Zheng, et al.             Expires 8 August 2025                 [Page 6]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
-
-   *  S-flag represents the space of media type specified in the MT
-      field.  When S-flag is not set, MT represents the standard media
-      types as defined in the IANA registry "UDP-Notif media types"
-      (Section 9.1).  When S-flag is set, MT represents a private space
-      to be freely used for non-standard encodings.  When S is set, the
-      Private Encoding Option defined in Section 5.2 can be used in
-      conjunction with MT to define more verbose encoding descriptions.
 
    *  MT is a 4-bit identifier that indicates the media type used for
       the notification message.  When the S bit is not set, the
@@ -364,7 +356,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    *  Message Length (16-bit) records the total length of the UDP-Notif
       message within one UDP datagram, measured in octets, including the
       message header.  When the notification message is segmented using
-      the Segmentation Options defined in Section 5.1, the Message
+      the Segmentation Options defined in Section 4.1, the Message
       Length is the total length of the current UDP-Notif segment, not
       the length of the entire notification message.
 
@@ -376,16 +368,24 @@ Internet-Draft                  UDP-Notif                  February 2025
       obtained from the conjunction of the Message Publisher ID and the
       Message ID field.  If Message Publisher ID unicity is not
       preserved through the collection domain, the source IP address of
-      the UDP datagram SHOULD be used in addition to the Message
-      Publisher ID to identify the information source.  If a transport
-      layer relay is used, Message Publisher ID unicity must be
-      preserved through the collection domain.
+      the UDP datagram MUST be used in addition to the Message Publisher
+      ID to identify the information source.  If a transport layer relay
+      is used, Message Publisher ID unicity must be preserved through
+      the collection domain.
 
    *  The Message ID is increased monotonically by the publisher of UDP-
       Notif messages.  A publisher MUST use different Message IDs for
       different messages generated with the same Message Publisher ID.
       Note that the main purpose of the Message ID is to reconstruct
       messages which are segmented using the segmentation option
+      described in Section 4.1.  The Message ID values SHOULD be
+      incremented by one for successive messages originated with the
+      same Message Publisher ID, so that message loss can be detected at
+      data collection.  When the last value (2^32-1) of Message ID has
+      been reached, the Message ID wraps around and restarts at 0.
+      Different subscribers MAY share the same Message ID sequence.
+
+
 
 
 
@@ -394,23 +394,16 @@ Zheng, et al.             Expires 8 August 2025                 [Page 7]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-      described in Section 5.1.  The Message ID values SHOULD be
-      incremented by one for successive messages originated with the
-      same Message Publisher ID, so that message loss can be detected at
-      data collection.  When the last value (2^32-1) of Message ID has
-      been reached, the Message ID wraps around and restarts at 0.
-      Different subscribers MAY share the same Message ID sequence.
-
    *  Options are a variable-length field in the TLV format.  When the
       Header Length is larger than 12 octets, which is the length of the
       fixed header, Options TLVs follow directly after the fixed message
-      header.  Options are described in Section 5.
+      header.  Options are described in Section 4.
 
    All the binary fields MUST be encoded in network byte order (big
    endian).
 
 
-4.3.  Data Encoding
+3.3.  Data Encoding
 
    UDP-Notif message data can be encoded in XML, JSON or CBOR format.
    Additional encodings may be supported in the future.  This can be
@@ -420,7 +413,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    Private encodings can be used by enabling the S-flag of the header.
    When the S-flag is set, the value of the MT field is left to be
    defined and agreed upon by the users of the private encoding.  An
-   option is defined in Section 5.2 for more verbose encoding
+   option is defined in Section 4.2 for more verbose encoding
    descriptions.  Users defining a private encoding MAY use any
    combination of MT and private encoding fitting their needs.
 
@@ -428,7 +421,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    notification messages using only one encoding method per
    subscription.
 
-5.  Options
+4.  Options
 
    All the options are defined with the format shown in Figure 3.
 
@@ -440,7 +433,14 @@ Internet-Draft                  UDP-Notif                  February 2025
 
                       Figure 3: Generic Option Format
 
+   *  Type: 1-octet describing the option type.  The values of the Type
+      field are allocated by the IANA regsitry "UDP-Notif options types"
+      (Section 8.1).
 
+   *  Length: 1-octet representing the total number of octets in the
+      TLV, including the Type and Length fields.
+
+   *  Variable-length data: 0 or more octets of data.
 
 
 
@@ -450,24 +450,15 @@ Zheng, et al.             Expires 8 August 2025                 [Page 8]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-   *  Type: 1-octet describing the option type.  The values of the Type
-      field are allocated by the IANA regsitry "UDP-Notif options types"
-      (Section 9.1).
-
-   *  Length: 1-octet representing the total number of octets in the
-      TLV, including the Type and Length fields.
-
-   *  Variable-length data: 0 or more octets of data.
-
    When more than one option are used in a UDP-Notif header, the
-   segmentation option defined in Section 5.1 MUST be placed first.
+   segmentation option defined in Section 4.1 MUST be placed first.
    Placing the segmentation option first can simplify some
    implementations for both the publisher and the receiver, notably
    those assuming a fixed location for the segmentation option.
    Segmented messages without the segmentation option located as the
    first option, MAY be dropped by the receiver.
 
-5.1.  Segmentation Option
+4.1.  Segmentation Option
 
    The UDP payload length is limited to 65527 bytes (65535 - 8 bytes).
    Application-level headers will make the actual payload shorter.  Even
@@ -480,7 +471,7 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    Implementations MUST provide a configurable parameter to control the
    maximum size of a UDP-Notif segment.  This parameter is defined as
-   "max-segment-size" in the YANG module specified in Section 8.1.
+   "max-segment-size" in the YANG module specified in Section 7.1.
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -497,6 +488,15 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    *  Type: indicates a Segmentation Option.  The value is TBD1.
 
+   *  Length: indicates the length of this option, in octets.  It MUST
+      be set to 4 octets.
+
+   *  Segment Number: 15-bit value indicating the sequence number of the
+      current segment.  The first segment of a segmented message has a
+      segment number value of 0.  The segment number cannot wrap around.
+
+
+
 
 
 
@@ -505,13 +505,6 @@ Zheng, et al.             Expires 8 August 2025                 [Page 9]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
-
-   *  Length: indicates the length of this option, in octets.  It MUST
-      be set to 4 octets.
-
-   *  Segment Number: 15-bit value indicating the sequence number of the
-      current segment.  The first segment of a segmented message has a
-      segment number value of 0.  The segment number cannot wrap around.
 
    *  L: indicates whether the current segment is the last one of the
       message.  When 0 is set, the current segment is not the last one.
@@ -534,7 +527,8 @@ Internet-Draft                  UDP-Notif                  February 2025
    The receiver SHOULD support the reception of unordered segments.  The
    implementation of the receiver SHOULD provide an option to discard
    the received segments if, after some time, one of the segments is
-   still missing and the reassembly of the message is not possible.  If
+   still missing and the reassembly of the message is not possible.  No
+   retransmission of lost segments are expected from the publisher.  If
    the receiver collects a segment more than once, the implementation
    SHOULD drop the duplicate segment.
 
@@ -554,6 +548,12 @@ Internet-Draft                  UDP-Notif                  February 2025
    message of the newly created UDP-Notif message.  The Header Length
    and Message Length are then updated accordingly.
 
+4.2.  Private Encoding Option
+
+   The space to describe private encodings in the MT field of the UDP-
+   Notif header being limited, an option is provided to describe custom
+   encodings.  The fields of this option are as follows.
+
 
 
 
@@ -561,12 +561,6 @@ Zheng, et al.             Expires 8 August 2025                [Page 10]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
-
-5.2.  Private Encoding Option
-
-   The space to describe private encodings in the MT field of the UDP-
-   Notif header being limited, an option is provided to describe custom
-   encodings.  The fields of this option are as follows.
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -591,7 +585,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    as providing a private encoding description for standard encodings is
    meaningless.
 
-6.  Applicability
+5.  Applicability
 
    This section provides an applicability for the UDP-Notif mechanism,
    following the recommendations of [RFC8085].
@@ -605,6 +599,12 @@ Internet-Draft                  UDP-Notif                  February 2025
    congestion control, message size guidelines, reliability
    considerations and security considerations.
 
+   The main use case of the UDP-Notif mechanism is the collection of
+   statistical metrics for accounting purposes, where potential loss is
+   not a concern, but should however be reported (such as IPFIX Flow
+   Records exported with UDP [RFC7011]).  Such metrics are typically
+   exported in a periodical subscription as described in Section 3.1 of
+   [RFC8641].
 
 
 
@@ -618,14 +618,7 @@ Zheng, et al.             Expires 8 August 2025                [Page 11]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-   The main use case of the UDP-Notif mechanism is the collection of
-   statistical metrics for accounting purposes, where potential loss is
-   not a concern, but should however be reported (such as IPFIX Flow
-   Records exported with UDP [RFC7011]).  Such metrics are typically
-   exported in a periodical subscription as described in Section 3.1 of
-   [RFC8641].
-
-6.1.  Congestion Control
+5.1.  Congestion Control
 
    The above application falls into the category of applications
    performing transfer of large amounts of data.  It is expected that
@@ -656,7 +649,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    lower streaming rate.  The interaction to control the streaming rate
    on the Publisher is out of the scope of this document.
 
-6.2.  Message Size
+5.2.  Message Size
 
    [RFC8085] recommends not to rely on IP fragmentation for messages
    whose size result in IP packets exceeding the MTU along the path.
@@ -664,6 +657,13 @@ Internet-Draft                  UDP-Notif                  February 2025
    segmentation of the UDP-Notif message content without relying on IP
    fragmentation.  Implementations SHOULD allow for the configuration of
    the MTU.
+
+   It is RECOMMENDED that the size of a Notification Message is small
+   and segmentation does not result in segmenting the message into too
+   many segments to avoid dropping the entire message when there is a
+   lost segment.  When a Notification Message is large, it is
+   RECOMMENDED to use a reliable transport such as HTTPS-notif
+   [I-D.ietf-netconf-https-notif].
 
 
 
@@ -674,26 +674,19 @@ Zheng, et al.             Expires 8 August 2025                [Page 12]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-   It is RECOMMENDED that the size of a Notification Message is small
-   and segmentation does not result in segmenting the message into too
-   many segments to avoid dropping the entire message when there is a
-   lost segment.  When a Notification Message is large, it is
-   RECOMMENDED to use a reliable transport such as HTTPS-notif
-   [I-D.ietf-netconf-https-notif].
-
    A receiver collecting segmented UDP-Notif messages SHOULD have a
    configurable parameter to discard segments when they exceed a certain
    amount of segments.  The generation of too many segments by a
    publisher can be used as an abuse to require computation resources
    for reassembling large messages at the receiver.
 
-6.3.  Reliability
+5.3.  Reliability
 
    A receiver implementation SHOULD discard packets that were received
    but cannot be re-assembled as a complete message within a given
    amount of time.  This time SHOULD be configurable.
 
-7.  Secured layer for UDP-Notif
+6.  Secured layer for UDP-Notif
 
    In unsecured networks, which are not authenticated and encrypted on
    layers below transport, UDP-Notif messages MUST be encrypted.  In
@@ -712,25 +705,12 @@ Internet-Draft                  UDP-Notif                  February 2025
    number, but MAY be configurable to send messages to a different port.
    The Publisher MAY use any source UDP port for transmitting messages.
 
-7.1.  Session Lifecycle
+6.1.  Session Lifecycle
 
    This section describes the lifecycle of UDP-Notif messages when they
    are encrypted using DTLS.
 
-
-
-
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 13]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
-7.1.1.  DTLS Session Initiation
+6.1.1.  DTLS Session Initiation
 
    The Publisher initiates a DTLS connection by sending a DTLS
    ClientHello to the Receiver.  Implementations MAY support the denial
@@ -740,6 +720,15 @@ Internet-Draft                  UDP-Notif                  February 2025
    HelloRetryRequest containing a stateless cookie.  The Publisher sends
    a second DTLS ClientHello message containing the received cookie.
    Details can be found in Section 5.1 of [RFC9147].
+
+
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 13]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
    When DTLS is implemented, the Publisher MUST NOT send any UDP-Notif
    messages before the DTLS handshake has successfully completed.  Early
@@ -756,7 +745,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    implementations must negotiate a cipher suite that employs a non-NULL
    encryption algorithm.
 
-7.1.2.  Publish Data
+6.1.2.  Publish Data
 
    When DTLS is used, all UDP-Notif messages MUST be published as DTLS
    "application_data".  It is possible that multiple UDP-Notif messages
@@ -776,8 +765,19 @@ Internet-Draft                  UDP-Notif                  February 2025
 
    DIGIT = %d48 / NONZERO-DIGIT
 
-   UDP-NOTIF-MSG is defined in Section 4.
+   UDP-NOTIF-MSG is defined in Section 3.
 
+   The Publisher SHOULD attempt to avoid IP fragmentation by using the
+   Segmentation Option in the UDP-Notif message.
+
+6.1.3.  Session Termination
+
+   A Publisher MUST close the associated DTLS connection if the
+   connection is not expected to deliver any UDP-Notif Messages later.
+   It MUST send a DTLS close_notify alert before closing the connection.
+   A Publisher (DTLS client) MAY choose to not wait for the Receiver's
+   close_notify alert and simply close the DTLS connection.  Once the
+   Receiver gets a close_notify from the Publisher, it MUST reply with a
 
 
 
@@ -786,17 +786,6 @@ Zheng, et al.             Expires 8 August 2025                [Page 14]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-   The Publisher SHOULD attempt to avoid IP fragmentation by using the
-   Segmentation Option in the UDP-Notif message.
-
-7.1.3.  Session Termination
-
-   A Publisher MUST close the associated DTLS connection if the
-   connection is not expected to deliver any UDP-Notif Messages later.
-   It MUST send a DTLS close_notify alert before closing the connection.
-   A Publisher (DTLS client) MAY choose to not wait for the Receiver's
-   close_notify alert and simply close the DTLS connection.  Once the
-   Receiver gets a close_notify from the Publisher, it MUST reply with a
    close_notify.
 
    When no data is received from a DTLS connection for a long time, the
@@ -812,7 +801,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    like all alerts, are not retransmitted by DTLS and so may be lost
    over an unreliable network.
 
-7.1.4.  DTLS Fragmentation
+6.1.4.  DTLS Fragmentation
 
    [RFC9147] states that DTLS message may be fragmented into multiple
    DTLS records.  A DTLS message carrying a UDP-Notif message SHOULD fit
@@ -820,27 +809,14 @@ Internet-Draft                  UDP-Notif                  February 2025
    Implementations SHOULD account for DTLS overhead when determining the
    maximum UDP-Notif notification message size.
 
-8.  A YANG Data Model for Management of UDP-Notif
+7.  A YANG Data Model for Management of UDP-Notif
 
-8.1.  YANG Module for configuring UDP-Notif
+7.1.  YANG Module for configuring UDP-Notif
 
-   The YANG model described in Section 8.2 defines a new receiver
+   The YANG model described in Section 7.2 defines a new receiver
    instance for UDP-Notif transport.  When this transport is used, four
    new leaves and a dtls container allow configuring UDP-Notif receiver
    parameters.
-
-
-
-
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 15]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
 
    The source address of the UDP-Notif message can be configured using
    the "source-address" leaf at the subscription level as defined in
@@ -858,6 +834,14 @@ Internet-Draft                  UDP-Notif                  February 2025
           +--rw udp-notif-receiver
              +--rw remote-address         inet:host
              +--rw remote-port            inet:port-number
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 15]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
              +--rw local-address?         inet:ip-address
              |       {local-binding}?
              +--rw local-port?            inet:port-number
@@ -890,14 +874,6 @@ Internet-Draft                  UDP-Notif                  February 2025
              |  |  |  +--rw max?   identityref
              |  |  +--rw cipher-suites
              |  |     +--rw cipher-suite*
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 16]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
              |  |             tlscsa:tls-cipher-suite-algorithm
              |  +--rw keepalives {tls-client-keepalives}?
              |     +--rw peer-allowed-to-send?   empty
@@ -907,7 +883,22 @@ Internet-Draft                  UDP-Notif                  February 2025
              +--rw enable-segmentation?   boolean
              +--rw max-segment-size?      uint16
 
-8.2.  YANG Module
+
+
+
+
+
+
+
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 16]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
+7.2.  YANG Module
 
    This YANG module is used to configure, on a publisher, a receiver
    willing to consume notification messages.  This module augments the
@@ -946,14 +937,6 @@ Internet-Draft                  UDP-Notif                  February 2025
          "RFC 9645: YANG Groupings for TLS Clients and TLS Servers";
      }
      import ietf-tls-client {
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 17]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
        prefix tlsc;
        reference
          "RFC 9645: YANG Groupings for TLS Clients and TLS Servers";
@@ -963,6 +946,13 @@ Internet-Draft                  UDP-Notif                  February 2025
      contact
        "WG Web:   <http:/tools.ietf.org/wg/netconf/>
         WG List:  <mailto:netconf@ietf.org>
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 17]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
         Authors:  Guangying Zheng
                   <mailto:zhengguangying@huawei.com>
@@ -1002,14 +992,6 @@ Internet-Draft                  UDP-Notif                  February 2025
 
     /*
      * FEATURES
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 18]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
      */
      feature encode-cbor {
        description
@@ -1020,6 +1002,14 @@ Internet-Draft                  UDP-Notif                  February 2025
      }
      feature dtls13 {
        description
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 18]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
          "Indicates that DTLS 1.3 encryption of UDP
          packets is supported.";
        reference
@@ -1058,14 +1048,6 @@ Internet-Draft                  UDP-Notif                  February 2025
        }
 
        container dtls {
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 19]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
          if-feature dtls13;
          presence dtls;
          uses tlsc:tls-client-grouping {
@@ -1076,6 +1058,14 @@ Internet-Draft                  UDP-Notif                  February 2025
              if-feature "not tlsc:client-ident-tls12-psk";
            }
            refine "server-authentication/tls12-psks" {
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 19]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
              // create the logical impossibility of enabling TLS1.2
              if-feature "not tlsc:server-auth-tls12-psk";
            }
@@ -1114,14 +1104,6 @@ Internet-Draft                  UDP-Notif                  February 2025
            control the size of each segment (UDP-Notif header, with
            options, included).";
        }
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 20]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
      }
 
      augment "/sn:subscriptions/snr:receiver-instances/" +
@@ -1132,6 +1114,14 @@ Internet-Draft                  UDP-Notif                  February 2025
              "The UDP-notif receiver to send notifications to.";
            uses udp-notif-receiver;
          }
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 20]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
+
        }
        description
          "Augments the transport-type choice to include the 'udp-notif'
@@ -1140,12 +1130,12 @@ Internet-Draft                  UDP-Notif                  February 2025
    }
    <CODE ENDS>
 
-9.  IANA Considerations
+8.  IANA Considerations
 
    This document describes several new registries, the URIs from IETF
    XML Registry and the registration of a new YANG module name.
 
-9.1.  IANA Registries
+8.1.  IANA Registries
 
    This document requests IANA to create a new registry group called
    "UDP-Notif protocol".
@@ -1169,15 +1159,6 @@ Internet-Draft                  UDP-Notif                  February 2025
      Description: Reserved
      Reference: RFC-to-be
 
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 21]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
      Value: 1
      Description: media type application/yang-data+json
      Reference: RFC 8040
@@ -1189,6 +1170,13 @@ Internet-Draft                  UDP-Notif                  February 2025
      Value: 3
      Description: media type application/yang-data+cbor
      Reference: RFC 9254
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 21]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
    The second requested registry is the following:
 
@@ -1224,7 +1212,19 @@ Internet-Draft                  UDP-Notif                  February 2025
      Description: UDP-based Transport for Configured Subscriptions.
      Reference: RFC-to-be
 
+8.2.  URI
 
+   IANA is also requested to assign a new URI from the IETF XML Registry
+   [RFC3688].  The following URI is suggested:
+
+     URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
+     Registrant Contact: The IESG.
+     XML: N/A; the requested URI is an XML namespace.
+
+8.3.  YANG Module Name
+
+   This document also requests a new YANG module names in the YANG
+   Module Names registry [RFC8342] with the following suggestions:
 
 
 
@@ -1234,53 +1234,53 @@ Zheng, et al.             Expires 8 August 2025                [Page 22]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-9.2.  URI
-
-   IANA is also requested to assign a new URI from the IETF XML Registry
-   [RFC3688].  The following URI is suggested:
-
-     URI: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
-     Registrant Contact: The IESG.
-     XML: N/A; the requested URI is an XML namespace.
-
-9.3.  YANG Module Name
-
-   This document also requests a new YANG module names in the YANG
-   Module Names registry [RFC8342] with the following suggestions:
-
      name: ietf-udp-notif-transport
      namespace: urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport
      maintained by IANA: N
      prefix: unt
      reference: RFC-to-be
 
-10.  Implementation Status
+9.  Implementation Status
 
    Note to the RFC-Editor: Please remove this section before publishing.
 
-10.1.  Open Source Publisher
+9.1.  Open Source Publisher
 
    INSA Lyon implemented this document for a YANG Push publisher in an
    example implementation.
 
    The open source code can be obtained here: [INSA-Lyon-Publisher].
 
-10.2.  Open Source Receiver Library
+9.2.  Open Source Receiver Library
 
    INSA Lyon implemented this document for a YANG Push receiver as a
    library.
 
    The open source code can be obtained here: [INSA-Lyon-Receiver].
 
-10.3.  Pmacct Data Collection
+9.3.  Pmacct Data Collection
 
    The open source YANG push receiver library has been integrated into
    the Pmacct open source Network Telemetry data collection.
 
-10.4.  Huawei VRP
+9.4.  Huawei VRP
 
    Huawei implemented this document for a YANG Push publisher in their
    VRP platform.
+
+9.5.  6WIND VSR
+
+   6WIND implemented this document for a YANG Push publisher in their
+   VSR platform.
+
+9.6.  Cisco IOS XR
+
+   Cisco implemented this document for a YANG Push publisher in their
+   IOS XR platform.
+
+
+
+
 
 
 
@@ -1290,17 +1290,7 @@ Zheng, et al.             Expires 8 August 2025                [Page 23]
 Internet-Draft                  UDP-Notif                  February 2025
 
 
-10.5.  6WIND VSR
-
-   6WIND implemented this document for a YANG Push publisher in their
-   VSR platform.
-
-10.6.  Cisco IOS XR
-
-   Cisco implemented this document for a YANG Push publisher in their
-   IOS XR platform.
-
-11.  Security Considerations
+10.  Security Considerations
 
    [RFC8085] states that "UDP applications that need to protect their
    communications against eavesdropping, tampering, or message forgery
@@ -1311,7 +1301,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    security layer is not necessary required.  Nevertheless, an
    encryption layer MUST be implemented for non secured networks.  A
    specification of UDP-notif using DTLS 1.3 as its encryption layer is
-   presented in Section 7.
+   presented in Section 6.
 
    The following text uses the template described in Section 3.7 of
    [I-D.ietf-netmod-rfc8407bis].
@@ -1338,14 +1328,6 @@ Internet-Draft                  UDP-Notif                  February 2025
    There are a number of data nodes defined in this YANG module that are
    writable/creatable/deletable (i.e., config true, which is the
    default).  These data nodes may be considered sensitive or vulnerable
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 24]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
    in some network environments.  Write operations (e.g., edit-config)
    to these data nodes without proper protection can have a negative
    effect on network operations.  These are the subtrees and data nodes
@@ -1356,6 +1338,13 @@ Internet-Draft                  UDP-Notif                  February 2025
       transport parameters for the recipient of UDP-Notif messages.
       Unauthorized modification of these transport parameters could
       redirect notifications to unintended recipients.
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 24]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
    Some of the readable data nodes in this YANG module may be considered
    sensitive or vulnerable in some network environments.  It is thus
@@ -1368,7 +1357,7 @@ Internet-Draft                  UDP-Notif                  February 2025
    important to control access to these operations.  The YANG module
    defined in this document does not define any RPC operations.
 
-12.  Acknowledgements
+11.  Acknowledgements
 
    The authors of this documents would like to thank Lucas Aubard,
    Alexander Clemm, Benoit Claise, Ebben Aries, Eric Voit, Huiyang Yang,
@@ -1379,9 +1368,9 @@ Internet-Draft                  UDP-Notif                  February 2025
    Fioccola for their constructive suggestions for improving this
    document.
 
-13.  References
+12.  References
 
-13.1.  Normative References
+12.1.  Normative References
 
    [BCP195]   Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
               1.1", BCP 195, RFC 8996, March 2021.
@@ -1393,6 +1382,17 @@ Internet-Draft                  UDP-Notif                  February 2025
 
               <https://www.rfc-editor.org/info/bcp195>
 
+   [BCP230]   Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
+              and F. Gont, "IP Fragmentation Considered Fragile",
+              BCP 230, RFC 8900, September 2020.
+
+              <https://www.rfc-editor.org/info/bcp230>
+
+
+
+
+
+
 
 
 
@@ -1401,12 +1401,6 @@ Zheng, et al.             Expires 8 August 2025                [Page 25]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
-
-   [BCP230]   Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
-              and F. Gont, "IP Fragmentation Considered Fragile",
-              BCP 230, RFC 8900, September 2020.
-
-              <https://www.rfc-editor.org/info/bcp230>
 
    [I-D.ietf-netconf-distributed-notif]
               Zhou, T., Zheng, G., Voit, E., Graf, T., and P. Francois,
@@ -1447,17 +1441,6 @@ Internet-Draft                  UDP-Notif                  February 2025
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/info/rfc3688>.
 
-
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 26]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
@@ -1466,6 +1449,14 @@ Internet-Draft                  UDP-Notif                  February 2025
    [RFC6242]  Wasserman, M., "Using the NETCONF Protocol over Secure
               Shell (SSH)", RFC 6242, DOI 10.17487/RFC6242, June 2011,
               <https://www.rfc-editor.org/info/rfc6242>.
+
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 26]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
    [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
               RFC 6991, DOI 10.17487/RFC6991, July 2013,
@@ -1503,17 +1494,6 @@ Internet-Draft                  UDP-Notif                  February 2025
               RFC 8639, DOI 10.17487/RFC8639, September 2019,
               <https://www.rfc-editor.org/info/rfc8639>.
 
-
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 27]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
    [RFC8640]  Voit, E., Clemm, A., Gonzalez Prieto, A., Nilsen-Nygaard,
               E., and A. Tripathy, "Dynamic Subscription to YANG Events
               and Datastores over NETCONF", RFC 8640,
@@ -1524,6 +1504,15 @@ Internet-Draft                  UDP-Notif                  February 2025
               A. Bierman, "Dynamic Subscription to YANG Events and
               Datastores over RESTCONF", RFC 8650, DOI 10.17487/RFC8650,
               November 2019, <https://www.rfc-editor.org/info/rfc8650>.
+
+
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 27]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
    [RFC9147]  Rescorla, E., Tschofenig, H., and N. Modadugu, "The
               Datagram Transport Layer Security (DTLS) Protocol Version
@@ -1540,7 +1529,7 @@ Internet-Draft                  UDP-Notif                  February 2025
               Servers", RFC 9645, DOI 10.17487/RFC9645, October 2024,
               <https://www.rfc-editor.org/info/rfc9645>.
 
-13.2.  Informative References
+12.2.  Informative References
 
    [INSA-Lyon-Publisher]
               "INSA Lyon, YANG Push publisher example implementation",
@@ -1560,16 +1549,6 @@ Internet-Draft                  UDP-Notif                  February 2025
               (NETCONF)", RFC 6241, DOI 10.17487/RFC6241, June 2011,
               <https://www.rfc-editor.org/info/rfc6241>.
 
-
-
-
-
-
-Zheng, et al.             Expires 8 August 2025                [Page 28]
-
-Internet-Draft                  UDP-Notif                  February 2025
-
-
    [RFC7011]  Claise, B., Ed., Trammell, B., Ed., and P. Aitken,
               "Specification of the IP Flow Information Export (IPFIX)
               Protocol for the Exchange of Flow Information", STD 77,
@@ -1580,6 +1559,16 @@ Internet-Draft                  UDP-Notif                  February 2025
               for Subscription to YANG Datastores", RFC 7923,
               DOI 10.17487/RFC7923, June 2016,
               <https://www.rfc-editor.org/info/rfc7923>.
+
+
+
+
+
+
+Zheng, et al.             Expires 8 August 2025                [Page 28]
+
+Internet-Draft                  UDP-Notif                  February 2025
+
 
    [RFC7951]  Lhotka, L., "JSON Encoding of Data Modeled with YANG",
               RFC 7951, DOI 10.17487/RFC7951, August 2016,
@@ -1612,6 +1601,17 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
 
    This example shows how UDP-Notif can be configured without DTLS
    encryption.
+
+
+
+
+
+
+
+
+
+
+
 
 
 

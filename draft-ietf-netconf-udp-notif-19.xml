@@ -209,9 +209,9 @@
       states and retransmissions, which is not necessary for high-frequency continuous
       notification content, typically published directly from network processors on line cards.</t>
 
-      <t>This document specifies a transport option for Subscribed Notifications
-      <xref target="RFC8639"/> that leverages UDP. Specifically, it facilitates the distributed data
-      collection mechanism described in <xref
+      <t>This document specifies a transport option for Configured Subscriptions as defined in 
+      <xref target="RFC8639" section="2.5"/> that leverages UDP. Specifically, it facilitates the
+      distributed data collection mechanism described in <xref
       target="I-D.ietf-netconf-distributed-notif"/>. In the case of publishing
       from multiple network processors on multiple line cards, centralized
       designs require data to be internally forwarded from those network
@@ -227,35 +227,38 @@
       UDP-based transport allows for such a distributed data
       publishing approach:</t>
 
-      <t><list style="symbols">
-          <t>Firstly, a UDP approach reduces the burden of maintaining a large
-          pool of active TCP connections at the receiver, notably in cases
-          where it collects data from network processors on line cards from a
-          large amount of network nodes.</t>
+      <list style="symbols">
+        <t>Firstly, a UDP approach reduces the burden of maintaining a large
+        pool of active TCP connections at the receiver, notably in cases
+        where it collects data from network processors on line cards from a
+        large amount of network nodes.</t>
 
-          <t>Secondly, as no connection state needs to be maintained, UDP
-          encapsulation can be easily implemented by the hardware of the
-          publisher, which further improves performance.</t>
+        <t>Secondly, as no connection state needs to be maintained, UDP
+        encapsulation can be easily implemented by the hardware of the
+        publisher, which further improves performance.</t>
 
-          <t>Ultimately, such advantages allow for a larger data analysis
-          feature set, as more voluminous, finer grained data sets can be
-          streamed to the receiver.</t>
-        </list></t>
+        <t>Ultimately, such advantages allow for a larger data analysis
+        feature set, as more voluminous, finer grained data sets can be
+        streamed to the receiver.</t>
+      </list>
 
       <t>The transport described in this document can be used for transmitting
-      notification messages over both IPv4 and IPv6.</t>
+      notification messages over both IPv4 and IPv6. It is designed to be used
+      in cases where packet loss is not a concern, such as the collection of statistical
+      metrics that are exported periodically. This transport can be configured
+      via NETCONF <xref target="RFC6241"/> or RESTCONF <xref target="RFC8040"/>.</t>
 
       <t>This document describes the notification mechanism. It is intended to
       be used in conjunction with <xref target="RFC8639"/>, extended by <xref
       target="I-D.ietf-netconf-distributed-notif"/>.</t>
 
-      <t><xref target="sec_transport"/> describes the control of the proposed
-      transport mechanism. <xref target="sec_ups_transport"/> details the
+      <t><xref target="sec_ups_transport"/> details the
       notification mechanism and message format. <xref target="sec_options"/>
       describes the use of options in the notification message header. <xref
       target="sec_applicability"/> covers the applicability of the
       mechanism. <xref target="sec_dtls_udp_notif"/> describes a mechanism to
       secure the protocol in open networks.</t>
+
     </section>
 
     <section title="Terminology">
@@ -274,11 +277,19 @@
         <li>Publisher</li>
         <li>Receiver</li>
       </ul>
+
+      <t>The term Message Publisher ID is used as defined in <xref target="I-D.ietf-netconf-distributed-notif"/>.</t>
+
+      <t>This document defines the following terms:</t>
+      <ul>
+        <li>Message ID: identifier of a message transported by the UDP-Notif protocol.
+        More details are presented in <xref target="sec_ups_format"/>.</li>
+      </ul>
     </section>
 
-    <section anchor="sec_transport"
-             title="Configured Subscription to UDP-Notif">
-      <t>This section describes how the proposed mechanism can be controlled
+    <!-- <section anchor="sec_transport"
+             title="Configured Subscription to UDP-Notif"> -->
+      <!-- <t>This section describes how the proposed mechanism can be controlled
       using subscription channels based on NETCONF or RESTCONF.</t>
 
       <t>Configured subscriptions, as defined in <xref target="RFC8639" section="2.5">
@@ -295,11 +306,10 @@
       Subscription state notifications, defined in Section 2.7 of
       <xref target="RFC8639"/>, MUST be encapsulated in separate notification
       messages.</t>
-      <!-- TODO:What if it the message is lost? -->
       <t>Note also that publishers MAY NOT be aware of the capabilities supported by the receivers.
-      </t>
+      </t> -->
 
-    </section>
+    <!-- </section> -->
 
     <section anchor="sec_ups_transport" title="UDP-Based Transport">
       <t>This section specifies the UDP-Notif transport behavior. <xref
@@ -342,6 +352,18 @@
           </figure></t>
 
         <t/>
+
+
+      <t>Note that receivers collecting UDP-Notif messages may not be already up and running when the
+      configuration of the subscription takes effect on a monitored network
+      node. The first message generated by the publisher MUST be a separate
+      "subscription-started" notification to indicate to the receiver that the stream has started
+      flowing. Then, the notifications can be sent immediately without delay.
+      Subscription state notifications, defined in Section 2.7 of
+      <xref target="RFC8639"/>, MUST be encapsulated in separate notification
+      messages.</t>
+      <t>Note also that publishers MAY NOT be aware of the capabilities supported by the receivers.
+      </t>
       </section>
 
       <section anchor="sec_ups_format"
@@ -417,7 +439,7 @@
             of an information source. Message unicity is obtained from the conjunction of the Message
             Publisher ID and the Message ID field. If Message
             Publisher ID unicity is not preserved through the collection
-            domain, the source IP address of the UDP datagram SHOULD be used
+            domain, the source IP address of the UDP datagram MUST be used
             in addition to the Message Publisher ID to identify the
             information source. If a transport layer relay is used, Message
             Publisher ID unicity must be preserved through the collection
@@ -567,7 +589,8 @@
         <t>The receiver SHOULD support the reception of unordered segments.
         The implementation of the receiver SHOULD provide an option to discard
         the received segments if, after some time, one of the segments is still
-        missing and the reassembly of the message is not possible. If the receiver
+        missing and the reassembly of the message is not possible. No retransmission
+        of lost segments are expected from the publisher. If the receiver
         collects a segment more than once, the implementation SHOULD drop the
         duplicate segment.</t>
 
