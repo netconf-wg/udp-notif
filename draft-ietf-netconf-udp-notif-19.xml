@@ -252,7 +252,9 @@
       <t>This document describes the notification mechanism. It is intended to
       be used in conjunction with <xref target="RFC8639"/>, extended by <xref
       target="I-D.ietf-netconf-distributed-notif"/>. Additionally, 
-      this document defines a YANG data model for management of the UDP-based transport.</t>
+      this document defines a YANG data model for management of the UDP-based transport.
+      The YANG module specified in this document is compliant with Network Management
+      Datastore Architecture (NMDA) <xref target="RFC8639"/>.</t>
 
       <t><xref target="sec_ups_transport"/> details the
       notification mechanism and message format. <xref target="sec_options"/>
@@ -1200,7 +1202,13 @@ module ietf-udp-notif-transport {
   Value: TBD2 (suggested value: 2)
   Description: Private Encoding Option
   Reference: RFC-to-be]]></artwork>
-          </figure>
+        </figure>
+
+        <t>Note to the RFC-Editor:</t>
+        <ul>
+          <li>Please replace TBD1 and TBD2 with the values allocated by IANA.
+          There are multiple instances in the document.</li>
+        </ul>
 
         <t>The third requested registry is the following:</t>
 
@@ -1371,8 +1379,8 @@ module ietf-udp-notif-transport {
       Clemm, Benoit Claise, Ebben Aries, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh
       Jethanandani, Marco Tollini, Hannes Tschofenig, Michael Tuxen, Rob Wilton, Sean
       Turner, Stephane Frenot, Timothy Carey, Tim Jenkins, Tom Petch, Yunan Gu,
-      Joseph Touch, Andy Bierman, Carsten Bormann, Mohamed Boucadair, Weiqiang Cheng
-      and Giuseppe Fioccola for their constructive
+      Joseph Touch, Andy Bierman, Carsten Bormann, Mohamed Boucadair, Weiqiang Cheng,
+      Giuseppe Fioccola, Camilo Cardona, Qiufang Ma and James Cumming for their constructive
 	    suggestions for improving this document.</t>
     </section>
   </middle>
