@@ -454,7 +454,7 @@
             domain.</t>
 
             <t>The Message ID is increased monotonically by the publisher of
-            UDP-Notif messages. It is RECOMMENDED that the Message ID starts at 1 with
+            UDP-Notif messages and MUST start at 1 with
             the first message. A publisher MUST use different Message IDs
             for different messages generated with the same Message
             Publisher ID. Note that the main purpose of the Message ID is to
@@ -493,16 +493,11 @@
         Users defining a private encoding MAY use any combination of MT and private encoding
         fitting their needs.</t>
 
-        <t>It is RECOMMENDED that the publisher is configured to generate notification
-        messages using only one encoding method per subscription.</t>
+        <t>The encoding of a message data is configured on a subscription basis and each
+        subscription reference a receiver instance. Publishers
+        MUST NOT be configured to send notification messages with more than one 
+        encoding to the same receivers.</t>
 
-        <!-- Implementations MAY support multiple encoding methods within the same
-        subscription. It is NOT RECOMMENDED to use multiple encodings within the same
-        subscription. -->
-        <!-- <t>Implementations MAY support multiple encoding methods per
-        subscription. When bundled notifications are supported between the
-        publisher and the receiver, only subscribed notifications with the
-        same encoding can be bundled in a given message.</t> -->
       </section>
     </section>
 
@@ -586,14 +581,15 @@
         <t>Implementations MUST NOT rely on IP
         fragmentation by default to carry large messages. Implementations
         MUST either restrict the size of individual
-        messages carried over this protocol, or support the segmentation
-        option. In the latter case, the parameter "max-segment-size" SHOULD be set
+        messages to a value that will not lead to IP fragmentation as per <xref target="sec_message_size"/>,
+        or support the segmentation option. In the latter case, the parameter "max-segment-size" MUST be set
         so that the size of a UDP-Notif segment and the size of the IP layer
         together do not exceed the MTU of the egress interface.</t>
 
         <t>When a message has multiple options and is segmented, all the options
-        MUST be present on the first segment, with the segmentation option placed first. The rest
-        of segmented messages MAY include all the options ordered by options type.</t>
+        MUST be present on the first segment. The rest of segmented messages MAY
+        include all the options. The segmentation option MUST be placed first
+        in all segments.</t>
 
         <t>The receiver SHOULD support the reception of unordered segments.
         The implementation of the receiver SHOULD provide an option to discard
@@ -641,7 +637,7 @@
             <t>Length: Generic option field which indicates the length of this
             option in octets. It is a variable value.</t>
 
-            <t>Variable length Enc. Descr: The description of the private encoding used for
+            <t>Variable length enc. descr: The description of the private encoding used for
             this message. The values to be used for such private encodings is
             left to be defined by the users of private encodings.</t>
           </list></t>
@@ -989,8 +985,15 @@ module ietf-udp-notif-transport {
     4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
     (https://trustee.ietf.org/license-info).
 
-    This version of this YANG module is part of RFC XXXX; see the RFC
-    itself for full legal notices.";
+    This version of this YANG module is part of RFC XXXX
+    (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+    for full legal notices.
+    
+    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+    NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+    'MAY', and 'OPTIONAL' in this document are to be interpreted as
+    described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+    they appear in all capitals, as shown here.";
 
   revision 2025-02-07 {
     description
@@ -1035,6 +1038,16 @@ module ietf-udp-notif-transport {
       "Encode data using CBOR.";
     reference
       "RFC 9254: CBOR Encoding of Data Modeled with YANG";
+  }
+
+  identity invalid-max-segment-size {
+    base sn:establish-subscription-error;
+    base sn:modify-subscription-error;
+    description
+      "Error triggered when the 'max-segment-size' is not supported
+      by the publisher.";
+    reference
+      "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
 
   grouping udp-notif-receiver {
@@ -1095,7 +1108,9 @@ module ietf-udp-notif-transport {
       description 
         "UDP-Notif provides a configurable max-segment-size to
         control the size of each segment (UDP-Notif header, with
-        options, included).";
+        options, included).
+        The publisher MAY trigger a 'invalid-max-segment-size' error
+        if the publisher does not support the configured value.";
     }
   }
 
