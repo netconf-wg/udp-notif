@@ -641,14 +641,17 @@
           <t>Length: Generic option field which indicates the length of this
           option in octets. It is a variable value.</t>
 
-          <t>Variable length enc. descr: Field to be freely used by the implementor
+          <t>Variable length enc. descr.: Field to be freely used by the implementor
           when defining a new encoding flavor. This field MAY be used together 
           the MT field. The values to be used for such private encodings is
           left to be defined by the users of private encodings.</t>
         </list>
 
         <t>This option MUST only be used when the S-flag bit of the header is
-        set. An example of usage is shown in <xref target="example-private-end"/>.</t>
+        set. The definition of the content of the field Variable length enc. descr.
+        is out of scope of this document. An example of usage is
+        shown in <xref target="example-private-end"/>.</t>
+
       </section>
     </section>
 
@@ -1748,23 +1751,14 @@ rmat</public-key-format>
           within their organization, the implementor may use the MT field only
           to define such values. Each value within the MT field may identify one private encoding.</t>
 
-          <t>In the following example, the message would be encoded using the private encoding "0".</t>
+          <t>In the following example, the message would be encoded using the private encoding "3"
+          that is defined in an internal registry private to an organization.</t>
           <figure>
             <artwork align="left"><![CDATA[
 S-flag: 1
-MT: 0
-Notification Message: message encoded using the encoding "0"]]></artwork>
+MT: 3
+Notification Message: message encoded using the encoding "3"]]></artwork>
           </figure>
-
-          <t>In this next example, the message would be encoded using the private encoding "1".</t>
-
-          <figure>
-            <artwork align="left"><![CDATA[
-S-flag: 1
-MT: 1
-Notification Message: message encoded using the encoding "1"]]></artwork>
-          </figure>
-
         </section>
         
         <section anchor="priv_usecase_2" title="Defining Encoding Flavors with the Private Encoding Option">

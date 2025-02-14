@@ -124,7 +124,7 @@ Internet-Draft                  UDP-Notif                  February 2025
      A.4.  Example of Private Encoding Option Usage  . . . . . . . .  36
        A.4.1.  Using the MT Field only . . . . . . . . . . . . . . .  36
        A.4.2.  Defining Encoding Flavors with the Private Encoding
-               Option  . . . . . . . . . . . . . . . . . . . . . . .  37
+               Option  . . . . . . . . . . . . . . . . . . . . . . .  36
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  37
 
 1.  Introduction
@@ -633,14 +633,16 @@ Internet-Draft                  UDP-Notif                  February 2025
    *  Length: Generic option field which indicates the length of this
       option in octets.  It is a variable value.
 
-   *  Variable length enc. descr: Field to be freely used by the
+   *  Variable length enc. descr.: Field to be freely used by the
       implementor when defining a new encoding flavor.  This field MAY
       be used together the MT field.  The values to be used for such
       private encodings is left to be defined by the users of private
       encodings.
 
    This option MUST only be used when the S-flag bit of the header is
-   set.  An example of usage is shown in Appendix A.4.
+   set.  The definition of the content of the field Variable length enc.
+   descr.  is out of scope of this document.  An example of usage is
+   shown in Appendix A.4.
 
 5.  Applicability
 
@@ -662,8 +664,6 @@ Internet-Draft                  UDP-Notif                  February 2025
    Records exported with UDP [RFC7011]).  Such metrics are typically
    exported in a periodical subscription as described in Section 3.1 of
    [RFC8641].
-
-
 
 
 
@@ -1996,19 +1996,19 @@ A.4.1.  Using the MT Field only
    one private encoding.
 
    In the following example, the message would be encoded using the
-   private encoding "0".
+   private encoding "3" that is defined in an internal registry private
+   to an organization.
 
    S-flag: 1
-   MT: 0
-   Notification Message: message encoded using the encoding "0"
+   MT: 3
+   Notification Message: message encoded using the encoding "3"
 
-   In this next example, the message would be encoded using the private
-   encoding "1".
+A.4.2.  Defining Encoding Flavors with the Private Encoding Option
 
-   S-flag: 1
-   MT: 1
-   Notification Message: message encoded using the encoding "1"
-
+   When an organization would need more than 16 private encoding values,
+   the implementor can use the private encoding option arbitrarily to
+   extend these private encodings.  The following examples show an
+   arbitrarily approach that make use of this private encoding option.
 
 
 
@@ -2017,13 +2017,6 @@ Zheng, et al.            Expires 15 August 2025                [Page 36]
 
 Internet-Draft                  UDP-Notif                  February 2025
 
-
-A.4.2.  Defining Encoding Flavors with the Private Encoding Option
-
-   When an organization would need more than 16 private encoding values,
-   the implementor can use the private encoding option arbitrarily to
-   extend these private encodings.  The following examples show an
-   arbitrarily approach that make use of this private encoding option.
 
    In this first message, the implementor uses the MT field to define a
    private encoding "5" that is internally defined.  Additionally, the
@@ -2064,6 +2057,13 @@ Authors' Addresses
    Email: zhoutianran@huawei.com
 
 
+   Thomas Graf
+   Swisscom
+   Binzring 17
+   CH- Zuerich 8045
+   Switzerland
+   Email: thomas.graf@swisscom.com
+
 
 
 
@@ -2072,14 +2072,6 @@ Authors' Addresses
 Zheng, et al.            Expires 15 August 2025                [Page 37]
 
 Internet-Draft                  UDP-Notif                  February 2025
-
-
-   Thomas Graf
-   Swisscom
-   Binzring 17
-   CH- Zuerich 8045
-   Switzerland
-   Email: thomas.graf@swisscom.com
 
 
    Pierre Francois
@@ -2102,6 +2094,14 @@ Internet-Draft                  UDP-Notif                  February 2025
    Hoofddorp, WT 2132
    Netherlands
    Email: paolo@ntt.net
+
+
+
+
+
+
+
+
 
 
 
