@@ -177,9 +177,9 @@
     <abstract>
       <t>This document describes a UDP-based transport for YANG notifications
       to collect data from network nodes. A shim header is defined to
-      facilitate the data streaming directly from the publishing process on
-      network processor of line cards to receivers. Such a design enables higher
-      frequency and less performance impact on publisher and receiver processes compared to
+      facilitate the data streaming directly from a publishing process on a network
+      device to telemetry receivers. Such a design enable higher frequency
+      updates and less performance overhead on publisher and receiver processes compared to
       already established notification mechanisms. A YANG data model is also defined 
       for management of the described UDP-based transport.</t>
     </abstract>
@@ -190,9 +190,11 @@
       <t>The mechanism to support a subscription of a continuous and
       customized stream of updates from a YANG datastore <xref
       target="RFC8342"/> is defined in Subscribed Notifications <xref target="RFC8639"/>
-      and YANG-Push <xref target="RFC8641"/>. Requirements for
+      and YANG-Push <xref target="RFC8641"/>. 
+      <!-- Requirements for
       Subscription to YANG Datastores are defined in <xref
-      target="RFC7923"/>.</t>
+      target="RFC7923"/>. -->
+      </t>
 
       <t>Subscribed Notifications <xref target="RFC8639"/> separate the management and control
       of subscriptions from the transport used to deliver the data. Three transport mechanisms,
@@ -232,10 +234,10 @@
         <t>Firstly, a UDP approach reduces the burden of maintaining a large
         pool of active TCP connections at the receiver, notably in cases
         where it collects data from network processors on line cards from a
-        large amount of network nodes.</t>
+        large number of network nodes.</t>
 
         <t>Secondly, as no connection state needs to be maintained, UDP
-        encapsulation can be easily implemented by the hardware of the
+        encapsulation could be implemented by the hardware of the
         publisher, which further improves performance.</t>
 
         <t>Ultimately, such advantages allow for a larger data analysis
@@ -328,7 +330,7 @@
 
       <section anchor="sec_design" title="Design Overview">
         <t>As specified in <xref target="RFC8639" section="2.6">Subscribed Notifications</xref>,
-        the YANG data is encapsulated in a NETCONF/RESTCONF notification message, which is then
+        the content of a YANG notification is encapsulated in a notification message, which is then
         encapsulated and carried using a transport protocol. <xref
         target="fig_ups_message"/> illustrates the structure of a UDP-Notif
         message:</t>
@@ -486,7 +488,8 @@
         Additional encodings may be supported in the
         future. This can be accomplished by augmenting the subscription data
         model with additional identity statements used to refer to requested
-        encodings.</t>
+        encodings. When new encodings are defined, a new registration in the
+        IANA registry "UDP-Notif media types" MUST be allocated (<xref target="sec_iana_reg"/>).</t>
 
         <t>Private encodings can be used by enabling the S-flag of the header. When the S-flag
         is set, the value of the MT field is left to be defined and agreed
@@ -743,12 +746,13 @@
     <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-Notif">
       <t>In unsecured networks, which are not authenticated and encrypted on
 	    layers below transport, UDP-Notif messages MUST be 
-      encrypted. In this section, a mechanism using DTLS 1.3 <xref target="RFC9147"/> to secure
+      encrypted. In this section, a mechanism using DTLS
+      <xref target="RFC6347"/><xref target="RFC9147"/> to secure
       UDP-Notif protocol is presented.</t>
 
       <t>Implementations using DTLS to secure UDP-Notif messages MUST use DTLS
-      1.3 protocol as defined in <xref target="RFC9147"/>. No DTLS 1.3 extensions
-      are defined in this document.</t>
+      1.2 <xref target="RFC6347"/> or later, and SHOULD use DTLS 1.3 <xref target="RFC9147"/>.
+      No DTLS extensions are defined in this document.</t>
 
       <t>When this security layer is used, the publisher MUST always be a DTLS
       client, and the Receiver MUST always be a DTLS server. The Receivers
@@ -765,23 +769,25 @@
         <section title="DTLS Session Initiation">
           <t>The publisher initiates a DTLS connection by sending a DTLS
           ClientHello to the Receiver. Implementations MAY support the denial
-          of service countermeasures defined by DTLS 1.3 if a given deployment
-          can ensure that DoS attacks are not a concern. When these
-          countermeasures are used, the Receiver responds with a DTLS
-          HelloRetryRequest containing a stateless cookie. The publisher sends
-          a second DTLS ClientHello message containing the received cookie.
+          of service countermeasures defined by DTLS 1.2 and DTLS 1.3 if a given deployment
+          can ensure that DoS attacks are not a concern.</t>
+
+          <t>In DTLS 1.3 when the denial of service countermeasures are implemented, the
+          Receiver responds with a DTLS HelloRetryRequest containing a stateless cookie.
+          The publisher sends then a second DTLS ClientHello message containing the received cookie.
           Details can be found in Section 5.1 of <xref target="RFC9147"/>.</t>
 
           <t>When DTLS is implemented, the publisher MUST NOT send any
           UDP-Notif messages before the DTLS handshake has successfully
-          completed. Early data mechanism (also known as 0-RTT data) as
-          defined in <xref target="RFC9147"/> MUST NOT be used.</t>
+          completed. Implementations MUST NOT use the early data mechanism
+          (also known as 0-RTT data) defined in DTLS 1.3 <xref target="RFC9147"/>.</t>
 
-          <t>Implementations of this security layer MUST support DTLS 1.3
-          <xref target="RFC9147"/> and MUST follow recommendations defined
-          by <xref target="BCP195"/>. If other cipher suites are used,
-          then implementations MUST NOT negotiate a cipher suite that employs
-          NULL integrity or authentication algorithms.</t>
+          <t>Implementations of this security layer MUST support DTLS 1.2 <xref target="RFC6347"/>
+          or later, and SHOULD support DTLS 1.3 <xref target="RFC9147"/>.
+          Implementations MUST follow recommendations defined
+          by <xref target="BCP195"/>. If other cipher suites than the ones recommended by
+          <xref target="BCP195"/> are used, then implementations MUST NOT negotiate a
+          cipher suite that employs NULL integrity or authentication algorithms.</t>
 
           <t>Where confidentiality protection with DTLS is required,
           implementations must negotiate a cipher suite that employs a
@@ -839,7 +845,8 @@
         </section>
 
         <section title="DTLS Fragmentation">
-          <t><xref target="RFC9147"/> states that DTLS message may be fragmented into
+          <t>DTLS 1.2 <xref target="RFC6347"/> and DTLS 1.3 <xref target="RFC9147"/> states
+          that DTLS message may be fragmented into
           multiple DTLS records. A DTLS message carrying a UDP-Notif message SHOULD fit within a
           single datagram to avoid DTLS fragmentation. Implementations SHOULD
           account for DTLS overhead when determining the maximum UDP-Notif
@@ -878,13 +885,15 @@ module: ietf-udp-notif-transport
           |       {local-binding}?
           +--rw local-port?            inet:port-number
           |       {local-binding}?
-          +--rw dtls! {dtls13}?
+          +--rw dtls! {dtls}?
           |  +--rw client-identity!
           |  |  +--rw (auth-type)
           |  |     +--:(certificate) {client-ident-x509-cert}?
           |  |     |     ...
           |  |     +--:(raw-public-key)
           |  |     |        {client-ident-raw-public-key}?
+          |  |     |     ...
+          |  |     +--:(tls12-psk) {client-ident-tls12-psk}?
           |  |     |     ...
           |  |     +--:(tls13-epsk) {client-ident-tls13-epsk}?
           |  |           ...
@@ -898,20 +907,17 @@ module: ietf-udp-notif-transport
           |  |  +--rw raw-public-keys! {server-auth-raw-public-key}?
           |  |  |  +--rw (inline-or-truststore)
           |  |  |        ...
+          |  |  +--rw tls12-psks?        empty
+          |  |  |       {server-auth-tls12-psk}?
           |  |  +--rw tls13-epsks?       empty
           |  |          {server-auth-tls13-epsk}?
           |  +--rw hello-params {tlscmn:hello-params}?
-          |  |  +--rw tls-versions
-          |  |  |  +--rw min?   identityref
-          |  |  |  +--rw max?   identityref
-          |  |  +--rw cipher-suites
-          |  |     +--rw cipher-suite*
-          |  |             tlscsa:tls-cipher-suite-algorithm
-          |  +--rw keepalives {tls-client-keepalives}?
-          |     +--rw peer-allowed-to-send?   empty
-          |     +--rw test-peer-aliveness!
-          |        +--rw max-wait?       uint16
-          |        +--rw max-attempts?   uint8
+          |     +--rw tls-versions
+          |     |  +--rw min?   identityref
+          |     |  +--rw max?   identityref
+          |     +--rw cipher-suites
+          |        +--rw cipher-suite*
+          |                tlscsa:tls-cipher-suite-algorithm
           +--rw enable-segmentation?   boolean
           +--rw max-segment-size?      uint16
   ]]></sourcecode>
@@ -928,7 +934,7 @@ module: ietf-udp-notif-transport
         and the "tls-client-grouping" defined in the "ietf-tls-client" module
         <xref target="RFC9645"/>.</t>
 
-        <sourcecode name="ietf-udp-notif-transport@2025-02-07.yang" type="yang" markers="true"><![CDATA[
+        <sourcecode name="ietf-udp-notif-transport@2025-02-14.yang" type="yang" markers="true"><![CDATA[
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -949,11 +955,6 @@ module ietf-udp-notif-transport {
     prefix udpc;
     reference
       "RFC ZZZZ: YANG Grouping for UDP Clients and UDP Servers";
-  }
-  import ietf-tls-common {
-    prefix tlscmn;
-    reference
-      "RFC 9645: YANG Groupings for TLS Clients and TLS Servers";
   }
   import ietf-tls-client {
     prefix tlsc;
@@ -994,9 +995,15 @@ module ietf-udp-notif-transport {
 
     This version of this YANG module is part of RFC XXXX
     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
-    for full legal notices.";
+    for full legal notices.
+    
+    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+    NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+    'MAY', and 'OPTIONAL' in this document are to be interpreted as
+    described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+    they appear in all capitals, as shown here.";
 
-  revision 2025-02-07 {
+  revision 2025-02-14 {
     description
       "Initial revision";
     reference
@@ -1013,12 +1020,15 @@ module ietf-udp-notif-transport {
     reference
       "RFC 9254: CBOR Encoding of Data Modeled with YANG";
   }
-  feature dtls13 {
+  feature dtls {
     description
-      "Indicates that DTLS 1.3 encryption of UDP
-      packets is supported.";
+      "Indicates that DTLS encryption of UDP
+      packets is supported. UDP-Notif mandates that, in 
+      unsecured networks, DTLS 1.2 or later MUST be supported,
+      and DTLS 1.3 SHOULD be supported.";
     reference 
-      "RFC 9147: The Datagram Transport Layer Security (DTLS)
+      "RFC6347: Datagram Transport Layer Security Version 1.2,
+      RFC 9147: The Datagram Transport Layer Security (DTLS)
       Protocol Version 1.3";
   }
 
@@ -1064,36 +1074,16 @@ module ietf-udp-notif-transport {
     }
 
     container dtls {
-      if-feature dtls13;
+      if-feature dtls;
       presence dtls;
       uses tlsc:tls-client-grouping {
-        // Using tls-client-grouping without TLS1.2 parameters
-        // allowing only DTLS 1.3
-        refine "client-identity/auth-type/tls12-psk" {
-          // create the logical impossibility of enabling TLS1.2
-          if-feature "not tlsc:client-ident-tls12-psk";
-        }
-        refine "server-authentication/tls12-psks" {
-          // create the logical impossibility of enabling TLS1.2
-          if-feature "not tlsc:server-auth-tls12-psk";
-        }
-        refine "hello-params/tls-versions/min" {
-          must "not(derived-from-or-self(current(), "
-            + "'tlscmn:tls12'))" {
-            error-message
-              "TLS 1.2 is not supported as min TLS version";
-          }
-        }
-        refine "hello-params/tls-versions/max" {
-          must "not(derived-from-or-self(current(), "
-            + "'tlscmn:tls12'))" {
-            error-message
-              "TLS 1.2 is not supported as max TLS version";
-          }
+        // Remove keep-alives for DTLS
+        refine "keepalives" {
+          if-feature "not tlsc:tls-client-keepalives";
         }
       }
       description 
-        "Container for configuring DTLS 1.3 parameters.";
+        "Container for configuring DTLS parameters.";
     }
 
     leaf enable-segmentation {
@@ -1414,7 +1404,7 @@ module ietf-udp-notif-transport {
 
       <?rfc include='https://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
 
-      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6242.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6347.xml"?>
 
       <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml"?>
 
@@ -1425,9 +1415,8 @@ module ietf-udp-notif-transport {
       <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8174.xml"?>
 
       <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8341.xml"?>
-      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml"?>
 
-      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8342.xml"?>
       
       <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8639.xml"?>
 
@@ -1441,7 +1430,6 @@ module ietf-udp-notif-transport {
       <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.9645.xml"?>
 
       <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-https-notif.xml'?>
-      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-rfc8407bis.xml'?>
 
       <?rfc include="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-distributed-notif.xml"?>
 
@@ -1452,24 +1440,28 @@ module ietf-udp-notif-transport {
       <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-notification-messages.xml"?> -->
 
       <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?> -->
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-udp-pub-channel.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-udp-pub-channel.xml"?>
+      <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-rfc8407bis.xml'?>
 
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6241.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6242.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7011.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.7011.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7923.xml"?>
+      <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7923.xml"?> -->
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.7951.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.7951.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8040.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8641.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8446.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8641.xml"?>
 
-      <?rfc include="http://xml.resource.org/public/rfc/bibxml/reference.RFC.8799.xml"?>
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8340.xml"?>
+
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.8799.xml"?>
 
       <reference anchor="INSA-Lyon-Publisher"
                  target="https://github.com/network-analytics/udp-notif-scapy">
