@@ -63,13 +63,7 @@ module ietf-udp-notif-transport {
 
     This version of this YANG module is part of RFC XXXX
     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
-    for full legal notices.
-    
-    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
-    NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
-    'MAY', and 'OPTIONAL' in this document are to be interpreted as
-    described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
-    they appear in all capitals, as shown here.";
+    for full legal notices.";
 
   revision 2025-02-07 {
     description
@@ -116,12 +110,13 @@ module ietf-udp-notif-transport {
       "RFC 9254: CBOR Encoding of Data Modeled with YANG";
   }
 
-  identity invalid-max-segment-size {
+  identity unsupported-max-segment-size {
     base sn:establish-subscription-error;
     base sn:modify-subscription-error;
     description
-      "Error triggered when the 'max-segment-size' is not supported
-      by the publisher.";
+      "Error triggered when the specified value 'max-segment-size'
+      is not supported by the publisher. An implementation may
+      only support a subset of the uint16.";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -155,14 +150,14 @@ module ietf-udp-notif-transport {
           must "not(derived-from-or-self(current(), "
             + "'tlscmn:tls12'))" {
             error-message
-                  "TLS 1.2 is not supported as min TLS version";
+              "TLS 1.2 is not supported as min TLS version";
           }
         }
         refine "hello-params/tls-versions/max" {
           must "not(derived-from-or-self(current(), "
             + "'tlscmn:tls12'))" {
             error-message
-                  "TLS 1.2 is not supported as max TLS version";
+              "TLS 1.2 is not supported as max TLS version";
           }
         }
       }
@@ -185,8 +180,9 @@ module ietf-udp-notif-transport {
         "UDP-Notif provides a configurable max-segment-size to
         control the size of each segment (UDP-Notif header, with
         options, included).
-        The publisher MAY trigger a 'invalid-max-segment-size' error
-        if the publisher does not support the configured value.";
+        The publisher may trigger an 'unsupported-max-segment-size'
+        error if the publisher does not support the configured
+        value.";
     }
   }
 
