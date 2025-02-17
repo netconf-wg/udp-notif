@@ -468,8 +468,9 @@
             successive messages originated with the same Message Publisher ID,
             so that message loss can be detected at data collection. When the last value (2^32-1)
             of Message ID has been reached, the Message ID wraps around and
-            restarts at 0. Different subscribers MAY share the same Message ID
-            sequence.</t>
+            restarts at 0.
+            <!-- Different subscribers MAY share the same Message ID sequence. -->
+            </t>
 
             <t>Options are a variable-length field in the TLV format. When the
             Header Length is larger than 12 octets, which is the length of the
@@ -716,7 +717,11 @@
         for messages whose size result in IP packets exceeding the MTU along
         the path. The segmentation option of the current specification permits
         segmentation of the UDP-Notif message content without relying on IP
-        fragmentation. Implementations SHOULD allow for the configuration of the MTU.</t>
+        fragmentation.
+        <!-- Implementations MUST allow for the configuration of the
+        maximum size of a UDP-Notif segment. -->
+        </t>
+<!-- as per errat, this protocol does not mandate any default encoding -->
 
         <t>It is RECOMMENDED that the size of a Notification Message is 
         small and segmentation does not result in segmenting the message into too
