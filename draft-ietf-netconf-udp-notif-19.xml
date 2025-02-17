@@ -492,6 +492,12 @@
         encodings. When new encodings are defined, a new registration in the
         IANA registry "UDP-Notif media types" MUST be allocated (<xref target="sec_iana_reg"/>).</t>
 
+        <t>Subscribed Notifications <xref target="RFC8639"/> states that a transport MUST identify
+        a default encoding. However, as per <xref target="Errata-6211"/>, Subscribed Notifications does not
+        require to define a default encoding.
+        <!-- A mechanism for the discovery of supported encodings is defined in <xref target="I-D.netana-netconf-yp-transport-capabilities"/>. -->
+        </t>
+
         <t>Private encodings can be used by enabling the S-flag of the header. When the S-flag
         is set, the value of the MT field is left to be defined and agreed
         upon by the users of the private encoding. The MT field only allows for 16
@@ -1446,6 +1452,7 @@ module ietf-udp-notif-transport {
 
       <!-- <?rfc include="http://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ahuang-netconf-notif-yang.xml"?> -->
       <?rfc include="https://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.ietf-netconf-udp-pub-channel.xml"?>
+      <!-- <?rfc include="https://xml.resource.org/public/rfc/bibxml-ids/reference.I-D.netana-netconf-yp-transport-capabilities.xml"?> -->
       <?rfc include='https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-netmod-rfc8407bis.xml'?>
 
 
@@ -1499,6 +1506,17 @@ module ietf-udp-notif-transport {
           <author/>
 
           <date/>
+        </front>
+      </reference>
+
+      <reference anchor="Errata-6211"
+                 target="https://www.rfc-editor.org/errata/eid6211">
+        <front>
+          <title>Errata 6211</title>
+          <author initials="Kent" surname="Watsen">
+            <organization/>
+          </author>
+          <date year="2024"/>
         </front>
       </reference>
     </references>
