@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="11" month="February" year="2025"/>
+    <date day="21" month="February" year="2025"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -414,11 +414,12 @@
             When S-flag is not set, MT represents the standard media types as defined
             in the IANA registry <xref target="sec_iana_reg">"UDP-Notif media
             types"</xref>. When S-flag is set, MT represents a private space to
-            be freely used for non-standard encodings. Additionally, when S-flag is set and 
+            be freely used for non-standard encodings. 
+            <!-- Additionally, when S-flag is set and 
             the 16 private encoding values set in the MT field are not sufficient, the  
             Private Encoding Option defined in <xref target="sec_enc_opt"/>
             can be used together with the MT to define more encoding flavors.
-            See <xref target="sec_enc_opt"/> for more details.
+            See <xref target="sec_enc_opt"/> for more details. -->
             </t>
 
             <t>MT is a 4-bit identifier that indicates the media type used for
@@ -500,11 +501,13 @@
 
         <t>Private encodings can be used by enabling the S-flag of the header. When the S-flag
         is set, the value of the MT field is left to be defined and agreed
-        upon by the users of the private encoding. The MT field only allows for 16
-        private encodings when S-flag is set. If users need more than 16 private encodings, 
+        upon by the users of the private encoding. The MT field allows for 16
+        private encodings when S-flag is set. 
+        <!-- If users need more than 16 private encodings, 
         an option is defined in <xref target="sec_enc_opt"/> to be freely used to define more encoding flavors.
         Users defining a private encoding MAY use any combination of MT and private encoding option
-        fitting their needs.</t>
+        fitting their needs. -->
+        </t>
 
         <t>The encoding of a message data is configured on a subscription basis and each
         subscription reference a receiver instance. Publishers
@@ -624,43 +627,6 @@
         on the Segment Number. The new concatenated notification message becomes the notification message
         of the newly created UDP-Notif message. The Header Length and Message Length are then updated
         accordingly.</t>
-
-      </section>
-
-      <section anchor="sec_enc_opt" title="Private Encoding Option">
-        <t>The space to describe private encodings in the MT field of the
-        UDP-Notif header is limited to 16 values. When users need more than 16 private encoding values,
-        an additional private encoding option can be used to extend the amount of encodings flavors.
-        The fields of this option are as follows.</t>
-
-        <figure anchor="fig_enc_option" title="Private Encoding Option Format">
-          <artwork align="center"><![CDATA[
-  0                   1                   2                   3
-  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
- +---------------+---------------+--------------------------------
- |     Type      |     Length    |   Variable length enc. descr.  
- +---------------+---------------+--------------------------------
-
- ]]></artwork>
-        </figure>
-
-        <list style="symbols">
-          <t>Type: Generic option field which indicates a Private Encoding
-          Option. The Type value is to be assigned TBD2.</t>
-
-          <t>Length: Generic option field which indicates the length of this
-          option in octets. It is a variable value.</t>
-
-          <t>Variable length enc. descr.: Field to be freely used by the implementor
-          when defining a new encoding flavor. This field MAY be used together 
-          the MT field. The values to be used for such private encodings is
-          left to be defined by the users of private encodings.</t>
-        </list>
-
-        <t>This option MUST only be used when the S-flag bit of the header is
-        set. The definition of the content of the field Variable length enc. descr.
-        is out of scope of this document. An example of usage is
-        shown in <xref target="example-private-end"/>.</t>
 
       </section>
     </section>
@@ -1216,16 +1182,9 @@ module ietf-udp-notif-transport {
   Reference: RFC-to-be]]></artwork>
           </figure>
 
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: TBD2 (suggested value: 2)
-  Description: Private Encoding Option
-  Reference: RFC-to-be]]></artwork>
-        </figure>
-
         <t>Note to the RFC-Editor:</t>
         <ul>
-          <li>Please replace TBD1 and TBD2 with the values allocated by IANA.
+          <li>Please replace TBD1 with the values allocated by IANA.
           There are multiple instances in the document.</li>
         </ul>
 
@@ -1752,61 +1711,6 @@ rmat</public-key-format>
  +---------------------------------------------------------------+
   ]]></artwork>
           </figure>
-      </section>
-
-      <section anchor="example-private-end" title="Example of Private Encoding Option Usage">
-        <t>This section showcases two examples of usage when implementing
-        private encodings in UDP-Notif. <xref target="priv_usecase_1"/> describes the
-        simplest approach using only the MT field while <xref target="priv_usecase_2"/>
-        uses the private encoding option defined in <xref target="sec_enc_opt"/>
-        to specify an custom encoding flavor.</t>
-
-        <section anchor="priv_usecase_1" title="Using the MT Field only">
-          <t>When an implementor needs to define less than 16 private encodings
-          within their organization, the implementor may use the MT field only
-          to define such values. Each value within the MT field may identify one private encoding.</t>
-
-          <t>In the following example, the message would be encoded using the private encoding "3"
-          that is defined in an internal registry private to an organization.</t>
-          <figure>
-            <artwork align="left"><![CDATA[
-S-flag: 1
-MT: 3
-Notification Message: message encoded using the encoding "3"]]></artwork>
-          </figure>
-        </section>
-        
-        <section anchor="priv_usecase_2" title="Defining Encoding Flavors with the Private Encoding Option">
-          <t>When an organization would need more than 16 private encoding values, the implementor
-          can use the private encoding option arbitrarily to extend these private encodings.
-          The following examples show an arbitrarily approach that make use of this private encoding option.
-          </t>
-
-          <t>In this first message, the implementor uses the MT field to define a private encoding "5"
-          that is internally defined. Additionally, the implementor defines an encoding flavor "5-flavor-1":</t>
-
-          <figure>
-            <artwork align="left"><![CDATA[
-S-flag: 1
-MT: 5
-Private Encoding Option: 5-flavor-1
-Notification Message: message encoded using the encoding "5"
-                      with the encoding flavor 5-flavor-1]]></artwork>
-          </figure>
-
-          <t>In this second message, the implementor uses the private encoding option to specify
-          that the message is encoded using the encoding flavor "5-flavor-2":</t>
-
-          <figure>
-            <artwork align="left"><![CDATA[
-S-flag: 1
-MT: 5
-Private Encoding Option: 5-flavor-2
-Notification Message: message encoded using the encoding "5"
-                      with the encoding flavor 5-flavor-2]]></artwork>
-          </figure>
-
-        </section>
       </section>
     </section>
   </back>
