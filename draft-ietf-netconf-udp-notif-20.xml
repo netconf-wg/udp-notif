@@ -746,7 +746,7 @@
 
         <section title="DTLS Session Initiation">
           <t>The publisher initiates a DTLS connection by sending a DTLS
-          ClientHello to the Receiver. Implementations MAY not support the denial
+          ClientHello to the Receiver. Implementations MAY disable the denial
           of service countermeasures defined by DTLS 1.2 and DTLS 1.3 if a given deployment
           can ensure that DoS attacks are not a concern.</t>
 
