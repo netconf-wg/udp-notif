@@ -1,93 +1,89 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-  <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
-    <subscription>
-      <id>6666</id>
-      <stream-subtree-filter>some-subtree-filter</stream-subtree-filter>
-      <stream>some-stream</stream>
-      <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">unt:udp-notif</transport>
-      <encoding>encode-json</encoding>
-      <receivers>
-        <receiver>
-          <name>subscription-specific-receiver-def</name>
-          <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">udp-notif-receiver-dtls</receiver-instance-ref>
-      </receivers>
-      <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
-        <period>6000</period>
-      </periodic>
-    </subscription>
-    <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">
-      <receiver-instance>
-        <name>udp-notif-receiver-dtls</name>
-        <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">
-          <remote-address>2001:db8:abcd:12::1</remote-address>
-          <remote-port>12345</remote-port>
-          <dtls>
-            <client-identity>
-              <tls13-epsk>
-                <local-definition>
-                  <key-format>ct:octet-string-key-format</key-format>
-                  <cleartext-key>BASE64VALUE=</cleartext-key>
-                </local-definition>
-                <external-identity>example_external_id</external-identity>
-                <hash>sha-256</hash>
-                <context>example_context_string</context>
-                <target-protocol>8443</target-protocol>
-                <target-kdf>12345</target-kdf>
-              </tls13-epsk>
-            </client-identity>
-            <server-authentication>
-              <ca-certs>
-                <local-definition>
-                  <certificate>
-                    <name>Server Cert Issuer #1</name>
-                    <cert-data>BASE64VALUE=</cert-data>
-                  </certificate>
-                  <certificate>
-                    <name>Server Cert Issuer #2</name>
-                    <cert-data>BASE64VALUE=</cert-data>
-                  </certificate>
-                </local-definition>
-              </ca-certs>
-              <ee-certs>
-                <local-definition>
-                  <certificate>
-                    <name>My Application #1</name>
-                    <cert-data>BASE64VALUE=</cert-data>
-                  </certificate>
-                  <certificate>
-                    <name>My Application #2</name>
-                    <cert-data>BASE64VALUE=</cert-data>
-                  </certificate>
-                </local-definition>
-              </ee-certs>
-              <raw-public-keys>
-                <local-definition>
-                  <public-key>
-                    <name>corp-fw1</name>
-                    <public-key-format>ct:subject-public-key-info-format</public-key-format>
-                    <public-key>BASE64VALUE=</public-key>
-                  </public-key>
-                  <public-key>
-                    <name>corp-fw2</name>
-                    <public-key-format>ct:subject-public-key-info-format</public-key-format>
-                    <public-key>BASE64VALUE=</public-key>
-                  </public-key>
-                </local-definition>
-              </raw-public-keys>
-              <tls13-epsks/>
-            </server-authentication>
-            <keepalives>
-              <test-peer-aliveness>
-                <max-wait>30</max-wait>
-                <max-attempts>3</max-attempts>
-              </test-peer-aliveness>
-            </keepalives>
-          </dtls>
-          <enable-segmentation>true</enable-segmentation>
-          <max-segment-size>9000</max-segment-size>
-        </udp-notif-receiver>
-      </receiver-instance>
-    </receiver-instances>
-  </subscriptions>
-</config>
+<subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notifications">
+  <subscription>
+    <id>6666</id>
+    <datastore xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push"
+      xmlns:ds="urn:ietf:params:xml:ns:yang:ietf-datastores">ds:operational</datastore>
+    <datastore-xpath-filter xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push"
+      xmlns:if="urn:ietf:params:xml:ns:yang:ietf-interfaces">/if:interfaces/interface</datastore-xpath-filter>
+    <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">unt:udp-notif</transport>
+    <encoding>encode-json</encoding>
+    <receivers>
+      <receiver>
+        <name>subscription-specific-receiver-def</name>
+        <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">udp-notif-receiver-dtls</receiver-instance-ref>
+        <state>active</state>
+      </receiver>
+    </receivers>
+    <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
+      <period>6000</period>
+    </periodic>
+  </subscription>
+  <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">
+    <receiver-instance>
+      <name>udp-notif-receiver-dtls</name>
+      <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">
+        <remote-address>2001:db8:abcd:12::1</remote-address>
+        <remote-port>12345</remote-port>
+        <dtls>
+          <client-identity>
+            <tls13-epsk>
+              <inline-definition>
+                <key-format xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">ct:octet-string-key-format</key-format>
+                <cleartext-symmetric-key>BASE64VALUE=</cleartext-symmetric-key>
+              </inline-definition>
+              <external-identity>example_external_id</external-identity>
+              <hash>sha-256</hash>
+              <context>example_context_string</context>
+              <target-protocol>8443</target-protocol>
+              <target-kdf>12345</target-kdf>
+            </tls13-epsk>
+          </client-identity>
+          <server-authentication>
+            <ca-certs>
+              <inline-definition>
+                <certificate>
+                  <name>Server Cert Issuer #1</name>
+                  <cert-data>BASE64VALUE=</cert-data>
+                </certificate>
+                <certificate>
+                  <name>Server Cert Issuer #2</name>
+                  <cert-data>BASE64VALUE=</cert-data>
+                </certificate>
+              </inline-definition>
+            </ca-certs>
+            <ee-certs>
+              <inline-definition>
+                <certificate>
+                  <name>My Application #1</name>
+                  <cert-data>BASE64VALUE=</cert-data>
+                </certificate>
+                <certificate>
+                  <name>My Application #2</name>
+                  <cert-data>BASE64VALUE=</cert-data>
+                </certificate>
+              </inline-definition>
+            </ee-certs>
+            <raw-public-keys>
+              <inline-definition>
+                <public-key>
+                  <name>corp-fw1</name>
+                  <public-key-format xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">ct:subject-public-key-info-format</public-key-format>
+                  <public-key>BASE64VALUE=</public-key>
+                </public-key>
+                <public-key>
+                  <name>corp-fw2</name>
+                  <public-key-format xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">ct:subject-public-key-info-format</public-key-format>
+                  <public-key>BASE64VALUE=</public-key>
+                </public-key>
+              </inline-definition>
+            </raw-public-keys>
+            <tls13-epsks/>
+          </server-authentication>
+        </dtls>
+        <enable-segmentation>true</enable-segmentation>
+        <max-segment-size>9000</max-segment-size>
+      </udp-notif-receiver>
+    </receiver-instance>
+  </receiver-instances>
+</subscriptions>

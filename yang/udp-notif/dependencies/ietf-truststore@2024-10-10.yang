@@ -8,27 +8,31 @@ module ietf-truststore {
     reference
       "RFC 8341: Network Configuration Access Control Model";
   }
-
   import ietf-crypto-types {
     prefix ct;
     reference
-      "RFC AAAA: YANG Data Types and Groupings for Cryptography";
+      "RFC 9640: YANG Data Types and Groupings for Cryptography";
   }
 
   organization
     "IETF NETCONF (Network Configuration) Working Group";
-
   contact
-    "WG Web  : https://datatracker.ietf.org/wg/netconf
-     WG List : NETCONF WG list <mailto:netconf@ietf.org>
-     Author  : Kent Watsen <kent+ietf@watsen.net>";
-
+    "WG Web:   https://datatracker.ietf.org/wg/netconf
+     WG List:  NETCONF WG list <mailto:netconf@ietf.org>
+     Author:   Kent Watsen <kent+ietf@watsen.net>";
   description
     "This module defines a 'truststore' to centralize management
-     of trust anchors including certificates and public keys.
+     of trust anchors, including certificates and public keys.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
+     'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED',
+     'NOT RECOMMENDED', 'MAY', and 'OPTIONAL' in this document
+     are to be interpreted as described in BCP 14 (RFC 2119)
+     (RFC 8174) when, and only when, they appear in all
+     capitals, as shown here.
 
      Copyright (c) 2024 IETF Trust and the persons identified
-     as authors of the code. All rights reserved.
+     as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with
      or without modification, is permitted pursuant to, and
@@ -37,22 +41,15 @@ module ietf-truststore {
      Legal Provisions Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC BBBB
-     (https://www.rfc-editor.org/info/rfcBBBB); see the RFC
-     itself for full legal notices.
+     This version of this YANG module is part of RFC 9641
+     (https://www.rfc-editor.org/info/rfc9641); see the RFC
+     itself for full legal notices.";
 
-     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
-     'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED',
-     'NOT RECOMMENDED', 'MAY', and 'OPTIONAL' in this document
-     are to be interpreted as described in BCP 14 (RFC 2119)
-     (RFC 8174) when, and only when, they appear in all
-     capitals, as shown here.";
-
-  revision 2024-03-16 {
+  revision 2024-10-10 {
     description
-      "Initial version";
+      "Initial version.";
     reference
-      "RFC BBBB: A YANG Data Model for a Truststore";
+      "RFC 9641: A YANG Data Model for a Truststore";
   }
 
   /****************/
@@ -69,7 +66,7 @@ module ietf-truststore {
   feature inline-definitions-supported {
     description
       "The 'inline-definitions-supported' feature indicates that
-       the server supports locally-defined trust anchors.";
+       the server supports locally defined trust anchors.";
   }
 
   feature certificates {
@@ -106,10 +103,10 @@ module ietf-truststore {
     }
     description
       "This typedef defines a reference to a specific certificate
-       in a certificate bag in the central truststore. This typedef
+       in a certificate bag in the central truststore.  This typedef
        requires that there exist a sibling 'leaf' node called
-       'certificate-bag' that SHOULD have the typedef
-       'central-certificate-bag-ref'.";
+       'certificate-bag' that SHOULD have the
+       'central-certificate-bag-ref' typedef.";
   }
 
   typedef central-public-key-bag-ref {
@@ -132,14 +129,13 @@ module ietf-truststore {
       "This typedef defines a reference to a specific public key
        in a public key bag in the truststore.  This typedef
        requires that there exist a sibling 'leaf' node called
-       'public-key-bag' that SHOULD have the typedef
-       'central-public-key-bag-ref'.";
+       'public-key-bag' SHOULD have the
+       'central-public-key-bag-ref' typedef.";
   }
 
   /*****************/
   /*   Groupings   */
   /*****************/
-
   // *-ref groupings
 
   grouping central-certificate-ref-grouping {
@@ -151,7 +147,7 @@ module ietf-truststore {
       if-feature "central-truststore-supported";
       if-feature "certificates";
       type ts:central-certificate-bag-ref;
-      must "../certificate";
+      must '../certificate';
       description
         "Reference to a certificate-bag in the truststore.";
     }
@@ -160,7 +156,7 @@ module ietf-truststore {
       if-feature "central-truststore-supported";
       if-feature "certificates";
       type ts:central-certificate-ref;
-      must "../certificate-bag";
+      must '../certificate-bag';
       description
         "Reference to a specific certificate in the
          referenced certificate-bag.";
@@ -177,7 +173,7 @@ module ietf-truststore {
       if-feature "public-keys";
       type ts:central-public-key-bag-ref;
       description
-        "Reference of a public key bag in the truststore including
+        "Reference of a public key bag in the truststore, including
          the certificate to authenticate the TLS client.";
     }
     leaf public-key {
@@ -196,11 +192,11 @@ module ietf-truststore {
   grouping inline-or-truststore-certs-grouping {
     description
       "A grouping for the configuration of a list of certificates.
-       The list of certificate may be defined inline or as a
+       The list of certificates may be defined inline or as a
        reference to a certificate bag in the central truststore.
 
        Servers that wish to define alternate truststore locations
-       MUST augment in custom 'case' statements enabling
+       MUST augment in custom 'case' statements, enabling
        references to those alternate truststore locations.";
     choice inline-or-truststore {
       nacm:default-deny-write;
@@ -247,12 +243,12 @@ module ietf-truststore {
 
   grouping inline-or-truststore-public-keys-grouping {
     description
-      "A grouping that allows the public keys to be either
-       configured locally, within the using data model, or be a
+      "A grouping that allows the public keys to either be
+       configured locally, within the data model being used, or be a
        reference to a public key bag stored in the truststore.
 
        Servers that wish to define alternate truststore locations
-       SHOULD augment in custom 'case' statements enabling
+       SHOULD augment in custom 'case' statement, enabling
        references to those alternate truststore locations.";
     choice inline-or-truststore {
       nacm:default-deny-write;
@@ -351,7 +347,7 @@ module ietf-truststore {
         description
           "A bag of public keys.  Each bag of keys SHOULD be for
            a specific purpose.  For instance, one bag could be used
-           authenticate a specific set of servers, while another
+           to authenticate a specific set of servers, while another
            could be used to authenticate a specific set of clients.";
         leaf name {
           type string;
@@ -361,7 +357,7 @@ module ietf-truststore {
         leaf description {
           type string;
           description
-            "A description for this bag public keys.  The
+            "A description for this bag of public keys.  The
              intended purpose for the bag MUST be described.";
         }
         list public-key {
@@ -380,11 +376,11 @@ module ietf-truststore {
   }
 
   /*********************************/
-  /*   Protocol accessible nodes   */
+  /*   Protocol-accessible nodes   */
   /*********************************/
 
   container truststore {
-    if-feature central-truststore-supported;
+    if-feature "central-truststore-supported";
     nacm:default-deny-write;
     description
       "The truststore contains bags of certificates and

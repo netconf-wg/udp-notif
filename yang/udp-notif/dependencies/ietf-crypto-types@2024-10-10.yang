@@ -27,8 +27,15 @@ module ietf-crypto-types {
     "This module defines common YANG types for cryptographic
      applications.
 
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
+     'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED',
+     'NOT RECOMMENDED', 'MAY', and 'OPTIONAL' in this document
+     are to be interpreted as described in BCP 14 (RFC 2119)
+     (RFC 8174) when, and only when, they appear in all
+     capitals, as shown here.
+
      Copyright (c) 2024 IETF Trust and the persons identified
-     as authors of the code. All rights reserved.
+     as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with
      or without modification, is permitted pursuant to, and
@@ -37,22 +44,15 @@ module ietf-crypto-types {
      Legal Provisions Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC AAAA
-     (https://www.rfc-editor.org/info/rfcAAAA); see the RFC
-     itself for full legal notices.
+     This version of this YANG module is part of RFC 9640
+     (https://www.rfc-editor.org/info/rfc9640); see the RFC
+     itself for full legal notices.";
 
-     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL',
-     'SHALL NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED',
-     'NOT RECOMMENDED', 'MAY', and 'OPTIONAL' in this document
-     are to be interpreted as described in BCP 14 (RFC 2119)
-     (RFC 8174) when, and only when, they appear in all
-     capitals, as shown here.";
-
-  revision 2024-03-16 {
+  revision 2024-10-10 {
     description
-      "Initial version";
+      "Initial version.";
     reference
-      "RFC AAAA: YANG Data Types and Groupings for Cryptography";
+      "RFC 9640: YANG Data Types and Groupings for Cryptography";
   }
 
   /****************/
@@ -200,7 +200,7 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   identity ec-private-key-format {
@@ -217,24 +217,26 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   identity one-asymmetric-key-format {
     if-feature "one-asymmetric-key-format";
     base private-key-format;
     description
-      "Indicates that the private key value is a CMS
-       OneAsymmetricKey structure, as defined in RFC 5958,
-       encoded using ASN.1 distinguished encoding rules
-       (DER), as specified in ITU-T X.690.";
+      "Indicates that the private key value is a
+       Cryptographic Message Syntax (CMS) OneAsymmetricKey
+       structure, as defined in RFC 5958, encoded using
+       ASN.1 distinguished encoding rules (DER), as
+       specified in ITU-T X.690.";
     reference
-      "RFC 5958: Asymmetric Key Packages
+      "RFC 5958:
+         Asymmetric Key Packages
        ITU-T X.690:
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   /***************************************************/
@@ -244,8 +246,8 @@ module ietf-crypto-types {
   identity ssh-public-key-format {
     base public-key-format;
     description
-      "Indicates that the public key value is an SSH public key,
-       as specified by RFC 4253, Section 6.6, i.e.:
+      "Indicates that the public key value is a Secure Shell (SSH)
+       public key, as specified in RFC 4253, Section 6.6, i.e.:
 
          string    certificate or public key format
                    identifier
@@ -258,7 +260,7 @@ module ietf-crypto-types {
     base public-key-format;
     description
       "Indicates that the public key value is a SubjectPublicKeyInfo
-       structure, as described in RFC 5280 encoded using ASN.1
+       structure, as described in RFC 5280, encoded using ASN.1
        distinguished encoding rules (DER), as specified in
        ITU-T X.690.";
     reference
@@ -269,7 +271,7 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   /******************************************************/
@@ -283,9 +285,9 @@ module ietf-crypto-types {
        The length of the octet string MUST be appropriate for
        the associated algorithm's block size.
 
-        The identity of the associated algorithm is outside the
-        scope of this specification.  This is also true when
-        the octet string has been encrypted.";
+       The identity of the associated algorithm is outside the
+       scope of this specification.  This is also true when
+       the octet string has been encrypted.";
   }
 
   identity one-symmetric-key-format {
@@ -297,13 +299,14 @@ module ietf-crypto-types {
        encoded using ASN.1 distinguished encoding rules
        (DER), as specified in ITU-T X.690.";
     reference
-      "RFC 6031: Cryptographic Message Syntax (CMS)
-                 Symmetric Key Package Content Type
+      "RFC 6031:
+         Cryptographic Message Syntax (CMS)
+         Symmetric Key Package Content Type
        ITU-T X.690:
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   /*************************************************/
@@ -339,12 +342,13 @@ module ietf-crypto-types {
        the 'encrypted-data-cms' type with the constraint
        that the 'unprotectedAttrs' value is not set.";
     reference
-      "RFC 5652: Cryptographic Message Syntax (CMS)
+      "RFC 5652:
+         Cryptographic Message Syntax (CMS)
        ITU-T X.690:
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   identity cms-enveloped-data-format {
@@ -364,16 +368,18 @@ module ietf-crypto-types {
        'method 1' in RFC 7093 over the recipient's public key.
 
        Otherwise, if the asymmetric key supports key agreement
-       (e.g., ECC), then the 'RecipientInfo' must be a
-       'KeyAgreeRecipientInfo'.  The 'OriginatorIdentifierOrKey'
-       value must use the 'OriginatorPublicKey' alternative.
-       The 'UserKeyingMaterial' value must not be present.
-       There must be exactly one 'RecipientEncryptedKeys' value
+       (e.g., Elliptic Curve Cryptography (ECC)), then the
+       'RecipientInfo' must be a 'KeyAgreeRecipientInfo'.  The
+       'OriginatorIdentifierOrKey' value must use the
+       'OriginatorPublicKey' alternative.  The
+       'UserKeyingMaterial' value must not be present.  There
+       must be exactly one 'RecipientEncryptedKeys' value
        having the 'KeyAgreeRecipientIdentifier' set to 'rKeyId'
        with the value set using 'method 1' in RFC 7093 over the
        recipient's public key.";
     reference
-      "RFC 5652: Cryptographic Message Syntax (CMS)
+      "RFC 5652:
+         Cryptographic Message Syntax (CMS)
        RFC 7093:
          Additional Methods for Generating Key
          Identifiers Values
@@ -381,7 +387,7 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   /*********************************************************/
@@ -399,7 +405,7 @@ module ietf-crypto-types {
     if-feature "p10-csr-format";
     base csr-format;
     description
-      "Indicates the 'CertificationRequest' structure
+      "Indicates the CertificationRequest structure
        defined in RFC 2986.";
     reference
       "RFC 2986: PKCS #10: Certification Request Syntax
@@ -417,13 +423,14 @@ module ietf-crypto-types {
        RFC 2986, encoded using ASN.1 distinguished encoding
        rules (DER), as specified in ITU-T X.690.";
     reference
-      "RFC 2986: PKCS #10: Certification Request Syntax
-                 Specification Version 1.7
+      "RFC 2986:
+         PKCS #10: Certification Request Syntax
+         Specification Version 1.7
        ITU-T X.690:
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   typedef p10-csr {
@@ -440,12 +447,13 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   /***************************************************/
   /*   Typedefs for ASN.1 structures from RFC 5280   */
   /***************************************************/
+
   typedef x509 {
     type binary;
     description
@@ -460,7 +468,7 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   typedef crl {
@@ -477,7 +485,7 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   /***************************************************/
@@ -498,7 +506,7 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   typedef oscp-response {
@@ -515,7 +523,7 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   /***********************************************/
@@ -535,14 +543,14 @@ module ietf-crypto-types {
          Information technology - ASN.1 encoding rules:
          Specification of Basic Encoding Rules (BER),
          Canonical Encoding Rules (CER) and Distinguished
-         Encoding Rules (DER) 02/2021.";
+         Encoding Rules (DER) 02/2021";
   }
 
   typedef data-content-cms {
     type cms;
     description
       "A CMS structure whose top-most content type MUST be the
-       data content type, as described by Section 4 in RFC 5652.";
+       data content type, as described in Section 4 of RFC 5652.";
     reference
       "RFC 5652: Cryptographic Message Syntax (CMS)";
   }
@@ -551,7 +559,7 @@ module ietf-crypto-types {
     type cms;
     description
       "A CMS structure whose top-most content type MUST be the
-       signed-data content type, as described by Section 5 in
+       signed-data content type, as described in Section 5 of
        RFC 5652.";
     reference
       "RFC 5652: Cryptographic Message Syntax (CMS)";
@@ -561,8 +569,8 @@ module ietf-crypto-types {
     type cms;
     description
       "A CMS structure whose top-most content type MUST be the
-       enveloped-data content type, as described by Section 6
-       in RFC 5652.";
+       enveloped-data content type, as described in Section 6
+       of RFC 5652.";
     reference
       "RFC 5652: Cryptographic Message Syntax (CMS)";
   }
@@ -571,8 +579,8 @@ module ietf-crypto-types {
     type cms;
     description
       "A CMS structure whose top-most content type MUST be the
-       digested-data content type, as described by Section 7
-       in RFC 5652.";
+       digested-data content type, as described in Section 7
+       of RFC 5652.";
     reference
       "RFC 5652: Cryptographic Message Syntax (CMS)";
   }
@@ -581,8 +589,8 @@ module ietf-crypto-types {
     type cms;
     description
       "A CMS structure whose top-most content type MUST be the
-       encrypted-data content type, as described by Section 8
-       in RFC 5652.";
+       encrypted-data content type, as described in Section 8
+       of RFC 5652.";
     reference
       "RFC 5652: Cryptographic Message Syntax (CMS)";
   }
@@ -591,8 +599,8 @@ module ietf-crypto-types {
     type cms;
     description
       "A CMS structure whose top-most content type MUST be the
-       authenticated-data content type, as described by Section 9
-       in RFC 5652.";
+       authenticated-data content type, as described in Section 9
+       of RFC 5652.";
     reference
       "RFC 5652: Cryptographic Message Syntax (CMS)";
   }
@@ -612,7 +620,7 @@ module ietf-crypto-types {
     type x509;
     description
       "A Certificate structure that MUST encode a certificate
-       that is neither self-signed nor having Basic constraint
+       that is neither self-signed nor has Basic constraint
        CA true.";
   }
 
@@ -625,7 +633,7 @@ module ietf-crypto-types {
     description
       "A CMS SignedData structure that MUST contain the chain of
        X.509 certificates needed to authenticate the certificate
-       presented by a client or end-entity.
+       presented by a client or end entity.
 
        The CMS MUST contain only a single chain of certificates.
        The client or end-entity certificate MUST only authenticate
@@ -648,7 +656,7 @@ module ietf-crypto-types {
     reference
       "RFC 5280:
          Internet X.509 Public Key Infrastructure Certificate
-         and Certificate Revocation List (CRL) Profile.
+         and Certificate Revocation List (CRL) Profile
        RFC 5652:
          Cryptographic Message Syntax (CMS)";
   }
@@ -656,13 +664,13 @@ module ietf-crypto-types {
   typedef end-entity-cert-cms {
     type signed-data-cms;
     description
-      "A CMS SignedData structure that MUST contain the end
-       entity certificate itself, and MAY contain any number
+      "A CMS SignedData structure that MUST contain the end-entity
+       certificate itself and MAY contain any number
        of intermediate certificates leading up to a trust
        anchor certificate.  The trust anchor certificate
        MAY be included as well.
 
-       The CMS MUST contain a single end entity certificate.
+       The CMS MUST contain a single end-entity certificate.
        The CMS MUST NOT contain any spurious certificates.
 
        This CMS structure MAY (as applicable where this type is
@@ -678,7 +686,7 @@ module ietf-crypto-types {
     reference
       "RFC 5280:
          Internet X.509 Public Key Infrastructure Certificate
-         and Certificate Revocation List (CRL) Profile.
+         and Certificate Revocation List (CRL) Profile
        RFC 5652:
          Cryptographic Message Syntax (CMS)";
   }
@@ -686,6 +694,7 @@ module ietf-crypto-types {
   /*****************/
   /*   Groupings   */
   /*****************/
+
   grouping encrypted-value-grouping {
     description
       "A reusable grouping for a value that has been encrypted by
@@ -701,9 +710,10 @@ module ietf-crypto-types {
          'symmetric-key-ref'.  An asymmetric key MUST be referenced
          via a leaf node called 'asymmetric-key-ref'.
 
-         The leaf nodes MUST be direct descendants in the data tree,
+         The leaf nodes MUST be direct descendants in the data tree
          and MAY be direct descendants in the schema tree (e.g.,
-         choice/case statements are allowed, but not a container).";
+         'choice'/'case' statements are allowed but not a
+         container).";
     }
     leaf encrypted-value-format {
       type identityref {
@@ -713,13 +723,13 @@ module ietf-crypto-types {
       description
         "Identifies the format of the 'encrypted-value' leaf.
 
-         If 'encrypted-by' points to a symmetric key, then a
-         'symmetrically-encrypted-value-format' based identity
-         MUST be set (e.g., cms-encrypted-data-format).
+         If 'encrypted-by' points to a symmetric key, then an
+         identity based on 'symmetrically-encrypted-value-format'
+         MUST be set (e.g., 'cms-encrypted-data-format').
 
          If 'encrypted-by' points to an asymmetric key, then an
-         'asymmetrically-encrypted-value-format' based identity
-         MUST be set (e.g., cms-enveloped-data-format).";
+         identity based on 'asymmetrically-encrypted-value-format'
+         MUST be set (e.g., 'cms-enveloped-data-format').";
     }
     leaf encrypted-value {
       nacm:default-deny-write;
@@ -739,7 +749,7 @@ module ietf-crypto-types {
       "A password used for authenticating to a remote system.
 
        The 'ianach:crypt-hash' typedef from RFC 7317 should be
-       used instead when needing a password to authencate a
+       used instead when needing a password to authenticate a
        local account.";
     choice password-type {
       nacm:default-deny-write;
@@ -781,7 +791,7 @@ module ietf-crypto-types {
 
          For encrypted keys, the value is the decrypted key's
          format (i.e., the 'encrypted-value-format' conveys the
-         encrypted key's format.";
+         encrypted key's format).";
     }
     choice key-type {
       nacm:default-deny-write;
@@ -805,9 +815,9 @@ module ietf-crypto-types {
           type empty;
           must 'not(../key-format)';
           description
-            "A hidden key is not exportable, and not extractable,
-             and therefore, it is of type 'empty' as its value is
-             inaccessible via management interfaces. Though hidden
+            "A hidden key is not exportable and not extractable;
+             therefore, it is of type 'empty' as its value is
+             inaccessible via management interfaces.  Though hidden
              to users, such keys are not hidden to the server and
              may be referenced by configuration to indicate which
              key a server should use for a cryptographic operation.
@@ -839,7 +849,7 @@ module ietf-crypto-types {
       }
       mandatory true;
       description
-        "Identifies the public key's format. Implementations SHOULD
+        "Identifies the public key's format.  Implementations SHOULD
          ensure that the incoming public key value is encoded in the
          specified format.";
     }
@@ -849,7 +859,7 @@ module ietf-crypto-types {
       mandatory true;
       description
         "The binary value of the public key.  The interpretation
-         of the value is defined by 'public-key-format' field.";
+         of the value is defined by the 'public-key-format' field.";
     }
   }
 
@@ -868,7 +878,7 @@ module ietf-crypto-types {
 
          For encrypted keys, the value is the decrypted key's
          format (i.e., the 'encrypted-value-format' conveys the
-         encrypted key's format.";
+         encrypted key's format).";
     }
     choice private-key-type {
       nacm:default-deny-write;
@@ -882,7 +892,7 @@ module ietf-crypto-types {
           type binary;
           must '../private-key-format';
           description
-            "The value of the binary key  The key's value is
+            "The value of the binary key.  The key's value is
              interpreted by the 'private-key-format' field.";
         }
       }
@@ -895,7 +905,7 @@ module ietf-crypto-types {
             "A hidden key.  It is of type 'empty' as its value is
              inaccessible via management interfaces.  Though hidden
              to users, such keys are not hidden to the server and
-             and may be referenced by configuration to indicate which
+             may be referenced by configuration to indicate which
              key a server should use for a cryptographic operation.
              How such keys are created is outside the scope of this
              module.";
@@ -921,10 +931,10 @@ module ietf-crypto-types {
        Implementations MUST ensure that the two keys, when both
        are specified, are a matching pair.";
     uses public-key-grouping {
-      refine public-key-format {
+      refine "public-key-format" {
         mandatory false;
       }
-      refine public-key {
+      refine "public-key" {
         mandatory false;
       }
     }
@@ -933,19 +943,19 @@ module ietf-crypto-types {
 
   grouping certificate-expiration-grouping {
     description
-      "A notification for when a certificate is about to, or
-       already has, expired.";
+      "A notification for when a certificate is about to expire or
+       has already expired.";
     notification certificate-expiration {
       if-feature "certificate-expiration-notification";
       description
         "A notification indicating that the configured certificate
          is either about to expire or has already expired.  When to
-         send notifications is an implementation specific decision,
+         send notifications is an implementation-specific decision,
          but it is RECOMMENDED that a notification be sent once a
          month for 3 months, then once a week for four weeks, and
          then once a day thereafter until the issue is resolved.
 
-         If the certificate's Issuer maintains a Certificate
+         If the certificate's issuer maintains a Certificate
          Revocation List (CRL), the expiration notification MAY
          be sent if the CRL is about to expire.";
       leaf expiration-date {
@@ -959,8 +969,8 @@ module ietf-crypto-types {
 
   grouping trust-anchor-cert-grouping {
     description
-      "A trust anchor certificate, and a notification for when
-       it is about to (or already has) expire.";
+      "A trust anchor certificate and a notification for when
+       it is about to expire or has already expired.";
     leaf cert-data {
       nacm:default-deny-all;
       type trust-anchor-cert-cms;
@@ -972,9 +982,9 @@ module ietf-crypto-types {
 
   grouping end-entity-cert-grouping {
     description
-      "An end entity certificate, and a notification for when
-       it is about to (or already has) expire.  Implementations
-       SHOULD assert that, where used, the end entity certificate
+      "An end-entity certificate and a notification for when
+       it is about to expire or has already expired.  Implementations
+       SHOULD assert that, where used, the end-entity certificate
        contains the expected public key.";
     leaf cert-data {
       nacm:default-deny-all;
@@ -996,7 +1006,7 @@ module ietf-crypto-types {
          the associated asymmetric key using the passed subject
          and attribute values.
 
-         This action statement is only available when the
+         This 'action' statement is only available when the
          associated 'public-key-format' node's value is
          'subject-public-key-info-format'.";
       input {
@@ -1015,18 +1025,19 @@ module ietf-crypto-types {
             "A CertificationRequestInfo structure, as defined in
              RFC 2986.
 
-             Enables the client to provide a fully-populated
+             Enables the client to provide a fully populated
              CertificationRequestInfo structure that the server
              only needs to sign in order to generate the complete
-             'CertificationRequest' structure to return in the
+             CertificationRequest structure to return in the
              'output'.
+
              The 'AlgorithmIdentifier' field contained inside
              the 'SubjectPublicKeyInfo' field MUST be one known
              to be supported by the device.";
           reference
             "RFC 2986:
                PKCS #10: Certification Request Syntax Specification
-             RFC AAAA:
+             RFC 9640:
                YANG Data Types and Groupings for Cryptography";
         }
       }
@@ -1048,7 +1059,7 @@ module ietf-crypto-types {
             reference
               "RFC 2986:
                  PKCS #10: Certification Request Syntax Specification
-               RFC AAAA:
+               RFC 9640:
                  YANG Data Types and Groupings for Cryptography";
           }
         }
