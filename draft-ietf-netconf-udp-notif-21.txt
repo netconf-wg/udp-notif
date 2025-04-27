@@ -5,14 +5,14 @@
 NETCONF                                                         G. Zheng
 Internet-Draft                                                   T. Zhou
 Intended status: Standards Track                                  Huawei
-Expires: 13 September 2025                                       T. Graf
+Expires: 27 October 2025                                         T. Graf
                                                                 Swisscom
                                                              P. Francois
                                                            A. Huang Feng
                                                                INSA-Lyon
                                                               P. Lucente
                                                                      NTT
-                                                           12 March 2025
+                                                           25 April 2025
 
 
             UDP-based Transport for Configured Subscriptions
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 September 2025.
+   This Internet-Draft will expire on 27 October 2025.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 1]
+Zheng, et al.            Expires 27 October 2025                [Page 1]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 2]
+Zheng, et al.            Expires 27 October 2025                [Page 2]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    Appendix A.  UDP-Notif Examples . . . . . . . . . . . . . . . . .  29
@@ -165,9 +165,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 3]
+Zheng, et al.            Expires 27 October 2025                [Page 3]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    What is needed is a mechanism that allows for directly publishing
@@ -221,9 +221,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 4]
+Zheng, et al.            Expires 27 October 2025                [Page 4]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    The following terms are used as defined in Subscribed Notifications
@@ -277,9 +277,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 5]
+Zheng, et al.            Expires 27 October 2025                [Page 5]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
                +-------+  +--------------+  +--------------+
@@ -333,9 +333,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 6]
+Zheng, et al.            Expires 27 October 2025                [Page 6]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    *  S-flag represents the space of media type specified in the MT
@@ -389,9 +389,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 7]
+Zheng, et al.            Expires 27 October 2025                [Page 7]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
       messages originated with the same Message Publisher ID, so that
@@ -445,9 +445,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 8]
+Zheng, et al.            Expires 27 October 2025                [Page 8]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
                       Figure 3: Generic Option Format
@@ -501,9 +501,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025               [Page 9]
+Zheng, et al.            Expires 27 October 2025                [Page 9]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    *  Type: indicates a Segmentation Option.  The value is 1 for this
@@ -557,9 +557,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 10]
+Zheng, et al.            Expires 27 October 2025               [Page 10]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    Notif segments in an ascending order based on the Segment Number.
@@ -613,9 +613,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 11]
+Zheng, et al.            Expires 27 October 2025               [Page 11]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    Burst mitigation through packet pacing is RECOMMENDED.  Disabling
@@ -657,9 +657,11 @@ Internet-Draft                  UDP-Notif                     March 2025
 6.  Secured layer for UDP-Notif
 
    In unsecured networks, which are not authenticated and encrypted on
-   layers below transport, UDP-Notif messages MUST be encrypted.  In
-   this section, a mechanism using DTLS [RFC6347][RFC9147] to secure
-   UDP-Notif protocol is presented.
+   layers below transport, UDP-Notif messages MUST be encrypted.  This
+   section presents a mechanism using DTLS [RFC6347][RFC9147] to secure
+   UDP-Notif protocol.  In addition to providing encryption, DTLS also
+   ensures authentication and integrity protection, preventing attacks
+   such as the injection of malicious packets.
 
    Implementations using DTLS to secure UDP-Notif messages MUST support
    DTLS 1.2 [RFC6347] or later, and SHOULD support DTLS 1.3 [RFC9147].
@@ -667,11 +669,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-
-
-Zheng, et al.           Expires 13 September 2025              [Page 12]
+Zheng, et al.            Expires 27 October 2025               [Page 12]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    When this security layer is used, the publisher MUST always be a DTLS
@@ -725,9 +725,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 13]
+Zheng, et al.            Expires 27 October 2025               [Page 13]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    APPLICATION-DATA = 1*UDP-NOTIF-FRAME
@@ -781,9 +781,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 14]
+Zheng, et al.            Expires 27 October 2025               [Page 14]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
 7.  A YANG Data Model for Management of UDP-Notif
@@ -837,9 +837,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 15]
+Zheng, et al.            Expires 27 October 2025               [Page 15]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    module: ietf-udp-notif-transport
@@ -893,9 +893,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 16]
+Zheng, et al.            Expires 27 October 2025               [Page 16]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
 7.2.  YANG Module
@@ -909,7 +909,7 @@ Internet-Draft                  UDP-Notif                     March 2025
    client" module [I-D.ietf-netconf-udp-client-server] and the "tls-
    client-grouping" defined in the "ietf-tls-client" module [RFC9645].
 
-   <CODE BEGINS> file "ietf-udp-notif-transport@2025-02-14.yang"
+   <CODE BEGINS> file "ietf-udp-notif-transport@2025-04-27.yang"
    module ietf-udp-notif-transport {
      yang-version 1.1;
      namespace
@@ -949,9 +949,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 17]
+Zheng, et al.            Expires 27 October 2025               [Page 17]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
                   Thomas Graf
@@ -986,7 +986,7 @@ Internet-Draft                  UDP-Notif                     March 2025
        described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
        they appear in all capitals, as shown here.";
 
-     revision 2025-02-14 {
+     revision 2025-04-27 {
        description
          "Initial revision";
        reference
@@ -1005,9 +1005,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 18]
+Zheng, et al.            Expires 27 October 2025               [Page 18]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
      }
@@ -1061,9 +1061,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 19]
+Zheng, et al.            Expires 27 October 2025               [Page 19]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
        uses udpc:udp-client {
@@ -1111,15 +1111,15 @@ Internet-Draft                  UDP-Notif                     March 2025
        case udp-notif {
          container udp-notif-receiver {
            description
-             "The UDP-notif receiver to send notifications to.";
+             "The UDP-Notif receiver to send notifications to.";
            uses udp-notif-receiver;
          }
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 20]
+Zheng, et al.            Expires 27 October 2025               [Page 20]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
        }
@@ -1173,9 +1173,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 21]
+Zheng, et al.            Expires 27 October 2025               [Page 21]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    The second requested registry is the following:
@@ -1229,9 +1229,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 22]
+Zheng, et al.            Expires 27 October 2025               [Page 22]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
 8.3.  YANG Module Name
@@ -1285,9 +1285,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 23]
+Zheng, et al.            Expires 27 October 2025               [Page 23]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
 10.  Security Considerations
@@ -1298,10 +1298,11 @@ Internet-Draft                  UDP-Notif                     March 2025
    protocols".  As mentioned above, the proposed mechanism is designed
    to be used in controlled environments, as defined in [RFC8085] also
    known as "limited domains", as defined in [RFC8799].  Thus, a
-   security layer is not necessary required.  Nevertheless, an
-   encryption layer MUST be implemented for non secured networks.  A
-   specification of UDP-notif using DTLS 1.3 as its encryption layer is
-   presented in Section 6.
+   security layer is not necessary required.  Nevertheless, for networks
+   that are not secured, a secure transport providing confidentiality,
+   integrity protection, authentication, and replay protection MUST be
+   implemented.  A specification of UDP-Notif using DTLS 1.3 as its
+   encryption layer is presented in Section 6.
 
    The following text uses the template described in Section 3.7 of
    [I-D.ietf-netmod-rfc8407bis].
@@ -1340,10 +1341,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-
-Zheng, et al.           Expires 13 September 2025              [Page 24]
+Zheng, et al.            Expires 27 October 2025               [Page 24]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
 11.  Acknowledgements
@@ -1382,8 +1382,8 @@ Internet-Draft                  UDP-Notif                     March 2025
               "Subscription to Distributed Notifications", Work in
               Progress, Internet-Draft, draft-ietf-netconf-distributed-
               notif-13, 1 March 2025,
-              <https://datatracker.ietf.org/api/v1/doc/document/draft-
-              ietf-netconf-distributed-notif/>.
+              <https://datatracker.ietf.org/doc/html/draft-ietf-netconf-
+              distributed-notif-13>.
 
    [I-D.ietf-netconf-https-notif]
               Jethanandani, M. and K. Watsen, "An HTTPS-based Transport
@@ -1397,9 +1397,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 25]
+Zheng, et al.            Expires 27 October 2025               [Page 25]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    [I-D.ietf-netconf-udp-client-server]
@@ -1453,9 +1453,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 26]
+Zheng, et al.            Expires 27 October 2025               [Page 26]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    [RFC8342]  Bjorklund, M., Schoenwaelder, J., Shafer, P., Watsen, K.,
@@ -1509,18 +1509,18 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 27]
+Zheng, et al.            Expires 27 October 2025               [Page 27]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    [I-D.ietf-netmod-rfc8407bis]
               Bierman, A., Boucadair, M., and Q. Wu, "Guidelines for
               Authors and Reviewers of Documents Containing YANG Data
               Models", Work in Progress, Internet-Draft, draft-ietf-
-              netmod-rfc8407bis-22, 14 January 2025,
+              netmod-rfc8407bis-24, 18 April 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              rfc8407bis-22>.
+              rfc8407bis-24>.
 
    [INSA-Lyon-Publisher]
               "INSA Lyon, YANG Push publisher example implementation",
@@ -1565,9 +1565,9 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 28]
+Zheng, et al.            Expires 27 October 2025               [Page 28]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
@@ -1597,34 +1597,9 @@ Appendix A.  UDP-Notif Examples
 A.1.  Configuration for UDP-Notif transport with DTLS disabled
 
    This example shows how UDP-Notif can be configured without DTLS
-   encryption.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Zheng, et al.           Expires 13 September 2025              [Page 29]
-
-Internet-Draft                  UDP-Notif                     March 2025
-
+   encryption.  It illustrates the definition of two receivers, one uses
+   an IPv4 as its destination address and another uses IPv6.  The IPv4
+   receiver is bound to the subscription.
 
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1634,18 +1609,27 @@ Internet-Draft                  UDP-Notif                     March 2025
    notifications">
        <subscription>
          <id>6666</id>
-         <stream-subtree-filter>some-subtree-filter</stream-subtree-fil\
-   ter>
-         <stream>some-stream</stream>
+         <datastore xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">\
+   ds:operational</datastore>
+         <datastore-xpath-filter xmlns="urn:ietf:params:xml:ns:yang:iet\
+   f-yang-push">/some/path</datastore-xpath-filter>
          <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
    if-transport">unt:udp-notif</transport>
          <encoding>encode-json</encoding>
          <receivers>
            <receiver>
-             <name>subscription-specific-receiver-def</name>
+
+
+
+Zheng, et al.            Expires 27 October 2025               [Page 29]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
+             <name>subscription-specific-receiver</name>
              <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
-   ietf-subscribed-notif-receivers">global-udp-notif-receiver-def</rece\
-   iver-instance-ref>
+   ietf-subscribed-notif-receivers">ipv4-udp-notif-receiver</receiver-i\
+   nstance-ref>
            </receiver>
          </receivers>
          <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
@@ -1655,13 +1639,23 @@ Internet-Draft                  UDP-Notif                     March 2025
        <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
    cribed-notif-receivers">
          <receiver-instance>
-           <name>global-udp-notif-receiver-def</name>
+           <name>ipv4-udp-notif-receiver</name>
            <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
    udp-notif-transport">
-             <remote-address>192.0.5.1</remote-address>
+             <remote-address>192.0.2.1</remote-address>
              <remote-port>12345</remote-port>
-             <enable-segmentation>false</enable-segmentation>
-             <max-segment-size/>
+             <enable-segmentation>true</enable-segmentation>
+             <max-segment-size>9000</max-segment-size>
+           </udp-notif-receiver>
+         </receiver-instance>
+         <receiver-instance>
+           <name>ipv6-udp-notif-receiver</name>
+           <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
+   udp-notif-transport">
+             <remote-address>2001:db8:abcd:12::1</remote-address>
+             <remote-port>12345</remote-port>
+             <enable-segmentation>true</enable-segmentation>
+             <max-segment-size>9000</max-segment-size>
            </udp-notif-receiver>
          </receiver-instance>
        </receiver-instances>
@@ -1673,15 +1667,6 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
    This example shows how UDP-Notif can be configured with DTLS
    encryption.
 
-
-
-
-
-Zheng, et al.           Expires 13 September 2025              [Page 30]
-
-Internet-Draft                  UDP-Notif                     March 2025
-
-
    =============== NOTE: '\' line wrapping per RFC 8792 ================
 
    <?xml version='1.0' encoding='UTF-8'?>
@@ -1689,6 +1674,14 @@ Internet-Draft                  UDP-Notif                     March 2025
      <subscriptions xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-\
    notifications">
        <subscription>
+
+
+
+Zheng, et al.            Expires 27 October 2025               [Page 30]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
          <id>6666</id>
          <stream-subtree-filter>some-subtree-filter</stream-subtree-fil\
    ter>
@@ -1700,9 +1693,8 @@ Internet-Draft                  UDP-Notif                     March 2025
            <receiver>
              <name>subscription-specific-receiver-def</name>
              <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
-   ietf-subscribed-notif-receivers">global-udp-notif-receiver-dtls-def<\
-   /receiver-instance-ref>
-           </receiver>
+   ietf-subscribed-notif-receivers">udp-notif-receiver-dtls</receiver-i\
+   nstance-ref>
          </receivers>
          <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
            <period>6000</period>
@@ -1711,13 +1703,11 @@ Internet-Draft                  UDP-Notif                     March 2025
        <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
    cribed-notif-receivers">
          <receiver-instance>
-           <name>global-udp-notif-receiver-dtls-def</name>
+           <name>udp-notif-receiver-dtls</name>
            <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
    udp-notif-transport">
-             <remote-address>192.0.5.1</remote-address>
+             <remote-address>2001:db8:abcd:12::1</remote-address>
              <remote-port>12345</remote-port>
-             <enable-segmentation>false</enable-segmentation>
-             <max-segment-size/>
              <dtls>
                <client-identity>
                  <tls13-epsk>
@@ -1730,14 +1720,6 @@ Internet-Draft                  UDP-Notif                     March 2025
                    <hash>sha-256</hash>
                    <context>example_context_string</context>
                    <target-protocol>8443</target-protocol>
-
-
-
-Zheng, et al.           Expires 13 September 2025              [Page 31]
-
-Internet-Draft                  UDP-Notif                     March 2025
-
-
                    <target-kdf>12345</target-kdf>
                  </tls13-epsk>
                </client-identity>
@@ -1748,6 +1730,14 @@ Internet-Draft                  UDP-Notif                     March 2025
                        <name>Server Cert Issuer #1</name>
                        <cert-data>BASE64VALUE=</cert-data>
                      </certificate>
+
+
+
+Zheng, et al.            Expires 27 October 2025               [Page 31]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
                      <certificate>
                        <name>Server Cert Issuer #2</name>
                        <cert-data>BASE64VALUE=</cert-data>
@@ -1786,22 +1776,24 @@ Internet-Draft                  UDP-Notif                     March 2025
                </server-authentication>
                <keepalives>
                  <test-peer-aliveness>
-
-
-
-Zheng, et al.           Expires 13 September 2025              [Page 32]
-
-Internet-Draft                  UDP-Notif                     March 2025
-
-
                    <max-wait>30</max-wait>
                    <max-attempts>3</max-attempts>
                  </test-peer-aliveness>
                </keepalives>
              </dtls>
+             <enable-segmentation>true</enable-segmentation>
+             <max-segment-size>9000</max-segment-size>
            </udp-notif-receiver>
          </receiver-instance>
        </receiver-instances>
+
+
+
+Zheng, et al.            Expires 27 October 2025               [Page 32]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
      </subscriptions>
    </config>
 
@@ -1845,9 +1837,17 @@ A.3.  YANG Push message with UDP-Notif transport protocol
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 33]
+
+
+
+
+
+
+
+
+Zheng, et al.            Expires 27 October 2025               [Page 33]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
       0                   1                   2                   3
@@ -1901,9 +1901,9 @@ Authors' Addresses
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 34]
+Zheng, et al.            Expires 27 October 2025               [Page 34]
 
-Internet-Draft                  UDP-Notif                     March 2025
+Internet-Draft                  UDP-Notif                     April 2025
 
 
    Pierre Francois
@@ -1957,4 +1957,4 @@ Internet-Draft                  UDP-Notif                     March 2025
 
 
 
-Zheng, et al.           Expires 13 September 2025              [Page 35]
+Zheng, et al.            Expires 27 October 2025               [Page 35]

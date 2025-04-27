@@ -9,8 +9,8 @@
       <encoding>encode-json</encoding>
       <receivers>
         <receiver>
-          <name>subscription-specific-receiver-def</name>
-          <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">global-udp-notif-receiver-def</receiver-instance-ref>
+          <name>subscription-specific-receiver</name>
+          <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">ipv4-udp-notif-receiver</receiver-instance-ref>
         </receiver>
       </receivers>
       <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
@@ -19,21 +19,21 @@
     </subscription>
     <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscribed-notif-receivers">
       <receiver-instance>
-        <name>global-udp-notif-receiver-def</name>
+        <name>ipv4-udp-notif-receiver</name>
         <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">
-          <remote-address>192.0.5.1</remote-address>
+          <remote-address>192.0.2.1</remote-address>
           <remote-port>12345</remote-port>
-          <enable-segmentation>false</enable-segmentation>
-          <max-segment-size/>
+          <enable-segmentation>true</enable-segmentation>
+          <max-segment-size>9000</max-segment-size>
         </udp-notif-receiver>
       </receiver-instance>
       <receiver-instance>
-        <name>ipv6-udp-notif-receiver-example</name>
+        <name>ipv6-udp-notif-receiver</name>
         <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport">
-          <remote-address>192.0.5.1</remote-address>
+          <remote-address>2001:db8:abcd:12::1</remote-address>
           <remote-port>12345</remote-port>
-          <enable-segmentation>false</enable-segmentation>
-          <max-segment-size/>
+          <enable-segmentation>true</enable-segmentation>
+          <max-segment-size>9000</max-segment-size>
         </udp-notif-receiver>
       </receiver-instance>
     </receiver-instances>

@@ -170,7 +170,7 @@
       </address>
     </author>
 
-    <date day="12" month="March" year="2025"/>
+    <date day="25" month="April" year="2025"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -691,18 +691,12 @@
         the path. The segmentation option of the current specification permits
         segmentation of the UDP-Notif message content without relying on IP
         fragmentation.
-        <!-- Implementations MUST allow for the configuration of the
-        maximum size of a UDP-Notif segment. -->
         </t>
-<!-- as per errat, this protocol does not mandate any default encoding -->
 
         <t>It is RECOMMENDED that the size of a Notification Message is 
         small and segmentation does not result in segmenting the message into too
         many segments to avoid dropping the entire message when there is a lost
-        segment. 
-        <!-- When a Notification Message is large, it is RECOMMENDED to use a
-        reliable transport such as HTTPS-notif
-        <xref target="I-D.ietf-netconf-https-notif"/>. -->
+        segment.
         </t>
         
         <t>A receiver collecting segmented UDP-Notif 
@@ -716,7 +710,6 @@
         but cannot be re-assembled as a
         complete message within a given amount of time. This time SHOULD be
         configurable. 
-        <!-- It is RECOMMENDED to discard UDP-Notif segments after 10 seconds. -->
         </t>
       </section>
     </section>
@@ -724,9 +717,11 @@
     <section anchor="sec_dtls_udp_notif" title="Secured layer for UDP-Notif">
       <t>In unsecured networks, which are not authenticated and encrypted on
 	    layers below transport, UDP-Notif messages MUST be 
-      encrypted. In this section, a mechanism using DTLS
+      encrypted. This section presents a mechanism using DTLS
       <xref target="RFC6347"/><xref target="RFC9147"/> to secure
-      UDP-Notif protocol is presented.</t>
+      UDP-Notif protocol. In addition to providing encryption, DTLS also
+      ensures authentication and integrity protection, preventing attacks
+      such as the injection of malicious packets.</t>
 
       <t>Implementations using DTLS to secure UDP-Notif messages MUST support DTLS
       1.2 <xref target="RFC6347"/> or later, and SHOULD support DTLS 1.3 <xref target="RFC9147"/>.
@@ -910,7 +905,7 @@ module: ietf-udp-notif-transport
         and the "tls-client-grouping" defined in the "ietf-tls-client" module
         <xref target="RFC9645"/>.</t>
 
-        <sourcecode name="ietf-udp-notif-transport@2025-02-14.yang" type="yang" markers="true"><![CDATA[
+        <sourcecode name="ietf-udp-notif-transport@2025-04-27.yang" type="yang" markers="true"><![CDATA[
 module ietf-udp-notif-transport {
   yang-version 1.1;
   namespace
@@ -979,7 +974,7 @@ module ietf-udp-notif-transport {
     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
     they appear in all capitals, as shown here.";
 
-  revision 2025-02-14 {
+  revision 2025-04-27 {
     description
       "Initial revision";
     reference
@@ -1088,7 +1083,7 @@ module ietf-udp-notif-transport {
     case udp-notif {
       container udp-notif-receiver {
         description
-          "The UDP-notif receiver to send notifications to.";
+          "The UDP-Notif receiver to send notifications to.";
         uses udp-notif-receiver;
       }
     }
@@ -1293,8 +1288,10 @@ module ietf-udp-notif-transport {
       designed to be used in controlled environments, as defined in <xref
       target="RFC8085"/> also known as "limited domains", as defined in <xref
       target="RFC8799"/>. Thus, a security layer is not necessary required.
-      Nevertheless, an encryption layer MUST be implemented for non secured
-      networks. A specification of UDP-notif using DTLS 1.3 as its encryption layer
+      Nevertheless, for networks that are not secured, a secure transport
+      providing confidentiality, integrity protection, authentication,
+      and replay protection MUST be implemented.
+      A specification of UDP-Notif using DTLS 1.3 as its encryption layer
       is presented in <xref target="sec_dtls_udp_notif"/>.</t>
 
       
@@ -1485,9 +1482,11 @@ module ietf-udp-notif-transport {
       <section anchor="example_no_dtls"
                title="Configuration for UDP-Notif transport with DTLS disabled">
         <t>This example shows how UDP-Notif can be configured without DTLS
-        encryption.</t>
+        encryption. It illustrates the definition of two receivers, one uses an
+        IPv4 as its destination address and another uses IPv6. The IPv4 receiver
+        is bound to the subscription.</t>
 
-        <t><figure>
+        <figure>
             <artwork align="left"><![CDATA[
 =============== NOTE: '\' line wrapping per RFC 8792 ================
 
@@ -1497,18 +1496,19 @@ module ietf-udp-notif-transport {
 notifications">
     <subscription>
       <id>6666</id>
-      <stream-subtree-filter>some-subtree-filter</stream-subtree-fil\
-ter>
-      <stream>some-stream</stream>
+      <datastore xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">\
+ds:operational</datastore>
+      <datastore-xpath-filter xmlns="urn:ietf:params:xml:ns:yang:iet\
+f-yang-push">/some/path</datastore-xpath-filter>
       <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-not\
 if-transport">unt:udp-notif</transport>
       <encoding>encode-json</encoding>
       <receivers>
         <receiver>
-          <name>subscription-specific-receiver-def</name>
+          <name>subscription-specific-receiver</name>
           <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
-ietf-subscribed-notif-receivers">global-udp-notif-receiver-def</rece\
-iver-instance-ref>
+ietf-subscribed-notif-receivers">ipv4-udp-notif-receiver</receiver-i\
+nstance-ref>
         </receiver>
       </receivers>
       <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
@@ -1518,20 +1518,30 @@ iver-instance-ref>
     <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
 cribed-notif-receivers">
       <receiver-instance>
-        <name>global-udp-notif-receiver-def</name>
+        <name>ipv4-udp-notif-receiver</name>
         <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
 udp-notif-transport">
-          <remote-address>192.0.5.1</remote-address>
+          <remote-address>192.0.2.1</remote-address>
           <remote-port>12345</remote-port>
-          <enable-segmentation>false</enable-segmentation>
-          <max-segment-size/>
+          <enable-segmentation>true</enable-segmentation>
+          <max-segment-size>9000</max-segment-size>
+        </udp-notif-receiver>
+      </receiver-instance>
+      <receiver-instance>
+        <name>ipv6-udp-notif-receiver</name>
+        <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
+udp-notif-transport">
+          <remote-address>2001:db8:abcd:12::1</remote-address>
+          <remote-port>12345</remote-port>
+          <enable-segmentation>true</enable-segmentation>
+          <max-segment-size>9000</max-segment-size>
         </udp-notif-receiver>
       </receiver-instance>
     </receiver-instances>
   </subscriptions>
 </config>
   ]]></artwork>
-          </figure></t>
+          </figure>
       </section>
 
       <section anchor="example_dtls"
@@ -1559,9 +1569,8 @@ if-transport">unt:udp-notif</transport>
         <receiver>
           <name>subscription-specific-receiver-def</name>
           <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:\
-ietf-subscribed-notif-receivers">global-udp-notif-receiver-dtls-def<\
-/receiver-instance-ref>
-        </receiver>
+ietf-subscribed-notif-receivers">udp-notif-receiver-dtls</receiver-i\
+nstance-ref>
       </receivers>
       <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
         <period>6000</period>
@@ -1570,13 +1579,11 @@ ietf-subscribed-notif-receivers">global-udp-notif-receiver-dtls-def<\
     <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subs\
 cribed-notif-receivers">
       <receiver-instance>
-        <name>global-udp-notif-receiver-dtls-def</name>
+        <name>udp-notif-receiver-dtls</name>
         <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-\
 udp-notif-transport">
-          <remote-address>192.0.5.1</remote-address>
+          <remote-address>2001:db8:abcd:12::1</remote-address>
           <remote-port>12345</remote-port>
-          <enable-segmentation>false</enable-segmentation>
-          <max-segment-size/>
           <dtls>
             <client-identity>
               <tls13-epsk>
@@ -1642,12 +1649,14 @@ rmat</public-key-format>
               </test-peer-aliveness>
             </keepalives>
           </dtls>
+          <enable-segmentation>true</enable-segmentation>
+          <max-segment-size>9000</max-segment-size>
         </udp-notif-receiver>
       </receiver-instance>
     </receiver-instances>
   </subscriptions>
 </config>
-  ]]></artwork>
+]]></artwork>
           </figure>
       </section>
 
@@ -1662,7 +1671,7 @@ rmat</public-key-format>
         encoded following the <xref target="fig_udp_notif_ex"/>. The UDP-Notif
         message is then encapsulated in a UDP datagram.</t>
 
-        <t><figure anchor="fig_ex_json_payload"
+        <figure anchor="fig_ex_json_payload"
             title="JSON Payload to be sent">
             <artwork align="center"><![CDATA[
 {
@@ -1684,7 +1693,7 @@ rmat</public-key-format>
     }
 }
   ]]></artwork>
-          </figure></t>
+          </figure>
 
         <figure anchor="fig_udp_notif_ex"
             title="UDP-Notif transport message">
