@@ -5,13 +5,13 @@
 NETCONF                                                    A. Huang Feng
 Internet-Draft                                               P. Francois
 Intended status: Standards Track                               INSA-Lyon
-Expires: 27 October 2025                                         T. Zhou
+Expires: 30 October 2025                                         T. Zhou
                                                                   Huawei
                                                                  T. Graf
                                                                 Swisscom
                                                               P. Lucente
                                                                      NTT
-                                                           25 April 2025
+                                                           28 April 2025
 
 
             UDP-based Transport for Configured Subscriptions
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 October 2025.
+   This Internet-Draft will expire on 30 October 2025.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 1]
+Huang Feng, et al.       Expires 30 October 2025                [Page 1]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 2]
+Huang Feng, et al.       Expires 30 October 2025                [Page 2]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -165,7 +165,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 3]
+Huang Feng, et al.       Expires 30 October 2025                [Page 3]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -221,7 +221,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 4]
+Huang Feng, et al.       Expires 30 October 2025                [Page 4]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -277,7 +277,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 5]
+Huang Feng, et al.       Expires 30 October 2025                [Page 5]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -333,7 +333,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 6]
+Huang Feng, et al.       Expires 30 October 2025                [Page 6]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -389,7 +389,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 7]
+Huang Feng, et al.       Expires 30 October 2025                [Page 7]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -445,7 +445,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 8]
+Huang Feng, et al.       Expires 30 October 2025                [Page 8]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -501,7 +501,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025                [Page 9]
+Huang Feng, et al.       Expires 30 October 2025                [Page 9]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -557,7 +557,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 10]
+Huang Feng, et al.       Expires 30 October 2025               [Page 10]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -613,7 +613,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 11]
+Huang Feng, et al.       Expires 30 October 2025               [Page 11]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -669,7 +669,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 12]
+Huang Feng, et al.       Expires 30 October 2025               [Page 12]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -725,7 +725,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 13]
+Huang Feng, et al.       Expires 30 October 2025               [Page 13]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -781,7 +781,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 14]
+Huang Feng, et al.       Expires 30 October 2025               [Page 14]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -837,7 +837,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 15]
+Huang Feng, et al.       Expires 30 October 2025               [Page 15]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -893,7 +893,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 16]
+Huang Feng, et al.       Expires 30 October 2025               [Page 16]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -949,7 +949,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 17]
+Huang Feng, et al.       Expires 30 October 2025               [Page 17]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 18]
+Huang Feng, et al.       Expires 30 October 2025               [Page 18]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 19]
+Huang Feng, et al.       Expires 30 October 2025               [Page 19]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 20]
+Huang Feng, et al.       Expires 30 October 2025               [Page 20]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 21]
+Huang Feng, et al.       Expires 30 October 2025               [Page 21]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 22]
+Huang Feng, et al.       Expires 30 October 2025               [Page 22]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 23]
+Huang Feng, et al.       Expires 30 October 2025               [Page 23]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 24]
+Huang Feng, et al.       Expires 30 October 2025               [Page 24]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-Huang Feng, et al.       Expires 27 October 2025               [Page 25]
+Huang Feng, et al.       Expires 30 October 2025               [Page 25]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
@@ -1425,16 +1425,22 @@ Internet-Draft                  UDP-Notif                     April 2025
    China
    Email: zhengguangying@huawei.com
 
+   Yunan Gu
+   Huawei
+   Beijing
+   China
+   Email: guyunan@huawei.com
+
 12.  Acknowledgements
 
    The authors of this documents would like to thank Lucas Aubard,
    Alexander Clemm, Benoit Claise, Ebben Aries, Eric Voit, Huiyang Yang,
    Kent Watsen, Mahesh Jethanandani, Marco Tollini, Hannes Tschofenig,
    Michael Tuxen, Rob Wilton, Sean Turner, Stephane Frenot, Timothy
-   Carey, Tim Jenkins, Tom Petch, Yunan Gu, Joseph Touch, Andy Bierman,
-   Carsten Bormann, Mohamed Boucadair, Weiqiang Cheng, Giuseppe
-   Fioccola, Camilo Cardona, Qiufang Ma and James Cumming for their
-   constructive suggestions for improving this document.
+   Carey, Tim Jenkins, Tom Petch, Joseph Touch, Andy Bierman, Carsten
+   Bormann, Mohamed Boucadair, Weiqiang Cheng, Giuseppe Fioccola, Camilo
+   Cardona, Qiufang Ma and James Cumming for their constructive
+   suggestions for improving this document.
 
 13.  References
 
@@ -1443,20 +1449,21 @@ Internet-Draft                  UDP-Notif                     April 2025
    [BCP195]   Moriarty, K. and S. Farrell, "Deprecating TLS 1.0 and TLS
               1.1", BCP 195, RFC 8996, March 2021.
 
+
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 26]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
               Sheffer, Y., Saint-Andre, P., and T. Fossati,
               "Recommendations for Secure Use of Transport Layer
               Security (TLS) and Datagram Transport Layer Security
               (DTLS)", BCP 195, RFC 9325, November 2022.
 
               <https://www.rfc-editor.org/info/bcp195>
-
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 26]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
 
    [BCP230]   Bonica, R., Baker, F., Huston, G., Hinden, R., Troan, O.,
               and F. Gont, "IP Fragmentation Considered Fragile",
@@ -1500,19 +1507,17 @@ Internet-Draft                  UDP-Notif                     April 2025
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
 
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 27]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/info/rfc6020>.
-
-
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 27]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
 
    [RFC6347]  Rescorla, E. and N. Modadugu, "Datagram Transport Layer
               Security Version 1.2", RFC 6347, DOI 10.17487/RFC6347,
@@ -1556,19 +1561,19 @@ Internet-Draft                  UDP-Notif                     April 2025
               DOI 10.17487/RFC8640, September 2019,
               <https://www.rfc-editor.org/info/rfc8640>.
 
+
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 28]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
    [RFC8650]  Voit, E., Rahman, R., Nilsen-Nygaard, E., Clemm, A., and
               A. Bierman, "Dynamic Subscription to YANG Events and
               Datastores over RESTCONF", RFC 8650, DOI 10.17487/RFC8650,
               November 2019, <https://www.rfc-editor.org/info/rfc8650>.
-
-
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 28]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
 
    [RFC9147]  Rescorla, E., Tschofenig, H., and N. Modadugu, "The
               Datagram Transport Layer Security (DTLS) Protocol Version
@@ -1610,6 +1615,17 @@ Internet-Draft                  UDP-Notif                     April 2025
               "INSA Lyon, YANG Push publisher example implementation",
               <https://github.com/network-analytics/udp-notif-scapy>.
 
+
+
+
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 29]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
    [INSA-Lyon-Receiver]
               "INSA Lyon, YANG Push receiver library implementation",
               <https://github.com/network-analytics/udp-notif-
@@ -1618,13 +1634,6 @@ Internet-Draft                  UDP-Notif                     April 2025
    [Paolo-Lucente-Pmacct]
               "Paolo Lucente, Pmacct open source Network Telemetry Data
               Collection", <https://github.com/pmacct/pmacct>.
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 29]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
@@ -1665,22 +1674,18 @@ Internet-Draft                  UDP-Notif                     April 2025
               Protocols", RFC 8799, DOI 10.17487/RFC8799, July 2020,
               <https://www.rfc-editor.org/info/rfc8799>.
 
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 30]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
    [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/info/rfc9000>.
-
-
-
-
-
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 30]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
 
 Appendix A.  UDP-Notif Examples
 
@@ -1725,19 +1730,19 @@ A.1.  Configuration for UDP-Notif transport with DTLS disabled
        <periodic xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-push">
          <period>6000</period>
        </periodic>
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 31]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
      </subscription>
      <receiver-instances xmlns="urn:ietf:params:xml:ns:yang:ietf-subscr\
    ibed-notif-receivers">
        <receiver-instance>
          <name>ipv4-udp-notif-receiver</name>
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 31]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
-
          <udp-notif-receiver xmlns="urn:ietf:params:xml:ns:yang:ietf-ud\
    p-notif-transport">
            <remote-address>192.0.2.1</remote-address>
@@ -1781,19 +1786,19 @@ A.2.  Configuration for UDP-Notif transport with DTLS enabled
        <transport xmlns:unt="urn:ietf:params:xml:ns:yang:ietf-udp-notif\
    -transport">unt:udp-notif</transport>
        <encoding>encode-json</encoding>
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 32]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
        <receivers>
          <receiver>
            <name>subscription-specific-receiver-def</name>
            <receiver-instance-ref xmlns="urn:ietf:params:xml:ns:yang:ie\
    tf-subscribed-notif-receivers">udp-notif-receiver-dtls</receiver-ins\
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 32]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
-
    tance-ref>
            <state>active</state>
          </receiver>
@@ -1837,19 +1842,19 @@ Internet-Draft                  UDP-Notif                     April 2025
                    <certificate>
                      <name>Server Cert Issuer #2</name>
                      <cert-data>BASE64VALUE=</cert-data>
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 33]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
                    </certificate>
                  </inline-definition>
                </ca-certs>
                <ee-certs>
                  <inline-definition>
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 33]
-
-Internet-Draft                  UDP-Notif                     April 2025
-
-
                    <certificate>
                      <name>My Application #1</name>
                      <cert-data>BASE64VALUE=</cert-data>
@@ -1894,17 +1899,16 @@ A.3.  YANG Push message with UDP-Notif transport protocol
    send a "push-update" notification [RFC8641] encoded in JSON
    [RFC7951].
 
-   Assuming the publisher needs to send the JSON payload showed in
-   Figure 5, the UDP-Notif transport is encoded following the Figure 6.
-   The UDP-Notif message is then encapsulated in a UDP datagram.
 
 
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 34]
+Huang Feng, et al.       Expires 30 October 2025               [Page 34]
 
 Internet-Draft                  UDP-Notif                     April 2025
 
+
+   Assuming the publisher needs to send the JSON payload showed in
+   Figure 5, the UDP-Notif transport is encoded following the Figure 6.
+   The UDP-Notif message is then encapsulated in a UDP datagram.
 
               {
                   "ietf-notification:notification": {
@@ -1947,19 +1951,22 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 Authors' Addresses
 
+
+
+
+
+
+
+Huang Feng, et al.       Expires 30 October 2025               [Page 35]
+
+Internet-Draft                  UDP-Notif                     April 2025
+
+
    Alex Huang Feng
    INSA-Lyon
    Lyon
    France
    Email: alex.huang-feng@insa-lyon.fr
-
-
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 35]
-
-Internet-Draft                  UDP-Notif                     April 2025
 
 
    Pierre Francois
@@ -2006,11 +2013,4 @@ Internet-Draft                  UDP-Notif                     April 2025
 
 
 
-
-
-
-
-
-
-
-Huang Feng, et al.       Expires 27 October 2025               [Page 36]
+Huang Feng, et al.       Expires 30 October 2025               [Page 36]

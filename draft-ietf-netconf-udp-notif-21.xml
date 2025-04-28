@@ -101,7 +101,7 @@
       </address>
     </author>
 
-    <date day="25" month="April" year="2025"/>
+    <date day="28" month="April" year="2025"/>
 
     <workgroup>NETCONF</workgroup>
 
@@ -1277,6 +1277,12 @@ Nanjing
 Jiangsu,
 China
 Email: zhengguangying@huawei.com
+
+Yunan Gu
+Huawei
+Beijing
+China
+Email: guyunan@huawei.com
 </artwork>
       </figure>
     </section>
@@ -1285,7 +1291,7 @@ Email: zhengguangying@huawei.com
       <t>The authors of this documents would like to thank Lucas Aubard, Alexander
       Clemm, Benoit Claise, Ebben Aries, Eric Voit, Huiyang Yang, Kent Watsen, Mahesh
       Jethanandani, Marco Tollini, Hannes Tschofenig, Michael Tuxen, Rob Wilton, Sean
-      Turner, Stephane Frenot, Timothy Carey, Tim Jenkins, Tom Petch, Yunan Gu,
+      Turner, Stephane Frenot, Timothy Carey, Tim Jenkins, Tom Petch,
       Joseph Touch, Andy Bierman, Carsten Bormann, Mohamed Boucadair, Weiqiang Cheng,
       Giuseppe Fioccola, Camilo Cardona, Qiufang Ma and James Cumming for their constructive
 	    suggestions for improving this document.</t>
