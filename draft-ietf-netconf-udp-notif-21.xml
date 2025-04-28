@@ -256,7 +256,7 @@
       target="I-D.ietf-netconf-distributed-notif"/>. Additionally, 
       this document defines a YANG data model for management of the UDP-based transport.
       The YANG module specified in this document is compliant with Network Management
-      Datastore Architecture (NMDA) <xref target="RFC8639"/>.</t>
+      Datastore Architecture (NMDA) <xref target="RFC8342"/>.</t>
 
       <t><xref target="sec_ups_transport"/> details the
       notification mechanism and message format. <xref target="sec_options"/>
@@ -528,7 +528,7 @@
   0                   1                   2                   3        
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
  +---------------+---------------+--------------------------------
- |     Type      |    Length     |    Variable-length data     
+ |     Type      |    Length     |    Variable-length data       ~
  +---------------+---------------+--------------------------------]]></artwork>
         </figure></t>
 
@@ -908,9 +908,9 @@ module: ietf-udp-notif-transport
         <sourcecode name="ietf-udp-notif-transport@2025-04-27.yang" type="yang" markers="true"><![CDATA[
 module ietf-udp-notif-transport {
   yang-version 1.1;
-  namespace
-    "urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport";
+  namespace "urn:ietf:params:xml:ns:yang:ietf-udp-notif-transport";
   prefix unt;
+
   import ietf-subscribed-notifications {
     prefix sn;
     reference
@@ -933,7 +933,8 @@ module ietf-udp-notif-transport {
       "RFC 9645: YANG Groupings for TLS Clients and TLS Servers";
   }
 
-  organization "IETF NETCONF (Network Configuration) Working Group";
+  organization
+    "IETF NETCONF (Network Configuration) Working Group";
   contact
     "WG Web:   <http:/tools.ietf.org/wg/netconf/>
      WG List:  <mailto:netconf@ietf.org>
@@ -950,29 +951,28 @@ module ietf-udp-notif-transport {
                <mailto:alex.huang-feng@insa-lyon.fr>
                Paolo Lucente
                <mailto:paolo@ntt.net>";
-
   description
     "Defines a model for configuring UDP-Notif as a transport
-    for configured subscriptions [RFC8639].
+     for configured subscriptions [RFC8639].
 
-    Copyright (c) 2025 IETF Trust and the persons identified as
-    authors of the code.  All rights reserved.
+     Copyright (c) 2025 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
 
-    Redistribution and use in source and binary forms, with or without
-    modification, is permitted pursuant to, and subject to the license
-    terms contained in, the Revised BSD License set forth in Section
-    4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
-    (https://trustee.ietf.org/license-info).
+     Redistribution and use in source and binary forms, with or without
+     modification, is permitted pursuant to, and subject to the license
+     terms contained in, the Revised BSD License set forth in Section
+     4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
 
-    This version of this YANG module is part of RFC XXXX
-    (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
-    for full legal notices.
-    
-    The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
-    NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
-    'MAY', and 'OPTIONAL' in this document are to be interpreted as
-    described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
-    they appear in all capitals, as shown here.";
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.";
 
   revision 2025-04-27 {
     description
@@ -980,32 +980,35 @@ module ietf-udp-notif-transport {
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
- 
- /*
-  * FEATURES
-  */
+
+  /*
+   * FEATURES
+   */
+
   feature encode-cbor {
     description
       "Indicates that CBOR encoding of notification
-      messages is supported.";
+       messages is supported.";
     reference
       "RFC 9254: CBOR Encoding of Data Modeled with YANG";
   }
+
   feature dtls {
     description
       "Indicates that DTLS encryption of UDP
-      packets is supported. UDP-Notif mandates that, in 
-      unsecured networks, DTLS 1.2 or later MUST be supported,
-      and DTLS 1.3 SHOULD be supported.";
-    reference 
+       packets is supported. UDP-Notif mandates that, in
+       unsecured networks, DTLS 1.2 or later MUST be supported,
+       and DTLS 1.3 SHOULD be supported.";
+    reference
       "RFC6347: Datagram Transport Layer Security Version 1.2,
-      RFC 9147: The Datagram Transport Layer Security (DTLS)
-      Protocol Version 1.3";
+       RFC 9147: The Datagram Transport Layer Security (DTLS)
+       Protocol Version 1.3";
   }
 
- /*
-  * IDENTITIES
-  */  
+  /*
+   * IDENTITIES
+   */  
+
   identity udp-notif {
     base sn:transport;
     base sn:configurable-encoding;
@@ -1027,8 +1030,8 @@ module ietf-udp-notif-transport {
     base sn:modify-subscription-error;
     description
       "Error triggered when the specified value 'max-segment-size'
-      is not supported by the publisher. An implementation may
-      only support a subset of the uint16.";
+       is not supported by the publisher. An implementation may
+       only support a subset of the uint16.";
     reference
       "RFC XXXX: UDP-based Transport for Configured Subscriptions";
   }
@@ -1036,50 +1039,46 @@ module ietf-udp-notif-transport {
   grouping udp-notif-receiver {
     description
       "Provides a reusable identification of a UDP-Notif target
-      receiver.";
-
+       receiver.";
     uses udpc:udp-client {
-      refine remote-port {
+      refine "remote-port" {
         mandatory true;
       }
     }
-
     container dtls {
-      if-feature dtls;
-      presence dtls;
+      if-feature "dtls";
+      presence "dtls";
       uses tlsc:tls-client-grouping {
         // Remove keep-alives for DTLS
         refine "keepalives" {
           if-feature "not tlsc:tls-client-keepalives";
         }
       }
-      description 
+      description
         "Container for configuring DTLS parameters.";
     }
-
     leaf enable-segmentation {
       type boolean;
-      default true;
-      description 
+      default "true";
+      description
         "When disabled, the publisher will not segment UDP-Notif
-        messages and large messages may be fragmented at the IP
-        layer.";
+         messages and large messages may be fragmented at the IP
+         layer.";
     }
-
     leaf max-segment-size {
       type uint16;
-      description 
+      description
         "UDP-Notif provides a configurable max-segment-size to
-        control the size of each segment (UDP-Notif header, with
-        options, included).
-        The publisher may trigger an 'unsupported-max-segment-size'
-        error if the publisher does not support the configured
-        value.";
+         control the size of each segment (UDP-Notif header, with
+         options, included).
+         The publisher may trigger an 'unsupported-max-segment-size'
+         error if the publisher does not support the configured
+         value.";
     }
   }
 
-  augment "/sn:subscriptions/snr:receiver-instances/" +
-          "snr:receiver-instance/snr:transport-type" {
+  augment "/sn:subscriptions/snr:receiver-instances/"
+        + "snr:receiver-instance/snr:transport-type" {
     case udp-notif {
       container udp-notif-receiver {
         description
@@ -1103,109 +1102,99 @@ module ietf-udp-notif-transport {
       <section title="IANA Registries" anchor="sec_iana_reg">
         <t>This document requests IANA to create a new registry group called
         "UDP-Notif protocol".</t>
+
+        <t>Under this registry group, the following three registries are to be created:</t>
+        <section title="UDP-Notif Media Types Registry">
+          <t>Registry Name: UDP-Notif Media Types</t>
+          <t>Description: This registry defines media types that can be used for encoding notification payloads transported using the UDP-Notif protocol.</t>
+          <t>Registration Procedure: Standards Action (see <xref target="RFC8126" section="4.9"/>).</t>
+          <t>
+            Registration Template:
+            <list style="symbols">
+              <t>Value: Integer (0-15)</t>
+              <t>Description: Short text description of the media type</t>
+              <t>Reference: Document reference (e.g., RFC number)</t>
+            </list>
+          </t>
+          <t>
+            Initial Registrations:
+          </t>
+          <texttable title="Initial UDP-Notif Media Types Registry">
+            <ttcol>Value</ttcol>
+            <ttcol>Description</ttcol>
+            <ttcol>Reference</ttcol>
+            <c>0</c><c>Reserved</c><c>RFC-to-be</c>
+            <c>1</c><c>media type application/yang-data+json</c><c>RFC8040</c>
+            <c>2</c><c>media type application/yang-data+xml</c><c>RFC8040</c>
+            <c>3</c><c>media type application/yang-data+cbor</c><c>RFC9254</c>
+          </texttable>
+        </section>
         
-        <t>Also, this document requests IANA to create the
-        following three registries called "UDP-Notif media types",
-        "UDP-Notif option types", and "UDP-Notif header version", under
-        the "UDP-Notif protocol" registry group.</t>
-        
-        <t>The registration procedure for all these registries follows the
-        "Standards Action" policy (<xref target="RFC8126" section="4.9"/>).</t>
-
-        <t>The first requested registry is the following:</t>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Registry Name: UDP-Notif media types
-  Maximum value: 15]]></artwork>
-          </figure>
-
-        <t>These are the initial registrations for "UDP-Notif media
-        types":</t>
-
-        <figure>
-          <artwork align="left"><![CDATA[
-  Value: 0
-  Description: Reserved
-  Reference: RFC-to-be]]></artwork>
-        </figure>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: 1
-  Description: media type application/yang-data+json
-  Reference: RFC 8040]]></artwork>
-          </figure>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: 2
-  Description: media type application/yang-data+xml
-  Reference: RFC 8040]]></artwork>
-          </figure>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: 3
-  Description: media type application/yang-data+cbor
-  Reference: RFC 9254]]></artwork>
-          </figure>
-
-        <t>The second requested registry is the following:</t>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Registry Name: UDP-Notif option types
-  Maximum value: 255]]></artwork>
-          </figure>
-
-        <t>These are the initial registrations for "UDP-Notif options
-        types":</t>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: 0
-  Description: Reserved
-  Reference: RFC-to-be]]></artwork>
-          </figure>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: 1
-  Description: Segmentation Option
-  Reference: RFC-to-be]]></artwork>
-          </figure>
-
-        <t>The third requested registry is the following:</t>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Registry Name: UDP-Notif header version
-  Maximum value: 7]]></artwork>
-          </figure>
-
-        <t>There is an older specification of this transport protocol defined in 
-        <xref target="I-D.ietf-netconf-udp-pub-channel"/> that was deployed
-        in some networks. To enable differentiating both protocols, different version numbers
-        are used. The current specification replaces <xref
-        target="I-D.ietf-netconf-udp-pub-channel"/> and uses 1 as its
-        version while the header defined in <xref
-        target="I-D.ietf-netconf-udp-pub-channel"/> uses 0. These are the initial registrations for
-        "UDP-Notif header version" registry:</t>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: 0
-  Description: UDP based Publication Channel for Streaming Telemetry
-  Reference: draft-ietf-netconf-udp-pub-channel-05]]></artwork>
-          </figure>
-
-        <figure>
-            <artwork align="left"><![CDATA[
-  Value: 1
-  Description: UDP-based Transport for Configured Subscriptions.
-  Reference: RFC-to-be]]></artwork>
-          </figure>
+        <section title="UDP-Notif Option Types Registry">
+          <t>
+            Registry Name: UDP-Notif Option Types
+          </t>
+          <t>
+            Description: This registry defines option types used to extend message capabilities within the UDP-Notif protocol, such as segmentation.
+          </t>
+          <t>
+            Registration Procedure: Standards Action (see Section 4.9 of <xref target="RFC8126" />).
+          </t>
+          <t>
+            Registration Template:
+            <list style="symbols">
+              <t>Value: Integer (0-255)</t>
+              <t>Description: Short text description of the option</t>
+              <t>Reference: Document reference (e.g., RFC number)</t>
+            </list>
+          </t>
+          <t>
+            Initial contents of the "UDP-Notif Option Types" registry are shown in Table 2.
+          </t>
+          <texttable title="Initial UDP-Notif Option Types Registry">
+            <ttcol>Value</ttcol>
+            <ttcol>Description</ttcol>
+            <ttcol>Reference</ttcol>
+            <c>0</c><c>Reserved</c><c>RFC-to-be</c>
+            <c>1</c><c>Segmentation Option</c><c>RFC-to-be</c>
+          </texttable>
+        </section>
+        <section title="UDP-Notif Header Version Registry">
+          <t>
+            Registry Name: UDP-Notif Header Version
+          </t>
+          <t>
+            Description: This registry defines the header version numbers used in the UDP-Notif protocol to distinguish between different versions of the transport protocol.
+          </t>
+          <t>
+            Registration Procedure: Standards Action (see Section 4.9 of <xref target="RFC8126" />).
+          </t>
+          <t>
+            Registration Template:
+            <list style="symbols">
+              <t>Value: Integer (0-7)</t>
+              <t>Description: Short text description of the header version</t>
+              <t>Reference: Document reference (e.g., RFC number)</t>
+            </list>
+          </t>
+          <t>
+            Initial contents of the "UDP-Notif Header Version" registry are shown in Table 3.
+          </t>
+          <texttable title="Initial UDP-Notif Header Version Registry">
+            <ttcol>Value</ttcol>
+            <ttcol>Description</ttcol>
+            <ttcol>Reference</ttcol>
+            <c>0</c><c>UDP based Publication Channel for Streaming Telemetry</c><c>draft-ietf-netconf-udp-pub-channel-05</c>
+            <c>1</c><c>UDP-based Transport for Configured Subscriptions</c><c>RFC-to-be</c>
+          </texttable>
+          <t>
+            Note: There is an older specification of this transport protocol defined in
+            <xref target="I-D.ietf-netconf-udp-pub-channel"/> that was deployed in some networks.
+            To enable differentiating both protocols, different version numbers are used.
+            The current specification replaces <xref target="I-D.ietf-netconf-udp-pub-channel"/> and uses 1 as its version,
+            while the header defined in <xref target="I-D.ietf-netconf-udp-pub-channel"/> uses 0.
+          </t>
+        </section>
       </section>
 
       <section title="URI">
@@ -1223,7 +1212,7 @@ module ietf-udp-notif-transport {
 
       <section title="YANG Module Name">
         <t>This document also requests a new YANG module name in the
-        <xref target="RFC8342">YANG Module Names registry</xref> with the
+        <xref target="RFC6020">YANG Module Names registry</xref> with the
         following suggestions:</t>
 
         <figure>
@@ -1365,6 +1354,7 @@ module ietf-udp-notif-transport {
 
       <?rfc include='https://xml.resource.org/public/rfc/bibxml/reference.RFC.5234.xml'?>
 
+      <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6020.xml"?>
       <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6347.xml"?>
 
       <?rfc include="https://xml.resource.org/public/rfc/bibxml/reference.RFC.6991.xml"?>
