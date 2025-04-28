@@ -843,6 +843,7 @@
         in the "local-address" leaf defined in the "ietf-udp-notif-transport" YANG module.
         </t>
 
+        <t>The model defines the following YANG tree <xref target="RFC8340"/>:</t>
         <sourcecode type="yangtree"><![CDATA[
 module: ietf-udp-notif-transport
 
@@ -903,7 +904,7 @@ module: ietf-udp-notif-transport
         document using the generic "udp-client" grouping from the 
         "ietf-udp-client" module <xref target="I-D.ietf-netconf-udp-client-server"/>
         and the "tls-client-grouping" defined in the "ietf-tls-client" module
-        <xref target="RFC9645"/>.</t>
+        <xref target="RFC9645"/>. It uses data types defined in <xref target="RFC6991"/>.</t>
 
         <sourcecode name="ietf-udp-notif-transport@2025-04-27.yang" type="yang" markers="true"><![CDATA[
 module ietf-udp-notif-transport {
@@ -958,10 +959,11 @@ module ietf-udp-notif-transport {
      Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
-     Redistribution and use in source and binary forms, with or without
-     modification, is permitted pursuant to, and subject to the license
-     terms contained in, the Revised BSD License set forth in Section
-     4.c of the IETF Trust's Legal Provisions Relating to IETF Documents
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
 
      This version of this YANG module is part of RFC XXXX
@@ -1248,8 +1250,9 @@ module ietf-udp-notif-transport {
       </section>
 
       <section anchor="pmacct" title="Pmacct Data Collection">
-        <t>The open source YANG push receiver library has been integrated into
-        the Pmacct open source Network Telemetry data collection.</t>
+        <t>The open source YANG push receiver library <xref
+        target="INSA-Lyon-Receiver"/> has been integrated into
+        the Pmacct open source Network Telemetry data collection <xref target="Paolo-Lucente-Pmacct"/>.</t>
       </section>
 
       <section anchor="Huawei" title="Huawei VRP">
