@@ -16,156 +16,87 @@
     <title abbrev="UDP-Notif">UDP-based Transport for Configured
     Subscriptions</title>
 
-    <author fullname="Guangying Zheng" initials="G." surname="Zheng">
-      <organization>Huawei</organization>
-
+    <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
+      <organization>INSA-Lyon</organization>
       <address>
         <postal>
-          <street>101 Yu-Hua-Tai Software Road</street>
-
-          <city>Nanjing</city>
-
-          <code/>
-
-          <region>Jiangsu</region>
-
-          <country>China</country>
-        </postal>
-
-        <phone/>
-
-        <facsimile/>
-
-        <email>zhengguangying@huawei.com</email>
-      </address>
-    </author>
-
-    <author fullname="Tianran Zhou" initials="T." surname="Zhou">
-      <organization>Huawei</organization>
-
-      <address>
-        <postal>
-          <street>156 Beiqing Rd., Haidian District</street>
-
-          <city>Beijing</city>
-
+          <street/>
+          <city>Lyon</city>
           <region/>
-
           <code/>
-
-          <country>China</country>
+          <country>France</country>
         </postal>
-
         <phone/>
-
         <facsimile/>
-
-        <email>zhoutianran@huawei.com</email>
-
-        <uri/>
-      </address>
-    </author>
-
-    <author fullname="Thomas Graf" initials="T." surname="Graf">
-      <organization>Swisscom</organization>
-
-      <address>
-        <postal>
-          <street>Binzring 17</street>
-
-          <city>Zuerich 8045</city>
-
-          <region/>
-
-          <code/>
-
-          <country>Switzerland</country>
-        </postal>
-
-        <phone/>
-
-        <facsimile/>
-
-        <email>thomas.graf@swisscom.com</email>
-
+        <email>alex.huang-feng@insa-lyon.fr</email>
         <uri/>
       </address>
     </author>
 
     <author fullname="Pierre Francois" initials="P." surname="Francois">
       <organization>INSA-Lyon</organization>
-
       <address>
         <postal>
           <street/>
-
           <city>Lyon</city>
-
           <region/>
-
           <code/>
-
           <country>France</country>
         </postal>
-
         <phone/>
-
         <facsimile/>
-
         <email>pierre.francois@insa-lyon.fr</email>
-
         <uri/>
       </address>
     </author>
 
-    <author fullname="Alex Huang Feng" initials="A." surname="Huang Feng">
-      <organization>INSA-Lyon</organization>
-
+    <author fullname="Tianran Zhou" initials="T." surname="Zhou">
+      <organization>Huawei</organization>
       <address>
         <postal>
-          <street/>
-
-          <city>Lyon</city>
-
+          <street>156 Beiqing Rd., Haidian District</street>
+          <city>Beijing</city>
           <region/>
-
           <code/>
-
-          <country>France</country>
+          <country>China</country>
         </postal>
-
         <phone/>
-
         <facsimile/>
+        <email>zhoutianran@huawei.com</email>
+        <uri/>
+      </address>
+    </author>
 
-        <email>alex.huang-feng@insa-lyon.fr</email>
-
+    <author fullname="Thomas Graf" initials="T." surname="Graf">
+      <organization>Swisscom</organization>
+      <address>
+        <postal>
+          <street>Binzring 17</street>
+          <city>Zuerich 8045</city>
+          <region/>
+          <code/>
+          <country>Switzerland</country>
+        </postal>
+        <phone/>
+        <facsimile/>
+        <email>thomas.graf@swisscom.com</email>
         <uri/>
       </address>
     </author>
 
     <author fullname="Paolo Lucente" initials="P." surname="Lucente">
       <organization>NTT</organization>
-
       <address>
         <postal>
           <street>Siriusdreef 70-72</street>
-
           <city>Hoofddorp, WT 2132</city>
-
           <region/>
-
           <code/>
-
           <country>NL</country>
         </postal>
-
         <phone/>
-
         <facsimile/>
-
         <email>paolo@ntt.net</email>
-
         <uri/>
       </address>
     </author>
@@ -1333,6 +1264,21 @@ module ietf-udp-notif-transport {
       to these operations. The YANG module defined in this document does not define any RPC
       operations.</t> -->
 
+    </section>
+
+
+    <section title="Contributors">
+      <figure>
+        <artwork>
+Guangying Zheng
+Huawei
+101 Yu-Hua-Tai Software Road
+Nanjing
+Jiangsu,
+China
+Email: zhengguangying@huawei.com
+</artwork>
+      </figure>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
